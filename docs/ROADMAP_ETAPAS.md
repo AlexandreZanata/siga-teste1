@@ -8,9 +8,9 @@ Metodologia fixa: trunk-based, fases ≤1 entrega, DCO (`-s`), `pytest -q` verde
 - [x] **F3** índice SQLite + incremental (`store.py`, invalidação por hash, `verify` hash-estável) + teste 1/10 arquivos
 - [x] **F4** Query API mínima (`find_symbol/definition/references`) + CLI `verify`
 - [x] **F5** BM25 (FTS5) + Capsule sob budget (500–32k) + benchmark dev A–G (≥50 Qs) + curva
-- [ ] **F6** baselines grep/BM25/vector + harness `benchmark run/report` (JSONL)
-- [ ] **F7** freeze SIGA + scoring test + `v0.x-siga-frozen`
-- [ ] **F8** Bitcoin transfer (sem redesign) + `LIMITATIONS_BITCOIN.md`
-- [ ] **F9** ablações (9) + paper draft + SBOM + release `v1` (só via RFC)
+- [x] **F6** experimento A/B em agente: baseline (exploração normal) vs ArchAtlas (índice+Capsule), mesmas perguntas, tempo+acerto — `experiments/agent_ab/`
+- [ ] **F7** fidelidade total SIGA-Doc: expandir índice p/ `siga-ex` completo + JSPs `sigaex`, medir `unresolved_rate`, harness `benchmark run/report` (JSONL)
+- [ ] **F8** freeze SIGA + scoring dev completo + `v0.x-siga-frozen`
+- [ ] **FUTURO (pós-SIGA)** Bitcoin transfer (sem redesign) + `LIMITATIONS_BITCOIN.md`; ablações (9) + paper + SBOM + `v1` (só via RFC) — Bitcoin removido das etapas executáveis por decisão 2026-09-24: foco 100% SIGA-Doc até fidelidade comprovada
 
 Agente responsável por etapa: executa `docs/VERIFICATION_PROTOCOL.md` (4 portões) e anexa evidências no corpo do commit. Sem evidência, sem push.
