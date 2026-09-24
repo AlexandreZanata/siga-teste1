@@ -1,0 +1,32 @@
+[
+ {
+  "budget": 500,
+  "recall": 0.915,
+  "avg_used": 455,
+  "seconds": 15.0
+ },
+ {
+  "budget": 1000,
+  "recall": 0.9477,
+  "avg_used": 913,
+  "seconds": 14.7
+ },
+ {
+  "budget": 2000,
+  "recall": 1.0,
+  "avg_used": 1732,
+  "seconds": 14.5
+ },
+ {
+  "budget": 4000,
+  "recall": 1.0,
+  "avg_used": 1934,
+  "seconds": 15.4
+ },
+ {
+  "budget": 8000,
+  "recall": 1.0,
+  "avg_used": 1934,
+  "seconds": 15.1
+ }
+]

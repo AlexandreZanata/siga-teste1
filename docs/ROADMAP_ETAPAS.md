@@ -22,7 +22,8 @@ Metodologia fixa: trunk-based, fases ≤1 entrega, DCO (`-s`), `pytest -q` verde
 - [x] **F17** GT-conjunto de caminhos + harness full-504: recall 1.00 (108/108, 8 cats), p50/p95 144/326ms
 - [x] **F18** 3 módulos (153Qs A–H, recall 1.00, index 841 arqs 5s, p95 372ms) + ranking tierado + fallback restaurado
 - [x] **F19** privacidade (config env, GT relativo, README sem paths) + latência (cache disco único + co-ocorrência: p95 372→119ms, recall 1.00)
-- [ ] **F20** (aberta) endurecer p95 em budget sweep + relatório comparativo F18→F19
+- [x] **F20** sweep budgets (500:.915, 1k:.948, 2k+:1.00, satura em ~1934tk) + comparativo
+- [ ] **F21** (aberta) tarefas de edição reais (frontend/backend) + cego de eficiência de edição
 - [ ] **FUTURO (pós-SIGA)** Bitcoin transfer (sem redesign) + `LIMITATIONS_BITCOIN.md`; ablações (9) + paper + SBOM + `v1` (só via RFC) — Bitcoin removido das etapas executáveis por decisão 2026-09-24: foco 100% SIGA-Doc até fidelidade comprovada
 
 Agente responsável por etapa: executa `docs/VERIFICATION_PROTOCOL.md` (4 portões) e anexa evidências no corpo do commit. Sem evidência, sem push.
