@@ -6,24 +6,28 @@ com dataset, tarefas, pré-registro e resultados próprios. Nenhum aceite copiad
 
 ## Checkpoint
 
-- Etapa atual: **BTC-P0 concluída** (auditoria + PIN/CENSO honestos; sem adaptador, sem rodada).
-- Último aceite e evidências: `research/bitcoin/AUDIT_BASELINE.md` (A1–A7, `arquivo:linha@e6fde13`);
-  `benchmarks/bitcoin/PIN.md` (BTC_SHA pendente); `benchmarks/bitcoin/CENSO.md` (dataset pendente);
-  `research/bitcoin/WORKSPACE.md` (isolamento `codex/bitcoin-context` confirmado).
-- SHA publicado: a registrar após push deste commit (branch `codex/bitcoin-context`).
+- Etapa atual: **BTC-P1 concluída** (literatura aplicada + pré-registro preliminar próprio;
+  sem adaptador, sem rodada, sem autorização de gasto).
+- Último aceite e evidências: `research/bitcoin/LITERATURE_APPLICATION.md` (R26-01–R26-09,
+  revisão congelada da base + aplicabilidade C++/Python como hipótese);
+  `research/bitcoin/PREREGISTRATION.md` (preliminar, não selado; lacunas nulas explícitas);
+  BTC-P0 segue em `research/bitcoin/AUDIT_BASELINE.md`, `benchmarks/bitcoin/PIN.md` (BTC_SHA pendente),
+  `benchmarks/bitcoin/CENSO.md`, `research/bitcoin/WORKSPACE.md`.
+- SHA publicado: `e46209b` (BTC-P0) em `origin/codex/bitcoin-context`; este commit BTC-P1 a registrar após push.
 - `run_id`: nenhum (sem medição). Reserva de recursos: nenhuma ativa.
-- Pedido ao core: nenhum (bloqueios A1–A7 registrados como pendências BTC-P2, sem `BTC-CORE-NNN` ainda).
-- Bloqueio exato: `BTC_SHA` indefinido (PIN) + checkpoint documental paralelo ainda não publicado
-  em `main` (`DOCS_SHA` pendente; worktree baseada em `BASE_SHA` publicado, sem herdar não commitados).
-- Alternativa independente: BTC-P1 pode referenciar R26-01–R26-09 publicados sem esperar o checkpoint;
+- Pedido ao core: nenhum (adaptação C++ pendente de BTC-P2; sem `BTC-CORE-NNN` ainda).
+- Bloqueio exato: `BTC_SHA` indefinido (PIN) + teto/modelos/custodiante nulos (pré-registro §7);
+  `main` avançou para `2b8a04f` (E26-01 SIGA: telemetria + artefatos `e26_01`) — observado, NÃO incorporado
+  (execução SIGA, sem entrega de contrato ao B; nenhuma medição B em curso afetada).
+- Alternativa independente: BTC-P2 pode especificar contratos e fixtures sem esperar PIN resolvido;
   sem PIN, porém, nenhuma indexação/benchmark é autorizada.
-- Próximo comando/ação: resolver `BTC_SHA` via `git ls-remote` + clone somente leitura
-  (procedimento em `benchmarks/bitcoin/PIN.md`); depois abrir BTC-P1 com pré-registro próprio.
+- Próximo comando/ação: resolver `BTC_SHA` (procedimento em `benchmarks/bitcoin/PIN.md`);
+  depois especificar BTC-P2 (`CONTRACTS_P2.md`, adaptador, fixtures, E26-00 espelho).
 
 ## Etapas
 
 - [x] BTC-P0 — auditoria, PIN e censo (auditoria concluída; PIN/CENSO como pendências explícitas bloqueando P2+).
-- [ ] BTC-P1 — aplicação da literatura e pré-registro próprio.
+- [x] BTC-P1 — aplicação da literatura e pré-registro próprio (preliminar, não selado; sem rodada autorizada).
 - [ ] BTC-P2 — adaptador, ambiente e medição.
 - [ ] BTC-P3 — piloto de edição.
 - [ ] BTC-P4 — protótipo e ablações.
@@ -32,4 +36,5 @@ com dataset, tarefas, pré-registro e resultados próprios. Nenhum aceite copiad
 - [ ] BTC-P7 — uso por desenvolvedor e checkpoint de integração.
 
 Histórico de transições preservado aqui: 2026-09-24 BTC-P0 concluída (auditoria) com PIN/CENSO
-pendentes; nenhuma fase posterior marcada. Experimentos BTC-E26-00–06: todos planejados, nenhum executado.
+pendentes; 2026-09-24 BTC-P1 concluída (literatura + pré-registro preliminar, lacunas nulas em §7).
+Nenhuma fase posterior marcada. Experimentos BTC-E26-00–06: todos planejados, nenhum executado.
