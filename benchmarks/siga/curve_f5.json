@@ -1,0 +1,47 @@
+{
+ "query": "Documento itextpdf assinatura",
+ "curve": [
+  {
+   "budget": 500,
+   "used": 460,
+   "kept": 9,
+   "candidates": 18
+  },
+  {
+   "budget": 1000,
+   "used": 952,
+   "kept": 18,
+   "candidates": 18
+  },
+  {
+   "budget": 2000,
+   "used": 952,
+   "kept": 18,
+   "candidates": 18
+  },
+  {
+   "budget": 4000,
+   "used": 952,
+   "kept": 18,
+   "candidates": 18
+  },
+  {
+   "budget": 8000,
+   "used": 952,
+   "kept": 18,
+   "candidates": 18
+  },
+  {
+   "budget": 16000,
+   "used": 952,
+   "kept": 18,
+   "candidates": 18
+  },
+  {
+   "budget": 32000,
+   "used": 952,
+   "kept": 18,
+   "candidates": 18
+  }
+ ]
+}

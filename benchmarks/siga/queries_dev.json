@@ -1,0 +1,542 @@
+[
+ {
+  "id": "A-000",
+  "category": "A",
+  "query": "Em qual arquivo está definida a classe Documento?",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Documento.java",
+   "line": 89
+  }
+ },
+ {
+  "id": "B-000",
+  "category": "B",
+  "query": "Qual módulo contém a classe Documento?",
+  "gt": {
+   "module": "siga-ex",
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Documento.java"
+  }
+ },
+ {
+  "id": "D-000",
+  "category": "D",
+  "query": "Cite um arquivo que referencia Documento.",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Documento.java",
+   "line": 72
+  }
+ },
+ {
+  "id": "A-001",
+  "category": "A",
+  "query": "Em qual arquivo está definida a classe Bookmarker?",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Documento.java",
+   "line": 387
+  }
+ },
+ {
+  "id": "B-001",
+  "category": "B",
+  "query": "Qual módulo contém a classe Bookmarker?",
+  "gt": {
+   "module": "siga-ex",
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Documento.java"
+  }
+ },
+ {
+  "id": "D-001",
+  "category": "D",
+  "query": "Cite um arquivo que referencia Bookmarker.",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Documento.java",
+   "line": 387
+  }
+ },
+ {
+  "id": "A-002",
+  "category": "A",
+  "query": "Em qual arquivo está definida a classe FOP?",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FOP.java",
+   "line": 44
+  }
+ },
+ {
+  "id": "B-002",
+  "category": "B",
+  "query": "Qual módulo contém a classe FOP?",
+  "gt": {
+   "module": "siga-ex",
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FOP.java"
+  }
+ },
+ {
+  "id": "D-002",
+  "category": "D",
+  "query": "Cite um arquivo que referencia FOP.",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FOP.java",
+   "line": 44
+  }
+ },
+ {
+  "id": "A-003",
+  "category": "A",
+  "query": "Em qual arquivo está definida a classe FlyingSaucer?",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java",
+   "line": 59
+  }
+ },
+ {
+  "id": "B-003",
+  "category": "B",
+  "query": "Qual módulo contém a classe FlyingSaucer?",
+  "gt": {
+   "module": "siga-ex",
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java"
+  }
+ },
+ {
+  "id": "D-003",
+  "category": "D",
+  "query": "Cite um arquivo que referencia FlyingSaucer.",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java",
+   "line": 59
+  }
+ },
+ {
+  "id": "A-004",
+  "category": "A",
+  "query": "Em qual arquivo está definida a classe LocalizaAnotacao?",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/LocalizaAnotacao.java",
+   "line": 17
+  }
+ },
+ {
+  "id": "B-004",
+  "category": "B",
+  "query": "Qual módulo contém a classe LocalizaAnotacao?",
+  "gt": {
+   "module": "siga-ex",
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/LocalizaAnotacao.java"
+  }
+ },
+ {
+  "id": "D-004",
+  "category": "D",
+  "query": "Cite um arquivo que referencia LocalizaAnotacao.",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/LocalizaAnotacao.java",
+   "line": 17
+  }
+ },
+ {
+  "id": "A-005",
+  "category": "A",
+  "query": "Em qual arquivo está definida a classe LocalizaTexto?",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/LocalizaTexto.java",
+   "line": 15
+  }
+ },
+ {
+  "id": "B-005",
+  "category": "B",
+  "query": "Qual módulo contém a classe LocalizaTexto?",
+  "gt": {
+   "module": "siga-ex",
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/LocalizaTexto.java"
+  }
+ },
+ {
+  "id": "D-005",
+  "category": "D",
+  "query": "Cite um arquivo que referencia LocalizaTexto.",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/LocalizaTexto.java",
+   "line": 15
+  }
+ },
+ {
+  "id": "A-006",
+  "category": "A",
+  "query": "Em qual arquivo está definida a classe Nheengatu?",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Nheengatu.java",
+   "line": 31
+  }
+ },
+ {
+  "id": "B-006",
+  "category": "B",
+  "query": "Qual módulo contém a classe Nheengatu?",
+  "gt": {
+   "module": "siga-ex",
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Nheengatu.java"
+  }
+ },
+ {
+  "id": "D-006",
+  "category": "D",
+  "query": "Cite um arquivo que referencia Nheengatu.",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java",
+   "line": 471
+  }
+ },
+ {
+  "id": "A-007",
+  "category": "A",
+  "query": "Em qual arquivo está definida a classe Stamp?",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Stamp.java",
+   "line": 52
+  }
+ },
+ {
+  "id": "B-007",
+  "category": "B",
+  "query": "Qual módulo contém a classe Stamp?",
+  "gt": {
+   "module": "siga-ex",
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Stamp.java"
+  }
+ },
+ {
+  "id": "D-007",
+  "category": "D",
+  "query": "Cite um arquivo que referencia Stamp.",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Documento.java",
+   "line": 480
+  }
+ },
+ {
+  "id": "A-008",
+  "category": "A",
+  "query": "Em qual arquivo está definida a classe Status?",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Status.java",
+   "line": 12
+  }
+ },
+ {
+  "id": "B-008",
+  "category": "B",
+  "query": "Qual módulo contém a classe Status?",
+  "gt": {
+   "module": "siga-ex",
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Status.java"
+  }
+ },
+ {
+  "id": "D-008",
+  "category": "D",
+  "query": "Cite um arquivo que referencia Status.",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Documento.java",
+   "line": 425
+  }
+ },
+ {
+  "id": "A-009",
+  "category": "A",
+  "query": "Em qual arquivo está definida a classe Sample?",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/sample.java",
+   "line": 32
+  }
+ },
+ {
+  "id": "B-009",
+  "category": "B",
+  "query": "Qual módulo contém a classe Sample?",
+  "gt": {
+   "module": "siga-ex",
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/sample.java"
+  }
+ },
+ {
+  "id": "D-009",
+  "category": "D",
+  "query": "Cite um arquivo que referencia Sample.",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/sample.java",
+   "line": 32
+  }
+ },
+ {
+  "id": "A-010",
+  "category": "A",
+  "query": "Em qual arquivo está definida a classe AbstractExClassificacao?",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExClassificacao.java",
+   "line": 96
+  }
+ },
+ {
+  "id": "B-010",
+  "category": "B",
+  "query": "Qual módulo contém a classe AbstractExClassificacao?",
+  "gt": {
+   "module": "siga-ex",
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExClassificacao.java"
+  }
+ },
+ {
+  "id": "D-010",
+  "category": "D",
+  "query": "Cite um arquivo que referencia AbstractExClassificacao.",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExClassificacao.java",
+   "line": 96
+  }
+ },
+ {
+  "id": "A-011",
+  "category": "A",
+  "query": "Em qual arquivo está definida a classe AbstractExDocumento?",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExDocumento.java",
+   "line": 288
+  }
+ },
+ {
+  "id": "B-011",
+  "category": "B",
+  "query": "Qual módulo contém a classe AbstractExDocumento?",
+  "gt": {
+   "module": "siga-ex",
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExDocumento.java"
+  }
+ },
+ {
+  "id": "D-011",
+  "category": "D",
+  "query": "Cite um arquivo que referencia AbstractExDocumento.",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExDocumento.java",
+   "line": 288
+  }
+ },
+ {
+  "id": "A-012",
+  "category": "A",
+  "query": "Em qual arquivo está definida a classe AbstractExEmailNotificacao?",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExEmailNotificacao.java",
+   "line": 40
+  }
+ },
+ {
+  "id": "B-012",
+  "category": "B",
+  "query": "Qual módulo contém a classe AbstractExEmailNotificacao?",
+  "gt": {
+   "module": "siga-ex",
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExEmailNotificacao.java"
+  }
+ },
+ {
+  "id": "D-012",
+  "category": "D",
+  "query": "Cite um arquivo que referencia AbstractExEmailNotificacao.",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExEmailNotificacao.java",
+   "line": 40
+  }
+ },
+ {
+  "id": "A-013",
+  "category": "A",
+  "query": "Em qual arquivo está definida a classe AbstractExEstadoDoc?",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExEstadoDoc.java",
+   "line": 87
+  }
+ },
+ {
+  "id": "B-013",
+  "category": "B",
+  "query": "Qual módulo contém a classe AbstractExEstadoDoc?",
+  "gt": {
+   "module": "siga-ex",
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExEstadoDoc.java"
+  }
+ },
+ {
+  "id": "D-013",
+  "category": "D",
+  "query": "Cite um arquivo que referencia AbstractExEstadoDoc.",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExEstadoDoc.java",
+   "line": 87
+  }
+ },
+ {
+  "id": "A-014",
+  "category": "A",
+  "query": "Em qual arquivo está definida a classe AbstractExFormaDocumento?",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExFormaDocumento.java",
+   "line": 50
+  }
+ },
+ {
+  "id": "B-014",
+  "category": "B",
+  "query": "Qual módulo contém a classe AbstractExFormaDocumento?",
+  "gt": {
+   "module": "siga-ex",
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExFormaDocumento.java"
+  }
+ },
+ {
+  "id": "D-014",
+  "category": "D",
+  "query": "Cite um arquivo que referencia AbstractExFormaDocumento.",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExFormaDocumento.java",
+   "line": 50
+  }
+ },
+ {
+  "id": "A-015",
+  "category": "A",
+  "query": "Em qual arquivo está definida a classe AbstractExMarca?",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExMarca.java",
+   "line": 141
+  }
+ },
+ {
+  "id": "B-015",
+  "category": "B",
+  "query": "Qual módulo contém a classe AbstractExMarca?",
+  "gt": {
+   "module": "siga-ex",
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExMarca.java"
+  }
+ },
+ {
+  "id": "D-015",
+  "category": "D",
+  "query": "Cite um arquivo que referencia AbstractExMarca.",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExMarca.java",
+   "line": 141
+  }
+ },
+ {
+  "id": "A-016",
+  "category": "A",
+  "query": "Em qual arquivo está definida a classe AbstractExMobil?",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExMobil.java",
+   "line": 113
+  }
+ },
+ {
+  "id": "B-016",
+  "category": "B",
+  "query": "Qual módulo contém a classe AbstractExMobil?",
+  "gt": {
+   "module": "siga-ex",
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExMobil.java"
+  }
+ },
+ {
+  "id": "D-016",
+  "category": "D",
+  "query": "Cite um arquivo que referencia AbstractExMobil.",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExMobil.java",
+   "line": 113
+  }
+ },
+ {
+  "id": "A-017",
+  "category": "A",
+  "query": "Em qual arquivo está definida a classe AbstractExModelo?",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExModelo.java",
+   "line": 56
+  }
+ },
+ {
+  "id": "B-017",
+  "category": "B",
+  "query": "Qual módulo contém a classe AbstractExModelo?",
+  "gt": {
+   "module": "siga-ex",
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExModelo.java"
+  }
+ },
+ {
+  "id": "D-017",
+  "category": "D",
+  "query": "Cite um arquivo que referencia AbstractExModelo.",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExModelo.java",
+   "line": 56
+  }
+ },
+ {
+  "id": "A-018",
+  "category": "A",
+  "query": "Em qual arquivo está definida a classe AbstractExMovimentacao?",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExMovimentacao.java",
+   "line": 209
+  }
+ },
+ {
+  "id": "B-018",
+  "category": "B",
+  "query": "Qual módulo contém a classe AbstractExMovimentacao?",
+  "gt": {
+   "module": "siga-ex",
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExMovimentacao.java"
+  }
+ },
+ {
+  "id": "D-018",
+  "category": "D",
+  "query": "Cite um arquivo que referencia AbstractExMovimentacao.",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExMovimentacao.java",
+   "line": 206
+  }
+ },
+ {
+  "id": "A-019",
+  "category": "A",
+  "query": "Em qual arquivo está definida a classe AbstractExNivelAcesso?",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExNivelAcesso.java",
+   "line": 36
+  }
+ },
+ {
+  "id": "B-019",
+  "category": "B",
+  "query": "Qual módulo contém a classe AbstractExNivelAcesso?",
+  "gt": {
+   "module": "siga-ex",
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExNivelAcesso.java"
+  }
+ },
+ {
+  "id": "D-019",
+  "category": "D",
+  "query": "Cite um arquivo que referencia AbstractExNivelAcesso.",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExNivelAcesso.java",
+   "line": 36
+  }
+ }
+]

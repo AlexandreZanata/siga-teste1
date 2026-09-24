@@ -5,8 +5,8 @@ import hashlib
 import pathlib
 import re
 
-CLASS_RE = re.compile(r"^\s*(?:public\s+|protected\s+|private\s+|abstract\s+|final\s+)*(class|interface|enum)\s+(\w+)", re.M)
-METHOD_RE = re.compile(r"^\s*(?:public|protected|private|static|final|synchronized|abstract|native|\s)+\s*[\w<>\[\].,? ]+\s+(\w+)\s*\([^;]*\)\s*(?:throws\s+[\w., ]+)?\s*[{;]", re.M)
+CLASS_RE = re.compile(r"^[ \t]*(?:(?:public|protected|private|abstract|final)[ \t]+)*(class|interface|enum)[ \t]+(\w+)", re.M)
+METHOD_RE = re.compile(r"^[ \t]*(?:(?:public|protected|private|static|final|synchronized|abstract|native)[ \t]+)+[\w<>\[\].,? ]+[ \t]+(\w+)[ \t]*\([^;]*\)[ \t]*(?:throws[ \t]+[\w., ]+)?[ \t]*[{;]", re.M)
 
 
 def extract_java_symbols(path: pathlib.Path) -> list[dict]:
