@@ -6,29 +6,24 @@ com dataset, tarefas, pré-registro e resultados próprios. Nenhum aceite copiad
 
 ## Checkpoint
 
-- Etapa atual: **E26-01 medido no corpus em duas rodadas** — sonda 12 tarefas (4f9034d) +
-  rodada 34 tarefas deste commit; C_adapter candidato; sem edição, sem modelo.
-- Último aceite e evidências: `benchmarks/bitcoin/e26_01_dev.json` (34 tarefas: 26+8; 12
-  adotadas do commit 4f9034d após auditoria item a item, resto ouro próprio — todos os paths
-  verificados no tag); `archatlas/bitcoin/realretrieval.py` (run_all + verify_gold);
-  `tests/bitcoin/test_btc_e26_01.py` (5/5) + `test_btc_e26_01_real.py` (3/3, do commit anterior);
-  `experiments/bitcoin/e26_01/btc-e2601-001/` (204 rodadas + REPORT) e
-  `experiments/bitcoin/e26_01_real/btc-e26-01-real-001/` (72 rodadas + REPORT, commit anterior).
-- Resultados 34 tarefas @2000 (8k idêntico em conjuntos): A hit 0.962/recall 0.942/prec 0.0018
-  (1427 arqs); B 0.385/0.231/0.1058; C hit 0.808/recall 0.731/prec 0.0071 (238 arqs),
-  por tipo code2test 1.0, edit2ripple 1.0, comment2context 0.7, trace2code 0.312;
-  abstenção só N05 sob C; `used` por arquivo inteiro (B 0 = artefato).
-- SHA publicado: `4f9034d` (sonda 12) em `origin/codex/bitcoin-context`; este commit (34 tarefas)
-  a registrar após push.
-- `run_id`: `btc-e2601-001` (leitura, 230s). Reserva: nenhuma. Pedido ao core: nenhum.
+- Etapa atual: **E26-01 repetido com teto de fan-in (teto global NÃO adotado)** — 204 rodadas,
+  C 0.731/0.673 (era 0.808/0.731), −21% arquivos, +63% precisão relativa, perdas R04/R10 (ouro-hub);
+  alternativa (teto além-das-seeds/co-ocorrência) registrada; sem edição, sem modelo.
+- Último aceite e evidências: `archatlas/bitcoin/realretrieval.py` (`build_fanin`, teto opcional
+  compatível com chamada antiga); `tests/bitcoin/test_btc_e26_01.py` (7/7: fan-in sintético +
+  campos/replay da repetição); `experiments/bitcoin/e26_01/btc-e2601-002/` (runs + REPORT
+  comparativo); rodada 001 e sonda 12 preservadas.
+- Resultados 34 tarefas @2000: A 0.962/0.942 (idêntico); B 0.385/0.231 (idêntico);
+  C sem teto 0.808/0.731/0.0071 (238 arqs) vs CAP=25 0.731/0.673/0.0116 (189 arqs, 14373 hubs
+  pulados); por tipo CAP: 1.0/1.0/0.6/0.188.
+- SHA publicado: `4e5d366` (E26-01 34 tarefas) em `origin/codex/bitcoin-context`; este commit
+  (teto + repetição) a registrar após push.
+- `run_id`: `btc-e2601-002` (leitura, 106s). Reserva: nenhuma. Pedido ao core: nenhum.
 - Bloqueio exato: edição/piloto exigem teto + modelos + custodiante + dev (nulos); `main`
-  observado, NÃO incorporado.
-- Incidente de isolamento RESOLVIDO: dois escritores atuaram na mesma worktree/branch sem
-  coordenação (rascunho 13:51 + commit 4f9034d 13:58 absorvendo `run_all`/`verify_gold` deste
-  agente via `add -A`). Sem reescrita de história: commit anterior mantido; este commit só
-  adiciona paths novos + STATUS. Daqui em diante: um escritor por worktree/branch.
-- Alternativa independente: E26-02 com spans no corpus; teto de fan-in; vocabulário de domínio.
-- Próximo comando/ação: fan-in cap + repetir; E26-02 real; ou build isolado.
+  observado, NÃO incorporado. Sem escritor concorrente neste turno.
+- Incidente anterior RESOLVIDO e arquivado (ver histórico): um escritor por worktree/branch.
+- Alternativa independente: E26-02 com spans no corpus; vocabulário de domínio (`addrman`).
+- Próximo comando/ação: teto além-das-seeds ou co-ocorrência; ou build isolado.
 
 ## Etapas
 
@@ -66,7 +61,8 @@ toolchain disponível sem clang++; build não tentado);
 2026-09-24 E26-01-real no corpus, rodada 1 (12 sondas × 3 braços × 2 reps = 72 rodadas;
 C_adapter 0.917/0.833, A 1.0 inutilizável, B 0.5/0.292; R12 `addrman` sistemático);
 2026-09-24 E26-01 no corpus, rodada 2 (34 tarefas 26+8 × 3 braços × 2k/8k = 204 rodadas;
-C 0.808/0.731, trace2code 0.312, abstenção só N05; escrita dupla na worktree resolvida sem
-reescrita — commit anterior mantido, este só adiciona).
+C 0.808/0.731, trace2code 0.312, abstenção só N05);
+2026-09-24 E26-01 repetido com teto (CAP=25: C 0.731/0.673, −21% arqs, perdas R04/R10;
+teto global não adotado; alternativa além-das-seeds registrada).
 Nenhuma fase posterior marcada além de BTC-P7. Experimentos BTC-E26-00–06 e E26-06 espelho:
 E26-00/E26-02/drills sintéticos + E26-01 em dataset (2 rodadas); edição segue sem modelo.
