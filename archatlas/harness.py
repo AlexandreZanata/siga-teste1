@@ -22,7 +22,7 @@ def run(dev_json: pathlib.Path, db: pathlib.Path, out_jsonl: pathlib.Path, budge
     counts = index_many(con, files, SHA)
     rebuild_lexical(con)
     index_s = time.perf_counter() - t0
-    hits, total_s = 0, 0.0
+    hits, total_s, dts = 0, 0.0, []
     out_jsonl.parent.mkdir(parents=True, exist_ok=True)
     with open(out_jsonl, "w", encoding="utf-8") as fh:
         for q in qs:
@@ -30,6 +30,7 @@ def run(dev_json: pathlib.Path, db: pathlib.Path, out_jsonl: pathlib.Path, budge
             cap = build_capsule(con, q["query"], budget)
             dt = time.perf_counter() - s
             total_s += dt
+            dts.append(dt)
             gt = q["gt"]
             files = set(cap["files"])
             if "files" in gt:
@@ -42,5 +43,9 @@ def run(dev_json: pathlib.Path, db: pathlib.Path, out_jsonl: pathlib.Path, budge
             fh.write(json.dumps({"id": q["id"], "cat": q["category"], "budget": budget,
                                  "hit": ok, "seconds": round(dt, 4), "used": cap["budget"]["used"],
                                  "kept": cap["stats"]["kept"], "sha": SHA}, ensure_ascii=False) + "\n")
+    import statistics as _st
+    dts.sort()
+    p = lambda q: round(dts[min(len(dts) - 1, int(q * len(dts)))], 4)
     return {"n": len(qs), "recall": hits / len(qs), "index_seconds": round(index_s, 2),
-            "mean_query_s": round(total_s / len(qs), 4), "counts": counts}
+            "mean_query_s": round(total_s / len(qs), 4), "p50_query_s": p(0.5),
+            "p95_query_s": p(0.95), "counts": counts}
