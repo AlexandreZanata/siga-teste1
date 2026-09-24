@@ -84,6 +84,30 @@ def payload_tokens_for_capsule(cap: dict) -> int:
     return count_tokens_chars4(blob)
 
 
+def score_additional(delivered: set[str] | list[str],
+                     expected_additional: set[str] | list[str],
+                     given: set[str] | list[str] | None = None) -> dict:
+    """E26-01: escore sobre arquivos ADICIONAIS (dado o já fornecido). Puro.
+
+    `novel = delivered − given`; esperado vazio (negativos) nunca gera recall
+    convencional: retorna `recall_set=None` + `abstained` (novel vazio?).
+    """
+    det, exp, giv = set(delivered), set(expected_additional), set(given or [])
+    novel = det - giv
+    inter = sorted(novel & exp)
+    if not exp:
+        return {"hit": False, "recall_set": None, "precision_set": None,
+                "all_necessary": False, "abstained": len(novel) == 0,
+                "novel_count": len(novel), "expected_count": 0,
+                "matched": inter, "kind": "negative", "error": None}
+    n_exp, n_nov, n_hit = len(exp), len(novel), len(inter)
+    return {"hit": n_hit > 0, "recall_set": n_hit / n_exp,
+            "precision_set": (n_hit / n_nov if n_nov else 0.0),
+            "all_necessary": n_hit == n_exp, "abstained": False,
+            "novel_count": n_nov, "expected_count": n_exp,
+            "matched": inter, "kind": "additional", "error": None}
+
+
 def build_manifest(task_id: str, condition: str, repetition: int, order: int,
                    budget: int, sha: str, tokenizer: str = "chars//4",
                    extra: dict | None = None) -> dict:
