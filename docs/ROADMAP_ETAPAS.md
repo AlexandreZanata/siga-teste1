@@ -20,7 +20,8 @@ Metodologia fixa: trunk-based, fases ≤1 entrega, DCO (`-s`), `pytest -q` verde
 - [x] **F15** freeze `v1-siga` + tabelas accuracy/tokens/latência + SBOM
 - [x] **F16** trace multi-hop (8Qs H, cego RAW 7/8 em 66s vs TRACE 7/8 em 2.7s) — empate técnico, 24x velocidade
 - [x] **F17** GT-conjunto de caminhos + harness full-504: recall 1.00 (108/108, 8 cats), p50/p95 144/326ms
-- [ ] **F18** (aberta) expand questions p/ `siga-cp`/`siga-wf` + relatório comparativo
+- [x] **F18** 3 módulos (153Qs A–H, recall 1.00, index 841 arqs 5s, p95 372ms) + ranking tierado + fallback restaurado
+- [ ] **F19** (aberta) endurecer latência (p95 < 200ms) + relatório comparativo F17→F18
 - [ ] **FUTURO (pós-SIGA)** Bitcoin transfer (sem redesign) + `LIMITATIONS_BITCOIN.md`; ablações (9) + paper + SBOM + `v1` (só via RFC) — Bitcoin removido das etapas executáveis por decisão 2026-09-24: foco 100% SIGA-Doc até fidelidade comprovada
 
 Agente responsável por etapa: executa `docs/VERIFICATION_PROTOCOL.md` (4 portões) e anexa evidências no corpo do commit. Sem evidência, sem push.

@@ -22,14 +22,20 @@ def _fts_query(q: str) -> str:
 
 
 def bm25_search(con: sqlite3.Connection, query: str, k: int = 20) -> list[dict]:
-    fq = _fts_query(query)
-    rows = con.execute(
-        """SELECT s.name, s.kind, s.file, s.line, s.provenance, s.confidence, bm25(lex_docs) AS b
-           FROM lex_docs JOIN symbols s ON s.name=lex_docs.name AND s.file=lex_docs.file
-           WHERE lex_docs MATCH ? ORDER BY b LIMIT ?""",
-        (fq, k),
-    ).fetchall()
+    toks = re.findall(r"[A-Za-z0-9_]+", query)
+    known = [t for t in toks if con.execute("SELECT 1 FROM symbols WHERE name=? LIMIT 1", (t,)).fetchone()]
+    queries = ([" OR ".join(f'"{t}"' for t in known)] if known else []) + \
+              ([" OR ".join(f'"{t}"' for t in toks)] if set(toks) - set(known) else [])
     seen, out = set(), []
+    for fq in queries:
+        if len(out) >= k:
+            break
+        rows = con.execute(
+            """SELECT s.name, s.kind, s.file, s.line, s.provenance, s.confidence, bm25(lex_docs) AS b
+               FROM lex_docs JOIN symbols s ON s.name=lex_docs.name AND s.file=lex_docs.file
+               WHERE lex_docs MATCH ? ORDER BY b LIMIT ?""",
+            (fq, k),
+        ).fetchall()
     for r in rows:
         key = (r[0], r[2], r[3])
         if key in seen:

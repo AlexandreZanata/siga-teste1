@@ -11,7 +11,7 @@ DEV = pathlib.Path("benchmarks/siga/queries_dev.json")
 def test_harness_jsonl(tmp_path):
     rep = run(DEV, tmp_path / "h.sqlite", tmp_path / "r.jsonl", budget=2000)
     lines = (tmp_path / "r.jsonl").read_text(encoding="utf-8").strip().splitlines()
-    assert len(lines) == rep["n"] == 108
+    assert len(lines) == rep["n"] == 153
     for ln in lines:
         r = json.loads(ln)
         assert {"id", "cat", "hit", "seconds", "used", "kept", "sha"} <= set(r)

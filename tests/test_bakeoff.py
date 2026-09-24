@@ -25,11 +25,15 @@ def gt_match(q: dict, files: set[str]) -> bool:
 
 def test_bakeoff(tmp_path):
     ds = pathlib.Path("/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga")
-    roots = sorted((ds / "siga-ex/src/main/java").rglob("*.java"))[:40]
+    roots = []
+    for rel in ("siga-ex/src/main/java", "siga-cp/src/main/java", "siga-wf/src/main/java"):
+        roots += sorted((ds / rel).rglob("*.java"))
     con = open_db(tmp_path / "b.sqlite")
     index_many(con, roots, SHA)
     rebuild_lexical(con)
     qs = json.loads(DEV.read_text(encoding="utf-8"))
+    qs = [q for i, q in enumerate(qs) if i % 5 == 0]  # amostra estratificada ~31Qs (rápida; total em bakeoff_f13)
+    assert len(qs) >= 30
     rep: dict = {}
     for name, fn in STRATEGIES.items():
         hits, dt = 0, 0.0

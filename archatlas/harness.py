@@ -16,7 +16,9 @@ SHA = "e3be22828f787cbe71b339aecb7a7bf569099803"
 def run(dev_json: pathlib.Path, db: pathlib.Path, out_jsonl: pathlib.Path, budget: int = 2000) -> dict:
     qs = json.loads(dev_json.read_text(encoding="utf-8"))
     ds = pathlib.Path("/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga")
-    files = sorted((ds / "siga-ex/src/main/java").rglob("*.java"))
+    files = []
+    for rel in ("siga-ex/src/main/java", "siga-cp/src/main/java", "siga-wf/src/main/java"):
+        files += sorted((ds / rel).rglob("*.java"))
     con = open_db(db)
     t0 = time.perf_counter()
     counts = index_many(con, files, SHA)

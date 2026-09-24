@@ -23,6 +23,17 @@
   "query": "Cite um arquivo que referencia Documento.",
   "gt": {
    "files": [
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/CpArquivoBlob.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/CpTipoConfiguracaoDicionario.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/bl/CpBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/model/enm/CpMarcadorEnum.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/model/enm/CpServicosNotificacaoPorEmail.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/util/CpProcessadorReferencias.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/util/SigaCpSinc.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/AbstractCpMarcador.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/AbstractDpLotacao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/CpMarca.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/dao/CpDao.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Documento.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/LocalizaTexto.java",
@@ -254,7 +265,20 @@
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/persistencia/ExDocumentoDaoFiltro.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/persistencia/ExMobilDaoFiltro.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/persistencia/ExModeloDaoFiltro.java",
-    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/testes/TesteParagrafos.java"
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/testes/TesteParagrafos.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/bl/WfBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/dao/WfDao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/WfProcedimento.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/enm/WfTipoDePrincipal.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/enm/WfTipoDeTarefa.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/enm/WfTipoDeVariavel.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/task/WfTarefaDocAlterarPrincipal.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/task/WfTarefaDocAutuar.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/task/WfTarefaDocCriar.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/task/WfTarefaDocIncluirCopia.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/task/WfTarefaDocJuntar.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/util/WfHandler.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/util/WfTarefaComparator.java"
    ]
   }
  },
@@ -522,6 +546,9 @@
   "query": "Cite um arquivo que referencia Status.",
   "gt": {
    "files": [
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/arquivo/AmazonRequestSignatureV4Utils.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/arquivo/ArmazenamentoHCP.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/arquivo/ArmazenamentoS3REST.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Documento.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Status.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExAssinadorExternoSave.java",
@@ -529,7 +556,10 @@
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/Mesa.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/Mesa2.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/Mesa2Ant.java",
-    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/PublicacaoDJEBL.java"
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/PublicacaoDJEBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/logic/WfEstaRetomando.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/logic/WfEstaTerminado.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/WfProcedimento.java"
    ]
   }
  },
@@ -614,6 +644,7 @@
   "query": "Cite um arquivo que referencia AbstractExDocumento.",
   "gt": {
    "files": [
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/CpArquivoBlob.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExDocumento.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExDocumento.java"
    ]
@@ -870,6 +901,70 @@
   "gt": {
    "callee": "length",
    "files": [
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/AbstractCpAcesso.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/AbstractCpComplexo.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/AbstractCpConfiguracao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/AbstractCpGrupo.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/AbstractCpIdentidade.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/AbstractCpPapel.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/AbstractCpServico.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/AbstractCpTipoGrupo.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/AbstractCpTipoIdentidade.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/AbstractCpTipoPapel.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/AbstractCpTipoServico.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/AbstractCpToken.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/AbstractCpUnidadeMedida.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/CpArquivo.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/CpConfiguracaoCache.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/CpModelo.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/CpServico.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/arquivo/AmazonRequestSignatureV4Utils.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/arquivo/Armazenamento.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/arquivo/ArmazenamentoS3.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/auth/AutenticadorJwtCookie.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/bl/CpBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/bl/CpConfiguracaoBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/model/enm/ITipoDeConfiguracao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/util/Blob.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/util/CpProcessadorReferencias.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/util/Excel.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/util/MatriculaUtils.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/util/SigaCpSincLdap.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/util/SigaFlyway.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/util/SigaUtil.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/util/SiglaDeEntidadeParser.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/util/XjusUtils.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/AbstractCpAplicacaoFeriado.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/AbstractCpContrato.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/AbstractCpFeriado.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/AbstractCpLocalidade.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/AbstractCpOrgao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/AbstractCpOrgaoUsuario.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/AbstractCpTipoLotacao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/AbstractCpTipoMarca.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/AbstractCpTipoPessoa.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/AbstractCpUF.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/AbstractDpCargo.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/AbstractDpFuncaoConfianca.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/AbstractDpLotacao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/AbstractDpPessoa.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/AbstractDpSubstituicao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/AbstractDpVisualizacao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/AbstractDpVisualizacaoAcesso.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/CpOrgao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/CpOrgaoUsuario.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/DpFuncaoConfianca.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/DpLotacao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/DpPessoa.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/dao/CpDao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/dao/DpPessoaDaoFiltro.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/gi/service/impl/GiServiceImpl.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/ldap/sinc/LdapBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/ldap/sinc/resolvedores/ResolvedorNomeEmail.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/matrix/sinc/Cards.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/matrix/sinc/Department.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/matrix/sinc/JobTitle.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/matrix/sinc/SigaCpSincExtMatrix.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Documento.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Stamp.java",
@@ -933,7 +1028,17 @@
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/pdf/PDFDocument.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/pdf/PDFTable.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/testes/TesteParagrafos.java",
-    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/util/GraphicsState.java"
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/util/GraphicsState.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/bl/WfBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/WfDefinicaoDeDesvio.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/WfDefinicaoDeProcedimento.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/WfDefinicaoDeResponsavel.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/WfDefinicaoDeTarefa.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/WfDefinicaoDeVariavel.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/WfMov.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/WfProcedimento.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/WfVariavel.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/util/SiglaUtils.java"
    ]
   }
  },
@@ -943,6 +1048,70 @@
   "query": "Se length mudar, cite um arquivo que precisaria revisão.",
   "gt": {
    "files": [
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/AbstractCpAcesso.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/AbstractCpComplexo.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/AbstractCpConfiguracao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/AbstractCpGrupo.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/AbstractCpIdentidade.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/AbstractCpPapel.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/AbstractCpServico.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/AbstractCpTipoGrupo.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/AbstractCpTipoIdentidade.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/AbstractCpTipoPapel.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/AbstractCpTipoServico.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/AbstractCpToken.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/AbstractCpUnidadeMedida.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/CpArquivo.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/CpConfiguracaoCache.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/CpModelo.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/CpServico.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/arquivo/AmazonRequestSignatureV4Utils.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/arquivo/Armazenamento.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/arquivo/ArmazenamentoS3.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/auth/AutenticadorJwtCookie.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/bl/CpBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/bl/CpConfiguracaoBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/model/enm/ITipoDeConfiguracao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/util/Blob.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/util/CpProcessadorReferencias.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/util/Excel.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/util/MatriculaUtils.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/util/SigaCpSincLdap.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/util/SigaFlyway.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/util/SigaUtil.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/util/SiglaDeEntidadeParser.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/util/XjusUtils.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/AbstractCpAplicacaoFeriado.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/AbstractCpContrato.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/AbstractCpFeriado.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/AbstractCpLocalidade.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/AbstractCpOrgao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/AbstractCpOrgaoUsuario.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/AbstractCpTipoLotacao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/AbstractCpTipoMarca.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/AbstractCpTipoPessoa.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/AbstractCpUF.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/AbstractDpCargo.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/AbstractDpFuncaoConfianca.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/AbstractDpLotacao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/AbstractDpPessoa.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/AbstractDpSubstituicao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/AbstractDpVisualizacao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/AbstractDpVisualizacaoAcesso.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/CpOrgao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/CpOrgaoUsuario.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/DpFuncaoConfianca.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/DpLotacao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/DpPessoa.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/dao/CpDao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/dao/DpPessoaDaoFiltro.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/gi/service/impl/GiServiceImpl.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/ldap/sinc/LdapBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/ldap/sinc/resolvedores/ResolvedorNomeEmail.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/matrix/sinc/Cards.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/matrix/sinc/Department.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/matrix/sinc/JobTitle.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/matrix/sinc/SigaCpSincExtMatrix.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Documento.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Stamp.java",
@@ -1006,7 +1175,17 @@
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/pdf/PDFDocument.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/pdf/PDFTable.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/testes/TesteParagrafos.java",
-    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/util/GraphicsState.java"
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/util/GraphicsState.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/bl/WfBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/WfDefinicaoDeDesvio.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/WfDefinicaoDeProcedimento.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/WfDefinicaoDeResponsavel.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/WfDefinicaoDeTarefa.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/WfDefinicaoDeVariavel.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/WfMov.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/WfProcedimento.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/WfVariavel.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/util/SiglaUtils.java"
    ],
    "callee": "length"
   }
@@ -1038,6 +1217,44 @@
   "gt": {
    "callee": "toString",
    "files": [
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/CpArquivo.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/CpConfiguracao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/CpIdentidade.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/arquivo/AmazonRequestSignatureV4Utils.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/arquivo/Armazenamento.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/arquivo/ArmazenamentoHCP.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/bl/CpBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/bl/CpConfiguracaoBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/model/enm/CpMarcadorFinalidadeEnum.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/model/enm/CpMarcadorGrupoEnum.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/util/CpProcessadorReferencias.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/util/Excel.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/util/SigaCpSinc.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/util/SigaCpSincLdap.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/util/SigaUtil.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/util/SiglaDeEntidadeParser.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/util/XjusUtils.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/CpMarca.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/CpOrgao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/CpOrgaoUsuario.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/DpCargo.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/DpFuncaoConfianca.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/DpLotacao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/DpPessoa.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/DpSubstituicao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/DpVisualizacao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/DpVisualizacaoAcesso.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/dao/CpDao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/gi/service/impl/GiServiceImpl.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/ldap/AdContato.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/ldap/AdModelo.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/ldap/AdObjeto.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/ldap/sinc/LdapBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/matrix/sinc/Cards.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/matrix/sinc/JdbcSimpleOrm.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/matrix/sinc/SigaCpSincExtMatrix.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/relatorio/AlteracaoDireitosItem.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/relatorio/PermissaoUsuarioRelatorio.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Documento.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FOP.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java",
@@ -1085,7 +1302,16 @@
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/html/HTMLDocument.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/html/Tag.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/pdf/RomanList.java",
-    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/testes/TesteParagrafos.java"
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/testes/TesteParagrafos.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/bl/WfBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/dao/WfDao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/WfDefinicaoDeDesvio.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/WfDefinicaoDeProcedimento.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/WfDefinicaoDeTarefa.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/WfResponsavel.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/WfVariavel.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/task/WfTarefaDocCriar.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/util/SiglaUtils.java"
    ]
   }
  },
@@ -1095,6 +1321,44 @@
   "query": "Se toString mudar, cite um arquivo que precisaria revisão.",
   "gt": {
    "files": [
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/CpArquivo.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/CpConfiguracao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/CpIdentidade.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/arquivo/AmazonRequestSignatureV4Utils.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/arquivo/Armazenamento.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/arquivo/ArmazenamentoHCP.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/bl/CpBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/bl/CpConfiguracaoBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/model/enm/CpMarcadorFinalidadeEnum.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/model/enm/CpMarcadorGrupoEnum.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/util/CpProcessadorReferencias.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/util/Excel.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/util/SigaCpSinc.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/util/SigaCpSincLdap.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/util/SigaUtil.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/util/SiglaDeEntidadeParser.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/util/XjusUtils.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/CpMarca.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/CpOrgao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/CpOrgaoUsuario.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/DpCargo.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/DpFuncaoConfianca.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/DpLotacao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/DpPessoa.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/DpSubstituicao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/DpVisualizacao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/DpVisualizacaoAcesso.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/dao/CpDao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/gi/service/impl/GiServiceImpl.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/ldap/AdContato.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/ldap/AdModelo.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/ldap/AdObjeto.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/ldap/sinc/LdapBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/matrix/sinc/Cards.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/matrix/sinc/JdbcSimpleOrm.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/matrix/sinc/SigaCpSincExtMatrix.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/relatorio/AlteracaoDireitosItem.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/relatorio/PermissaoUsuarioRelatorio.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Documento.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FOP.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java",
@@ -1142,7 +1406,16 @@
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/html/HTMLDocument.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/html/Tag.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/pdf/RomanList.java",
-    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/testes/TesteParagrafos.java"
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/testes/TesteParagrafos.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/bl/WfBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/dao/WfDao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/WfDefinicaoDeDesvio.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/WfDefinicaoDeProcedimento.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/WfDefinicaoDeTarefa.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/WfResponsavel.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/WfVariavel.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/task/WfTarefaDocCriar.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/util/SiglaUtils.java"
    ],
    "callee": "toString"
   }
@@ -1314,6 +1587,39 @@
   "gt": {
    "callee": "converter",
    "files": [
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/AbstractCpConfiguracao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/AbstractCpTipoServico.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/CpConfiguracao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/CpConfiguracaoCache.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/CpTipoMarcadorEnum.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/bl/CpConfiguracaoBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/converter/CpMarcadorCorEnumConverter.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/converter/CpMarcadorFinalidadeEnumConverter.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/converter/CpMarcadorGrupoEnumConverter.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/converter/CpMarcadorIconeEnumConverter.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/converter/CpMarcadorTipoAplicacaoEnumConverter.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/converter/CpMarcadorTipoDataEnumConverter.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/converter/CpMarcadorTipoExibicaoEnumConverter.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/converter/CpMarcadorTipoInteressadoEnumConverter.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/converter/CpMarcadorTipoTextoEnumConverter.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/converter/CpSituacaoDeConfiguracaoEnumConverter.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/converter/CpTipoMarcadorEnumConverter.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/converter/EnumWithIdConverter.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/converter/IEnumWithId.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/converter/ITipoDeConfiguracaoConverter.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/converter/ITipoDeMovimentacaoConverter.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/converter/LongNonNullConverter.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/model/enm/CpMarcadorCorEnum.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/model/enm/CpMarcadorFinalidadeEnum.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/model/enm/CpMarcadorGrupoEnum.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/model/enm/CpMarcadorIconeEnum.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/model/enm/CpMarcadorTipoAplicacaoEnum.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/model/enm/CpMarcadorTipoDataEnum.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/model/enm/CpMarcadorTipoExibicaoEnum.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/model/enm/CpMarcadorTipoInteressadoEnum.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/model/enm/CpMarcadorTipoTextoEnum.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/model/enm/CpServicosNotificacaoPorEmail.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/model/enm/CpSituacaoDeConfiguracaoEnum.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Documento.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FOP.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java",
@@ -1334,7 +1640,10 @@
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/GeraMessageDigest.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/GeradorRTF.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExMobilVO.java",
-    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExMovimentacaoVO.java"
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExMovimentacaoVO.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/bl/WfBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/WfConfiguracao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/WfConfiguracaoCache.java"
    ]
   }
  },
@@ -1344,6 +1653,39 @@
   "query": "Se converter mudar, cite um arquivo que precisaria revisão.",
   "gt": {
    "files": [
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/AbstractCpConfiguracao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/AbstractCpTipoServico.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/CpConfiguracao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/CpConfiguracaoCache.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/CpTipoMarcadorEnum.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/bl/CpConfiguracaoBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/converter/CpMarcadorCorEnumConverter.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/converter/CpMarcadorFinalidadeEnumConverter.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/converter/CpMarcadorGrupoEnumConverter.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/converter/CpMarcadorIconeEnumConverter.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/converter/CpMarcadorTipoAplicacaoEnumConverter.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/converter/CpMarcadorTipoDataEnumConverter.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/converter/CpMarcadorTipoExibicaoEnumConverter.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/converter/CpMarcadorTipoInteressadoEnumConverter.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/converter/CpMarcadorTipoTextoEnumConverter.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/converter/CpSituacaoDeConfiguracaoEnumConverter.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/converter/CpTipoMarcadorEnumConverter.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/converter/EnumWithIdConverter.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/converter/IEnumWithId.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/converter/ITipoDeConfiguracaoConverter.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/converter/ITipoDeMovimentacaoConverter.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/converter/LongNonNullConverter.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/model/enm/CpMarcadorCorEnum.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/model/enm/CpMarcadorFinalidadeEnum.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/model/enm/CpMarcadorGrupoEnum.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/model/enm/CpMarcadorIconeEnum.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/model/enm/CpMarcadorTipoAplicacaoEnum.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/model/enm/CpMarcadorTipoDataEnum.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/model/enm/CpMarcadorTipoExibicaoEnum.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/model/enm/CpMarcadorTipoInteressadoEnum.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/model/enm/CpMarcadorTipoTextoEnum.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/model/enm/CpServicosNotificacaoPorEmail.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/model/enm/CpSituacaoDeConfiguracaoEnum.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Documento.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FOP.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java",
@@ -1364,7 +1706,10 @@
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/GeraMessageDigest.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/GeradorRTF.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExMobilVO.java",
-    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExMovimentacaoVO.java"
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExMovimentacaoVO.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/bl/WfBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/WfConfiguracao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/WfConfiguracaoCache.java"
    ],
    "callee": "converter"
   }
@@ -1385,6 +1730,7 @@
   "gt": {
    "callee": "getResourceAsStream",
    "files": [
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/bl/CpBL.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FOP.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Stamp.java",
@@ -1399,6 +1745,7 @@
   "query": "Se getResourceAsStream mudar, cite um arquivo que precisaria revisão.",
   "gt": {
    "files": [
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/bl/CpBL.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FOP.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Stamp.java",
@@ -1415,6 +1762,8 @@
   "gt": {
    "callee": "stamp",
    "files": [
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/AbstractCpToken.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/dao/CpDao.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Documento.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Stamp.java",
@@ -1439,6 +1788,8 @@
   "query": "Se stamp mudar, cite um arquivo que precisaria revisão.",
   "gt": {
    "files": [
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/AbstractCpToken.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/dao/CpDao.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Documento.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Stamp.java",
@@ -1465,6 +1816,14 @@
   "gt": {
    "callee": "write",
    "files": [
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/CpArquivo.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/arquivo/ArmazenamentoHCP.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/arquivo/ArmazenamentoS3.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/util/Blob.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/util/SigaCpSincLdap.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/hibernate/SigaMysqlIdentityIntegrator.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/relatorio/AlteracaoDireitosRelatorio.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/relatorio/HistoricoUsuarioRelatorio.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Documento.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/LocalizaTexto.java",
@@ -1516,6 +1875,14 @@
   "query": "Se write mudar, cite um arquivo que precisaria revisão.",
   "gt": {
    "files": [
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/CpArquivo.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/arquivo/ArmazenamentoHCP.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/arquivo/ArmazenamentoS3.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/util/Blob.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/util/SigaCpSincLdap.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/hibernate/SigaMysqlIdentityIntegrator.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/relatorio/AlteracaoDireitosRelatorio.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/relatorio/HistoricoUsuarioRelatorio.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Documento.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/LocalizaTexto.java",
@@ -1803,6 +2170,14 @@
   "gt": {
    "callee": "write",
    "files": [
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/CpArquivo.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/arquivo/ArmazenamentoHCP.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/arquivo/ArmazenamentoS3.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/util/Blob.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/util/SigaCpSincLdap.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/hibernate/SigaMysqlIdentityIntegrator.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/relatorio/AlteracaoDireitosRelatorio.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/relatorio/HistoricoUsuarioRelatorio.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Documento.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/LocalizaTexto.java",
@@ -1854,6 +2229,14 @@
   "query": "Se write mudar, cite um arquivo que precisaria revisão.",
   "gt": {
    "files": [
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/CpArquivo.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/arquivo/ArmazenamentoHCP.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/arquivo/ArmazenamentoS3.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/util/Blob.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/util/SigaCpSincLdap.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/hibernate/SigaMysqlIdentityIntegrator.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/relatorio/AlteracaoDireitosRelatorio.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/relatorio/HistoricoUsuarioRelatorio.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Documento.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/LocalizaTexto.java",
@@ -1921,9 +2304,10 @@
     }
    ],
    "path_files": [
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/CpIdentidade.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExClassificacao.java"
    ],
-   "n_paths": 1
+   "n_paths": 2
   }
  },
  {
@@ -1947,6 +2331,8 @@
     }
    ],
    "path_files": [
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/CpConfiguracao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/dp/CpOrgaoUsuario.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExClassificacao.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExDocumento.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExMarca.java",
@@ -1957,7 +2343,7 @@
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExMobilVO.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExMovimentacaoVO.java"
    ],
-   "n_paths": 10
+   "n_paths": 12
   }
  },
  {
@@ -2096,10 +2482,12 @@
     }
    ],
    "path_files": [
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/grupo/ConfiguracaoGrupoFabrica.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java",
-    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Nheengatu.java"
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Nheengatu.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Stamp.java"
    ],
-   "n_paths": 1
+   "n_paths": 9
   }
  },
  {
@@ -2126,6 +2514,539 @@
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java"
    ],
    "n_paths": 1
+  }
+ },
+ {
+  "id": "A-cp-000",
+  "category": "A",
+  "query": "Em qual arquivo está definida a classe ConfiguracaoAcesso?",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/acesso/ConfiguracaoAcesso.java",
+   "line": 46
+  }
+ },
+ {
+  "id": "B-cp-000",
+  "category": "B",
+  "query": "Qual módulo contém a classe ConfiguracaoAcesso?",
+  "gt": {
+   "module": "siga-cp",
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/acesso/ConfiguracaoAcesso.java"
+  }
+ },
+ {
+  "id": "D-cp-000",
+  "category": "D",
+  "query": "Cite um arquivo que referencia ConfiguracaoAcesso.",
+  "gt": {
+   "files": [
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/acesso/ConfiguracaoAcesso.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/grupo/ConfiguracaoGrupoTransacao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/gi/service/impl/GiServiceImpl.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/relatorio/AcessoServicoRelatorio.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/relatorio/AlteracaoDireitosRelatorio.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/relatorio/PermissaoUsuarioRelatorio.java"
+   ]
+  }
+ },
+ {
+  "id": "A-cp-001",
+  "category": "A",
+  "query": "Em qual arquivo está definida a classe ConheceUsuarioSupport?",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/acesso/ConheceUsuarioSupport.java",
+   "line": 25
+  }
+ },
+ {
+  "id": "B-cp-001",
+  "category": "B",
+  "query": "Qual módulo contém a classe ConheceUsuarioSupport?",
+  "gt": {
+   "module": "siga-cp",
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/acesso/ConheceUsuarioSupport.java"
+  }
+ },
+ {
+  "id": "A-cp-002",
+  "category": "A",
+  "query": "Em qual arquivo está definida a classe UsuarioAutenticado?",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/acesso/UsuarioAutenticado.java",
+   "line": 36
+  }
+ },
+ {
+  "id": "B-cp-002",
+  "category": "B",
+  "query": "Qual módulo contém a classe UsuarioAutenticado?",
+  "gt": {
+   "module": "siga-cp",
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/acesso/UsuarioAutenticado.java"
+  }
+ },
+ {
+  "id": "A-cp-003",
+  "category": "A",
+  "query": "Em qual arquivo está definida a classe AbstractCpAcesso?",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/AbstractCpAcesso.java",
+   "line": 43
+  }
+ },
+ {
+  "id": "B-cp-003",
+  "category": "B",
+  "query": "Qual módulo contém a classe AbstractCpAcesso?",
+  "gt": {
+   "module": "siga-cp",
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/AbstractCpAcesso.java"
+  }
+ },
+ {
+  "id": "D-cp-003",
+  "category": "D",
+  "query": "Cite um arquivo que referencia AbstractCpAcesso.",
+  "gt": {
+   "files": [
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/AbstractCpAcesso.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/CpAcesso.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/auth/AutenticadorJwtCookie.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/bl/CpBL.java"
+   ]
+  }
+ },
+ {
+  "id": "A-cp-004",
+  "category": "A",
+  "query": "Em qual arquivo está definida a classe AbstractCpComplexo?",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/AbstractCpComplexo.java",
+   "line": 43
+  }
+ },
+ {
+  "id": "B-cp-004",
+  "category": "B",
+  "query": "Qual módulo contém a classe AbstractCpComplexo?",
+  "gt": {
+   "module": "siga-cp",
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/AbstractCpComplexo.java"
+  }
+ },
+ {
+  "id": "D-cp-004",
+  "category": "D",
+  "query": "Cite um arquivo que referencia AbstractCpComplexo.",
+  "gt": {
+   "files": [
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/AbstractCpComplexo.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/CpComplexo.java"
+   ]
+  }
+ },
+ {
+  "id": "A-cp-005",
+  "category": "A",
+  "query": "Em qual arquivo está definida a classe AbstractCpConfiguracao?",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/AbstractCpConfiguracao.java",
+   "line": 90
+  }
+ },
+ {
+  "id": "B-cp-005",
+  "category": "B",
+  "query": "Qual módulo contém a classe AbstractCpConfiguracao?",
+  "gt": {
+   "module": "siga-cp",
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/AbstractCpConfiguracao.java"
+  }
+ },
+ {
+  "id": "D-cp-005",
+  "category": "D",
+  "query": "Cite um arquivo que referencia AbstractCpConfiguracao.",
+  "gt": {
+   "files": [
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/AbstractCpConfiguracao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/CpConfiguracao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/WfConfiguracao.java"
+   ]
+  }
+ },
+ {
+  "id": "A-cp-006",
+  "category": "A",
+  "query": "Em qual arquivo está definida a classe AbstractCpGrupo?",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/AbstractCpGrupo.java",
+   "line": 66
+  }
+ },
+ {
+  "id": "B-cp-006",
+  "category": "B",
+  "query": "Qual módulo contém a classe AbstractCpGrupo?",
+  "gt": {
+   "module": "siga-cp",
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/AbstractCpGrupo.java"
+  }
+ },
+ {
+  "id": "D-cp-006",
+  "category": "D",
+  "query": "Cite um arquivo que referencia AbstractCpGrupo.",
+  "gt": {
+   "files": [
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/AbstractCpGrupo.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/CpGrupo.java"
+   ]
+  }
+ },
+ {
+  "id": "A-cp-007",
+  "category": "A",
+  "query": "Em qual arquivo está definida a classe AbstractCpIdentidade?",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/AbstractCpIdentidade.java",
+   "line": 105
+  }
+ },
+ {
+  "id": "B-cp-007",
+  "category": "B",
+  "query": "Qual módulo contém a classe AbstractCpIdentidade?",
+  "gt": {
+   "module": "siga-cp",
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/AbstractCpIdentidade.java"
+  }
+ },
+ {
+  "id": "D-cp-007",
+  "category": "D",
+  "query": "Cite um arquivo que referencia AbstractCpIdentidade.",
+  "gt": {
+   "files": [
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/AbstractCpIdentidade.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-cp/src/main/java/br/gov/jfrj/siga/cp/CpIdentidade.java"
+   ]
+  }
+ },
+ {
+  "id": "A-wf-008",
+  "category": "A",
+  "query": "Em qual arquivo está definida a classe Wf?",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/bl/Wf.java",
+   "line": 29
+  }
+ },
+ {
+  "id": "B-wf-008",
+  "category": "B",
+  "query": "Qual módulo contém a classe Wf?",
+  "gt": {
+   "module": "siga-wf",
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/bl/Wf.java"
+  }
+ },
+ {
+  "id": "D-wf-008",
+  "category": "D",
+  "query": "Cite um arquivo que referencia Wf.",
+  "gt": {
+   "files": [
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExCompetenciaBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/bl/Wf.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/bl/WfBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/bl/WfCompetenciaBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/bl/WfConfiguracaoBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/bl/WfConfiguracaoCacheComparator.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/bl/WfConfiguracaoComparator.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/bl/WfMarcaBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/dao/WfDao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/dao/WfStarter.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/dao/WfThreadFilter.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/logic/WfEstaPessoalmenteResponsavel.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/logic/WfEstaResponsavel.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/logic/WfEstaRetomando.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/logic/WfEstaSemResponsavel.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/logic/WfEstaTerminado.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/logic/WfPodeDuplicarDiagrama.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/logic/WfPodeEditarDiagrama.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/logic/WfPodeEditarDiagramaPorAcesso.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/logic/WfPodeEditarDiagramaPorConfiguracao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/logic/WfPodeEditarVariaveis.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/logic/WfPodeIniciarDiagrama.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/logic/WfPodeIniciarDiagramaPorAcesso.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/logic/WfPodeIniciarDiagramaPorConfiguracao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/logic/WfPodePegar.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/logic/WfPodePriorizar.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/logic/WfPodeRedirecionar.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/logic/WfPodeRetomar.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/logic/WfPodeTerminar.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/WfConfiguracao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/WfConfiguracaoCache.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/WfConhecimento.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/WfDefinicaoDeDesvio.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/WfDefinicaoDeProcedimento.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/WfDefinicaoDeResponsavel.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/WfDefinicaoDeTarefa.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/WfDefinicaoDeVariavel.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/WfMarca.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/WfMov.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/WfMovAnotacao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/WfMovCancelamento.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/WfMovDesignacao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/WfMovPriorizacao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/WfMovRedirecionamento.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/WfMovTermino.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/WfMovTransicao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/WfProcedimento.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/WfResponsavel.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/WfVariavel.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/enm/WfAcessoDeEdicao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/enm/WfAcessoDeInicializacao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/enm/WfParamCfg.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/enm/WfPrioridade.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/enm/WfTarefaDocCriarParam.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/enm/WfTarefaDocCriarParam2.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/enm/WfTipoDeAcessoDeVariavel.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/enm/WfTipoDeConfiguracao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/enm/WfTipoDeDesignacao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/enm/WfTipoDePrincipal.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/enm/WfTipoDeResponsavel.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/enm/WfTipoDeTarefa.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/enm/WfTipoDeVariavel.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/enm/WfTipoDeVinculoComPrincipal.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/task/WfTarefaArquivar.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/task/WfTarefaDocAguardarAssinatura.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/task/WfTarefaDocAguardarAuxiliar.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/task/WfTarefaDocAguardarJuntada.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/task/WfTarefaDocAlterarPrincipal.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/task/WfTarefaDocAutuar.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/task/WfTarefaDocCriar.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/task/WfTarefaDocIncluirCopia.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/task/WfTarefaDocJuntar.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/task/WfTarefaEmail.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/task/WfTarefaFormulario.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/task/WfTarefaSubprocedimento.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/task/WfTarefaTramitar.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/util/WfAcaoHelper.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/util/WfContext.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/util/WfContextoPrincipal.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/util/WfDefinicaoDeProcedimentoDaoFiltro.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/util/WfDefinicaoDeProcedimentoSelecao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/util/WfEngine.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/util/WfHandler.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/util/WfProcedimentoDaoFiltro.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/util/WfResp.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/util/WfTarefa.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/util/WfTarefaComparator.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/util/WfWikiParser.java"
+   ]
+  }
+ },
+ {
+  "id": "A-wf-009",
+  "category": "A",
+  "query": "Em qual arquivo está definida a classe WfBL?",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/bl/WfBL.java",
+   "line": 78
+  }
+ },
+ {
+  "id": "B-wf-009",
+  "category": "B",
+  "query": "Qual módulo contém a classe WfBL?",
+  "gt": {
+   "module": "siga-wf",
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/bl/WfBL.java"
+  }
+ },
+ {
+  "id": "D-wf-009",
+  "category": "D",
+  "query": "Cite um arquivo que referencia WfBL.",
+  "gt": {
+   "files": [
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/bl/Wf.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/bl/WfBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/util/WfHandler.java"
+   ]
+  }
+ },
+ {
+  "id": "A-wf-010",
+  "category": "A",
+  "query": "Em qual arquivo está definida a classe WfCompetenciaBL?",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/bl/WfCompetenciaBL.java",
+   "line": 41
+  }
+ },
+ {
+  "id": "B-wf-010",
+  "category": "B",
+  "query": "Qual módulo contém a classe WfCompetenciaBL?",
+  "gt": {
+   "module": "siga-wf",
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/bl/WfCompetenciaBL.java"
+  }
+ },
+ {
+  "id": "D-wf-010",
+  "category": "D",
+  "query": "Cite um arquivo que referencia WfCompetenciaBL.",
+  "gt": {
+   "files": [
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/bl/Wf.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/bl/WfCompetenciaBL.java"
+   ]
+  }
+ },
+ {
+  "id": "A-wf-011",
+  "category": "A",
+  "query": "Em qual arquivo está definida a classe WfConfiguracaoBL?",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/bl/WfConfiguracaoBL.java",
+   "line": 48
+  }
+ },
+ {
+  "id": "B-wf-011",
+  "category": "B",
+  "query": "Qual módulo contém a classe WfConfiguracaoBL?",
+  "gt": {
+   "module": "siga-wf",
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/bl/WfConfiguracaoBL.java"
+  }
+ },
+ {
+  "id": "D-wf-011",
+  "category": "D",
+  "query": "Cite um arquivo que referencia WfConfiguracaoBL.",
+  "gt": {
+   "files": [
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/bl/Wf.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/bl/WfConfiguracaoBL.java"
+   ]
+  }
+ },
+ {
+  "id": "A-wf-012",
+  "category": "A",
+  "query": "Em qual arquivo está definida a classe WfConfiguracaoCacheComparator?",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/bl/WfConfiguracaoCacheComparator.java",
+   "line": 31
+  }
+ },
+ {
+  "id": "B-wf-012",
+  "category": "B",
+  "query": "Qual módulo contém a classe WfConfiguracaoCacheComparator?",
+  "gt": {
+   "module": "siga-wf",
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/bl/WfConfiguracaoCacheComparator.java"
+  }
+ },
+ {
+  "id": "D-wf-012",
+  "category": "D",
+  "query": "Cite um arquivo que referencia WfConfiguracaoCacheComparator.",
+  "gt": {
+   "files": [
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/bl/Wf.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/bl/WfConfiguracaoCacheComparator.java"
+   ]
+  }
+ },
+ {
+  "id": "A-wf-013",
+  "category": "A",
+  "query": "Em qual arquivo está definida a classe WfConfiguracaoComparator?",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/bl/WfConfiguracaoComparator.java",
+   "line": 31
+  }
+ },
+ {
+  "id": "B-wf-013",
+  "category": "B",
+  "query": "Qual módulo contém a classe WfConfiguracaoComparator?",
+  "gt": {
+   "module": "siga-wf",
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/bl/WfConfiguracaoComparator.java"
+  }
+ },
+ {
+  "id": "A-wf-014",
+  "category": "A",
+  "query": "Em qual arquivo está definida a classe WfMarcaBL?",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/bl/WfMarcaBL.java",
+   "line": 18
+  }
+ },
+ {
+  "id": "B-wf-014",
+  "category": "B",
+  "query": "Qual módulo contém a classe WfMarcaBL?",
+  "gt": {
+   "module": "siga-wf",
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/bl/WfMarcaBL.java"
+  }
+ },
+ {
+  "id": "D-wf-014",
+  "category": "D",
+  "query": "Cite um arquivo que referencia WfMarcaBL.",
+  "gt": {
+   "files": [
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/bl/WfMarcaBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/dao/WfDao.java"
+   ]
+  }
+ },
+ {
+  "id": "A-wf-015",
+  "category": "A",
+  "query": "Em qual arquivo está definida a classe WfDao?",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/dao/WfDao.java",
+   "line": 73
+  }
+ },
+ {
+  "id": "B-wf-015",
+  "category": "B",
+  "query": "Qual módulo contém a classe WfDao?",
+  "gt": {
+   "module": "siga-wf",
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/dao/WfDao.java"
+  }
+ },
+ {
+  "id": "D-wf-015",
+  "category": "D",
+  "query": "Cite um arquivo que referencia WfDao.",
+  "gt": {
+   "files": [
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/bl/WfBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/bl/WfConfiguracaoBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/dao/WfDao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/dao/WfThreadFilter.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/WfDefinicaoDeProcedimento.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/model/WfProcedimento.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/util/WfDefinicaoDeProcedimentoSelecao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/util/WfEngine.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-wf/src/main/java/br/gov/jfrj/siga/wf/util/WfHandler.java"
+   ]
   }
  }
 ]

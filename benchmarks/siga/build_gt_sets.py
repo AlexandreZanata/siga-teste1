@@ -16,7 +16,9 @@ DEV = pathlib.Path(__file__).resolve().parent / "queries_dev.json"
 
 def main() -> int:
     qs = json.loads(DEV.read_text(encoding="utf-8"))
-    files = sorted((DATASET / "siga-ex/src/main/java").rglob("*.java"))
+    files = []
+    for rel in ("siga-ex/src/main/java", "siga-cp/src/main/java", "siga-wf/src/main/java"):
+        files += sorted((DATASET / rel).rglob("*.java"))
     scope = {str(f) for f in files}
     con = open_db(pathlib.Path(":memory:"))
     index_many(con, files, SHA)
