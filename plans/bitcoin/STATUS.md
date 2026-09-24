@@ -6,25 +6,27 @@ com dataset, tarefas, pré-registro e resultados próprios. Nenhum aceite copiad
 
 ## Checkpoint
 
-- Etapa atual: **trilha BTC-P0–P7 completa; corpus medido em leitura** — checkout v31.1,
-  LOC, `discover()` e primeira rodada do adaptador (12.546 includes, 368 pares); sem build/índice.
-- Último aceite e evidências: `experiments/bitcoin/corpus/btc-corpus-001/` (manifesto + REPORT);
-  `archatlas/bitcoin/cpp_lex.py` (correção de `skipped` ruidoso) + teste cobrindo;
-  `benchmarks/bitcoin/PIN.md` (working tree limpa) e `CENSO.md` (LOC/discover reais).
-- SHA publicado: `c21c770` (PIN) em `origin/codex/bitcoin-context`; este commit de corpus
-  a registrar após push.
-- `run_id`: `btc-corpus-001` (leitura, sem rodada). Reserva de recursos: nenhuma. Pedido ao core: nenhum
-  (lacuna `.cc` e triagem dos 10 skipped seguem locais).
+- Etapa atual: **trilha BTC-P0–P7 completa; corpus medido + triado** — 10 skipped
+  resolvidos (`__has_include` ignorado, 0 restantes), `BUILD_ENV.md` e `COVERAGE.md`
+  registrados; sem build/índice.
+- Último aceite e evidências: `archatlas/bitcoin/cpp_lex.py` (skipped só diretiva `#`
+  malformada) + teste cobrindo; `research/bitcoin/BUILD_ENV.md` (CMake, deps, regtest;
+  nada compilado); `research/bitcoin/COVERAGE.md` (áreas, 371 arqs de teste, exclusões);
+  `experiments/bitcoin/corpus/btc-corpus-001/`; BTC-P0–P7 inalterados.
+- SHA publicado: `8d6f27f` (corpus) em `origin/codex/bitcoin-context`; este commit
+  (triagem + BUILD_ENV + COVERAGE) a registrar após push.
+- `run_id`: nenhum (leitura). Reserva de recursos: nenhuma. Pedido ao core: nenhum
+  (lacuna `.cc` segue local).
 - Bloqueio exato: toolchain/build + teto + modelos + custodiante + dev (todos nulos);
   `main` em `793c3f3` (E26-05 SIGA) observado, NÃO incorporado.
 - Alternativa independente: nenhuma — aguardar desbloqueios; A integra em checkpoint.
-- Próximo comando/ação: triar 10 skipped; toolchain no snapshot; revalidar `C_btc` com tarefas reais.
+- Próximo comando/ação: toolchain no snapshot; índice do corpus; tarefas reais BTC-P3.
 
 ## Etapas
 
 - [x] BTC-P0 — auditoria, PIN e censo (auditoria + `BTC_SHA` v31.1 + censo real 2923 paths; working tree/toolchain pendentes).
 - [x] BTC-P1 — aplicação da literatura e pré-registro próprio (preliminar, não selado; sem rodada autorizada).
-- [x] BTC-P2 — adaptador, ambiente e medição (contratos + adaptador lexical + E26-00 sintético concluídos; build/índice do corpus pendentes de PIN).
+- [x] BTC-P2 — adaptador, ambiente e medição (contratos + adaptador lexical + E26-00 sintético + BUILD_ENV + COVERAGE + corpus medido; build/índice pendentes de toolchain).
 - [x] BTC-P3 — piloto de edição (especificação + dryrun offline 72 rodadas concluídos; piloto real com modelo bloqueado por PIN/ambiente/teto).
 - [x] BTC-P4 — protótipo e ablações (btc-pack/1 + E26-02 sintético + decisões; E26-03/04/05 com estado honesto; decisão final pendente de piloto).
 - [x] BTC-P5 — confirmatório cego (pré-registro final selável + maquinaria ensaiada; selo real e rodada bloqueados por piloto/custodiante).
@@ -48,6 +50,8 @@ em escopo sem dataset; execução real e uso humano pendentes de PIN e desbloque
 2026-09-24 PIN resolvido (`v31.1`, `9be056a8…`, MIT, 2923 paths: C++ 1498, Python 364;
 working tree e toolchain seguem pendentes);
 2026-09-24 corpus medido em leitura (checkout limpo, LOC/discover reais, adaptador 12.546 includes
-e 368 pares em 1409 C++; `.cc` e 10 skipped como pendências locais; build segue pendente).
+e 368 pares em 1409 C++; `.cc` como pendência local; build segue pendente);
+2026-09-24 triagem completa (10 skipped = `__has_include`, ignorados com teste; 0 restantes),
+BUILD_ENV (CMake/deps/regtest, nada compilado) e COVERAGE (áreas, 371 arqs de teste) registrados.
 Nenhuma fase posterior marcada além de BTC-P7. Experimentos BTC-E26-00–06 e E26-06 espelho:
 E26-00/E26-02/drills validados em fixtures sintéticas; nenhum executado em dataset.

@@ -12,7 +12,9 @@ from archatlas.dataset import extract_py
 VALIDATION_CPP = b"""#include "validation.h"
 #include <map>
 #include <vector>
+#if __has_include(<string_view>)
 // palavras 'include/included' em comentario nao sao diretivas nem skipped
+#endif
 bool CheckTransaction() {
     return true;
 }
