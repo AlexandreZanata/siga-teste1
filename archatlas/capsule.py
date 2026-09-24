@@ -5,7 +5,7 @@ import pathlib
 import sqlite3
 
 from archatlas.lexical import bm25_search
-from archatlas.packing import pack_ranked
+from archatlas.packing import apply_focus, focus_terms, pack_ranked
 from archatlas.query import find_references, find_symbol, read_contents
 from archatlas.telemetry import payload_tokens_for_capsule
 
@@ -60,7 +60,8 @@ def _rank_candidates(con: sqlite3.Connection, query: str, k: int,
 
 
 def build_capsule(con: sqlite3.Connection, query: str, budget: int, k: int = 20,
-                  packing: str = "multi", abstain: bool = False) -> dict:
+                  packing: str = "multi", abstain: bool = False,
+                  focus: str | None = None) -> dict:
     """Monta a cápsula; `packing` ∈ {one_per_file, multi, expanded} (E26-02).
 
     Default `multi` reproduz o comportamento F5–F19 byte a byte nos campos
@@ -68,6 +69,8 @@ def build_capsule(con: sqlite3.Connection, query: str, budget: int, k: int = 20,
     antigos (harness, strategies, testes) seguem funcionando sem mudanças.
     `abstain=True` (P4-infra(c), default False) aplica o gate dev-calibrado de
     `archatlas/abstain.py`: vazio duplo → entrega vazia + motivo explícito.
+    `focus=None` (E26-04, default) desliga a poda; com texto, aplica seleção
+    determinística pós-montagem (originais contados, omissões no log).
     """
     disk = read_contents(con)  # F19: lê cada arquivo UMA vez; verificação por linha mantida
     ranked = _rank_candidates(con, query, k, disk)
@@ -110,6 +113,12 @@ def build_capsule(con: sqlite3.Connection, query: str, budget: int, k: int = 20,
                 "('class','interface','enum','method') ORDER BY file, line").fetchall():
             decls.setdefault(f, []).append((line, kind, name))
     packed = pack_ranked(ranked, disk, budget, policy=packing, decls=decls)
+    focus_meta = {"focus_echo": None, "focus_terms": [], "omitted": 0, "pre_focus_kept": None}
+    if focus:
+        terms = focus_terms(focus)
+        packed = apply_focus({**packed, "focus_terms": terms}, terms)
+        focus_meta = {"focus_echo": focus, "focus_terms": terms,
+                      "omitted": packed["omitted"], "pre_focus_kept": packed["pre_focus_kept"]}
     symbols, excerpts, citations, relations, log = (
         packed["symbols"], packed["excerpts"], packed["citations"],
         packed["relations"], packed["truncation_log"])
@@ -138,5 +147,9 @@ def build_capsule(con: sqlite3.Connection, query: str, budget: int, k: int = 20,
                         "declared_relevant": None, "history_tokens": None,
                         "history_note": "historico/instrucoes nao incluidos; P3 medira custo total",
                         "abstained": False, "abstain_reason": gate["reason"],
-                        "uncertain": gate["uncertain"]}
+                        "uncertain": gate["uncertain"],
+                        "focus_echo": focus_meta["focus_echo"],
+                        "focus_terms": focus_meta["focus_terms"],
+                        "focus_omitted": focus_meta["omitted"],
+                        "pre_focus_kept": focus_meta["pre_focus_kept"]}
     return out

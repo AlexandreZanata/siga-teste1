@@ -98,3 +98,44 @@ def _enclosing_decl(decl_list: list[tuple], line: int) -> tuple | None:
         if dl <= line and (best is None or dl > best[0]):
             best = (dl, kind, name)
     return best
+
+
+def focus_terms(focus: str) -> list[str]:
+    """Termos do foco: alfanuméricos len>2, minúsculos, ordenados. Determinístico."""
+    import re as _re
+    return sorted({t.lower() for t in _re.findall(r"[A-Za-z0-9_]+", focus or "") if len(t) > 2})
+
+
+def apply_focus(packed: dict, terms: list[str]) -> dict:
+    """E26-04: poda determinística pós-montagem (mesmos candidatos, só seleção varia).
+
+    Mantém trecho sse casa algum termo (nome/texto, case-insensitive) OU é
+    esqueleto estrutural (class/interface/enum) — contratos nunca somem sem
+    registro. O restante vira `truncation_log` (`focus-prune`) + contadores;
+    originais preservados na contagem `pre_focus_kept`; excerto podado jamais
+    se apresenta como arquivo integral (spans com file/line intactos).
+    """
+    keep_ex, keep_ids = [], set()
+    for e in packed["excerpts"]:
+        txt = f"{e.get('text', '')} {' '.join(e.get('anchors', []))}".lower()
+        sym = next((s for s in packed["symbols"]
+                    if s["file"] == e["file"] and s["line"] == e["start_line"]), {})
+        if any(t in txt for t in terms) or sym.get("kind") in ("class", "interface", "enum"):
+            keep_ex.append(e)
+            keep_ids.add(e["id"])
+    kept_names = {(s["file"], s["line"]) for s in packed["symbols"]
+                  if any(e["id"] in keep_ids and e["file"] == s["file"]
+                         and e["start_line"] == s["line"] for e in keep_ex)}
+    symbols = [s for s in packed["symbols"] if (s["file"], s["line"]) in kept_names]
+    citations = [c for c in packed["citations"] if c["excerpt_id"] in keep_ids]
+    names = {s["name"] for s in symbols}
+    relations = [r for r in packed["relations"] if r["to"] in names]
+    log = list(packed["truncation_log"]) + [
+        {"stage": "focus", "rule": "focus-prune", "dropped": e["id"],
+         "reason": f"termos={','.join(terms) or '-'} {e['file']}:{e['start_line']}"}
+        for e in packed["excerpts"] if e["id"] not in keep_ids]
+    used = sum(e["tokens"] for e in keep_ex)
+    return {"symbols": symbols, "excerpts": keep_ex, "citations": citations,
+            "relations": relations, "truncation_log": log, "used": used,
+            "omitted": len(packed["excerpts"]) - len(keep_ex),
+            "pre_focus_kept": len(packed["excerpts"]), "focus_terms": terms}
