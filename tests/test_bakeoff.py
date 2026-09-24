@@ -16,6 +16,8 @@ def gt_match(q: dict, files: set[str]) -> bool:
     gt = q["gt"]
     if "files" in gt:
         return any(f in files for f in gt["files"])
+    if "edges" in gt:
+        return any(e["file"] in files for e in gt["edges"])
     if "package" in gt:
         return bool(gt.get("file") in files or any(f.startswith(gt["package"]) for f in files))
     return bool(gt.get("file")) and gt["file"] in files

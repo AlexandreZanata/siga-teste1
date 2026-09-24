@@ -35,6 +35,8 @@ def run(dev_json: pathlib.Path, db: pathlib.Path, out_jsonl: pathlib.Path, budge
             files = set(cap["files"])
             if "files" in gt:
                 ok = any(f in files for f in gt["files"])
+            elif "edges" in gt:
+                ok = any(e["file"] in files for e in gt["edges"])
             elif "package" in gt:
                 ok = bool(gt.get("file") in files or any(f.startswith(gt["package"]) for f in files))
             else:
