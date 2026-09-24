@@ -2,8 +2,8 @@
 
 Track: `bitcoin`. Dono: agente B. `BASE_SHA`: `e6fde134f7da0d3616d90c40232d9ebe2ed9f033`.
 `BTC_SHA`: `9be056a8a72b624dae9623b2f7bded92c2a21c91` (`v31.1`; ver `PIN.md`).
-Contagens por listagem real (`git ls-tree -r --name-only v31.1`, 2026-09-24). Sem blobs lidos:
-LOC e bytes por linguagem pendentes de checkout com working tree.
+Contagens por listagem real (`git ls-tree -r --name-only v31.1`, 2026-09-24) + checkout
+`--detach BTC_SHA` somente leitura (LOC e `discover()` medidos em working tree real).
 
 ## 1. Matriz de capacidade do core atual (observada, não herdada como suporte)
 
@@ -27,7 +27,12 @@ fora de cobertura declarada. Por diretório: `src/` 2003 (`src/rpc/` 28, `src/wa
 `src/test/` 334), `test/` 414 (`test/functional/` 378), `doc/` 180, `contrib/` 118.
 Exclusões a aplicar na indexação: `EXCLUDE_DIRS` publicadas + `depends/`, `src/secp256k1/`
 (submódulo/library externa) e locale/recursos `src/qt/` conforme desenho da rodada.
-`loc_por_linguagem`: pendente (exige blobs). Nenhum corpus copiado para este repositório.
+`discover()` no checkout (com `EXCLUDE_DIRS`): **1873** arquivos (cpp 1409, python 364, js 100) —
+`.cc` (89) fora do `EXT_MAP` publicado: lacuna, sem correção silenciosa.
+LOC (working tree): cpp **372.576**, python **90.096**, js **295.906** (js = locale Qt, fora de cobertura).
+Primeira medição do adaptador no corpus: `experiments/bitcoin/corpus/btc-corpus-001/REPORT.md`
+(12.546 includes, 368 pares, 10 skipped a triar, 0 erros, 0,2s).
+Nenhum corpus copiado para este repositório.
 
 ## 3. Próximo comando (checkout com working tree + toolchain)
 

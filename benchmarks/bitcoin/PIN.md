@@ -13,9 +13,9 @@ Track: `bitcoin`. Dono: agente B. Origem criada em BTC-P0; SHA resolvido em 2026
 - Commit: `2026-07-06 15:09:19 +0200`, `Merge bitcoin/bitcoin#35666: [31.x] Finalise 31.1`.
 - Data da resolução: 2026-09-24. Método: `git clone --filter=blob:none --no-checkout` (sem blobs,
   sem working tree por desenho) + `ls-tree`/`cat-file`/`show` sobre o object store.
-- Estado da árvore: tag verificado no object store (`rev-parse` confere); **sem working tree**
-  (clone `--no-checkout`; `status` lista tudo como `D` por desenho, não como sujeira) — checkout
-  completo com working tree fica pendente para a fase de build/índice.
+- Estado da árvore: tag verificado no object store (`rev-parse` confere) + checkout
+  `--detach BTC_SHA` somente leitura em 2026-09-24 (HEAD `9be056a8`, `status` limpo, 151M).
+  Caminho local em configuração não versionada; edições futuras só em cópias descartáveis.
 - Licença observada: **MIT** (`v31.1:COPYING`: "The MIT License (MIT)", © 2009-2026).
 - Layout confirmado por listagem (2923 paths): `src/` (2003), `test/` (414, inclui
   `test/functional/`), `doc/` (180); `src/rpc/` (28), `src/wallet/` (86), `src/test/` (334).
@@ -26,8 +26,8 @@ Track: `bitcoin`. Dono: agente B. Origem criada em BTC-P0; SHA resolvido em 2026
 
 - `doc/build-unix.md`, `test/README.md`, `test/functional/README.md`, `src/test/README.md`:
   todos EXISTEM em `v31.1` (verificado via `cat-file -e`; conteúdo ainda não confrontado).
-- Pendente (fase de build/índice): compilador, flags, dependências, features habilitadas,
-  comandos realmente usados e checkout com working tree.
+- Pendente (fase de build/índice): compilador, flags, dependências, features habilitadas e
+  comandos realmente usados (conteúdo dos docs ainda não confrontado).
   Testes funcionais usam ambiente isolado/regtest; nenhum resultado depende de mainnet,
   fundos, carteira pessoal ou nó de produção.
 

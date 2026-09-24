@@ -60,9 +60,10 @@ def extract_cpp_lexical(path: pathlib.Path) -> dict:
             continue
         m = INCLUDE_RE.search(text)
         if not m:
-            skipped.append({"line": i, "text": text.strip()[:120],
-                            "reason": "diretiva include malformada"})
-            continue
+            if text.lstrip().startswith("#"):
+                skipped.append({"line": i, "text": text.strip()[:120],
+                                "reason": "diretiva include malformada"})
+            continue  # palavra em comentário/código não é diretiva: sem ruído
         target = m.group(2)
         if target not in text:
             skipped.append({"line": i, "text": text.strip()[:120],

@@ -6,19 +6,19 @@ com dataset, tarefas, pré-registro e resultados próprios. Nenhum aceite copiad
 
 ## Checkpoint
 
-- Etapa atual: **trilha BTC-P0–P7 completa; PIN resolvido em follow-up** — `BTC_SHA` v31.1
-  + censo real do corpus; execução em corpus segue pendente de checkout com working tree + toolchain.
-- Último aceite e evidências: `benchmarks/bitcoin/PIN.md` (`BTC_SHA`
-  `9be056a8a72b624dae9623b2f7bded92c2a21c91`, MIT, layout e build-refs verificados no tag);
-  `benchmarks/bitcoin/CENSO.md` (2923 paths; C++ 1498, Python 364); BTC-P0–P7 inalterados.
-- SHA publicado: `e0ceed0` (BTC-P7) em `origin/codex/bitcoin-context`; este commit de PIN/CENSO
+- Etapa atual: **trilha BTC-P0–P7 completa; corpus medido em leitura** — checkout v31.1,
+  LOC, `discover()` e primeira rodada do adaptador (12.546 includes, 368 pares); sem build/índice.
+- Último aceite e evidências: `experiments/bitcoin/corpus/btc-corpus-001/` (manifesto + REPORT);
+  `archatlas/bitcoin/cpp_lex.py` (correção de `skipped` ruidoso) + teste cobrindo;
+  `benchmarks/bitcoin/PIN.md` (working tree limpa) e `CENSO.md` (LOC/discover reais).
+- SHA publicado: `c21c770` (PIN) em `origin/codex/bitcoin-context`; este commit de corpus
   a registrar após push.
-- `run_id`: nenhum (listagem, sem rodada). Reserva de recursos: nenhuma. Pedido ao core: nenhum.
-- Bloqueio exato: checkout com working tree + toolchain + teto + modelos + custodiante + dev
-  (todos nulos); `main` em `bda774e` (E26-04 SIGA) observado, NÃO incorporado.
+- `run_id`: `btc-corpus-001` (leitura, sem rodada). Reserva de recursos: nenhuma. Pedido ao core: nenhum
+  (lacuna `.cc` e triagem dos 10 skipped seguem locais).
+- Bloqueio exato: toolchain/build + teto + modelos + custodiante + dev (todos nulos);
+  `main` em `793c3f3` (E26-05 SIGA) observado, NÃO incorporado.
 - Alternativa independente: nenhuma — aguardar desbloqueios; A integra em checkpoint.
-- Próximo comando/ação: checkout `--detach BTC_SHA` + toolchain; revalidar `C_btc` no corpus;
-  só então piloto real.
+- Próximo comando/ação: triar 10 skipped; toolchain no snapshot; revalidar `C_btc` com tarefas reais.
 
 ## Etapas
 
@@ -46,6 +46,8 @@ LIMITATIONS consolidado; execução real pendente de snapshots);
 2026-09-24 BTC-P7 concluída (guia dev, jornada 2/2, handoff sem merge; trilha BTC-P0–P7 completa
 em escopo sem dataset; execução real e uso humano pendentes de PIN e desbloqueios);
 2026-09-24 PIN resolvido (`v31.1`, `9be056a8…`, MIT, 2923 paths: C++ 1498, Python 364;
-working tree e toolchain seguem pendentes).
+working tree e toolchain seguem pendentes);
+2026-09-24 corpus medido em leitura (checkout limpo, LOC/discover reais, adaptador 12.546 includes
+e 368 pares em 1409 C++; `.cc` e 10 skipped como pendências locais; build segue pendente).
 Nenhuma fase posterior marcada além de BTC-P7. Experimentos BTC-E26-00–06 e E26-06 espelho:
 E26-00/E26-02/drills validados em fixtures sintéticas; nenhum executado em dataset.
