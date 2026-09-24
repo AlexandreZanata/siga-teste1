@@ -48,20 +48,18 @@ def test_no_edges_means_no_refs_and_empty_without_seeds(tmp_path):
     assert empty["seeds"] == [] and empty["spans"] == []  # sem semente, sem entrega
 
 
-def test_incremental_equiv_edit_but_not_delete(tmp_path):
+def test_incremental_equiv_edit_delete_rename(tmp_path):
+    """P4 GC fix (ex-refutação E26-03): delete/rename invalidados; incremental == rebuild."""
     ds = [tmp_path / f"F{i}.java" for i in range(2)]
     ds[0].write_bytes(b"public class A {\n public void m() {}\n}\n")
     ds[1].write_bytes(b"public class B {\n}\n")
-    c1, c2 = open_db(tmp_path / "i.sqlite"), open_db(tmp_path / "r.sqlite")
+    c1 = open_db(tmp_path / "i.sqlite")
     index_many(c1, ds, "t")
-    index_many(c2, ds, "t")
-    assert stable_hash(c1) == stable_hash(c2)
     ds[0].write_bytes(ds[0].read_bytes() + b"\n// edit\n")
-    ds[1].unlink()  # exclusão: path some do disco
-    index_many(c1, [ds[0]], "t")  # incremental não tem GC de paths sumidos
-    stale = [r for r in c1.execute("SELECT name,file,line,content_hash FROM symbols").fetchall()
-             if r[1] == str(ds[1])]
-    assert stale  # linhas do arquivo excluído persistem (H4 refutada p/ delete)
-    bad = sum(1 for (n, f, ln, ch) in stale
-              if not verify_symbol({"name": n, "file": f, "line": ln, "content_hash": ch})[0])
-    assert bad == len(stale)
+    ds[1].unlink()  # exclusão: GC remove path + símbolos na reindexação
+    assert index_many(c1, [ds[0]], "t")["pruned_files"] == 1
+    assert c1.execute("SELECT COUNT(*) FROM symbols WHERE file=?",
+                      (str(ds[1]),)).fetchone()[0] == 0
+    c2 = open_db(tmp_path / "r.sqlite")
+    index_many(c2, [ds[0]], "t")
+    assert stable_hash(c1) == stable_hash(c2)  # equivalência lógica H4 restaurada

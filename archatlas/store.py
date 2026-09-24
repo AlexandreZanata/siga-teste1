@@ -21,6 +21,25 @@ def open_db(db: pathlib.Path) -> sqlite3.Connection:
     return con
 
 
+def prune_missing(con: sqlite3.Connection) -> dict:
+    """P4 GC: remove `files`+`symbols` cujos paths sumiram do disco.
+
+    Ausência no disco (delete; rename = delete+add) invalida também
+    relações/cache dependentes, pois vivem keyed por path. Retorna contagens
+    para telemetria; nunca levanta por linha ilegível (só checa existência).
+    """
+    gone = [p for (p,) in con.execute("SELECT path FROM files ORDER BY path").fetchall()
+            if not pathlib.Path(p).exists()]
+    n_sym = 0
+    for p in gone:
+        n_sym += con.execute("SELECT COUNT(*) FROM symbols WHERE file=?", (p,)).fetchone()[0]
+        con.execute("DELETE FROM symbols WHERE file=?", (p,))
+        con.execute("DELETE FROM files WHERE path=?", (p,))
+    if gone:
+        con.commit()
+    return {"pruned_files": len(gone), "pruned_symbols": n_sym}
+
+
 def index_file(con: sqlite3.Connection, path: pathlib.Path, commit_sha: str) -> str:
     raw = pathlib.Path(path).read_bytes()
     chash = hashlib.sha256(raw).hexdigest()
@@ -66,6 +85,7 @@ def index_discovered(con: sqlite3.Connection, root: pathlib.Path, commit_sha: st
     for p, lang in items:
         counts[index_any(con, p, lang, commit_sha)] += 1
         counts["langs"][lang] = counts["langs"].get(lang, 0) + 1
+    counts.update(prune_missing(con))  # GC: paths sumidos do disco saem do índice
     return counts
 
 
@@ -73,6 +93,7 @@ def index_many(con: sqlite3.Connection, paths: list[pathlib.Path], commit_sha: s
     counts = {"indexed": 0, "skipped": 0}
     for p in paths:
         counts[index_file(con, p, commit_sha)] += 1
+    counts.update(prune_missing(con))  # GC: delete/rename viram invalidação real
     return counts
 
 
