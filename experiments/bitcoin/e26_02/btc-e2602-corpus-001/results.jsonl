@@ -1,0 +1,78 @@
+{"budget": 2000, "candidates": 924, "dropped": 838, "excerpts": 86, "files": 86, "gt_all": false, "gt_covered": [], "pairs_complete": 7, "policy": "one_per_file", "task_id": "BTC-R01", "used": 1995}
+{"budget": 2000, "candidates": 924, "dropped": 841, "excerpts": 83, "files": 29, "gt_all": false, "gt_covered": [], "pairs_complete": 0, "policy": "multi", "task_id": "BTC-R01", "used": 1993}
+{"budget": 2000, "candidates": 924, "dropped": 845, "excerpts": 82, "files": 30, "gt_all": false, "gt_covered": [], "pairs_complete": 3, "policy": "expanded", "task_id": "BTC-R01", "used": 2000}
+{"budget": 2000, "candidates": 802, "dropped": 716, "excerpts": 86, "files": 86, "gt_all": false, "gt_covered": ["src/kernel/mempool_limits.h"], "pairs_complete": 9, "policy": "one_per_file", "task_id": "BTC-R02", "used": 1995}
+{"budget": 2000, "candidates": 802, "dropped": 720, "excerpts": 82, "files": 30, "gt_all": false, "gt_covered": [], "pairs_complete": 1, "policy": "multi", "task_id": "BTC-R02", "used": 1998}
+{"budget": 2000, "candidates": 802, "dropped": 724, "excerpts": 81, "files": 30, "gt_all": false, "gt_covered": [], "pairs_complete": 3, "policy": "expanded", "task_id": "BTC-R02", "used": 1993}
+{"budget": 2000, "candidates": 435, "dropped": 349, "excerpts": 86, "files": 86, "gt_all": true, "gt_covered": ["src/node/mempool_persist.cpp", "src/node/mempool_persist.h"], "pairs_complete": 7, "policy": "one_per_file", "task_id": "BTC-R03", "used": 1994}
+{"budget": 2000, "candidates": 435, "dropped": 354, "excerpts": 81, "files": 28, "gt_all": false, "gt_covered": [], "pairs_complete": 1, "policy": "multi", "task_id": "BTC-R03", "used": 1994}
+{"budget": 2000, "candidates": 435, "dropped": 356, "excerpts": 81, "files": 29, "gt_all": false, "gt_covered": [], "pairs_complete": 2, "policy": "expanded", "task_id": "BTC-R03", "used": 1992}
+{"budget": 2000, "candidates": 400, "dropped": 319, "excerpts": 81, "files": 81, "gt_all": false, "gt_covered": ["src/rpc/server.h"], "pairs_complete": 7, "policy": "one_per_file", "task_id": "BTC-R04", "used": 2000}
+{"budget": 2000, "candidates": 400, "dropped": 319, "excerpts": 81, "files": 35, "gt_all": false, "gt_covered": [], "pairs_complete": 3, "policy": "multi", "task_id": "BTC-R04", "used": 1994}
+{"budget": 2000, "candidates": 400, "dropped": 322, "excerpts": 81, "files": 34, "gt_all": false, "gt_covered": [], "pairs_complete": 3, "policy": "expanded", "task_id": "BTC-R04", "used": 1998}
+{"budget": 2000, "candidates": 400, "dropped": 309, "excerpts": 91, "files": 91, "gt_all": true, "gt_covered": ["src/rpc/mempool.cpp", "src/rpc/mempool.h"], "pairs_complete": 12, "policy": "one_per_file", "task_id": "BTC-R05", "used": 1996}
+{"budget": 2000, "candidates": 400, "dropped": 316, "excerpts": 84, "files": 34, "gt_all": false, "gt_covered": [], "pairs_complete": 4, "policy": "multi", "task_id": "BTC-R05", "used": 2000}
+{"budget": 2000, "candidates": 400, "dropped": 322, "excerpts": 82, "files": 32, "gt_all": false, "gt_covered": [], "pairs_complete": 4, "policy": "expanded", "task_id": "BTC-R05", "used": 1991}
+{"budget": 2000, "candidates": 301, "dropped": 211, "excerpts": 90, "files": 90, "gt_all": true, "gt_covered": ["src/rpc/client.cpp", "src/rpc/client.h"], "pairs_complete": 9, "policy": "one_per_file", "task_id": "BTC-R06", "used": 1990}
+{"budget": 2000, "candidates": 301, "dropped": 217, "excerpts": 84, "files": 35, "gt_all": false, "gt_covered": [], "pairs_complete": 4, "policy": "multi", "task_id": "BTC-R06", "used": 1999}
+{"budget": 2000, "candidates": 301, "dropped": 223, "excerpts": 82, "files": 34, "gt_all": false, "gt_covered": [], "pairs_complete": 4, "policy": "expanded", "task_id": "BTC-R06", "used": 2000}
+{"budget": 2000, "candidates": 516, "dropped": 430, "excerpts": 86, "files": 86, "gt_all": false, "gt_covered": [], "pairs_complete": 7, "policy": "one_per_file", "task_id": "BTC-R07", "used": 1995}
+{"budget": 2000, "candidates": 516, "dropped": 431, "excerpts": 85, "files": 39, "gt_all": false, "gt_covered": [], "pairs_complete": 0, "policy": "multi", "task_id": "BTC-R07", "used": 1992}
+{"budget": 2000, "candidates": 516, "dropped": 433, "excerpts": 84, "files": 39, "gt_all": false, "gt_covered": [], "pairs_complete": 1, "policy": "expanded", "task_id": "BTC-R07", "used": 1991}
+{"budget": 2000, "candidates": 792, "dropped": 704, "excerpts": 88, "files": 88, "gt_all": false, "gt_covered": [], "pairs_complete": 6, "policy": "one_per_file", "task_id": "BTC-R08", "used": 1998}
+{"budget": 2000, "candidates": 792, "dropped": 700, "excerpts": 92, "files": 31, "gt_all": false, "gt_covered": [], "pairs_complete": 1, "policy": "multi", "task_id": "BTC-R08", "used": 1990}
+{"budget": 2000, "candidates": 792, "dropped": 701, "excerpts": 92, "files": 31, "gt_all": false, "gt_covered": [], "pairs_complete": 1, "policy": "expanded", "task_id": "BTC-R08", "used": 1993}
+{"budget": 2000, "candidates": 1431, "dropped": 1344, "excerpts": 87, "files": 87, "gt_all": false, "gt_covered": [], "pairs_complete": 3, "policy": "one_per_file", "task_id": "BTC-R09", "used": 1999}
+{"budget": 2000, "candidates": 1431, "dropped": 1344, "excerpts": 87, "files": 41, "gt_all": false, "gt_covered": [], "pairs_complete": 0, "policy": "multi", "task_id": "BTC-R09", "used": 1997}
+{"budget": 2000, "candidates": 1431, "dropped": 1348, "excerpts": 86, "files": 42, "gt_all": false, "gt_covered": [], "pairs_complete": 3, "policy": "expanded", "task_id": "BTC-R09", "used": 1993}
+{"budget": 2000, "candidates": 416, "dropped": 328, "excerpts": 88, "files": 88, "gt_all": false, "gt_covered": ["src/net.h"], "pairs_complete": 8, "policy": "one_per_file", "task_id": "BTC-R10", "used": 1998}
+{"budget": 2000, "candidates": 416, "dropped": 335, "excerpts": 81, "files": 28, "gt_all": false, "gt_covered": [], "pairs_complete": 1, "policy": "multi", "task_id": "BTC-R10", "used": 1997}
+{"budget": 2000, "candidates": 416, "dropped": 338, "excerpts": 81, "files": 29, "gt_all": false, "gt_covered": [], "pairs_complete": 2, "policy": "expanded", "task_id": "BTC-R10", "used": 2000}
+{"budget": 2000, "candidates": 419, "dropped": 330, "excerpts": 89, "files": 89, "gt_all": true, "gt_covered": ["src/net.h", "src/net_processing.cpp"], "pairs_complete": 6, "policy": "one_per_file", "task_id": "BTC-R11", "used": 2000}
+{"budget": 2000, "candidates": 419, "dropped": 336, "excerpts": 83, "files": 29, "gt_all": false, "gt_covered": [], "pairs_complete": 0, "policy": "multi", "task_id": "BTC-R11", "used": 1991}
+{"budget": 2000, "candidates": 419, "dropped": 338, "excerpts": 83, "files": 30, "gt_all": false, "gt_covered": [], "pairs_complete": 2, "policy": "expanded", "task_id": "BTC-R11", "used": 1991}
+{"budget": 2000, "candidates": 222, "dropped": 143, "excerpts": 79, "files": 79, "gt_all": false, "gt_covered": [], "pairs_complete": 8, "policy": "one_per_file", "task_id": "BTC-R12", "used": 1996}
+{"budget": 2000, "candidates": 222, "dropped": 146, "excerpts": 76, "files": 29, "gt_all": false, "gt_covered": [], "pairs_complete": 0, "policy": "multi", "task_id": "BTC-R12", "used": 2000}
+{"budget": 2000, "candidates": 222, "dropped": 148, "excerpts": 76, "files": 30, "gt_all": false, "gt_covered": [], "pairs_complete": 1, "policy": "expanded", "task_id": "BTC-R12", "used": 1999}
+{"budget": 2000, "candidates": 1217, "dropped": 1133, "excerpts": 84, "files": 84, "gt_all": false, "gt_covered": [], "pairs_complete": 3, "policy": "one_per_file", "task_id": "BTC-R13", "used": 1999}
+{"budget": 2000, "candidates": 1217, "dropped": 1132, "excerpts": 85, "files": 35, "gt_all": false, "gt_covered": [], "pairs_complete": 0, "policy": "multi", "task_id": "BTC-R13", "used": 2000}
+{"budget": 2000, "candidates": 1217, "dropped": 1135, "excerpts": 85, "files": 36, "gt_all": false, "gt_covered": [], "pairs_complete": 3, "policy": "expanded", "task_id": "BTC-R13", "used": 1994}
+{"budget": 2000, "candidates": 1325, "dropped": 1240, "excerpts": 85, "files": 85, "gt_all": false, "gt_covered": [], "pairs_complete": 3, "policy": "one_per_file", "task_id": "BTC-R14", "used": 1991}
+{"budget": 2000, "candidates": 1325, "dropped": 1243, "excerpts": 82, "files": 33, "gt_all": false, "gt_covered": [], "pairs_complete": 0, "policy": "multi", "task_id": "BTC-R14", "used": 1992}
+{"budget": 2000, "candidates": 1325, "dropped": 1246, "excerpts": 82, "files": 35, "gt_all": false, "gt_covered": [], "pairs_complete": 3, "policy": "expanded", "task_id": "BTC-R14", "used": 2000}
+{"budget": 2000, "candidates": 1535, "dropped": 1455, "excerpts": 80, "files": 80, "gt_all": false, "gt_covered": [], "pairs_complete": 4, "policy": "one_per_file", "task_id": "BTC-R15", "used": 1992}
+{"budget": 2000, "candidates": 1535, "dropped": 1455, "excerpts": 80, "files": 35, "gt_all": false, "gt_covered": [], "pairs_complete": 0, "policy": "multi", "task_id": "BTC-R15", "used": 1995}
+{"budget": 2000, "candidates": 1535, "dropped": 1457, "excerpts": 81, "files": 36, "gt_all": false, "gt_covered": [], "pairs_complete": 3, "policy": "expanded", "task_id": "BTC-R15", "used": 1994}
+{"budget": 2000, "candidates": 1289, "dropped": 1208, "excerpts": 81, "files": 81, "gt_all": false, "gt_covered": [], "pairs_complete": 5, "policy": "one_per_file", "task_id": "BTC-R16", "used": 1996}
+{"budget": 2000, "candidates": 1289, "dropped": 1208, "excerpts": 81, "files": 32, "gt_all": false, "gt_covered": [], "pairs_complete": 2, "policy": "multi", "task_id": "BTC-R16", "used": 1998}
+{"budget": 2000, "candidates": 1289, "dropped": 1213, "excerpts": 81, "files": 33, "gt_all": false, "gt_covered": [], "pairs_complete": 5, "policy": "expanded", "task_id": "BTC-R16", "used": 2000}
+{"budget": 2000, "candidates": 3, "dropped": 2, "excerpts": 1, "files": 1, "gt_all": false, "gt_covered": [], "pairs_complete": 0, "policy": "one_per_file", "task_id": "BTC-R17", "used": 33}
+{"budget": 2000, "candidates": 3, "dropped": 0, "excerpts": 3, "files": 1, "gt_all": false, "gt_covered": [], "pairs_complete": 0, "policy": "multi", "task_id": "BTC-R17", "used": 102}
+{"budget": 2000, "candidates": 3, "dropped": 0, "excerpts": 3, "files": 1, "gt_all": false, "gt_covered": [], "pairs_complete": 0, "policy": "expanded", "task_id": "BTC-R17", "used": 102}
+{"budget": 2000, "candidates": 3, "dropped": 2, "excerpts": 1, "files": 1, "gt_all": false, "gt_covered": [], "pairs_complete": 0, "policy": "one_per_file", "task_id": "BTC-R18", "used": 33}
+{"budget": 2000, "candidates": 3, "dropped": 0, "excerpts": 3, "files": 1, "gt_all": false, "gt_covered": [], "pairs_complete": 0, "policy": "multi", "task_id": "BTC-R18", "used": 102}
+{"budget": 2000, "candidates": 3, "dropped": 0, "excerpts": 3, "files": 1, "gt_all": false, "gt_covered": [], "pairs_complete": 0, "policy": "expanded", "task_id": "BTC-R18", "used": 102}
+{"budget": 2000, "candidates": 3, "dropped": 2, "excerpts": 1, "files": 1, "gt_all": false, "gt_covered": [], "pairs_complete": 0, "policy": "one_per_file", "task_id": "BTC-R19", "used": 33}
+{"budget": 2000, "candidates": 3, "dropped": 0, "excerpts": 3, "files": 1, "gt_all": false, "gt_covered": [], "pairs_complete": 0, "policy": "multi", "task_id": "BTC-R19", "used": 102}
+{"budget": 2000, "candidates": 3, "dropped": 0, "excerpts": 3, "files": 1, "gt_all": false, "gt_covered": [], "pairs_complete": 0, "policy": "expanded", "task_id": "BTC-R19", "used": 102}
+{"budget": 2000, "candidates": 4, "dropped": 2, "excerpts": 2, "files": 2, "gt_all": false, "gt_covered": [], "pairs_complete": 0, "policy": "one_per_file", "task_id": "BTC-R20", "used": 66}
+{"budget": 2000, "candidates": 4, "dropped": 0, "excerpts": 4, "files": 2, "gt_all": false, "gt_covered": [], "pairs_complete": 0, "policy": "multi", "task_id": "BTC-R20", "used": 135}
+{"budget": 2000, "candidates": 4, "dropped": 0, "excerpts": 4, "files": 2, "gt_all": false, "gt_covered": [], "pairs_complete": 0, "policy": "expanded", "task_id": "BTC-R20", "used": 135}
+{"budget": 2000, "candidates": 490, "dropped": 398, "excerpts": 92, "files": 92, "gt_all": false, "gt_covered": [], "pairs_complete": 11, "policy": "one_per_file", "task_id": "BTC-R21", "used": 1993}
+{"budget": 2000, "candidates": 490, "dropped": 400, "excerpts": 90, "files": 34, "gt_all": false, "gt_covered": [], "pairs_complete": 3, "policy": "multi", "task_id": "BTC-R21", "used": 1999}
+{"budget": 2000, "candidates": 490, "dropped": 404, "excerpts": 89, "files": 33, "gt_all": false, "gt_covered": [], "pairs_complete": 3, "policy": "expanded", "task_id": "BTC-R21", "used": 1996}
+{"budget": 2000, "candidates": 151, "dropped": 94, "excerpts": 57, "files": 57, "gt_all": true, "gt_covered": ["src/policy/feerate.cpp", "src/policy/feerate.h"], "pairs_complete": 4, "policy": "one_per_file", "task_id": "BTC-R22", "used": 1428}
+{"budget": 2000, "candidates": 151, "dropped": 71, "excerpts": 80, "files": 30, "gt_all": true, "gt_covered": ["src/policy/feerate.cpp", "src/policy/feerate.h"], "pairs_complete": 2, "policy": "multi", "task_id": "BTC-R22", "used": 1998}
+{"budget": 2000, "candidates": 151, "dropped": 74, "excerpts": 79, "files": 29, "gt_all": true, "gt_covered": ["src/policy/feerate.cpp", "src/policy/feerate.h"], "pairs_complete": 2, "policy": "expanded", "task_id": "BTC-R22", "used": 1998}
+{"budget": 2000, "candidates": 240, "dropped": 161, "excerpts": 79, "files": 79, "gt_all": true, "gt_covered": ["src/script/descriptor.cpp", "src/script/descriptor.h"], "pairs_complete": 7, "policy": "one_per_file", "task_id": "BTC-R23", "used": 1998}
+{"budget": 2000, "candidates": 240, "dropped": 162, "excerpts": 78, "files": 31, "gt_all": false, "gt_covered": [], "pairs_complete": 0, "policy": "multi", "task_id": "BTC-R23", "used": 1995}
+{"budget": 2000, "candidates": 240, "dropped": 163, "excerpts": 78, "files": 32, "gt_all": false, "gt_covered": [], "pairs_complete": 1, "policy": "expanded", "task_id": "BTC-R23", "used": 1992}
+{"budget": 2000, "candidates": 259, "dropped": 176, "excerpts": 83, "files": 83, "gt_all": true, "gt_covered": ["src/psbt.cpp", "src/psbt.h"], "pairs_complete": 7, "policy": "one_per_file", "task_id": "BTC-R24", "used": 1996}
+{"budget": 2000, "candidates": 259, "dropped": 179, "excerpts": 80, "files": 30, "gt_all": false, "gt_covered": [], "pairs_complete": 0, "policy": "multi", "task_id": "BTC-R24", "used": 1998}
+{"budget": 2000, "candidates": 259, "dropped": 179, "excerpts": 80, "files": 30, "gt_all": false, "gt_covered": [], "pairs_complete": 0, "policy": "expanded", "task_id": "BTC-R24", "used": 1998}
+{"budget": 2000, "candidates": 1369, "dropped": 1276, "excerpts": 93, "files": 93, "gt_all": false, "gt_covered": ["src/consensus/params.h"], "pairs_complete": 4, "policy": "one_per_file", "task_id": "BTC-R25", "used": 1995}
+{"budget": 2000, "candidates": 1369, "dropped": 1277, "excerpts": 92, "files": 31, "gt_all": false, "gt_covered": [], "pairs_complete": 3, "policy": "multi", "task_id": "BTC-R25", "used": 1998}
+{"budget": 2000, "candidates": 1369, "dropped": 1288, "excerpts": 88, "files": 32, "gt_all": false, "gt_covered": ["src/kernel/chainparams.h"], "pairs_complete": 7, "policy": "expanded", "task_id": "BTC-R25", "used": 2000}
+{"budget": 2000, "candidates": 912, "dropped": 830, "excerpts": 82, "files": 82, "gt_all": false, "gt_covered": [], "pairs_complete": 6, "policy": "one_per_file", "task_id": "BTC-R26", "used": 2000}
+{"budget": 2000, "candidates": 912, "dropped": 827, "excerpts": 85, "files": 31, "gt_all": false, "gt_covered": [], "pairs_complete": 1, "policy": "multi", "task_id": "BTC-R26", "used": 1996}
+{"budget": 2000, "candidates": 912, "dropped": 832, "excerpts": 85, "files": 34, "gt_all": false, "gt_covered": [], "pairs_complete": 4, "policy": "expanded", "task_id": "BTC-R26", "used": 1995}

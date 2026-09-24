@@ -13,6 +13,14 @@ estado honesto por experimento.
 (0 pares, 108 tok) > `one_per_file` (0 pares, 48 tok, perde profundidade) no repo sintético.
 Decisão: `expanded` candidato; produto final `evidência insuficiente` sem piloto.
 
+## Adendo corpus (E26-02 `btc-e2602-corpus-001`, pós-PIN)
+
+Mesmas 3 políticas sobre conjuntos C reais (~610 candidatos/tarefa, ordem alfabética,
+budget 2000): one_per_file gt 0.340, multi 0.038, expanded 0.051 — largura vence SOB ORDEM
+ARBITRÁRIA, invertendo o sintético. Ranking sem score confunde o resultado: decisão de
+produto segue `evidência insuficiente`; próximo = candidatos ranqueados por score.
+Candidato `C_btc` inalterado até lá.
+
 ## E26-03 espelho — entidades e relações: NÃO EXECUTADO
 
 Nenhuma entidade/relação implementada; controle sem arestas permanece o padrão por ausência

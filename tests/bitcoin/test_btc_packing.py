@@ -9,6 +9,7 @@ import tempfile
 from archatlas.bitcoin.dryrun import FIXTURES, build_fixture_repo
 from archatlas.bitcoin.packing import header_pairs, pack_candidates
 from archatlas.bitcoin.cpp_lex import extract_cpp_lexical
+from archatlas.bitcoin.packrun import POLICIES, candidates_for_task, run_packing
 
 
 def _setup():
@@ -90,3 +91,23 @@ def test_gates_loud_and_tiny_budget_enforced():
     for pol, out in tiny.items():
         assert out["used"] <= 5, pol
         assert any(e["rule"] == "over_budget" for e in out["truncation_log"]), pol
+
+
+def test_packrun_candidates_and_policies_on_synthetic(tmp_path):
+    import tempfile
+    from archatlas.bitcoin.dryrun import build_fixture_repo as _bfr
+    tmp = tempfile.TemporaryDirectory(prefix="btc-packrun-")
+    root = _bfr(pathlib.Path(tmp.name))
+    delivered = ["src/validation.cpp", "src/validation.h", "src/gone.cpp"]
+    cands = candidates_for_task(root, delivered, "CheckTransaction validation")
+    assert cands and all(c["file"] != "src/gone.cpp" for c in cands)
+    assert sum(1 for c in cands if c["file"] == "src/validation.cpp") <= 3
+    tasks = [{"id": "T1", "type": "code2test", "query": "CheckTransaction validation",
+              "given_files": [], "expected_dev_files": ["src/validation.cpp", "src/validation.h"]}]
+    rows = run_packing(root, tasks, {"T1": delivered}, budget=2000)
+    assert sorted(r["policy"] for r in rows) == sorted(POLICIES)
+    by = {r["policy"]: r for r in rows}
+    assert by["expanded"]["pairs_complete"] >= by["multi"]["pairs_complete"]
+    assert all(r["used"] <= 2000 for r in rows)
+    assert run_packing(root, tasks, {"T1": delivered}, budget=2000) == rows
+    tmp.cleanup()
