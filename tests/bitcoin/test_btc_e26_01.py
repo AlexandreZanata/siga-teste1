@@ -157,6 +157,42 @@ def test_d_bm25_ranks_and_requires_ranker(tmp_path):
 RUNS3 = pathlib.Path("experiments/bitcoin/e26_01/btc-e2601-003/runs.jsonl")
 
 
+def test_text_seed_adds_textual_seeds_and_stays_deterministic(tmp_path):
+    from archatlas.bitcoin.realretrieval import corpus_texts
+    root = tmp_path
+    (root / "frame.py").write_bytes(b"report querytoken failure\n")
+    (root / "impl.cpp").write_bytes(b'#include "impl.h"\nquerytoken logic here\n')
+    (root / "impl.h").write_bytes(b"#pragma once\n")
+    texts = corpus_texts(root)
+    plain, _ = exec_arm("C_adapter", root, texts, "querytoken failure")
+    seeded, note = exec_arm("C_adapter", root, texts, "querytoken failure",
+                            None, 25, None, True)
+    assert "impl.cpp" in seeded and "text_seeds=" in note
+    assert seeded == exec_arm("C_adapter", root, texts, "querytoken failure",
+                              None, 25, None, True)[0]
+
+
+RUNS5 = pathlib.Path("experiments/bitcoin/e26_01/btc-e2601-005/runs.jsonl")
+
+
+def test_text_seed_pairing_and_replay():
+    all_tasks = json.loads(TASKS.read_text(encoding="utf-8"))
+    tasks = {t["id"]: [f for f in t["expected_dev_files"] if f not in t.get("given_files", [])]
+             for t in all_tasks if t["type"] != "negative"}
+    runs = [json.loads(l) for l in RUNS5.read_text(encoding="utf-8").splitlines()]
+    assert len(runs) == 34 * 4 * 2
+    assert all(r["split_ids"] is True for r in runs)
+    assert all(r["text_seed"] == (r["condition"] == "C_adapter") for r in runs)
+    assert {(r["task_id"], r["condition"], r["budget"]) for r in runs} == \
+        {(t["id"], c, b) for t in all_tasks
+         for c in ("A_busca", "B_freq", "C_adapter", "D_bm25") for b in (2000, 8000)}
+    for r in runs:
+        if r["type"] == "negative":
+            continue
+        sc = score_delivery(set(r["delivered"]), {"files": tasks[r["task_id"]]})
+        assert sc["hit"] == r["hit"] and sc["recall_set"] == r["recall_set"]
+
+
 def test_d_arm_pairing_and_replay():
     all_tasks = json.loads(TASKS.read_text(encoding="utf-8"))
     tasks = {t["id"]: [f for f in t["expected_dev_files"] if f not in t.get("given_files", [])]

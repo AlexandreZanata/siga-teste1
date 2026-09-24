@@ -6,20 +6,19 @@ com dataset, tarefas, pré-registro e resultados próprios. Nenhum aceite copiad
 
 ## Checkpoint
 
-- Etapa atual: **E26-01 com split de identificadores (ganho sem perda)** — 272 rodadas;
-  A 1.000/1.000, C 0.808/0.750 (R17+R18 recuperados, trace2code 0.625), D inalterado;
-  R12 exige alias verdadeiro; sem edição, sem modelo.
-- Último aceite e evidências: `archatlas/bitcoin/vocab.py` (`btc-vocab/1` mecânico + `ALIASES`
-  com evidência, desligados por padrão) + `tests/bitcoin/test_btc_vocab.py` (2/2);
-  `archatlas/bitcoin/realretrieval.py` (`split_ids` registrado por rodada);
-  `experiments/bitcoin/e26_01/btc-e2601-004/` (runs + REPORT comparativo).
-- SHA publicado: `7d9e6df` (braço D) em `origin/codex/bitcoin-context`; este commit
+- Etapa atual: **E26-01 com text-seed em C (ganho sem perda)** — 272 rodadas; C 0.962/0.885
+  (R04+R10+R12+R19 ganhos, R20 único miss); A/B/D idênticos; sem edição, sem modelo.
+- Último aceite e evidências: `archatlas/bitcoin/realretrieval.py` (`text_seed` opt-in só em C,
+  registrado); `tests/bitcoin/test_btc_e26_01.py` (11/11: text-seed sintético + pareamento 272);
+  `experiments/bitcoin/e26_01/btc-e2601-005/` (runs + REPORT comparativo).
+- SHA publicado: `3c66ab8` (split) em `origin/codex/bitcoin-context`; este commit
   a registrar após push.
-- `run_id`: `btc-e2601-004` (leitura, 95s). Reserva: nenhuma. Pedido ao core: nenhum.
+- `run_id`: `btc-e2601-005` (leitura, 179s). Reserva: nenhuma. Pedido ao core: nenhum.
 - Bloqueio exato: edição/piloto exigem teto + modelos + custodiante + dev (nulos); `main`
   observado, NÃO incorporado. Sem escritor concorrente neste turno.
-- Alternativa independente: aliases com evidência (R12); K/top-N; build isolado.
-- Próximo comando/ação: rodada com aliases aplicados; ou build isolado.
+- Alternativa independente: ponte teste→impl (R20) ou `unsupported`; E26-02 com spans do C
+  atual; build isolado.
+- Próximo comando/ação: E26-02 sobre conjuntos C+text-seed; ou build isolado.
 
 ## Etapas
 
@@ -69,6 +68,8 @@ na sonda; este commit: BM25 textual + E26-02 ranqueado; sem reescrita);
 2026-09-24 E26-01 com braço D_bm25 (272 rodadas: D 0.654/0.481 a 10 arqs, C 0.731/0.673;
 D precisão, C recall; A/B idênticos);
 2026-09-24 E26-01 com split (272 rodadas: A 1.0, C 0.808/0.750, R17+R18 ganhos, zero perdas;
-D inalterado; R12 pede alias verdadeiro).
+D inalterado; R12 pede alias verdadeiro);
+2026-09-24 E26-01 com text-seed em C (272 rodadas: C 0.962/0.885, R04+R10+R12+R19 ganhos,
+zero perdas; R20 único miss; A/B/D idênticos).
 Nenhuma fase posterior marcada além de BTC-P7. Experimentos BTC-E26-00–06 e E26-06 espelho:
 E26-00/E26-02/drills sintéticos + E26-01 em dataset (2 rodadas); edição segue sem modelo.

@@ -56,13 +56,16 @@ def build_fanin(root: pathlib.Path) -> dict[str, int]:
 
 def exec_arm(arm: str, root: pathlib.Path, texts: dict[str, str], query: str,
              fanin: dict[str, int] | None = None, cap: int = FANIN_CAP,
-             ranker=None) -> tuple[set, str]:
+             ranker=None, text_seed: bool = False) -> tuple[set, str]:
     """Braço determinístico rotulado; qualidade só interpretável no REPORT.
 
     `fanin=None` desliga o teto (comportamento original); senão alvos com
     `fanin > cap` são pulados e contados em `hubs_skipped` na nota.
     `D_bm25` (braço extra, fora de `ARMS`) exige `ranker(query, k)` e entrega os
     `D_TOP_FILES` arquivos com melhor linha BM25.
+    `text_seed=True` (só C): soma às sementes arquivos com ocorrência textual dos
+    tokens (top-30 por frequência, desempate por path) — sementes presas em frames
+    Python sem `#include` ganham de onde saltar.
     """
     toks = [t.lower() for t in query.split()]
     if arm == "A_busca":
@@ -75,6 +78,14 @@ def exec_arm(arm: str, root: pathlib.Path, texts: dict[str, str], query: str,
         names = {pathlib.Path(f).stem.lower() for f in texts}
         seeds = {f for f in texts if any(tok in pathlib.Path(f).stem.lower() for tok in toks)
                  and pathlib.Path(f).stem.lower() in names}
+        extra = ""
+        if text_seed:
+            scored = sorted(((sum(t.count(tok) for tok in toks), f) for f, t in texts.items()
+                             if any(tok in t for tok in toks)),
+                            key=lambda p: (-p[0], p[1]))[:30]
+            before = len(seeds)
+            seeds |= {f for _, f in scored}
+            extra = f"; text_seeds={len(seeds) - before}"
         hop = set()
         skipped = 0
         for f in sorted(seeds):
@@ -91,7 +102,8 @@ def exec_arm(arm: str, root: pathlib.Path, texts: dict[str, str], query: str,
                 hop |= {g for g in texts if pathlib.Path(g).name == base}
         return (seeds | hop,
                 f"adaptador real btc-cpp-lex/1 + seeds textuais; sem modelo; "
-                f"hubs_skipped={skipped}; fanin_cap={cap if fanin is not None else 'off'}")
+                f"hubs_skipped={skipped}; fanin_cap={cap if fanin is not None else 'off'}"
+                f"{extra}")
     if arm == "D_bm25":
         if ranker is None:
             raise ValueError("D_bm25 exige ranker BM25 (db_path em run_all)")
@@ -130,7 +142,8 @@ def verify_gold(tasks: list, texts: dict[str, str]) -> None:
 
 def run_all(root: pathlib.Path, tasks: list, budgets=(2000, 8000), seed: int = 7,
             cap: int = FANIN_CAP, extra_arms: tuple = (),
-            db_path: pathlib.Path | None = None, split_ids: bool = False) -> tuple[list, list]:
+            db_path: pathlib.Path | None = None, split_ids: bool = False,
+            text_seed: bool = False) -> tuple[list, list]:
     """Tarefas × (ARMS + extras) × budgets. Retorna (runs, manifests). Sem modelo.
 
     `split_ids=True` expande a query com partes de identificadores (`vocab`,
@@ -161,7 +174,8 @@ def run_all(root: pathlib.Path, tasks: list, budgets=(2000, 8000), seed: int = 7
             query, added = task["query"], []
             if split_ids:
                 query, added = expand_query(task["query"])
-            delivered, note = exec_arm(arm, root, texts, query, fanin, cap, ranker)
+            delivered, note = exec_arm(arm, root, texts, query, fanin, cap, ranker,
+                                           text_seed and arm == "C_adapter")
             m = re.search(r"hubs_skipped=(\d+)", note)
             hubs = int(m.group(1)) if m else 0
             if task.get("type") == "negative":
@@ -176,6 +190,7 @@ def run_all(root: pathlib.Path, tasks: list, budgets=(2000, 8000), seed: int = 7
             runs.append({"task_id": task_id, "condition": arm, "budget": budget,
                          "order": order, "sha": CORE_SHA, "tokenizer": TOKENIZER,
                          "fanin_cap": cap, "split_ids": split_ids,
+                         "text_seed": text_seed and arm == "C_adapter",
                          "added_tokens": added,
                          "type": task.get("type"), "delivered": sorted(delivered),
                          "opened": sorted(delivered), "executor_note": note,
