@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 """Gera TABLES_v1.md SOMENTE de artefatos medidos (falha se artefato ausente)."""
 from __future__ import annotations
+from archatlas.config import REPO_ROOT, dataset_root
 import hashlib
 import json
 import pathlib
@@ -23,7 +24,7 @@ def main() -> int:
     bake = json.loads((B / "bakeoff_f13.json").read_text())
     perf = json.loads((B / "perf_f14.json").read_text())
     qs = json.loads((B / "queries_dev.json").read_text())
-    ds = pathlib.Path("/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga")
+    ds = dataset_root()
     con = open_db(pathlib.Path(":memory:"))
     index_many(con, sorted((ds / "siga-ex/src/main/java").rglob("*.java"))[:40], SHA)
     rebuild_lexical(con)

@@ -1,3 +1,4 @@
+from archatlas.config import REPO_ROOT, dataset_root
 # SPDX-License-Identifier: Apache-2.0
 """F3: incremental invalida só o arquivo tocado; reindex == full; hash estável."""
 import pathlib
@@ -5,8 +6,8 @@ import shutil
 
 from archatlas.store import index_many, open_db, stable_hash
 
-A = pathlib.Path("/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExMovimentacao.java")
-B = pathlib.Path("/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExMobilVO.java")
+A = dataset_root() / "siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExMovimentacao.java"
+B = dataset_root() / "siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExMobilVO.java"
 SHA = "e3be22828f787cbe71b339aecb7a7bf569099803"
 
 

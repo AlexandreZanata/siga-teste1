@@ -1,9 +1,10 @@
+from archatlas.config import REPO_ROOT, dataset_root
 # SPDX-License-Identifier: Apache-2.0
 """F1: o PIN afirma exatamente o HEAD real do dataset (zero suposição)."""
 import pathlib
 import subprocess
 
-DATASET = pathlib.Path("/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga")
+DATASET = dataset_root()
 EXPECTED_SHA = "e3be22828f787cbe71b339aecb7a7bf569099803"
 
 

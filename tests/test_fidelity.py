@@ -1,10 +1,11 @@
+from archatlas.config import REPO_ROOT, dataset_root
 # SPDX-License-Identifier: Apache-2.0
 """F7: fidelidade Java ~total (único zero = package-info legítimo); JSPs fora de cobertura declarada."""
 import pathlib
 
 from archatlas.fidelity import measure_jsp, measure_scope
 
-DS = pathlib.Path("/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga")
+DS = dataset_root()
 
 
 def test_java_fidelity():

@@ -1,11 +1,12 @@
 # SPDX-License-Identifier: Apache-2.0
 """Censo determinístico do dataset SIGA (F1). Só afirma o que leu do disco."""
 from __future__ import annotations
+from archatlas.config import REPO_ROOT, dataset_root
 import hashlib
 import json
 import pathlib
 
-DATASET = pathlib.Path("/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga")
+DATASET = dataset_root()
 MODULES = ["siga-ex", "siga-cp", "siga-base", "siga-ws", "siga-wf", "sigawf", "sigaex", "siga"]
 
 

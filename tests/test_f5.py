@@ -1,3 +1,4 @@
+from archatlas.config import REPO_ROOT, as_abs, dataset_root
 # SPDX-License-Identifier: Apache-2.0
 """F5: BM25 encontra a classe âncora; cápsula respeita budget hard; GT 100% verificado."""
 import json
@@ -8,8 +9,8 @@ from archatlas.capsule import build_capsule
 from archatlas.lexical import bm25_search, rebuild_lexical
 from archatlas.store import index_many, open_db
 
-A = pathlib.Path("/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExMovimentacao.java")
-B = pathlib.Path("/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExMobilVO.java")
+A = dataset_root() / "siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExMovimentacao.java"
+B = dataset_root() / "siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExMobilVO.java"
 SHA = "e3be22828f787cbe71b339aecb7a7bf569099803"
 DEV = pathlib.Path("benchmarks/siga/queries_dev.json")
 
@@ -61,4 +62,4 @@ def test_benchmark_gt_verified():
             files = gt.get("files", [gt["file"]] if "file" in gt else [])
         assert files, q["id"]
         for f in files:
-            assert pathlib.Path(f).exists(), (q["id"], f)
+            assert as_abs(f).exists(), (q["id"], f)

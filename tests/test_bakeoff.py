@@ -1,3 +1,4 @@
+from archatlas.config import REPO_ROOT, as_rel, dataset_root
 # SPDX-License-Identifier: Apache-2.0
 """F13: bake-off mede recall+tempo das 5 condições nas 100Qs; roteador >= melhor isolada."""
 import json
@@ -13,18 +14,19 @@ SHA = "e3be22828f787cbe71b339aecb7a7bf569099803"
 
 
 def gt_match(q: dict, files: set[str]) -> bool:
+    rel = {as_rel(f) for f in files}
     gt = q["gt"]
     if "files" in gt:
-        return any(f in files for f in gt["files"])
+        return any(f in rel for f in gt["files"])
     if "edges" in gt:
-        return any(e["file"] in files for e in gt["edges"])
+        return any(e["file"] in rel for e in gt["edges"])
     if "package" in gt:
-        return bool(gt.get("file") in files or any(f.startswith(gt["package"]) for f in files))
-    return bool(gt.get("file")) and gt["file"] in files
+        return bool(gt.get("file") in rel or any(f.startswith(gt["package"]) for f in rel))
+    return bool(gt.get("file")) and gt["file"] in rel
 
 
 def test_bakeoff(tmp_path):
-    ds = pathlib.Path("/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga")
+    ds = dataset_root()
     roots = []
     for rel in ("siga-ex/src/main/java", "siga-cp/src/main/java", "siga-wf/src/main/java"):
         roots += sorted((ds / rel).rglob("*.java"))

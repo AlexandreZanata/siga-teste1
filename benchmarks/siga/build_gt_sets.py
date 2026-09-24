@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 """GT-conjunto F11: E/G/D passam a aceitar QUALQUER referência verificada no escopo (não só 1 arquivo)."""
 from __future__ import annotations
+from archatlas.config import REPO_ROOT, as_rel, dataset_root
 import json
 import pathlib
 import sys
@@ -9,7 +10,7 @@ sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent.parent))
 from archatlas.query import find_references
 from archatlas.store import index_many, open_db
 
-DATASET = pathlib.Path("/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga")
+DATASET = dataset_root()
 SHA = "e3be22828f787cbe71b339aecb7a7bf569099803"
 DEV = pathlib.Path(__file__).resolve().parent / "queries_dev.json"
 
@@ -34,11 +35,12 @@ def main() -> int:
             got: list[str] = []
             for nm in names:
                 for r in find_references(con, nm):
-                    if r["file"] in scope and r["file"] not in got:
+                    rel = as_rel(r["file"])
+                    if r["file"] in scope and rel not in got:
                         assert pathlib.Path(r["file"]).exists()
                         assert nm in pathlib.Path(r["file"]).read_text(
                             encoding="utf-8", errors="replace").splitlines()[r["line"] - 1]
-                        got.append(r["file"])
+                        got.append(rel)
             if got:
                 q["gt"]["files"] = got
                 q["gt"].pop("file", None)
@@ -59,9 +61,9 @@ def main() -> int:
                         dfs(e["callee"], path + [e], seen | {e["callee"]})
 
             dfs(a, [], {a})
-            pfiles = sorted({e["file"] for p in paths for e in p})
+            pfiles = sorted({as_rel(e["file"]) for p in paths for e in p})
             if pfiles:
-                q["gt"]["path_files"] = pfiles
+                q["gt"]["path_files"] = [as_rel(f) for f in pfiles]
                 q["gt"]["n_paths"] = len(paths)
     json.dump(qs, open(DEV, "w"), indent=1, ensure_ascii=False)
     print(f"questões: {len(qs)}, com GT-conjunto: {n_sets}")

@@ -1,3 +1,4 @@
+from archatlas.config import REPO_ROOT, dataset_root
 # SPDX-License-Identifier: Apache-2.0
 """F14: escala real — full 504 arqs, p50/p95, tamanho, incremental 10/100 vs rebuild (cópias tmp, dataset intacto)."""
 import json
@@ -10,7 +11,7 @@ from archatlas.lexical import rebuild_lexical
 from archatlas.store import index_many, open_db
 from archatlas.strategies import s_router
 
-DS = pathlib.Path("/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java")
+DS = dataset_root() / "siga-ex/src/main/java"
 SHA = "e3be22828f787cbe71b339aecb7a7bf569099803"
 DEV = pathlib.Path("benchmarks/siga/queries_dev.json")
 

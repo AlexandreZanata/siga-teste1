@@ -1,3 +1,4 @@
+from archatlas.config import REPO_ROOT, dataset_root
 # SPDX-License-Identifier: Apache-2.0
 """F12 dogfooding: mesmo DB, Python (este repo) + Java (SIGA), sem path hardcoded."""
 import pathlib
@@ -8,8 +9,8 @@ from archatlas.query import find_symbol
 from archatlas.store import index_discovered, open_db
 from archatlas.verify import verify_symbol
 
-ATLAS = pathlib.Path("/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/archatlas")
-SIGA_JAVA = pathlib.Path("/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java")
+ATLAS = REPO_ROOT / "archatlas"
+SIGA_JAVA = dataset_root() / "siga-ex/src/main/java"
 
 
 def test_discover_languages():

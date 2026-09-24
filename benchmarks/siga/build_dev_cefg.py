@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 """Estende queries_dev.json com C/E/F/G — GT só de arestas/linhas lidas (falha alto se ausente)."""
 from __future__ import annotations
+from archatlas.config import REPO_ROOT, as_rel, dataset_root
 import json
 import pathlib
 import sys
@@ -10,7 +11,7 @@ from archatlas.calls import extract_calls
 from archatlas.query import find_references
 from archatlas.store import index_many, open_db
 
-DATASET = pathlib.Path("/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga")
+DATASET = dataset_root()
 SHA = "e3be22828f787cbe71b339aecb7a7bf569099803"
 OUT = pathlib.Path(__file__).resolve().parent / "queries_dev.json"
 
@@ -34,24 +35,24 @@ def main() -> int:
         if n_c < 10:
             qs.append({"id": f"C-{n_c:03d}", "category": "C",
                        "query": f"Em qual arquivo/linha o método {caller} chama {callee}?",
-                       "gt": {"file": f, "line": line, "caller": caller, "callee": callee}})
+                       "gt": {"file": as_rel(f), "line": line, "caller": caller, "callee": callee}})
             n_c += 1
         refs = [r for r in find_references(con, callee) if r["file"] != f][:2]
         if refs and n_e < 10:
             qs.append({"id": f"E-{n_e:03d}", "category": "E",
                        "query": f"Cite um caller de {callee} (quem o chama e onde).",
-                       "gt": {"file": refs[0]["file"], "line": refs[0]["line"], "callee": callee}})
+                       "gt": {"file": as_rel(refs[0]["file"]), "line": refs[0]["line"], "callee": callee}})
             n_e += 1
         if refs and n_g < 10:
             qs.append({"id": f"G-{n_g:03d}", "category": "G",
                        "query": f"Se {callee} mudar, cite um arquivo que precisaria revisão.",
-                       "gt": {"files": [r["file"] for r in refs], "callee": callee}})
+                       "gt": {"files": [as_rel(r["file"]) for r in refs], "callee": callee}})
             n_g += 1
         pkg = str(pathlib.Path(f).parent).replace(str(DATASET) + "/", "")
         if n_f < 10:
             qs.append({"id": f"F-{n_f:03d}", "category": "F",
                        "query": f"Em qual pacote (diretório) está o método {caller}?",
-                       "gt": {"package": pkg, "file": f}})
+                       "gt": {"package": pkg, "file": as_rel(f)}})
             n_f += 1
     cats = {q["category"] for q in qs}
     assert {"A", "B", "C", "D", "E", "F", "G"} <= cats, cats

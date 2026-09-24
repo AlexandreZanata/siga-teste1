@@ -5,7 +5,7 @@ import pathlib
 import sqlite3
 
 from archatlas.lexical import bm25_search
-from archatlas.query import find_references, find_symbol
+from archatlas.query import find_references, find_symbol, read_contents
 
 
 def count_tokens(text: str) -> int:
@@ -14,23 +14,30 @@ def count_tokens(text: str) -> int:
 
 def build_capsule(con: sqlite3.Connection, query: str, budget: int, k: int = 20) -> dict:
     import re as _re
+    disk = read_contents(con)  # F19: lê cada arquivo UMA vez; verificação por linha mantida
     cands = bm25_search(con, query, k)
     for c in cands:
         c["tier"] = 1
-    for tok in query.split():
-        t = tok.strip("?,.")
+    codetoks = {t for tok in query.split() for t in [tok.strip("?,.")]
+                if _re.search(r"[A-Z_]", t) or len(t) > 8}
+    for t in {tok.strip("?,.") for tok in query.split()}:
         for s in find_symbol(con, t, exact=True)[:3]:
             if (s["name"], s["file"], s["line"]) not in {(c["name"], c["file"], c["line"]) for c in cands}:
                 cands.append({**s, "bm25": -1.0, "tier": 0})
-        if _re.search(r"[A-Z_]", t) or len(t) > 8:  # token code-like → refs verificadas, tier 0
-            for r in find_references(con, t)[:10]:
-                key = (r["name"], r["file"], r["line"])
-                if key not in {(c["name"], c["file"], c["line"]) for c in cands}:
-                    cands.append({"name": r["name"], "kind": "ref", "file": r["file"], "line": r["line"],
-                                  "provenance": "text-match-verified", "confidence": 0.7, "bm25": 0.0, "tier": 0})
+    for t in codetoks:  # token code-like → refs verificadas, tier 0, com co-ocorrência ≥2
+        for r in find_references(con, t, disk)[:30]:
+            key = (r["name"], r["file"], r["line"])
+            if key in {(c["name"], c["file"], c["line"]) for c in cands}:
+                continue
+            others = [u for u in codetoks if u != t]
+            blob = "\n".join(disk.get(r["file"], []))
+            if others and not any(u in blob for u in others):
+                continue
+            cands.append({"name": r["name"], "kind": "ref", "file": r["file"], "line": r["line"],
+                          "provenance": "text-match-verified", "confidence": 0.7, "bm25": 0.0, "tier": 0})
     if not cands:  # F10: nada indexado p/ query → refs verificadas de todos os tokens
         for tok in query.split():
-            for r in find_references(con, tok.strip("?,."))[:10]:
+            for r in find_references(con, tok.strip("?,."), disk)[:10]:
                 key = (r["name"], r["file"], r["line"])
                 if key not in {(c["name"], c["file"], c["line"]) for c in cands}:
                     cands.append({"name": r["name"], "kind": "ref", "file": r["file"], "line": r["line"],
@@ -38,7 +45,7 @@ def build_capsule(con: sqlite3.Connection, query: str, budget: int, k: int = 20)
     ranked = sorted(cands, key=lambda c: (c.get("tier", 1), c.get("bm25", 0), c["file"], c["line"]))
     seen = {(c["name"], c["file"], c["line"]) for c in ranked}
     for c in ranked[:8]:  # expansão 1-hop p/ qualquer símbolo (métodos incluídos)
-        for r in find_references(con, c["name"])[:5]:
+        for r in find_references(con, c["name"], disk)[:5]:
             key = (r["name"], r["file"], r["line"])
             if key not in seen:
                 seen.add(key)
@@ -49,10 +56,10 @@ def build_capsule(con: sqlite3.Connection, query: str, budget: int, k: int = 20)
     symbols, excerpts, citations, relations, log = [], [], [], [], []
     used = 0
     for i, c in enumerate(ranked):
-        p = pathlib.Path(c["file"])
+        lines = disk.get(c["file"])
         try:
-            line_text = p.read_text(encoding="utf-8", errors="replace").splitlines()[c["line"] - 1].strip()[:200]
-        except (OSError, IndexError):
+            line_text = lines[c["line"] - 1].strip()[:200]
+        except (TypeError, IndexError):
             log.append({"stage": "select", "rule": "unreadable", "dropped": c["name"], "reason": c["file"]})
             continue
         if c["name"] not in line_text and c["kind"] in ("class", "interface", "enum"):

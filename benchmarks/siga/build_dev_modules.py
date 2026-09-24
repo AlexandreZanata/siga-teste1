@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 """Questões A/B/D de siga-cp + siga-wf (GT verificado; ids com sufixo de módulo)."""
 from __future__ import annotations
+from archatlas.config import REPO_ROOT, as_rel, dataset_root
 import json
 import pathlib
 import sys
@@ -9,7 +10,7 @@ sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent.parent))
 from archatlas.query import find_references
 from archatlas.store import index_many, open_db
 
-DATASET = pathlib.Path("/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga")
+DATASET = dataset_root()
 SHA = "e3be22828f787cbe71b339aecb7a7bf569099803"
 DEV = pathlib.Path(__file__).resolve().parent / "queries_dev.json"
 MODS = {"siga-cp": "siga-cp/src/main/java", "siga-wf": "siga-wf/src/main/java"}
@@ -30,15 +31,15 @@ def main() -> int:
             tag = f"{mod.replace('siga-', '')}-{n:03d}"
             qs.append({"id": f"A-{tag}", "category": "A",
                        "query": f"Em qual arquivo está definida a classe {name}?",
-                       "gt": {"file": f, "line": line}})
+                       "gt": {"file": as_rel(f), "line": line}})
             qs.append({"id": f"B-{tag}", "category": "B",
                        "query": f"Qual módulo contém a classe {name}?",
-                       "gt": {"module": mod, "file": f}})
+                       "gt": {"module": mod, "file": as_rel(f)}})
             refs = [r for r in find_references(con, name) if r["file"] != f][:3]
             if refs:
                 qs.append({"id": f"D-{tag}", "category": "D",
                            "query": f"Cite um arquivo que referencia {name}.",
-                           "gt": {"files": [r["file"] for r in refs]}})
+                           "gt": {"files": [as_rel(r["file"]) for r in refs]}})
             n += 1
     from collections import Counter
     print(Counter(x["category"] for x in qs), len(qs))

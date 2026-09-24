@@ -30,18 +30,24 @@ def find_definition(con: sqlite3.Connection, name: str) -> list[dict]:
     return find_symbol(con, name, exact=True)
 
 
-def find_references(con: sqlite3.Connection, name: str) -> list[dict]:
-    """Referências textuais verificadas: cada hit exige nome literal na linha lida do disco."""
-    files = [r[0] for r in con.execute("SELECT path FROM files ORDER BY path").fetchall()]
-    out: list[dict] = []
-    for f in files:
-        p = pathlib.Path(f)
-        if not p.exists():
-            continue
+def read_contents(con: sqlite3.Connection) -> dict[str, list[str]]:
+    """Lê cada arquivo indexado UMA vez (cache por build; verificação mantida por linha)."""
+    out: dict[str, list[str]] = {}
+    for (f,) in con.execute("SELECT path FROM files ORDER BY path").fetchall():
         try:
-            lines = p.read_text(encoding="utf-8", errors="replace").splitlines()
+            out[f] = pathlib.Path(f).read_text(encoding="utf-8", errors="replace").splitlines()
         except OSError:
             continue
+    return out
+
+
+def find_references(con: sqlite3.Connection, name: str,
+                    contents: dict[str, list[str]] | None = None) -> list[dict]:
+    """Referências textuais verificadas: cada hit exige nome literal na linha lida do disco."""
+    if contents is None:
+        contents = read_contents(con)
+    out: list[dict] = []
+    for f, lines in contents.items():
         for i, line in enumerate(lines, 1):
             if name in line:
                 out.append({"name": name, "file": f, "line": i,

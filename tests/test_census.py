@@ -1,10 +1,11 @@
+from archatlas.config import REPO_ROOT, dataset_root
 # SPDX-License-Identifier: Apache-2.0
 """F1: o censo só passa se os arquivos reais existirem no disco."""
 import pathlib
 
 from archatlas.census import census
 
-DATASET = pathlib.Path("/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga")
+DATASET = dataset_root()
 
 
 def test_census_verifies_real_files():

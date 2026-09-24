@@ -1,12 +1,13 @@
 # SPDX-License-Identifier: Apache-2.0
 """Fidelidade F7: cobertura medida no disco (nunca estimada)."""
 from __future__ import annotations
+from archatlas.config import REPO_ROOT, dataset_root
 import pathlib
 import time
 
 from archatlas.extract import extract_java_symbols
 
-DATASET = pathlib.Path("/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga")
+DATASET = dataset_root()
 SHA = "e3be22828f787cbe71b339aecb7a7bf569099803"
 
 

@@ -5,7 +5,7 @@
 
 Memória estrutural externa, determinística, compacta, incremental e navegável de grandes repositórios. O LLM continua com contexto finito; o repositório fica fora do modelo; o agente recupera só a **Context Capsule** necessária.
 
-> **Dataset base (read-only, fora deste repo):** `/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/` — branch `desenvolvimento`, GitLab `controladoria/siga`, SHA `e3be22828` (14 commits à frente do ponto anterior `48610bd65`, incorporados via `git pull --ff-only` em 2026-09-24). Java 21, Hibernate 6, EAP 8.1, 19 módulos Maven. **Nunca commitamos código do SIGA aqui** — só ponteiros (URL+SHA+path) + hashes + scripts. SIGA é AGPL-3.0.
+> **Dataset base (read-only, fora deste repo):** uma versão modificada do SIGA-Doc — branch `desenvolvimento`, SHA `e3be22828`, Java 21, Hibernate 6, 19 módulos Maven. **Nunca commitamos código do dataset aqui** — só ponteiros (SHA+path relativo) + hashes + scripts. O dataset original é AGPL-3.0.
 
 ## Estrutura (100% open source)
 ```
@@ -18,25 +18,19 @@ experiments/      # capsules por execução (hashes, sem outputs gigantes)
 ```
 
 ## Metodologia de ponta (resumo)
-- **Trunk-based + fases curtíssimas**, cada fase = commit local + push (este README evolui por fase).
-- **Zero falso positivo:** todo fato estrutural exige evidência `arquivo:linha@SHA` + `content_hash`; o que não for deterministicamente verificável é marcado `heuristic/unresolved`, nunca inventado. Agente verificador lê bytes reais do disco em cada etapa.
+- **Trunk-based + fases curtíssimas**, cada fase = commit local + push.
+- **Zero falso positivo:** todo fato estrutural exige evidência `arquivo:linha@SHA` + `content_hash`; o que não for deterministicamente verificável é marcado `heuristic/unresolved`, nunca inventado.
 - **Reproduzível em 1 comando:** `python -m pytest -q` (sem rede, sem GPU, sem serviços).
 - **Fonte da verdade:** código/AST/símbolos/Git — nunca LLM. Cache IA só marcado/regenerável.
+- **Sem dados pessoais:** nenhum path de máquina no código ou docs; GT usa paths relativos ao dataset.
 
 ## Roadmap por etapas (cada etapa = commit + push)
-| Etapa | Entrega | Done |
-|---|---|---|
-| F0 | Bootstrap open-source (este commit) | LICENSE/README/CONTRIBUTING/CI/skeleton + push |
-| F1 | PIN + CENSO verificados do `/siga/` | scripts + testes verdes + push |
-| F2 `v0.1` | Extrator determinístico + protocolo verificação | pytest verde + tag `v0.1` + push |
-| F3 | Índice SQLite + incremental + Query API mínima | `verify` hash-estável + push |
-| F4 | Retrieval BM25 + Capsule sob budget + benchmark dev | curva 500–32k + push |
-| F5+ | Bitcoin transfer (freeze, sem redesign) → paper | LIMITATIONS + push por etapa |
-
-Ver `docs/ROADMAP_ETAPAS.md` (plano completo) e `docs/VERIFICATION_PROTOCOL.md` (anti-alucinação).
+Ver `docs/ROADMAP_ETAPAS.md` (F0–F19, plano completo) e `docs/VERIFICATION_PROTOCOL.md` (anti-alucinação).
 
 ## Uso rápido
 ```bash
+export ARCHATLAS_DATASET=/caminho/para/siga-doc   # checkout read-only da versão modificada (SHA e3be22828)
 python -m pytest -q
-python -m archatlas.cli verify --dataset /home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga
+python -m archatlas.cli verify
 ```
+Sem `ARCHATLAS_DATASET`, usa-se o vizinho `../siga` do checkout (quando existir).

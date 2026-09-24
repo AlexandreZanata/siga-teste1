@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 """Gera categoria H (multi-hop 2 saltos) de cadeias calls reais; GT = 2 arestas verificadas."""
 from __future__ import annotations
+from archatlas.config import REPO_ROOT, as_rel, dataset_root
 import json
 import pathlib
 import sys
@@ -8,7 +9,7 @@ import sys
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent.parent))
 from archatlas.trace import build_call_index
 
-DATASET = pathlib.Path("/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga")
+DATASET = dataset_root()
 DEV = pathlib.Path(__file__).resolve().parent / "queries_dev.json"
 
 
@@ -31,8 +32,8 @@ def main() -> int:
                 qs.append({"id": f"H-{n:03d}", "category": "H",
                            "query": f"Qual caminho verificado liga {a} a {e2['callee']} via {e['callee']}?",
                            "gt": {"chain": [a, e["callee"], e2["callee"]],
-                                  "edges": [{"file": e["file"], "line": e["line"]},
-                                            {"file": e2["file"], "line": e2["line"]}]}})
+                                  "edges": [{"file": as_rel(e["file"]), "line": e["line"]},
+                                            {"file": as_rel(e2["file"]), "line": e2["line"]}]}})
                 n += 1
                 if n >= 8:
                     break

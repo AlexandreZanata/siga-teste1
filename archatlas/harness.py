@@ -1,12 +1,14 @@
 # SPDX-License-Identifier: Apache-2.0
 """Harness F7: indexa, roda queries_dev.json com tempo/query, escreve JSONL. Recall = GT presente na cápsula."""
 from __future__ import annotations
+from archatlas.config import REPO_ROOT, dataset_root
 import json
 import pathlib
 import sqlite3
 import time
 
 from archatlas.capsule import build_capsule
+from archatlas.config import as_rel
 from archatlas.lexical import rebuild_lexical
 from archatlas.store import index_many, open_db
 
@@ -15,7 +17,7 @@ SHA = "e3be22828f787cbe71b339aecb7a7bf569099803"
 
 def run(dev_json: pathlib.Path, db: pathlib.Path, out_jsonl: pathlib.Path, budget: int = 2000) -> dict:
     qs = json.loads(dev_json.read_text(encoding="utf-8"))
-    ds = pathlib.Path("/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga")
+    ds = dataset_root()
     files = []
     for rel in ("siga-ex/src/main/java", "siga-cp/src/main/java", "siga-wf/src/main/java"):
         files += sorted((ds / rel).rglob("*.java"))
@@ -34,7 +36,7 @@ def run(dev_json: pathlib.Path, db: pathlib.Path, out_jsonl: pathlib.Path, budge
             total_s += dt
             dts.append(dt)
             gt = q["gt"]
-            files = set(cap["files"])
+            files = {as_rel(f) for f in cap["files"]}
             if "files" in gt:
                 ok = any(f in files for f in gt["files"])
             elif "edges" in gt:

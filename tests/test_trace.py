@@ -1,3 +1,4 @@
+from archatlas.config import REPO_ROOT, dataset_root
 # SPDX-License-Identifier: Apache-2.0
 """F16: trace encontra as 8 cadeias GT; cada aresta re-verificada no disco."""
 import json
@@ -5,7 +6,7 @@ import pathlib
 
 from archatlas.trace import build_call_index, trace
 
-DS = pathlib.Path("/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga")
+DS = dataset_root()
 DEV = pathlib.Path("benchmarks/siga/queries_dev.json")
 
 

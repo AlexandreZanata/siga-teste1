@@ -1,3 +1,4 @@
+from archatlas.config import REPO_ROOT, dataset_root
 # SPDX-License-Identifier: Apache-2.0
 """F9: JSP lexer resolve includes reais; calls têm caller+linha verificados; test-links espelham disco."""
 import pathlib
@@ -6,7 +7,7 @@ from archatlas.calls import extract_calls
 from archatlas.jsp import extract_jsp
 from archatlas.testlinks import map_tests
 
-DS = pathlib.Path("/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga")
+DS = dataset_root()
 ANCHOR = DS / "siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExMovimentacao.java"
 
 
