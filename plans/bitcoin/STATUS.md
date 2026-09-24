@@ -6,28 +6,29 @@ com dataset, tarefas, pré-registro e resultados próprios. Nenhum aceite copiad
 
 ## Checkpoint
 
-- Etapa atual: **BTC-P2 concluída (escopo sem dataset)** — contratos `btc-contracts/1`,
-  adaptador `btc-cpp-lex/1`, fixtures/testes próprios e E26-00 espelho sintético; sem rodada real.
-- Último aceite e evidências: `research/bitcoin/CONTRACTS_P2.md` (aceite próprio, 4/4 + 1 pendente de PIN);
-  `archatlas/bitcoin/cpp_lex.py` + `tests/bitcoin/test_btc_adapter.py` (5/5);
-  `tests/bitcoin/test_btc_e26_00.py` + `experiments/bitcoin/e26_00/btc-e2600-synth-001/`
-  (manifesto + REPORT, 5/5); BTC-P0/P1 inalterados.
-- SHA publicado: `77bf3ee` (BTC-P1) em `origin/codex/bitcoin-context`; este commit BTC-P2 a registrar após push.
-- `run_id`: `btc-e2600-synth-001` (sintético, determinístico, sem medição real). Reserva de recursos: nenhuma.
-- Pedido ao core: nenhum (nada genérico exigido; parsing C++ segue local).
-- Bloqueio exato: `BTC_SHA` indefinido → manifesto de build/índice do corpus, `compile_commands.json`
-  e piloto de patches seguem pendentes; `main` em `2b8a04f` (E26-01 SIGA) observado, NÃO incorporado.
-- Alternativa independente: BTC-P3 pode especificar tarefas/avaliação sem esperar o PIN;
-  nenhuma execução real é autorizada sem `BTC_SHA` + toolchain registrados.
-- Próximo comando/ação: resolver `BTC_SHA` (`benchmarks/bitcoin/PIN.md`); depois BTC-P3
-  (piloto A/B/C) com teto próprio.
+- Etapa atual: **BTC-P3 concluída (especificação + dryrun offline)** — piloto real com modelo
+  segue bloqueado (PIN, toolchain, modelos, teto, custodiante).
+- Último aceite e evidências: `research/bitcoin/PILOT_P3.md` (lote, braços, pareamento, aceitação, custos);
+  `benchmarks/bitcoin/pilot_p3_dev.json` (12 tarefas próprias, sem soluções);
+  `archatlas/bitcoin/dryrun.py` + `tests/bitcoin/test_btc_pilot_dryrun.py` (3/3);
+  `experiments/bitcoin/pilot_p3/btc-pilot-dryrun-001/` (72 rodadas, 1 erro injetado ruidoso,
+  replay exato, qualidade de stubs NÃO interpretável); BTC-P0–P2 inalterados.
+- SHA publicado: `eebe974` (BTC-P2) em `origin/codex/bitcoin-context`; este commit BTC-P3 a registrar após push.
+- `run_id`: `btc-pilot-dryrun-001` (offline, determinístico seed 7, sem medição real). Reserva de recursos: nenhuma.
+- Pedido ao core: nenhum.
+- Bloqueio exato: piloto real exige `BTC_SHA` + toolchain do snapshot + IDs de modelo + teto próprio +
+  custodiante (todos nulos); `main` em `5d72551` (E26-03 SIGA) observado, NÃO incorporado.
+- Alternativa independente: BTC-P4 pode especificar ablações sobre o adaptador sem esperar o PIN;
+  nenhuma execução em corpus sem `BTC_SHA`.
+- Próximo comando/ação: resolver `BTC_SHA` (`benchmarks/bitcoin/PIN.md`); depois BTC-P4
+  (E26-02 espelho primeiro) ou piloto real se desbloqueado.
 
 ## Etapas
 
 - [x] BTC-P0 — auditoria, PIN e censo (auditoria concluída; PIN/CENSO como pendências explícitas bloqueando P2+).
 - [x] BTC-P1 — aplicação da literatura e pré-registro próprio (preliminar, não selado; sem rodada autorizada).
 - [x] BTC-P2 — adaptador, ambiente e medição (contratos + adaptador lexical + E26-00 sintético concluídos; build/índice do corpus pendentes de PIN).
-- [ ] BTC-P3 — piloto de edição.
+- [x] BTC-P3 — piloto de edição (especificação + dryrun offline 72 rodadas concluídos; piloto real com modelo bloqueado por PIN/ambiente/teto).
 - [ ] BTC-P4 — protótipo e ablações.
 - [ ] BTC-P5 — confirmatório cego.
 - [ ] BTC-P6 — portabilidade temporal e de ambiente Bitcoin.
@@ -36,5 +37,7 @@ com dataset, tarefas, pré-registro e resultados próprios. Nenhum aceite copiad
 Histórico de transições preservado aqui: 2026-09-24 BTC-P0 concluída (auditoria) com PIN/CENSO
 pendentes; 2026-09-24 BTC-P1 concluída (literatura + pré-registro preliminar, lacunas nulas em §7);
 2026-09-24 BTC-P2 concluída em escopo sem dataset (contratos, adaptador lexical, E26-00 sintético 10/10;
-build/índice do corpus e piloto seguem pendentes de PIN).
+build/índice do corpus e piloto seguem pendentes de PIN);
+2026-09-24 BTC-P3 concluída em escopo offline (especificação + dryrun 72 rodadas, replay exato;
+piloto real bloqueado por PIN/ambiente/modelos/teto/custodiante).
 Nenhuma fase posterior marcada. Experimentos BTC-E26-00–06: E26-00 validado em fixtures sintéticas, demais planejados, nenhum executado em dataset.
