@@ -1,0 +1,29 @@
+{
+ "n": 60,
+ "recall": 0.95,
+ "index_seconds": 0.1,
+ "mean_query_s": 0.0019,
+ "counts": {
+  "indexed": 40,
+  "skipped": 0
+ },
+ "by_cat": {
+  "A": {
+   "hit": 20,
+   "miss": 0
+  },
+  "B": {
+   "hit": 20,
+   "miss": 0
+  },
+  "D": {
+   "hit": 17,
+   "miss": 3
+  }
+ },
+ "misses": [
+  "D-006",
+  "D-007",
+  "D-008"
+ ]
+}

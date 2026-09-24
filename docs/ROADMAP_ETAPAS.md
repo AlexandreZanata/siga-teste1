@@ -9,7 +9,8 @@ Metodologia fixa: trunk-based, fases ≤1 entrega, DCO (`-s`), `pytest -q` verde
 - [x] **F4** Query API mínima (`find_symbol/definition/references`) + CLI `verify`
 - [x] **F5** BM25 (FTS5) + Capsule sob budget (500–32k) + benchmark dev A–G (≥50 Qs) + curva
 - [x] **F6** experimento A/B em agente: baseline (exploração normal) vs ArchAtlas (índice+Capsule), mesmas perguntas, tempo+acerto — `experiments/agent_ab/`
-- [ ] **F7** fidelidade total SIGA-Doc: expandir índice p/ `siga-ex` completo + JSPs `sigaex`, medir `unresolved_rate`, harness `benchmark run/report` (JSONL)
+- [x] **F7** fidelidade total SIGA-Doc: `siga-ex` 504 arqs taxa 0.002 (único zero = `package-info.java` legítimo), JSPs `sigaex` 597 fora de cobertura declarada, harness JSONL recall 0.95 (A20/20 B20/20 D17/20), query média ~2ms
+- [ ] **F8** freeze SIGA + cápsula com expansão de referências (fechar D) + scoring dev completo + `v0.x-siga-frozen`
 - [ ] **F8** freeze SIGA + scoring dev completo + `v0.x-siga-frozen`
 - [ ] **FUTURO (pós-SIGA)** Bitcoin transfer (sem redesign) + `LIMITATIONS_BITCOIN.md`; ablações (9) + paper + SBOM + `v1` (só via RFC) — Bitcoin removido das etapas executáveis por decisão 2026-09-24: foco 100% SIGA-Doc até fidelidade comprovada
 
