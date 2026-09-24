@@ -6,21 +6,20 @@ com dataset, tarefas, pré-registro e resultados próprios. Nenhum aceite copiad
 
 ## Checkpoint
 
-- Etapa atual: **trilha BTC-P0–P7 completa; corpus medido + triado** — 10 skipped
-  resolvidos (`__has_include` ignorado, 0 restantes), `BUILD_ENV.md` e `COVERAGE.md`
-  registrados; sem build/índice.
-- Último aceite e evidências: `archatlas/bitcoin/cpp_lex.py` (skipped só diretiva `#`
-  malformada) + teste cobrindo; `research/bitcoin/BUILD_ENV.md` (CMake, deps, regtest;
-  nada compilado); `research/bitcoin/COVERAGE.md` (áreas, 371 arqs de teste, exclusões);
-  `experiments/bitcoin/corpus/btc-corpus-001/`; BTC-P0–P7 inalterados.
-- SHA publicado: `8d6f27f` (corpus) em `origin/codex/bitcoin-context`; este commit
-  (triagem + BUILD_ENV + COVERAGE) a registrar após push.
-- `run_id`: nenhum (leitura). Reserva de recursos: nenhuma. Pedido ao core: nenhum
-  (lacuna `.cc` segue local).
-- Bloqueio exato: toolchain/build + teto + modelos + custodiante + dev (todos nulos);
-  `main` em `793c3f3` (E26-05 SIGA) observado, NÃO incorporado.
-- Alternativa independente: nenhuma — aguardar desbloqueios; A integra em checkpoint.
-- Próximo comando/ação: toolchain no snapshot; índice do corpus; tarefas reais BTC-P3.
+- Etapa atual: **trilha BTC-P0–P7 completa; índice do corpus medido** — 1873 arquivos em
+  3,6s (DB 1,45MB, 4049 símbolos Python, C++/JS zero), incremental == rebuild, toolchain
+  disponível registrada; sem build.
+- Último aceite e evidências: `experiments/bitcoin/corpus/btc-index-001/` (manifesto + REPORT);
+  `research/bitcoin/BUILD_ENV.md` (disponibilidade + pendências); BTC-P0–P7 inalterados.
+- SHA publicado: `18520c7` (triagem/BUILD_ENV/COVERAGE) em `origin/codex/bitcoin-context`;
+  este commit de índice a registrar após push.
+- `run_id`: `btc-index-001` (leitura+DB em `/tmp`, sem rodada). Reserva: nenhuma.
+  Pedido ao core: nenhum.
+- Bloqueio exato: build + teto + modelos + custodiante + dev (todos nulos);
+  `main` em `519958a` (E26-06 SIGA) observado, NÃO incorporado.
+- Alternativa independente: retrieval sobre este índice com tarefas sintéticas do corpus
+  (ouro independente) — sem modelo, sem custo; piloto real segue bloqueado.
+- Próximo comando/ação: tarefas reais de retrieval (E26-01 espelho no corpus) ou build isolado.
 
 ## Etapas
 
@@ -52,6 +51,8 @@ working tree e toolchain seguem pendentes);
 2026-09-24 corpus medido em leitura (checkout limpo, LOC/discover reais, adaptador 12.546 includes
 e 368 pares em 1409 C++; `.cc` como pendência local; build segue pendente);
 2026-09-24 triagem completa (10 skipped = `__has_include`, ignorados com teste; 0 restantes),
-BUILD_ENV (CMake/deps/regtest, nada compilado) e COVERAGE (áreas, 371 arqs de teste) registrados.
+BUILD_ENV (CMake/deps/regtest, nada compilado) e COVERAGE (áreas, 371 arqs de teste) registrados;
+2026-09-24 índice do corpus (1873 arqs, 3,6s, 4049 símbolos PY, C++/JS zero; incremental == rebuild;
+toolchain disponível sem clang++; build não tentado).
 Nenhuma fase posterior marcada além de BTC-P7. Experimentos BTC-E26-00–06 e E26-06 espelho:
 E26-00/E26-02/drills validados em fixtures sintéticas; nenhum executado em dataset.

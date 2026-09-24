@@ -16,6 +16,13 @@ Guia futuro de `DEV_GUIDE.md`; pré-requisito do piloto real.
   `doc/dependencies.md`; `--coverage` p/ RPCs; `--extended`); `example_test.py` como modelo;
   estilo PEP-8/flake8. Ambiente: **regtest isolado** (nunca mainnet/fundos/produção).
 
+## Disponibilidade nesta máquina (2026-09-24; sem reserva, sem build executado)
+
+cmake 4.4.0, g++ 13.3.0, **sem clang++**, python 3.12.2, 16 cores, RAM livre ~2GB.
+Build NÃO tentado: 1,5GB/TU exigidos sem reserva isolada de CPU/RAM, e piloto segue
+bloqueado por teto/modelos. Quando autorizado: provisionar reserva por trilha, registrar
+limites e serializar benchmarks com o mutex do host conforme protocolo paralelo.
+
 ## Pendente antes de qualquer rodada com build
 
 Toolchain instalada e versionada, `compile_commands.json` (hash), features habilitadas,
