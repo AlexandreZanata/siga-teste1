@@ -23,6 +23,19 @@ Build NÃO tentado: 1,5GB/TU exigidos sem reserva isolada de CPU/RAM, e piloto s
 bloqueado por teto/modelos. Quando autorizado: provisionar reserva por trilha, registrar
 limites e serializar benchmarks com o mutex do host conforme protocolo paralelo.
 
+## Veredito: build BLOQUEADO nesta máquina (sondagem 2026-09-24, sem alterações)
+
+- Depends ausentes: libevent (–), Boost headers (–), libzmq (–); presente: sqlite3 3.45.1.
+- Sem sudo sem-senha (`sudo -n true` exige senha) → sem `apt-get`; compilar `depends/` do
+  zero escapa ao escopo unilateral (tempo/disco/impacto no host compartilhado).
+- RAM no momento da sonda: 30/31GB em uso, ~0 livre — compilar agora arriscaria OOM e
+  perturbaria as trilhas ativas (A em `main`, medições B); **não tentar aqui**.
+- Requisito para desbloquear: máquina (ou container) com depends instalados
+  (build-essential, cmake, pkgconf, python3, libevent-dev, libboost-dev, sqlite3, zmq),
+  ≥8GB livres reservados e `compile_commands.json` exportado no configure.
+  Comandos então: `cmake -B <run>/build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON <checkout>` +
+  `cmake --build` com `-j` dentro da reserva, tudo em runtime `/tmp`, corpus intacto.
+
 ## Pendente antes de qualquer rodada com build
 
 Toolchain instalada e versionada, `compile_commands.json` (hash), features habilitadas,

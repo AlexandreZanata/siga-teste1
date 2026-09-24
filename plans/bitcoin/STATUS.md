@@ -6,19 +6,18 @@ com dataset, tarefas, pré-registro e resultados próprios. Nenhum aceite copiad
 
 ## Checkpoint
 
-- Etapa atual: **sweep K do braço D (K=10 mantido)** — 104 rodadas; retornos decrescentes
-  após K=20; K=50 iguala recall de C com ~1/4 dos arquivos; sem edição, sem modelo.
-- Último aceite e evidências: `archatlas/bitcoin/realretrieval.py` (parâmetro `top`, pool fixo);
-  `tests/bitcoin/test_btc_e26_01.py` (12/12: top-K aninhado + determinismo);
-  `experiments/bitcoin/e26_01/btc-ksweep-001/` (results + REPORT com curva).
-- SHA publicado: `6b34dc4` (text-seed) em `origin/codex/bitcoin-context`; este commit
-  (sweep K) a registrar após push.
-- `run_id`: `btc-ksweep-001` (leitura, 104 rodadas). Reserva: nenhuma. Pedido ao core: nenhum.
-- Bloqueio exato: edição/piloto exigem teto + modelos + custodiante + dev (nulos); `main`
-  observado, NÃO incorporado. Sem escritor concorrente neste turno.
-- Alternativa independente: ponte teste→impl (R20) ou `unsupported`; E26-02 com spans do C
-  atual; build isolado.
-- Próximo comando/ação: E26-02 sobre conjuntos C+text-seed; ou build isolado.
+- Etapa atual: **build verificado como BLOQUEADO (veredito registrado)** — libevent/Boost/ZMQ
+  ausentes, sem sudo, RAM ~0 livre; compilar aqui arriscaria o host; requisitos documentados.
+- Último aceite e evidências: `research/bitcoin/BUILD_ENV.md` (sondagem + veredito + requisitos
+  de desbloqueio); resto inalterado.
+- SHA publicado: `1d76a02` (sweep K) em `origin/codex/bitcoin-context`; este commit
+  a registrar após push.
+- `run_id`: nenhum (sondagem). Reserva: nenhuma. Pedido ao core: nenhum.
+- Bloqueio exato: build (veredito) + teto + modelos + custodiante + dev (todos nulos ou externos);
+  `main` em `f4523d5` (P6 SIGA) observado, NÃO incorporado. Sem escritor concorrente neste turno.
+- Alternativa independente: nenhuma unilateral restante — trilha aguarda provisionamento/autorização.
+- Próximo comando/ação: máquina com depends + RAM reservada; então configure/build isolado,
+  `compile_commands.json`, índice com símbolos e tarefas reais de edição.
 
 ## Etapas
 
@@ -71,6 +70,8 @@ D precisão, C recall; A/B idênticos);
 D inalterado; R12 pede alias verdadeiro);
 2026-09-24 E26-01 com text-seed em C (272 rodadas: C 0.962/0.885, R04+R10+R12+R19 ganhos,
 zero perdas; R20 único miss; A/B/D idênticos);
-2026-09-24 sweep K do braço D (104 rodadas: K=10 mantido; K=50 iguala C com ~1/4 dos arqs).
+2026-09-24 sweep K do braço D (104 rodadas: K=10 mantido; K=50 iguala C com ~1/4 dos arqs);
+2026-09-24 build verificado BLOQUEADO (libevent/Boost/ZMQ ausentes, sem sudo, RAM ~0;
+requisitos de desbloqueio em BUILD_ENV; última pendência unilateral encerrada).
 Nenhuma fase posterior marcada além de BTC-P7. Experimentos BTC-E26-00–06 e E26-06 espelho:
 E26-00/E26-02/drills sintéticos + E26-01 em dataset (2 rodadas); edição segue sem modelo.
