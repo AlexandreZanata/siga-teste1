@@ -154,6 +154,30 @@ def test_d_bm25_ranks_and_requires_ranker(tmp_path):
     con.close()
 
 
+def test_d_top_k_respected_and_nested():
+    import sqlite3
+    from archatlas.bitcoin.bm25text import bm25_lines, build_text_index
+    import pathlib as _pl
+    import tempfile as _tf
+    with _tf.TemporaryDirectory() as tmp:
+        root = _pl.Path(tmp)
+        (root / "q.cpp").write_bytes(b"querytoken alpha\n")
+        (root / "r.cpp").write_bytes(b"querytoken beta\n")
+        (root / "s.cpp").write_bytes(b"querytoken gamma\n")
+        db = root / "k.sqlite"
+        build_text_index(db, root)
+        from archatlas.bitcoin.realretrieval import corpus_texts
+        texts = corpus_texts(root)
+        con = sqlite3.connect(db)
+        ranker = lambda q, k=200: bm25_lines(con, q, k)
+        d5, _ = exec_arm("D_bm25", root, texts, "querytoken", None, 25, ranker, False, 2)
+        d10, _ = exec_arm("D_bm25", root, texts, "querytoken", None, 25, ranker, False, 10)
+        assert len(d5) == 2 and d5 <= d10  # aninhado: top-2 dentro do top-10
+        assert exec_arm("D_bm25", root, texts, "querytoken", None, 25, ranker, False, 2) == \
+            exec_arm("D_bm25", root, texts, "querytoken", None, 25, ranker, False, 2)
+        con.close()
+
+
 RUNS3 = pathlib.Path("experiments/bitcoin/e26_01/btc-e2601-003/runs.jsonl")
 
 

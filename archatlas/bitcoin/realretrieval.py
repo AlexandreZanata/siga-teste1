@@ -56,13 +56,14 @@ def build_fanin(root: pathlib.Path) -> dict[str, int]:
 
 def exec_arm(arm: str, root: pathlib.Path, texts: dict[str, str], query: str,
              fanin: dict[str, int] | None = None, cap: int = FANIN_CAP,
-             ranker=None, text_seed: bool = False) -> tuple[set, str]:
+             ranker=None, text_seed: bool = False,
+             top: int | None = None) -> tuple[set, str]:
     """Braço determinístico rotulado; qualidade só interpretável no REPORT.
 
     `fanin=None` desliga o teto (comportamento original); senão alvos com
     `fanin > cap` são pulados e contados em `hubs_skipped` na nota.
     `D_bm25` (braço extra, fora de `ARMS`) exige `ranker(query, k)` e entrega os
-    `D_TOP_FILES` arquivos com melhor linha BM25.
+    `top or D_TOP_FILES` arquivos com melhor linha BM25.
     `text_seed=True` (só C): soma às sementes arquivos com ocorrência textual dos
     tokens (top-30 por frequência, desempate por path) — sementes presas em frames
     Python sem `#include` ganham de onde saltar.
@@ -107,12 +108,13 @@ def exec_arm(arm: str, root: pathlib.Path, texts: dict[str, str], query: str,
     if arm == "D_bm25":
         if ranker is None:
             raise ValueError("D_bm25 exige ranker BM25 (db_path em run_all)")
+        k = top or D_TOP_FILES
         best: dict[str, float] = {}
-        for h in ranker(query, 200):
+        for h in ranker(query, 200):  # pool fixo; só o corte varia com k
             if h["file"] not in best or h["bm25"] < best[h["file"]]:
                 best[h["file"]] = h["bm25"]
-        top = sorted(best, key=lambda f: (best[f], f))[:D_TOP_FILES]
-        return set(top), f"bm25-text file rank top-{D_TOP_FILES}; sem modelo"
+        topfiles = sorted(best, key=lambda f: (best[f], f))[:k]
+        return set(topfiles), f"bm25-text file rank top-{k}; sem modelo"
     raise ValueError(f"braço desconhecido: {arm}")
 
 

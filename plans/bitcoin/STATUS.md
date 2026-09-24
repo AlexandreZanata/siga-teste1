@@ -6,14 +6,14 @@ com dataset, tarefas, pré-registro e resultados próprios. Nenhum aceite copiad
 
 ## Checkpoint
 
-- Etapa atual: **E26-01 com text-seed em C (ganho sem perda)** — 272 rodadas; C 0.962/0.885
-  (R04+R10+R12+R19 ganhos, R20 único miss); A/B/D idênticos; sem edição, sem modelo.
-- Último aceite e evidências: `archatlas/bitcoin/realretrieval.py` (`text_seed` opt-in só em C,
-  registrado); `tests/bitcoin/test_btc_e26_01.py` (11/11: text-seed sintético + pareamento 272);
-  `experiments/bitcoin/e26_01/btc-e2601-005/` (runs + REPORT comparativo).
-- SHA publicado: `3c66ab8` (split) em `origin/codex/bitcoin-context`; este commit
-  a registrar após push.
-- `run_id`: `btc-e2601-005` (leitura, 179s). Reserva: nenhuma. Pedido ao core: nenhum.
+- Etapa atual: **sweep K do braço D (K=10 mantido)** — 104 rodadas; retornos decrescentes
+  após K=20; K=50 iguala recall de C com ~1/4 dos arquivos; sem edição, sem modelo.
+- Último aceite e evidências: `archatlas/bitcoin/realretrieval.py` (parâmetro `top`, pool fixo);
+  `tests/bitcoin/test_btc_e26_01.py` (12/12: top-K aninhado + determinismo);
+  `experiments/bitcoin/e26_01/btc-ksweep-001/` (results + REPORT com curva).
+- SHA publicado: `6b34dc4` (text-seed) em `origin/codex/bitcoin-context`; este commit
+  (sweep K) a registrar após push.
+- `run_id`: `btc-ksweep-001` (leitura, 104 rodadas). Reserva: nenhuma. Pedido ao core: nenhum.
 - Bloqueio exato: edição/piloto exigem teto + modelos + custodiante + dev (nulos); `main`
   observado, NÃO incorporado. Sem escritor concorrente neste turno.
 - Alternativa independente: ponte teste→impl (R20) ou `unsupported`; E26-02 com spans do C
@@ -70,6 +70,7 @@ D precisão, C recall; A/B idênticos);
 2026-09-24 E26-01 com split (272 rodadas: A 1.0, C 0.808/0.750, R17+R18 ganhos, zero perdas;
 D inalterado; R12 pede alias verdadeiro);
 2026-09-24 E26-01 com text-seed em C (272 rodadas: C 0.962/0.885, R04+R10+R12+R19 ganhos,
-zero perdas; R20 único miss; A/B/D idênticos).
+zero perdas; R20 único miss; A/B/D idênticos);
+2026-09-24 sweep K do braço D (104 rodadas: K=10 mantido; K=50 iguala C com ~1/4 dos arqs).
 Nenhuma fase posterior marcada além de BTC-P7. Experimentos BTC-E26-00–06 e E26-06 espelho:
 E26-00/E26-02/drills sintéticos + E26-01 em dataset (2 rodadas); edição segue sem modelo.
