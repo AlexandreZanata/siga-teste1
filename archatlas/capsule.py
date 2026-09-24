@@ -19,6 +19,18 @@ def build_capsule(con: sqlite3.Connection, query: str, budget: int, k: int = 20)
             if (s["name"], s["file"], s["line"]) not in {(c["name"], c["file"], c["line"]) for c in cands}:
                 cands.append({**s, "bm25": -1.0})
     ranked = sorted(cands, key=lambda c: (c.get("bm25", 0), c["file"], c["line"]))
+    seen = {(c["name"], c["file"], c["line"]) for c in ranked}
+    for c in ranked[:5]:  # F8: expansão 1-hop de referências verificadas
+        if c.get("kind") not in ("class", "interface", "enum"):
+            continue
+        for r in find_references(con, c["name"])[:5]:
+            key = (r["name"], r["file"], r["line"])
+            if key not in seen:
+                seen.add(key)
+                ranked.append({"name": r["name"], "kind": "ref", "file": r["file"], "line": r["line"],
+                               "provenance": "text-match-verified", "confidence": 0.7, "bm25": 0.0,
+                               "excerpt": r["excerpt"]})
+    ranked = sorted(ranked, key=lambda c: (c.get("bm25", 0), c["file"], c["line"]))
     symbols, excerpts, citations, relations, log = [], [], [], [], []
     used = 0
     for i, c in enumerate(ranked):
@@ -40,7 +52,8 @@ def build_capsule(con: sqlite3.Connection, query: str, budget: int, k: int = 20)
         excerpts.append({"id": f"e{i}", "file": c["file"], "start_line": c["line"], "end_line": c["line"],
                          "tokens": cost, "truncated": False, "text": line_text, "anchors": [c["name"]]})
         citations.append({"excerpt_id": f"e{i}", "file": c["file"], "line": c["line"], "symbol": c["name"]})
-        relations.append({"from": c["file"], "to": c["name"], "kind": "DEFINES",
+        rel_kind = "REFERENCES" if c.get("kind") == "ref" else "DEFINES"
+        relations.append({"from": c["file"], "to": c["name"], "kind": rel_kind,
                           "provenance": c["provenance"], "score": 1.0})
         used += cost
     files = sorted({s["file"] for s in symbols})
