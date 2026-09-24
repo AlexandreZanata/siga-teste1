@@ -1135,5 +1135,181 @@
    ],
    "callee": "write"
   }
+ },
+ {
+  "id": "H-000",
+  "category": "H",
+  "query": "Qual caminho verificado liga Zeros a Column via toString?",
+  "gt": {
+   "chain": [
+    "Zeros",
+    "toString",
+    "Column"
+   ],
+   "edges": [
+    {
+     "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExClassificacao.java",
+     "line": 64
+    },
+    {
+     "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExClassificacao.java",
+     "line": 197
+    }
+   ]
+  }
+ },
+ {
+  "id": "H-001",
+  "category": "H",
+  "query": "Qual caminho verificado liga Zeros a getCodificacao via toString?",
+  "gt": {
+   "chain": [
+    "Zeros",
+    "toString",
+    "getCodificacao"
+   ],
+   "edges": [
+    {
+     "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExClassificacao.java",
+     "line": 64
+    },
+    {
+     "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExClassificacao.java",
+     "line": 191
+    }
+   ]
+  }
+ },
+ {
+  "id": "H-002",
+  "category": "H",
+  "query": "Qual caminho verificado liga Zeros a getDescricao via toString?",
+  "gt": {
+   "chain": [
+    "Zeros",
+    "toString",
+    "getDescricao"
+   ],
+   "edges": [
+    {
+     "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExClassificacao.java",
+     "line": 64
+    },
+    {
+     "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExClassificacao.java",
+     "line": 191
+    }
+   ]
+  }
+ },
+ {
+  "id": "H-003",
+  "category": "H",
+  "query": "Qual caminho verificado liga addRestrictedProperty a ByteArrayInputStream via converter?",
+  "gt": {
+   "chain": [
+    "addRestrictedProperty",
+    "converter",
+    "ByteArrayInputStream"
+   ],
+   "edges": [
+    {
+     "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java",
+     "line": 539
+    },
+    {
+     "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Nheengatu.java",
+     "line": 42
+    }
+   ]
+  }
+ },
+ {
+  "id": "H-004",
+  "category": "H",
+  "query": "Qual caminho verificado liga addRestrictedProperty a ByteArrayOutputStream via converter?",
+  "gt": {
+   "chain": [
+    "addRestrictedProperty",
+    "converter",
+    "ByteArrayOutputStream"
+   ],
+   "edges": [
+    {
+     "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java",
+     "line": 539
+    },
+    {
+     "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Nheengatu.java",
+     "line": 41
+    }
+   ]
+  }
+ },
+ {
+  "id": "H-005",
+  "category": "H",
+  "query": "Qual caminho verificado liga addRestrictedProperty a DownloadExterno via converter?",
+  "gt": {
+   "chain": [
+    "addRestrictedProperty",
+    "converter",
+    "DownloadExterno"
+   ],
+   "edges": [
+    {
+     "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java",
+     "line": 539
+    },
+    {
+     "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java",
+     "line": 266
+    }
+   ]
+  }
+ },
+ {
+  "id": "H-006",
+  "category": "H",
+  "query": "Qual caminho verificado liga addRestrictedProperty a Exception via converter?",
+  "gt": {
+   "chain": [
+    "addRestrictedProperty",
+    "converter",
+    "Exception"
+   ],
+   "edges": [
+    {
+     "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java",
+     "line": 539
+    },
+    {
+     "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Nheengatu.java",
+     "line": 69
+    }
+   ]
+  }
+ },
+ {
+  "id": "H-007",
+  "category": "H",
+  "query": "Qual caminho verificado liga addRestrictedProperty a PdfRendererBuilder via converter?",
+  "gt": {
+   "chain": [
+    "addRestrictedProperty",
+    "converter",
+    "PdfRendererBuilder"
+   ],
+   "edges": [
+    {
+     "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java",
+     "line": 539
+    },
+    {
+     "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java",
+     "line": 265
+    }
+   ]
+  }
  }
 ]

@@ -55,7 +55,10 @@ def test_benchmark_gt_verified():
     assert {"A", "B", "C", "D", "E", "F", "G"} <= {q["category"] for q in qs}
     for q in qs:
         gt = q["gt"]
-        files = gt.get("files", [gt["file"]] if "file" in gt else [])
+        if "edges" in gt:
+            files = [e["file"] for e in gt["edges"]]
+        else:
+            files = gt.get("files", [gt["file"]] if "file" in gt else [])
         assert files, q["id"]
         for f in files:
             assert pathlib.Path(f).exists(), (q["id"], f)
