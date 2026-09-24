@@ -1,0 +1,46 @@
+{
+ "n": 108,
+ "recall": 1.0,
+ "index_seconds": 0.92,
+ "mean_query_s": 0.1328,
+ "p50_query_s": 0.1435,
+ "p95_query_s": 0.3263,
+ "counts": {
+  "indexed": 504,
+  "skipped": 0
+ },
+ "by_cat": {
+  "A": {
+   "hit": 20,
+   "miss": 0
+  },
+  "B": {
+   "hit": 20,
+   "miss": 0
+  },
+  "C": {
+   "hit": 10,
+   "miss": 0
+  },
+  "D": {
+   "hit": 20,
+   "miss": 0
+  },
+  "E": {
+   "hit": 10,
+   "miss": 0
+  },
+  "F": {
+   "hit": 10,
+   "miss": 0
+  },
+  "G": {
+   "hit": 10,
+   "miss": 0
+  },
+  "H": {
+   "hit": 8,
+   "miss": 0
+  }
+ }
+}

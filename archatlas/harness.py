@@ -16,7 +16,7 @@ SHA = "e3be22828f787cbe71b339aecb7a7bf569099803"
 def run(dev_json: pathlib.Path, db: pathlib.Path, out_jsonl: pathlib.Path, budget: int = 2000) -> dict:
     qs = json.loads(dev_json.read_text(encoding="utf-8"))
     ds = pathlib.Path("/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga")
-    files = sorted((ds / "siga-ex/src/main/java").rglob("*.java"))[:40]
+    files = sorted((ds / "siga-ex/src/main/java").rglob("*.java"))
     con = open_db(db)
     t0 = time.perf_counter()
     counts = index_many(con, files, SHA)
@@ -37,6 +37,8 @@ def run(dev_json: pathlib.Path, db: pathlib.Path, out_jsonl: pathlib.Path, budge
                 ok = any(f in files for f in gt["files"])
             elif "edges" in gt:
                 ok = any(e["file"] in files for e in gt["edges"])
+                if "path_files" in gt:
+                    ok = ok and any(f in files for f in gt["path_files"])
             elif "package" in gt:
                 ok = bool(gt.get("file") in files or any(f.startswith(gt["package"]) for f in files))
             else:

@@ -39,7 +39,222 @@
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExArquivo.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExArquivoNumerado.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExConfiguracao.java",
-    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExConfiguracaoCache.java"
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExConfiguracaoCache.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExDocumento.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExDocumentoNumeracao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExEditalEliminacao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExFormaDocumento.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExMarca.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExMobil.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExModelo.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExMovimentacao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExNivelAcesso.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExProtocolo.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExRef.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExSequencia.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExTermoEliminacao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExTipoDocumento.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ItemDeProtocolo.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ItemDeProtocoloComparator.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/AcessoConsulta.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/BIE/BoletimInternoBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExAcesso.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExAssinavelDoc.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExCompetenciaBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExConfiguracaoBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExConfiguracaoCacheComparator.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExConfiguracaoComparator.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExMarcadorBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExVisualizacaoTempDocCompl.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/Mesa.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/Mesa2.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/Mesa2Ant.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ext/AbstractConversorHTMLFactory.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ext/ConversorHTMLFactory.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExDeveAssinarMovimentacaoComSenha.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExDeveAutenticarComSenha.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExDeveAutenticarMovimentacaoComSenha.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExEAssinanteAtual.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExECadastrante.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExECapturado.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExECapturadoFormatoLivre.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExEColaborativo.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExEComposto.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExECossignatario.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExEDocFilho.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExEDocFilhoJuntadoAoPai.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExEEletronico.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExEExpediente.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExEExterno.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExEExternoCapturado.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExEFisico.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExEInternoCapturado.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExEInternoFolhaDeRosto.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExEInternoProduzido.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExELotacaoCadastrante.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExEMobilAutuado.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExEProcesso.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExESubscritor.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExESubscritorDeDespacho.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExESubscritorOuCossignatario.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExETitular.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExEstaAgendadaPublicacaoNoDOE.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExEstaAgendadaPublicacaoNoDiario.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExEstaArquivadoDoc.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExEstaAssinadoComSenha.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExEstaAssinadoOuAutenticadoComTokenOuSenhaERegistros.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExEstaAssinadoPeloSubscritorComTokenOuSenha.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExEstaAssinadoPorTodosOsSignatariosComTokenOuSenha.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExEstaAutenticadoComTokenOuSenha.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExEstaCancelado.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExEstaComPrazoDeAssinaturaVencido.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExEstaFinalizado.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExEstaOrdenadoAssinatura.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExEstaOrquestradoPeloWF.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExEstaPendenteDeAssinatura.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExEstaPublicadoNoBoletim.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExEstaPublicadoNoDiario.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExEstaSemEfeito.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExEstaSolicitadaPublicacaoNoBoletim.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExEstaSolicitadaPublicacaoNoDiario.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExEstaVinculadaPorPerfil.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExJaEsteveComAPessoa.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExJaEsteveNaLotacao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExJaEsteveNoOrgao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExJaTransferido.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExLotacaoEstaVinculadoPorPerfil.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPessoaEstaVinculadaPorPerfil.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeAcessarDocumento.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeAcessarDocumentoAntigo.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeAcessarPorConsulta.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeAgendarPublicacao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeAgendarPublicacaoDOE.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeAgendarPublicacaoNoBoletim.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeAnexarArquivoAuxiliar.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeApensar.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeArquivarCorrente.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeAssinar.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeAssinarMovimentacao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeAssinarMovimentacaoComSenha.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeAssinarPor.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeAtenderPedidoPublicacaoNoDiario.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeAutenticarComCertificadoDigital.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeAutenticarComSenha.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeAutenticarDocumento.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeAutenticarMovimentacao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeAutenticarMovimentacaoComSenha.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeAutuarDocumento.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeAvaliar.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeCancelarArquivoAuxiliar.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeCancelarDespacho.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeCancelarDocumento.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeCancelarOuAlterarPrazoDeAssinatura.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeCancelarRestringirAcesso.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeCancelarVia.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeCancelarVinculacao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeCancelarVinculacaoPapel.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeCapturarPDF.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeCopiar.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeCriarDocFilho.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeCriarSubprocesso.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeCriarVia.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeCriarVolume.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeDefinirPrazoAssinatura.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeDesapensar.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeDesarquivarCorrente.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeDesfazerConcelamentoDeDocumento.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeDesfazerRestricaoDeAcesso.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeDisponibilizarNoAcompanhamentoDoProtocolo.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeDuplicar.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeEditar.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeEditarData.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeEditarDescricao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeEnviarParaVisualizacaoExterna.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeEnviarSiafem.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeExcluir.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeExcluirCossignatario.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeExibirBotaoDeAgendarPublicacaoNoBoletim.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeExibirQuemTemAcessoAoDocumento.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeExibirTodasAsVias.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeFazerCiencia.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeFazerDownloadFormatoLivre.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeFinalizar.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeFinalizarAssinar.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeGerarProtocolo.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeIncluirCossignatario.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeIncluirDocumento.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeIncluirEmEditalDeEliminacao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeIndicarPermanente.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeJuntar.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeMigrarSEI.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeNotificar.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeOrdemAssinatura.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodePedirPublicacao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodePorConfiguracao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodePublicar.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeReceberDocumentoSemAssinatura.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeReceberEletronico.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeReclassificar.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeRedefinirNivelDeAcesso.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeRefazer.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeRegistrarAssinatura.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeRegistrarRequisicaoUsuario.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeReiniciarNumeracao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeRemeterParaPublicacaoSolicitadaNoDiario.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeRestringirAcesso.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeRetirarDeEditalDeEliminacao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeSerJuntado.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeSerSubscritor.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeSerSubscritorDeModelo.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeSobrestar.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeSolicitarAssinatura.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeTornarDocumentoSemEfeito.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeVisualizarExternamente.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeVisualizarImpressao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeVisualizarImpressaoCompleta.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExTemAssinaturaSolicitada.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExTemBoletimPublicado.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExTemDocumentosFilhos.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExTemLotaSubscritor.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExTemMaisDeUmMobilNaoCancelado.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExTemMobilPai.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExTemMovimentacaoNaoCanceladaDoTipo.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExTemNumeroMaximoDeVias.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExTemPDF.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExTemPerfil.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExTemSubscritor.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExTemVolumeComMovimentacaoNaoCanceladaDoTipo.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/model/enm/ExTipoDeConfiguracao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/model/enm/ExTipoDeMovimentacao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/BIE/ConversorDeExDocParaMateria.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/BIE/ManipuladorEntrevista.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/BIE/ModeloBIE.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/DocumentoFilhoComparator.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/DocumentoUtil.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/ExGraphColaboracao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/ExGraphRelacaoDocs.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/ExPesquisaDocumentoAgrupador.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/FuncoesEL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/GeradorRTF.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/NivelDeAcessoUtil.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/ProcessadorReferencias.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/PublicacaoDJEBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/notificador/especifico/ExEmail.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/notificador/especifico/ExNotificar.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/notificador/geral/Notificador.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExDocumentoVO.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExMobilVO.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExMovimentacaoVO.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExPesquisaDocumentoGrupo.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExPesquisaDocumentoItem.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/hibernate/ExDao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/hibernate/ext/MontadorQuery.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/hibernate/ext/MontadorQueryNative.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/persistencia/ExDocumentoDaoFiltro.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/persistencia/ExMobilDaoFiltro.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/persistencia/ExModeloDaoFiltro.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/testes/TesteParagrafos.java"
    ]
   }
  },
@@ -95,7 +310,11 @@
   "query": "Cite um arquivo que referencia FOP.",
   "gt": {
    "files": [
-    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FOP.java"
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FOP.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ext/AbstractConversorHTMLFactory.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ext/ConversorHTMLFactory.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/GeradorRTF.java"
    ]
   }
  },
@@ -123,7 +342,8 @@
   "query": "Cite um arquivo que referencia FlyingSaucer.",
   "gt": {
    "files": [
-    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java"
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ext/ConversorHTMLFactory.java"
    ]
   }
  },
@@ -209,7 +429,41 @@
   "gt": {
    "files": [
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java",
-    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Nheengatu.java"
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Nheengatu.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ext/ConversorHTMLFactory.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/css2/Style.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/css2/StyleSheet.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/csv/CSVDocument.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/csv/HTML2CSVParser.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/document/Document.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/html/HTML2MParser.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/html/HTMLDocument.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/html/HTMLHandler.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/html/Tag.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/html/Text.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/openoffice/calc/CalcDocument.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/openoffice/calc/HTML2CalcParser.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/openoffice/impress/HTML2ImpressParser.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/openoffice/impress/ImpressDocument.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/openoffice/writer/HTML2WriterParser.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/openoffice/writer/WriterDocument.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/pdf/CellWidths.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/pdf/HTML2PDFParser.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/pdf/PDFDiv.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/pdf/PDFDocument.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/pdf/PDFImage.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/pdf/PDFPageBreak.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/pdf/PDFTable.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/pdf/PDFText.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/testes/AbsolutePosition.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/testes/TesteImpressao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/testes/TesteParagrafos.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/testes/TesteParagrafosImagens.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/testes/TesteTabelao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/testes/TesteTabelasAninhadas.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/util/GraphicsState.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/util/HexadecimalColor.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/util/TagsManager.java"
    ]
   }
  },
@@ -269,7 +523,13 @@
   "gt": {
    "files": [
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Documento.java",
-    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Status.java"
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Status.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExAssinadorExternoSave.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/Mesa.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/Mesa2.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/Mesa2Ant.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/PublicacaoDJEBL.java"
    ]
   }
  },
@@ -354,7 +614,8 @@
   "query": "Cite um arquivo que referencia AbstractExDocumento.",
   "gt": {
    "files": [
-    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExDocumento.java"
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExDocumento.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExDocumento.java"
    ]
   }
  },
@@ -382,7 +643,8 @@
   "query": "Cite um arquivo que referencia AbstractExEmailNotificacao.",
   "gt": {
    "files": [
-    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExEmailNotificacao.java"
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExEmailNotificacao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExEmailNotificacao.java"
    ]
   }
  },
@@ -410,7 +672,8 @@
   "query": "Cite um arquivo que referencia AbstractExEstadoDoc.",
   "gt": {
    "files": [
-    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExEstadoDoc.java"
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExEstadoDoc.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExEstadoDoc.java"
    ]
   }
  },
@@ -438,7 +701,8 @@
   "query": "Cite um arquivo que referencia AbstractExFormaDocumento.",
   "gt": {
    "files": [
-    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExFormaDocumento.java"
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExFormaDocumento.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExFormaDocumento.java"
    ]
   }
  },
@@ -466,7 +730,8 @@
   "query": "Cite um arquivo que referencia AbstractExMarca.",
   "gt": {
    "files": [
-    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExMarca.java"
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExMarca.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExMarca.java"
    ]
   }
  },
@@ -494,7 +759,8 @@
   "query": "Cite um arquivo que referencia AbstractExMobil.",
   "gt": {
    "files": [
-    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExMobil.java"
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExMobil.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExMobil.java"
    ]
   }
  },
@@ -522,7 +788,8 @@
   "query": "Cite um arquivo que referencia AbstractExModelo.",
   "gt": {
    "files": [
-    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExModelo.java"
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExModelo.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExModelo.java"
    ]
   }
  },
@@ -550,7 +817,9 @@
   "query": "Cite um arquivo que referencia AbstractExMovimentacao.",
   "gt": {
    "files": [
-    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExMovimentacao.java"
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExMovimentacao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExMovimentacao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/hibernate/ExDao.java"
    ]
   }
  },
@@ -578,7 +847,8 @@
   "query": "Cite um arquivo que referencia AbstractExNivelAcesso.",
   "gt": {
    "files": [
-    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExNivelAcesso.java"
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExNivelAcesso.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExNivelAcesso.java"
    ]
   }
  },
@@ -624,7 +894,46 @@
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExTpDocPublicacao.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExVia.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExArquivo.java",
-    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExClassificacao.java"
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExClassificacao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExDocumento.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExMobil.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExMovimentacao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExProtocolo.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExRef.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExCompetenciaBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExMarcadorBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExParte.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExEAssinanteAtual.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/BIE/ConversorDeExDocParaMateria.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/CalculoPCD.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/Compactador.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/DatasPublicacaoDJE.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/DocumentoUtil.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/ExPesquisaDocumentoAgrupador.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/FuncoesEL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/GeraMessageDigest.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/GeradorRTF.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/MascaraUtil.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/PdfToPlainText.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/ProcessadorHtml.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/PublicacaoDJEBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/XMLParseHelper.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/notificador/geral/Notificador.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExDocumentoVO.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExMobilVO.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExMovimentacaoVO.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExParteVO.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/hibernate/ExDao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/hibernate/ext/MontadorQuery.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/hibernate/ext/MontadorQueryNative.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/css2/Style.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/css2/StyleSheet.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/html/HTMLHandler.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/pdf/PDFDocument.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/pdf/PDFTable.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/testes/TesteParagrafos.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/util/GraphicsState.java"
    ]
   }
  },
@@ -658,7 +967,46 @@
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExTpDocPublicacao.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExVia.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExArquivo.java",
-    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExClassificacao.java"
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExClassificacao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExDocumento.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExMobil.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExMovimentacao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExProtocolo.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExRef.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExCompetenciaBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExMarcadorBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExParte.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExEAssinanteAtual.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/BIE/ConversorDeExDocParaMateria.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/CalculoPCD.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/Compactador.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/DatasPublicacaoDJE.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/DocumentoUtil.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/ExPesquisaDocumentoAgrupador.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/FuncoesEL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/GeraMessageDigest.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/GeradorRTF.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/MascaraUtil.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/PdfToPlainText.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/ProcessadorHtml.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/PublicacaoDJEBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/XMLParseHelper.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/notificador/geral/Notificador.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExDocumentoVO.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExMobilVO.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExMovimentacaoVO.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExParteVO.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/hibernate/ExDao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/hibernate/ext/MontadorQuery.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/hibernate/ext/MontadorQueryNative.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/css2/Style.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/css2/StyleSheet.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/html/HTMLHandler.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/pdf/PDFDocument.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/pdf/PDFTable.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/testes/TesteParagrafos.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/util/GraphicsState.java"
    ],
    "callee": "length"
   }
@@ -694,7 +1042,50 @@
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FOP.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Stamp.java",
-    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExClassificacao.java"
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExClassificacao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExDocumento.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExFormaDocumento.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExMarca.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExMobil.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExMovimentacao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExPapel.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExRef.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExTpDocPublicacao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExVia.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/AcessoConsulta.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExVisualizacaoTempDocCompl.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/Mesa.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/Mesa2.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/Mesa2Ant.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/model/enm/ExTipoDeMovimentacao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/DatasPublicacaoDJE.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/DocumentoUtil.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/ExGraph.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/FormatadorLogOperacaoWeb.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/FreemarkerDefault.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/FuncoesEL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/GeraMessageDigest.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/MascaraUtil.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/PdfToPlainText.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/ProcessadorHtml.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/ProcessadorModeloFreemarker.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/PublicacaoDJEBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/notificador/especifico/ExNotificar.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/notificador/geral/Notificador.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExDocumentoVO.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExMobilVO.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExMovimentacaoVO.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExPesquisaDocumentoGrupo.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/hibernate/CarregadorPlugin.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/hibernate/ExDao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/hibernate/ext/MontadorQuery.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/hibernate/ext/MontadorQueryNative.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/csv/CSVDocument.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/html/HTMLDocument.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/html/Tag.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/pdf/RomanList.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/testes/TesteParagrafos.java"
    ]
   }
  },
@@ -708,7 +1099,50 @@
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FOP.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Stamp.java",
-    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExClassificacao.java"
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExClassificacao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExDocumento.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExFormaDocumento.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExMarca.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExMobil.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExMovimentacao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExPapel.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExRef.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExTpDocPublicacao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExVia.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/AcessoConsulta.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExVisualizacaoTempDocCompl.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/Mesa.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/Mesa2.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/Mesa2Ant.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/model/enm/ExTipoDeMovimentacao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/DatasPublicacaoDJE.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/DocumentoUtil.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/ExGraph.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/FormatadorLogOperacaoWeb.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/FreemarkerDefault.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/FuncoesEL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/GeraMessageDigest.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/MascaraUtil.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/PdfToPlainText.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/ProcessadorHtml.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/ProcessadorModeloFreemarker.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/PublicacaoDJEBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/notificador/especifico/ExNotificar.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/notificador/geral/Notificador.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExDocumentoVO.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExMobilVO.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExMovimentacaoVO.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExPesquisaDocumentoGrupo.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/hibernate/CarregadorPlugin.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/hibernate/ExDao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/hibernate/ext/MontadorQuery.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/hibernate/ext/MontadorQueryNative.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/csv/CSVDocument.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/html/HTMLDocument.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/html/Tag.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/pdf/RomanList.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/testes/TesteParagrafos.java"
    ],
    "callee": "toString"
   }
@@ -887,7 +1321,20 @@
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExDocumento.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExMovimentacao.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExConfiguracao.java",
-    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExConfiguracaoCache.java"
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExConfiguracaoCache.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExMarcadorBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExParte.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/converter/ExTipoDePrincipalConverter.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/converter/ExTipoDeVinculoConverter.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/model/enm/ExTipoDePrincipal.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/model/enm/ExTipoDeVinculo.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/BIE/ConversorDeExDocParaMateria.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/BIE/ModeloBIE.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/GeraMessageDigest.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/GeradorRTF.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExMobilVO.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExMovimentacaoVO.java"
    ]
   }
  },
@@ -904,7 +1351,20 @@
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExDocumento.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExMovimentacao.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExConfiguracao.java",
-    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExConfiguracaoCache.java"
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExConfiguracaoCache.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExMarcadorBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExParte.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/converter/ExTipoDePrincipalConverter.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/converter/ExTipoDeVinculoConverter.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/model/enm/ExTipoDePrincipal.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/model/enm/ExTipoDeVinculo.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/BIE/ConversorDeExDocParaMateria.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/BIE/ModeloBIE.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/GeraMessageDigest.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/GeradorRTF.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExMobilVO.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExMovimentacaoVO.java"
    ],
    "callee": "converter"
   }
@@ -927,7 +1387,9 @@
    "files": [
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FOP.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java",
-    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Stamp.java"
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Stamp.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/FreemarkerDefault.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/notificador/especifico/ExEmail.java"
    ]
   }
  },
@@ -939,7 +1401,9 @@
    "files": [
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FOP.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java",
-    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Stamp.java"
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Stamp.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/FreemarkerDefault.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/notificador/especifico/ExEmail.java"
    ],
    "callee": "getResourceAsStream"
   }
@@ -955,7 +1419,17 @@
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Stamp.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExMovimentacao.java",
-    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExArquivo.java"
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExArquivo.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExDocumento.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/Mesa.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/Mesa2.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/Mesa2Ant.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/model/enm/ExTipoDeConfiguracao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/model/enm/ExTipoDeMovimentacao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/CronologiaComparator.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/ExMovimentacaoRecebimentoComparator.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/hibernate/ExDao.java"
    ]
   }
  },
@@ -969,7 +1443,17 @@
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Stamp.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExMovimentacao.java",
-    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExArquivo.java"
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExArquivo.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExDocumento.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/Mesa.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/Mesa2.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/Mesa2Ant.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/model/enm/ExTipoDeConfiguracao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/model/enm/ExTipoDeMovimentacao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/CronologiaComparator.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/ExMovimentacaoRecebimentoComparator.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/hibernate/ExDao.java"
    ],
    "callee": "stamp"
   }
@@ -985,7 +1469,44 @@
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/LocalizaTexto.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Stamp.java",
-    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Status.java"
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Status.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/Compactador.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/ProcessadorHtml.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/ProcessadorReferencias.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/css2/Style.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/css2/StyleSheet.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/csv/CSVDocument.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/csv/HTML2CSVParser.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/document/Document.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/html/HTML2MParser.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/html/HTMLDocument.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/html/HTMLHandler.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/html/Tag.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/html/Text.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/openoffice/calc/CalcDocument.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/openoffice/calc/HTML2CalcParser.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/openoffice/impress/HTML2ImpressParser.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/openoffice/impress/ImpressDocument.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/openoffice/writer/HTML2WriterParser.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/openoffice/writer/WriterDocument.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/pdf/CellWidths.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/pdf/HTML2PDFParser.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/pdf/PDFDiv.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/pdf/PDFDocument.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/pdf/PDFImage.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/pdf/PDFPageBreak.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/pdf/PDFTable.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/pdf/PDFText.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/testes/AbsolutePosition.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/testes/TesteImpressao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/testes/TesteParagrafos.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/testes/TesteParagrafosImagens.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/testes/TesteTabelao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/testes/TesteTabelasAninhadas.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/util/GraphicsState.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/util/HexadecimalColor.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/util/TagsManager.java"
    ]
   }
  },
@@ -999,7 +1520,44 @@
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/LocalizaTexto.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Stamp.java",
-    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Status.java"
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Status.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/Compactador.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/ProcessadorHtml.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/ProcessadorReferencias.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/css2/Style.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/css2/StyleSheet.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/csv/CSVDocument.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/csv/HTML2CSVParser.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/document/Document.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/html/HTML2MParser.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/html/HTMLDocument.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/html/HTMLHandler.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/html/Tag.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/html/Text.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/openoffice/calc/CalcDocument.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/openoffice/calc/HTML2CalcParser.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/openoffice/impress/HTML2ImpressParser.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/openoffice/impress/ImpressDocument.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/openoffice/writer/HTML2WriterParser.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/openoffice/writer/WriterDocument.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/pdf/CellWidths.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/pdf/HTML2PDFParser.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/pdf/PDFDiv.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/pdf/PDFDocument.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/pdf/PDFImage.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/pdf/PDFPageBreak.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/pdf/PDFTable.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/pdf/PDFText.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/testes/AbsolutePosition.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/testes/TesteImpressao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/testes/TesteParagrafos.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/testes/TesteParagrafosImagens.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/testes/TesteTabelao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/testes/TesteTabelasAninhadas.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/util/GraphicsState.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/util/HexadecimalColor.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/util/TagsManager.java"
    ],
    "callee": "write"
   }
@@ -1016,7 +1574,15 @@
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExMovimentacao.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExVia.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExConfiguracao.java",
-    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExConfiguracaoCache.java"
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExConfiguracaoCache.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExDocumento.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExModelo.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExConfiguracaoBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExConfiguracaoComparator.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExDocumentoVO.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/hibernate/ExDao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/persistencia/ExModeloDaoFiltro.java"
    ]
   }
  },
@@ -1031,7 +1597,15 @@
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExMovimentacao.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExVia.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExConfiguracao.java",
-    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExConfiguracaoCache.java"
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExConfiguracaoCache.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExDocumento.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExModelo.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExConfiguracaoBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExConfiguracaoComparator.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExDocumentoVO.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/hibernate/ExDao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/persistencia/ExModeloDaoFiltro.java"
    ],
    "callee": "getExClassificacao"
   }
@@ -1051,7 +1625,62 @@
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExTpDocPublicacao.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExArquivoNumerado.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExConfiguracao.java",
-    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExConfiguracaoCache.java"
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExConfiguracaoCache.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExDocumento.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExMobil.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExRef.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExConfiguracaoBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExConfiguracaoComparator.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExMarcadorBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ext/ConversorHTMLFactory.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExDeveAssinarMovimentacaoComSenha.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExDeveAutenticarComSenha.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExDeveAutenticarMovimentacaoComSenha.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeAgendarPublicacao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeAgendarPublicacaoDOE.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeAnexarArquivo.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeAnexarArquivoAuxiliar.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeApensar.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeArquivarCorrente.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeAssinarMovimentacao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeAssinarMovimentacaoComSenha.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeAssinarPor.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeAutenticarComCertificadoDigital.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeAutenticarComSenha.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeAutenticarMovimentacaoComSenha.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeAutuarDocumento.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeCopiar.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeCriarVia.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeDefinirPrazoAssinatura.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeDesapensar.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeDisponibilizarNoAcompanhamentoDoProtocolo.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeDuplicar.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeEditar.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeEnviarSiafem.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeExibirBotaoDeAgendarPublicacaoNoBoletim.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeFazerCiencia.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeGerarLinkPublicoDoProcesso.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeIncluirDocumento.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeJuntar.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeMigrarSEI.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodePedirPublicacao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodePublicar.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeReceber.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeReceberPorConfiguracao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeRefazer.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeReferenciar.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeRegistrarAssinatura.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeRestringirAcesso.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeSerSubscritor.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeSolicitarAssinatura.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeTornarDocumentoSemEfeito.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeTramitarPara.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/FuncoesEL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/PublicacaoDJEBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/notificador/geral/Notificador.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExDocumentoVO.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/hibernate/ExDao.java"
    ]
   }
  },
@@ -1069,7 +1698,62 @@
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExTpDocPublicacao.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExArquivoNumerado.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExConfiguracao.java",
-    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExConfiguracaoCache.java"
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExConfiguracaoCache.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExDocumento.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExMobil.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExRef.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExConfiguracaoBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExConfiguracaoComparator.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExMarcadorBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ext/ConversorHTMLFactory.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExDeveAssinarMovimentacaoComSenha.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExDeveAutenticarComSenha.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExDeveAutenticarMovimentacaoComSenha.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeAgendarPublicacao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeAgendarPublicacaoDOE.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeAnexarArquivo.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeAnexarArquivoAuxiliar.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeApensar.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeArquivarCorrente.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeAssinarMovimentacao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeAssinarMovimentacaoComSenha.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeAssinarPor.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeAutenticarComCertificadoDigital.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeAutenticarComSenha.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeAutenticarMovimentacaoComSenha.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeAutuarDocumento.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeCopiar.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeCriarVia.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeDefinirPrazoAssinatura.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeDesapensar.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeDisponibilizarNoAcompanhamentoDoProtocolo.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeDuplicar.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeEditar.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeEnviarSiafem.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeExibirBotaoDeAgendarPublicacaoNoBoletim.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeFazerCiencia.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeGerarLinkPublicoDoProcesso.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeIncluirDocumento.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeJuntar.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeMigrarSEI.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodePedirPublicacao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodePublicar.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeReceber.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeReceberPorConfiguracao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeRefazer.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeReferenciar.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeRegistrarAssinatura.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeRestringirAcesso.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeSerSubscritor.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeSolicitarAssinatura.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeTornarDocumentoSemEfeito.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeTramitarPara.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/FuncoesEL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/PublicacaoDJEBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/notificador/geral/Notificador.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExDocumentoVO.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/hibernate/ExDao.java"
    ],
    "callee": "getExModelo"
   }
@@ -1086,7 +1770,10 @@
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExTipoDestinacao.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExClassificacao.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExConfiguracao.java",
-    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExConfiguracaoCache.java"
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExConfiguracaoCache.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExDocumento.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExConfiguracaoBL.java"
    ]
   }
  },
@@ -1101,7 +1788,10 @@
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExTipoDestinacao.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExClassificacao.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExConfiguracao.java",
-    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExConfiguracaoCache.java"
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExConfiguracaoCache.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExDocumento.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExConfiguracaoBL.java"
    ],
    "callee": "getExVia"
   }
@@ -1117,7 +1807,44 @@
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/LocalizaTexto.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Stamp.java",
-    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Status.java"
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Status.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/Compactador.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/ProcessadorHtml.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/ProcessadorReferencias.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/css2/Style.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/css2/StyleSheet.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/csv/CSVDocument.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/csv/HTML2CSVParser.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/document/Document.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/html/HTML2MParser.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/html/HTMLDocument.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/html/HTMLHandler.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/html/Tag.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/html/Text.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/openoffice/calc/CalcDocument.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/openoffice/calc/HTML2CalcParser.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/openoffice/impress/HTML2ImpressParser.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/openoffice/impress/ImpressDocument.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/openoffice/writer/HTML2WriterParser.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/openoffice/writer/WriterDocument.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/pdf/CellWidths.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/pdf/HTML2PDFParser.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/pdf/PDFDiv.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/pdf/PDFDocument.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/pdf/PDFImage.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/pdf/PDFPageBreak.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/pdf/PDFTable.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/pdf/PDFText.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/testes/AbsolutePosition.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/testes/TesteImpressao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/testes/TesteParagrafos.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/testes/TesteParagrafosImagens.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/testes/TesteTabelao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/testes/TesteTabelasAninhadas.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/util/GraphicsState.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/util/HexadecimalColor.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/util/TagsManager.java"
    ]
   }
  },
@@ -1131,7 +1858,44 @@
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/LocalizaTexto.java",
     "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Stamp.java",
-    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Status.java"
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Status.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExBL.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/Compactador.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/ProcessadorHtml.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/ProcessadorReferencias.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/css2/Style.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/css2/StyleSheet.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/csv/CSVDocument.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/csv/HTML2CSVParser.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/document/Document.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/html/HTML2MParser.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/html/HTMLDocument.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/html/HTMLHandler.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/html/Tag.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/html/Text.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/openoffice/calc/CalcDocument.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/openoffice/calc/HTML2CalcParser.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/openoffice/impress/HTML2ImpressParser.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/openoffice/impress/ImpressDocument.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/openoffice/writer/HTML2WriterParser.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/openoffice/writer/WriterDocument.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/pdf/CellWidths.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/pdf/HTML2PDFParser.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/pdf/PDFDiv.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/pdf/PDFDocument.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/pdf/PDFImage.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/pdf/PDFPageBreak.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/pdf/PDFTable.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/pdf/PDFText.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/testes/AbsolutePosition.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/testes/TesteImpressao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/testes/TesteParagrafos.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/testes/TesteParagrafosImagens.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/testes/TesteTabelao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/testes/TesteTabelasAninhadas.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/util/GraphicsState.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/util/HexadecimalColor.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/util/TagsManager.java"
    ],
    "callee": "write"
   }
@@ -1155,7 +1919,11 @@
      "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExClassificacao.java",
      "line": 197
     }
-   ]
+   ],
+   "path_files": [
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExClassificacao.java"
+   ],
+   "n_paths": 1
   }
  },
  {
@@ -1177,7 +1945,19 @@
      "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExClassificacao.java",
      "line": 191
     }
-   ]
+   ],
+   "path_files": [
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExClassificacao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExDocumento.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExMarca.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExMobil.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExMovimentacao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExRef.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExDocumentoVO.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExMobilVO.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExMovimentacaoVO.java"
+   ],
+   "n_paths": 10
   }
  },
  {
@@ -1199,7 +1979,13 @@
      "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExClassificacao.java",
      "line": 191
     }
-   ]
+   ],
+   "path_files": [
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExClassificacao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExFormaDocumento.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExMovimentacaoVO.java"
+   ],
+   "n_paths": 3
   }
  },
  {
@@ -1221,7 +2007,16 @@
      "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Nheengatu.java",
      "line": 42
     }
-   ]
+   ],
+   "path_files": [
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FOP.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Nheengatu.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Stamp.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Status.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/pdf/HTML2PDFParser.java"
+   ],
+   "n_paths": 11
   }
  },
  {
@@ -1243,7 +2038,15 @@
      "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Nheengatu.java",
      "line": 41
     }
-   ]
+   ],
+   "path_files": [
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FOP.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Nheengatu.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Stamp.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/com/aryjr/nheengatu/html/HTML2MParser.java"
+   ],
+   "n_paths": 8
   }
  },
  {
@@ -1265,7 +2068,11 @@
      "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java",
      "line": 266
     }
-   ]
+   ],
+   "path_files": [
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java"
+   ],
+   "n_paths": 1
   }
  },
  {
@@ -1287,7 +2094,12 @@
      "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Nheengatu.java",
      "line": 69
     }
-   ]
+   ],
+   "path_files": [
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Nheengatu.java"
+   ],
+   "n_paths": 1
   }
  },
  {
@@ -1309,7 +2121,11 @@
      "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java",
      "line": 265
     }
-   ]
+   ],
+   "path_files": [
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java"
+   ],
+   "n_paths": 1
   }
  }
 ]

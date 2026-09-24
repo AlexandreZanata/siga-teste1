@@ -16,10 +16,12 @@ DEV = pathlib.Path(__file__).resolve().parent / "queries_dev.json"
 
 def main() -> int:
     qs = json.loads(DEV.read_text(encoding="utf-8"))
-    files = sorted((DATASET / "siga-ex/src/main/java").rglob("*.java"))[:40]
+    files = sorted((DATASET / "siga-ex/src/main/java").rglob("*.java"))
     scope = {str(f) for f in files}
     con = open_db(pathlib.Path(":memory:"))
     index_many(con, files, SHA)
+    from archatlas.trace import build_call_index, trace as trace_path
+    cidx = build_call_index(files)
     n_sets = 0
     for q in qs:
         if q["category"] in ("E", "G", "D"):
@@ -40,6 +42,25 @@ def main() -> int:
                 q["gt"].pop("file", None)
                 q["gt"].pop("line", None)
                 n_sets += 1
+        if q["category"] == "H":
+            a, _, c = q["gt"]["chain"]
+            paths: list[list[dict]] = []
+
+            def dfs(node: str, path: list[dict], seen: set[str]) -> None:
+                if node == c and path:
+                    paths.append(list(path))
+                    return
+                if len(path) >= 3:
+                    return
+                for e in cidx.get(node, []):
+                    if e["callee"] not in seen:
+                        dfs(e["callee"], path + [e], seen | {e["callee"]})
+
+            dfs(a, [], {a})
+            pfiles = sorted({e["file"] for p in paths for e in p})
+            if pfiles:
+                q["gt"]["path_files"] = pfiles
+                q["gt"]["n_paths"] = len(paths)
     json.dump(qs, open(DEV, "w"), indent=1, ensure_ascii=False)
     print(f"questões: {len(qs)}, com GT-conjunto: {n_sets}")
     return 0
