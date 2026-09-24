@@ -1,0 +1,1 @@
+{"dataset_sha": "e3be22828f787cbe71b339aecb7a7bf569099803", "files": 504, "full_index_s": 0.92, "db_kb": 2512, "router_p50_s": 0.0258, "router_p95_s": 0.3315, "incremental_10_s": 0.03, "incremental_100_s": 0.23, "note": "medido 2026-09-24 em copias tmp (dataset intacto); recall 1.00 provado no bakeoff F13"}
