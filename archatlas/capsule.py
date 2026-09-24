@@ -60,15 +60,48 @@ def _rank_candidates(con: sqlite3.Connection, query: str, k: int,
 
 
 def build_capsule(con: sqlite3.Connection, query: str, budget: int, k: int = 20,
-                  packing: str = "multi") -> dict:
+                  packing: str = "multi", abstain: bool = False) -> dict:
     """Monta a cápsula; `packing` ∈ {one_per_file, multi, expanded} (E26-02).
 
     Default `multi` reproduz o comportamento F5–F19 byte a byte nos campos
     legados (mesmo ranking, mesmos gates, mesmos ids `e{i}`). Chamadores
     antigos (harness, strategies, testes) seguem funcionando sem mudanças.
+    `abstain=True` (P4-infra(c), default False) aplica o gate dev-calibrado de
+    `archatlas/abstain.py`: vazio duplo → entrega vazia + motivo explícito.
     """
     disk = read_contents(con)  # F19: lê cada arquivo UMA vez; verificação por linha mantida
     ranked = _rank_candidates(con, query, k, disk)
+    gate = {"abstain": False, "reason": None, "uncertain": None,
+            "note": "gate desligado (default); sem retenção"}
+    if abstain:
+        from archatlas.abstain import decide, features
+        from archatlas.lexical import bm25_search as _bm25
+        from archatlas.modules import seed_entities as _seeds
+        _seeds_n = _seeds(con, query)
+        _lex = _bm25(con, query, k)
+        _top = min((h["bm25"] for h in _lex), default=None)
+        dec = decide(features(len(_seeds_n), len(_lex), _top))
+        gate = {"abstain": dec["abstain"], "reason": dec["reason"],
+                "uncertain": dec["uncertain"], "note": "gate dev-calibrado E26-01"}
+        if dec["abstain"]:
+            out = {"capsule_version": "1.0", "query": query,
+                   "budget": {"requested": budget, "used": 0, "tokenizer": "chars//4",
+                              "hard_enforced": True},
+                   "symbols": [], "files": [], "relations": [], "call_paths": [],
+                   "tests": [], "docs": [], "excerpts": [], "citations": [],
+                   "truncation_log": [{"stage": "gate", "rule": "abstain",
+                                       "dropped": "delivery", "reason": dec["reason"]}],
+                   "stats": {"candidates": len(ranked), "kept": 0,
+                             "retrieved": len(ranked), "packing": packing}}
+            out["payload_tokens"] = 1
+            out["telemetry"] = {"retrieved": len(ranked), "delivered": 0,
+                                "packing": packing, "delivered_files": [],
+                                "payload_chars": 2, "payload_tokens": 1, "opened": 0,
+                                "declared_relevant": None, "history_tokens": None,
+                                "history_note": "historico/instrucoes nao incluidos",
+                                "abstained": True, "abstain_reason": dec["reason"],
+                                "uncertain": False}
+            return out
     decls = None
     if packing == "expanded":
         decls = {}
@@ -103,5 +136,7 @@ def build_capsule(con: sqlite3.Connection, query: str, budget: int, k: int = 20,
                         "delivered_files": files, "payload_chars": blob_chars,
                         "payload_tokens": out["payload_tokens"], "opened": 0,
                         "declared_relevant": None, "history_tokens": None,
-                        "history_note": "historico/instrucoes nao incluidos; P3 medira custo total"}
+                        "history_note": "historico/instrucoes nao incluidos; P3 medira custo total",
+                        "abstained": False, "abstain_reason": gate["reason"],
+                        "uncertain": gate["uncertain"]}
     return out
