@@ -24,6 +24,12 @@ Clones `t1`/`t2` re-verificados limpos após (PINs de `TRANSFER_PINS.md` intacto
 - Veredito: compilação reproduzível com toolchain ≥3.9.0; testes (`mvn test`)
   ficam para P6-exec-c (matriz maior, mesma trava de recursos do piloto).
 
+## T1 testes — `mvn test` VERDE (mesma cópia, Maven 3.9.9)
+
+Comando: `mvn test` (sem `-q`, sem skips) → **BUILD SUCCESS**: **3362 testes,
+0 falhas, 0 erros, 92 skipped** (skips condicionais dos próprios módulos).
+Clone PIN re-verificado limpo após (build só na cópia).
+
 ## Dívida restante
 
 Fixtures dev próprias por alvo (sem olhar tarefas finais), distinção
