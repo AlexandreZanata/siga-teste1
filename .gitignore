@@ -1,0 +1,14 @@
+# nunca commitar: índices, outputs, worktrees, blobs de terceiros, segredos
+*.sqlite
+*.sqlite-journal
+*.db
+experiments/capsules/*/output*.json
+compile_commands.json
+.worktrees/
+*.worktree
+__pycache__/
+.venv/
+*.pyc
+.env
+*.log
+.freebuff/
