@@ -1,0 +1,84 @@
+{
+ "manifest": {
+  "conditions": [
+   "A_busca",
+   "B_freq",
+   "C_adapter"
+  ],
+  "repetitions": 2,
+  "seed": 7,
+  "tasks": [
+   {
+    "family": "rpc",
+    "id": "BTC-P3D-001",
+    "scope": "cross"
+   },
+   {
+    "family": "validation",
+    "id": "BTC-P3D-002",
+    "scope": "local"
+   },
+   {
+    "family": "validation",
+    "id": "BTC-P3D-003",
+    "scope": "cross"
+   },
+   {
+    "family": "wallet",
+    "id": "BTC-P3D-004",
+    "scope": "local"
+   },
+   {
+    "family": "wallet",
+    "id": "BTC-P3D-005",
+    "scope": "cross"
+   },
+   {
+    "family": "network",
+    "id": "BTC-P3D-006",
+    "scope": "local"
+   },
+   {
+    "family": "rpc",
+    "id": "BTC-P3D-007",
+    "scope": "cross"
+   },
+   {
+    "family": "tests",
+    "id": "BTC-P3D-008",
+    "scope": "cross"
+   },
+   {
+    "family": "validation",
+    "id": "BTC-P3D-009",
+    "scope": "local"
+   },
+   {
+    "family": "rpc",
+    "id": "BTC-P3D-010",
+    "scope": "cross"
+   },
+   {
+    "family": "network",
+    "id": "BTC-P3D-011",
+    "scope": "cross"
+   },
+   {
+    "family": "tests",
+    "id": "BTC-P3D-012",
+    "scope": "cross"
+   }
+  ],
+  "versions": {
+   "adapter": "btc-cpp-lex/1",
+   "budget": 2000,
+   "core_sha": "e6fde134f7da0d3616d90c40232d9ebe2ed9f033",
+   "policy": "btc-pack/1+expanded",
+   "tokenizer": "chars//4"
+  }
+ },
+ "rehearsal": true,
+ "schema": "btc-seal/1",
+ "seal": "a6c5be5ae202089ff3c8620af748fc5feb6b987eeed11c5b70a33f8c2903322c",
+ "void_for_real_round": "ensaio sem custodiante, sem ouro, sem amostra dimensionada; o selo real ocorre uma vez antes da rodada"
+}
