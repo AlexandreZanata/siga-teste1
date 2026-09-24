@@ -11,7 +11,9 @@ from __future__ import annotations
 import pathlib
 import random
 import re
+import sqlite3
 
+from archatlas.bitcoin.bm25text import bm25_lines
 from archatlas.bitcoin.cpp_lex import CORE_SHA, discover_cpp, extract_cpp_lexical
 from archatlas.dataset import EXCLUDE_DIRS
 from archatlas.telemetry import build_manifest, score_delivery
@@ -21,6 +23,7 @@ BUDGET = 2000
 TOKENIZER = "chars//4"
 RUN_ID = "btc-e26-01-real-001"
 FANIN_CAP = 25  # teto de fan-in (p90≈27 em v31.1); alvos acima pulados com registro
+D_TOP_FILES = 10  # D_bm25 (braço extra, fora de ARMS) entrega os top arquivos por BM25
 
 
 def corpus_texts(root: pathlib.Path) -> dict[str, str]:
@@ -51,11 +54,14 @@ def build_fanin(root: pathlib.Path) -> dict[str, int]:
 
 
 def exec_arm(arm: str, root: pathlib.Path, texts: dict[str, str], query: str,
-             fanin: dict[str, int] | None = None, cap: int = FANIN_CAP) -> tuple[set, str]:
+             fanin: dict[str, int] | None = None, cap: int = FANIN_CAP,
+             ranker=None) -> tuple[set, str]:
     """Braço determinístico rotulado; qualidade só interpretável no REPORT.
 
     `fanin=None` desliga o teto (comportamento original); senão alvos com
     `fanin > cap` são pulados e contados em `hubs_skipped` na nota.
+    `D_bm25` (braço extra, fora de `ARMS`) exige `ranker(query, k)` e entrega os
+    `D_TOP_FILES` arquivos com melhor linha BM25.
     """
     toks = [t.lower() for t in query.split()]
     if arm == "A_busca":
@@ -85,6 +91,15 @@ def exec_arm(arm: str, root: pathlib.Path, texts: dict[str, str], query: str,
         return (seeds | hop,
                 f"adaptador real btc-cpp-lex/1 + seeds textuais; sem modelo; "
                 f"hubs_skipped={skipped}; fanin_cap={cap if fanin is not None else 'off'}")
+    if arm == "D_bm25":
+        if ranker is None:
+            raise ValueError("D_bm25 exige ranker BM25 (db_path em run_all)")
+        best: dict[str, float] = {}
+        for h in ranker(query, 200):
+            if h["file"] not in best or h["bm25"] < best[h["file"]]:
+                best[h["file"]] = h["bm25"]
+        top = sorted(best, key=lambda f: (best[f], f))[:D_TOP_FILES]
+        return set(top), f"bm25-text file rank top-{D_TOP_FILES}; sem modelo"
     raise ValueError(f"braço desconhecido: {arm}")
 
 
@@ -113,22 +128,32 @@ def verify_gold(tasks: list, texts: dict[str, str]) -> None:
 
 
 def run_all(root: pathlib.Path, tasks: list, budgets=(2000, 8000), seed: int = 7,
-            cap: int = FANIN_CAP) -> tuple[list, list]:
-    """Tarefas × 3 braços × budgets. Retorna (runs, manifests). Sem modelo."""
+            cap: int = FANIN_CAP, extra_arms: tuple = (),
+            db_path: pathlib.Path | None = None) -> tuple[list, list]:
+    """Tarefas × (ARMS + extras) × budgets. Retorna (runs, manifests). Sem modelo."""
     root = pathlib.Path(root)
     texts = corpus_texts(root)
     verify_gold(tasks, texts)
     fanin = build_fanin(root)
+    ranker = None
+    con = None
+    if "D_bm25" in extra_arms:
+        if db_path is None:
+            raise ValueError("D_bm25 exige db_path com índice btc-bm25text/1")
+        con = sqlite3.connect(db_path)
+        def ranker(query: str, k: int = 200):
+            return bm25_lines(con, query, k)
+    arms = ARMS + tuple(extra_arms)
     runs, mans = [], []
     order = 0
     for budget in budgets:
-        pairs = [(t["id"], a) for t in tasks for a in ARMS]
+        pairs = [(t["id"], a) for t in tasks for a in arms]
         random.Random(f"{seed}-{budget}").shuffle(pairs)
         for task_id, arm in pairs:
             order += 1
             task = next(t for t in tasks if t["id"] == task_id)
             mans.append(build_manifest(task_id, arm, 1, order, budget, CORE_SHA, TOKENIZER))
-            delivered, note = exec_arm(arm, root, texts, task["query"], fanin, cap)
+            delivered, note = exec_arm(arm, root, texts, task["query"], fanin, cap, ranker)
             m = re.search(r"hubs_skipped=(\d+)", note)
             hubs = int(m.group(1)) if m else 0
             if task.get("type") == "negative":
@@ -147,7 +172,9 @@ def run_all(root: pathlib.Path, tasks: list, budgets=(2000, 8000), seed: int = 7
                          "opened": sorted(delivered), "executor_note": note,
                          "hubs_skipped": hubs,
                          "used": used_tokens(root, delivered, budget),
-                         "patch_accepted": None, "patch_note": "sem modelo",
-                         "cost_total": None, "cost_note": "sem telemetria faturada",
-                         "error": None} | rec)
+                          "patch_accepted": None, "patch_note": "sem modelo",
+                          "cost_total": None, "cost_note": "sem telemetria faturada",
+                          "error": None} | rec)
+    if con is not None:
+        con.close()
     return runs, mans

@@ -6,20 +6,18 @@ com dataset, tarefas, pré-registro e resultados próprios. Nenhum aceite copiad
 
 ## Checkpoint
 
-- Etapa atual: **E26-02 ranqueado (confound resolvido; produto segue inconclusivo)** —
-  top-200 BM25/tarefa; expanded supera multi (13 vs 11), one_per_file lidera cobertura/token
-  (16/26); promoção exige edição real.
-- Último aceite e evidências: `archatlas/bitcoin/bm25text.py` (`btc-bm25text/1`: 404k linhas,
-  118MB, 2s) + `tests/bitcoin/test_btc_bm25text.py` (2/2);
-  `experiments/bitcoin/e26_02/btc-e2602-corpus-002/` (78 linhas + REPORT comparativo).
-- SHA publicado: `cbdefc3` (fan-in 100 na sonda 12: zero perda, −10% entregues — commit do
-  outro escritor, mantido) em `origin/codex/bitcoin-context`; este commit a registrar após push.
-- `run_id`: `btc-e2602-corpus-002` (leitura, ~2s + índice 2s). Reserva: nenhuma. Pedido ao core: nenhum.
+- Etapa atual: **E26-01 com braço BM25 (D precisão, C recall)** — 272 rodadas; D 0.654/0.481
+  a 10 arquivos (precisão 0.096), C 0.731/0.673; A/B bit-idênticos; sem edição, sem modelo.
+- Último aceite e evidências: `archatlas/bitcoin/realretrieval.py` (braço extra `D_bm25` fora de
+  `ARMS`, testes alheios intactos); `tests/bitcoin/test_btc_e26_01.py` (9/9: D sintético + pareamento
+  272 + replay); `experiments/bitcoin/e26_01/btc-e2601-003/` (runs + REPORT).
+- SHA publicado: `ccab140` (E26-02 ranqueado) em `origin/codex/bitcoin-context`; este commit
+  a registrar após push.
+- `run_id`: `btc-e2601-003` (leitura, 106s). Reserva: nenhuma. Pedido ao core: nenhum.
 - Bloqueio exato: edição/piloto exigem teto + modelos + custodiante + dev (nulos); `main`
-  observado, NÃO incorporado. Escritor concorrente ativo e cooperativo (evita STATUS; registra
-  em mensagens): convergência — teto 100 preserva na sonda, teto 25 perde no ouro-hub (34 tarefas).
-- Alternativa independente: braço BM25 de retrieval (E26-01); vocabulário (`addrman`); build.
-- Próximo comando/ação: retrieval BM25 vs C no corpus; ou build isolado.
+  observado, NÃO incorporado. Sem escritor concorrente neste turno.
+- Alternativa independente: vocabulário (`addrman`); K/top-N por orçamento; build isolado.
+- Próximo comando/ação: mapa de vocabulário com ouro; ou build isolado.
 
 ## Etapas
 
@@ -65,6 +63,8 @@ ranking confunde — inconclusivo, próximo com scores);
 2026-09-24 E26-02 ranqueado (top-200 BM25: 1/file 16/26, expanded 13/26 + 65 pares, multi 11/26;
 confound resolvido; produto inconclusivo sem edição);
 2026-09-24 coexistência cooperativa na branch (commit alheio cbdefc3 mantido: CAP=100 zero perda
-na sonda; este commit: BM25 textual + E26-02 ranqueado; sem reescrita).
+na sonda; este commit: BM25 textual + E26-02 ranqueado; sem reescrita);
+2026-09-24 E26-01 com braço D_bm25 (272 rodadas: D 0.654/0.481 a 10 arqs, C 0.731/0.673;
+D precisão, C recall; A/B idênticos).
 Nenhuma fase posterior marcada além de BTC-P7. Experimentos BTC-E26-00–06 e E26-06 espelho:
 E26-00/E26-02/drills sintéticos + E26-01 em dataset (2 rodadas); edição segue sem modelo.

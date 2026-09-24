@@ -124,3 +124,50 @@ def test_replay_reproduces_and_report_honest():
     rep = REPORT.read_text(encoding="utf-8")
     assert "sem modelo" in rep and "sem confirmação" in rep
     assert "204" in rep
+
+
+def _ranker_db(tmp_path):
+    import sqlite3
+    from archatlas.bitcoin.bm25text import bm25_lines, build_text_index
+    (tmp_path / "q.cpp").write_bytes(b"CheckTransaction validation querytoken\n")
+    (tmp_path / "z.cpp").write_bytes(b"unrelated xyzzy content here\n")
+    db = tmp_path / "r.sqlite"
+    build_text_index(db, tmp_path)
+    con = sqlite3.connect(db)
+    return con, lambda q, k=200: bm25_lines(con, q, k)
+
+
+def test_d_bm25_ranks_and_requires_ranker(tmp_path):
+    from archatlas.bitcoin.realretrieval import corpus_texts
+    con, ranker = _ranker_db(tmp_path)
+    texts = corpus_texts(tmp_path)
+    hit, note = exec_arm("D_bm25", tmp_path, texts, "CheckTransaction validation", None, 25, ranker)
+    assert "q.cpp" in hit and "top-10" in note
+    assert exec_arm("D_bm25", tmp_path, texts, "CheckTransaction", None, 25, ranker) == \
+        exec_arm("D_bm25", tmp_path, texts, "CheckTransaction", None, 25, ranker)
+    try:
+        exec_arm("D_bm25", tmp_path, texts, "x")
+    except ValueError as e:
+        assert "ranker" in str(e)
+    else:
+        raise AssertionError("D sem ranker deveria falhar ruidoso")
+    con.close()
+
+
+RUNS3 = pathlib.Path("experiments/bitcoin/e26_01/btc-e2601-003/runs.jsonl")
+
+
+def test_d_arm_pairing_and_replay():
+    all_tasks = json.loads(TASKS.read_text(encoding="utf-8"))
+    tasks = {t["id"]: [f for f in t["expected_dev_files"] if f not in t.get("given_files", [])]
+             for t in all_tasks if t["type"] != "negative"}
+    runs = [json.loads(l) for l in RUNS3.read_text(encoding="utf-8").splitlines()]
+    assert len(runs) == 34 * 4 * 2
+    assert {(r["task_id"], r["condition"], r["budget"]) for r in runs} == \
+        {(t["id"], c, b) for t in all_tasks
+         for c in ("A_busca", "B_freq", "C_adapter", "D_bm25") for b in (2000, 8000)}
+    for r in runs:
+        if r["type"] == "negative":
+            continue
+        sc = score_delivery(set(r["delivered"]), {"files": tasks[r["task_id"]]})
+        assert sc["hit"] == r["hit"] and sc["recall_set"] == r["recall_set"]
