@@ -18,11 +18,17 @@ def build_capsule(con: sqlite3.Connection, query: str, budget: int, k: int = 20)
         for s in find_symbol(con, tok.strip("?,."), exact=True)[:3]:
             if (s["name"], s["file"], s["line"]) not in {(c["name"], c["file"], c["line"]) for c in cands}:
                 cands.append({**s, "bm25": -1.0})
+    if not cands:  # F10-blind: query sem símbolo indexado (ex. método JDK) → fallback p/ refs verificadas
+        for tok in query.split():
+            for r in find_references(con, tok.strip("?,."))[:10]:
+                key = (r["name"], r["file"], r["line"])
+                if key not in {(c["name"], c["file"], c["line"]) for c in cands}:
+                    cands.append({"name": r["name"], "kind": "ref", "file": r["file"], "line": r["line"],
+                                  "provenance": "text-match-verified", "confidence": 0.7, "bm25": 0.0})
     ranked = sorted(cands, key=lambda c: (c.get("bm25", 0), c["file"], c["line"]))
     seen = {(c["name"], c["file"], c["line"]) for c in ranked}
-    for c in ranked[:5]:  # F8: expansão 1-hop de referências verificadas
-        if c.get("kind") not in ("class", "interface", "enum"):
-            continue
+    seen = {(c["name"], c["file"], c["line"]) for c in ranked}
+    for c in ranked[:8]:  # F10: expansão 1-hop p/ qualquer símbolo (métodos incluídos)
         for r in find_references(con, c["name"])[:5]:
             key = (r["name"], r["file"], r["line"])
             if key not in seen:

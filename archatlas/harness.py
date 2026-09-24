@@ -30,8 +30,14 @@ def run(dev_json: pathlib.Path, db: pathlib.Path, out_jsonl: pathlib.Path, budge
             cap = build_capsule(con, q["query"], budget)
             dt = time.perf_counter() - s
             total_s += dt
-            gt_file = q["gt"].get("file")
-            ok = bool(gt_file) and gt_file in cap["files"]
+            gt = q["gt"]
+            files = set(cap["files"])
+            if "files" in gt:
+                ok = any(f in files for f in gt["files"])
+            elif "package" in gt:
+                ok = bool(gt.get("file") in files or any(f.startswith(gt["package"]) for f in files))
+            else:
+                ok = bool(gt.get("file")) and gt["file"] in files
             hits += ok
             fh.write(json.dumps({"id": q["id"], "cat": q["category"], "budget": budget,
                                  "hit": ok, "seconds": round(dt, 4), "used": cap["budget"]["used"],

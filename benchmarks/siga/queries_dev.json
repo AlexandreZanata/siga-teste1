@@ -538,5 +538,425 @@
    "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExNivelAcesso.java",
    "line": 36
   }
+ },
+ {
+  "id": "C-000",
+  "category": "C",
+  "query": "Em qual arquivo/linha o método Zeros chama length?",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExClassificacao.java",
+   "line": 65,
+   "caller": "Zeros",
+   "callee": "length"
+  }
+ },
+ {
+  "id": "E-000",
+  "category": "E",
+  "query": "Cite um caller de length (quem o chama e onde).",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Documento.java",
+   "line": 130,
+   "callee": "length"
+  }
+ },
+ {
+  "id": "G-000",
+  "category": "G",
+  "query": "Se length mudar, cite um arquivo que precisaria revisão.",
+  "gt": {
+   "files": [
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Documento.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Documento.java"
+   ],
+   "callee": "length"
+  }
+ },
+ {
+  "id": "F-000",
+  "category": "F",
+  "query": "Em qual pacote (diretório) está o método Zeros?",
+  "gt": {
+   "package": "siga-ex/src/main/java/br/gov/jfrj/siga/ex",
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExClassificacao.java"
+  }
+ },
+ {
+  "id": "C-001",
+  "category": "C",
+  "query": "Em qual arquivo/linha o método Zeros chama toString?",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExClassificacao.java",
+   "line": 64,
+   "caller": "Zeros",
+   "callee": "toString"
+  }
+ },
+ {
+  "id": "E-001",
+  "category": "E",
+  "query": "Cite um caller de toString (quem o chama e onde).",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Documento.java",
+   "line": 224,
+   "callee": "toString"
+  }
+ },
+ {
+  "id": "G-001",
+  "category": "G",
+  "query": "Se toString mudar, cite um arquivo que precisaria revisão.",
+  "gt": {
+   "files": [
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Documento.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Documento.java"
+   ],
+   "callee": "toString"
+  }
+ },
+ {
+  "id": "F-001",
+  "category": "F",
+  "query": "Em qual pacote (diretório) está o método Zeros?",
+  "gt": {
+   "package": "siga-ex/src/main/java/br/gov/jfrj/siga/ex",
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExClassificacao.java"
+  }
+ },
+ {
+  "id": "C-002",
+  "category": "C",
+  "query": "Em qual arquivo/linha o método addRestrictedProperty chama FileOutputStream?",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java",
+   "line": 544,
+   "caller": "addRestrictedProperty",
+   "callee": "FileOutputStream"
+  }
+ },
+ {
+  "id": "F-002",
+  "category": "F",
+  "query": "Em qual pacote (diretório) está o método addRestrictedProperty?",
+  "gt": {
+   "package": "siga-ex/src/main/java/br/gov/jfrj/itextpdf",
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java"
+  }
+ },
+ {
+  "id": "C-003",
+  "category": "C",
+  "query": "Em qual arquivo/linha o método addRestrictedProperty chama FlyingSaucer?",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java",
+   "line": 536,
+   "caller": "addRestrictedProperty",
+   "callee": "FlyingSaucer"
+  }
+ },
+ {
+  "id": "F-003",
+  "category": "F",
+  "query": "Em qual pacote (diretório) está o método addRestrictedProperty?",
+  "gt": {
+   "package": "siga-ex/src/main/java/br/gov/jfrj/itextpdf",
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java"
+  }
+ },
+ {
+  "id": "C-004",
+  "category": "C",
+  "query": "Em qual arquivo/linha o método addRestrictedProperty chama addPrivateProperty?",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java",
+   "line": 528,
+   "caller": "addRestrictedProperty",
+   "callee": "addPrivateProperty"
+  }
+ },
+ {
+  "id": "F-004",
+  "category": "F",
+  "query": "Em qual pacote (diretório) está o método addRestrictedProperty?",
+  "gt": {
+   "package": "siga-ex/src/main/java/br/gov/jfrj/itextpdf",
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java"
+  }
+ },
+ {
+  "id": "C-005",
+  "category": "C",
+  "query": "Em qual arquivo/linha o método addRestrictedProperty chama addPrivateProperty?",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java",
+   "line": 531,
+   "caller": "addRestrictedProperty",
+   "callee": "addPrivateProperty"
+  }
+ },
+ {
+  "id": "F-005",
+  "category": "F",
+  "query": "Em qual pacote (diretório) está o método addRestrictedProperty?",
+  "gt": {
+   "package": "siga-ex/src/main/java/br/gov/jfrj/itextpdf",
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java"
+  }
+ },
+ {
+  "id": "C-006",
+  "category": "C",
+  "query": "Em qual arquivo/linha o método addRestrictedProperty chama addPublicProperty?",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java",
+   "line": 522,
+   "caller": "addRestrictedProperty",
+   "callee": "addPublicProperty"
+  }
+ },
+ {
+  "id": "F-006",
+  "category": "F",
+  "query": "Em qual pacote (diretório) está o método addRestrictedProperty?",
+  "gt": {
+   "package": "siga-ex/src/main/java/br/gov/jfrj/itextpdf",
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java"
+  }
+ },
+ {
+  "id": "C-007",
+  "category": "C",
+  "query": "Em qual arquivo/linha o método addRestrictedProperty chama addPublicProperty?",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java",
+   "line": 525,
+   "caller": "addRestrictedProperty",
+   "callee": "addPublicProperty"
+  }
+ },
+ {
+  "id": "F-007",
+  "category": "F",
+  "query": "Em qual pacote (diretório) está o método addRestrictedProperty?",
+  "gt": {
+   "package": "siga-ex/src/main/java/br/gov/jfrj/itextpdf",
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java"
+  }
+ },
+ {
+  "id": "C-008",
+  "category": "C",
+  "query": "Em qual arquivo/linha o método addRestrictedProperty chama convertStreamToString?",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java",
+   "line": 538,
+   "caller": "addRestrictedProperty",
+   "callee": "convertStreamToString"
+  }
+ },
+ {
+  "id": "F-008",
+  "category": "F",
+  "query": "Em qual pacote (diretório) está o método addRestrictedProperty?",
+  "gt": {
+   "package": "siga-ex/src/main/java/br/gov/jfrj/itextpdf",
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java"
+  }
+ },
+ {
+  "id": "C-009",
+  "category": "C",
+  "query": "Em qual arquivo/linha o método addRestrictedProperty chama converter?",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java",
+   "line": 539,
+   "caller": "addRestrictedProperty",
+   "callee": "converter"
+  }
+ },
+ {
+  "id": "E-002",
+  "category": "E",
+  "query": "Cite um caller de converter (quem o chama e onde).",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Documento.java",
+   "line": 676,
+   "callee": "converter"
+  }
+ },
+ {
+  "id": "G-002",
+  "category": "G",
+  "query": "Se converter mudar, cite um arquivo que precisaria revisão.",
+  "gt": {
+   "files": [
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Documento.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FOP.java"
+   ],
+   "callee": "converter"
+  }
+ },
+ {
+  "id": "F-009",
+  "category": "F",
+  "query": "Em qual pacote (diretório) está o método addRestrictedProperty?",
+  "gt": {
+   "package": "siga-ex/src/main/java/br/gov/jfrj/itextpdf",
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java"
+  }
+ },
+ {
+  "id": "E-003",
+  "category": "E",
+  "query": "Cite um caller de getResourceAsStream (quem o chama e onde).",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FOP.java",
+   "line": 61,
+   "callee": "getResourceAsStream"
+  }
+ },
+ {
+  "id": "G-003",
+  "category": "G",
+  "query": "Se getResourceAsStream mudar, cite um arquivo que precisaria revisão.",
+  "gt": {
+   "files": [
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FOP.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/FOP.java"
+   ],
+   "callee": "getResourceAsStream"
+  }
+ },
+ {
+  "id": "E-004",
+  "category": "E",
+  "query": "Cite um caller de stamp (quem o chama e onde).",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Documento.java",
+   "line": 358,
+   "callee": "stamp"
+  }
+ },
+ {
+  "id": "G-004",
+  "category": "G",
+  "query": "Se stamp mudar, cite um arquivo que precisaria revisão.",
+  "gt": {
+   "files": [
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Documento.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Documento.java"
+   ],
+   "callee": "stamp"
+  }
+ },
+ {
+  "id": "E-005",
+  "category": "E",
+  "query": "Cite um caller de try (quem o chama e onde).",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Documento.java",
+   "line": 457,
+   "callee": "try"
+  }
+ },
+ {
+  "id": "G-005",
+  "category": "G",
+  "query": "Se try mudar, cite um arquivo que precisaria revisão.",
+  "gt": {
+   "files": [
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Documento.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Documento.java"
+   ],
+   "callee": "try"
+  }
+ },
+ {
+  "id": "E-006",
+  "category": "E",
+  "query": "Cite um caller de write (quem o chama e onde).",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Documento.java",
+   "line": 389,
+   "callee": "write"
+  }
+ },
+ {
+  "id": "G-006",
+  "category": "G",
+  "query": "Se write mudar, cite um arquivo que precisaria revisão.",
+  "gt": {
+   "files": [
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Documento.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Documento.java"
+   ],
+   "callee": "write"
+  }
+ },
+ {
+  "id": "E-007",
+  "category": "E",
+  "query": "Cite um caller de getExClassificacao (quem o chama e onde).",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExDocumento.java",
+   "line": 606,
+   "callee": "getExClassificacao"
+  }
+ },
+ {
+  "id": "G-007",
+  "category": "G",
+  "query": "Se getExClassificacao mudar, cite um arquivo que precisaria revisão.",
+  "gt": {
+   "files": [
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExDocumento.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExModelo.java"
+   ],
+   "callee": "getExClassificacao"
+  }
+ },
+ {
+  "id": "E-008",
+  "category": "E",
+  "query": "Cite um caller de getExModelo (quem o chama e onde).",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Documento.java",
+   "line": 633,
+   "callee": "getExModelo"
+  }
+ },
+ {
+  "id": "G-008",
+  "category": "G",
+  "query": "Se getExModelo mudar, cite um arquivo que precisaria revisão.",
+  "gt": {
+   "files": [
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/itextpdf/Documento.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExClassificacao.java"
+   ],
+   "callee": "getExModelo"
+  }
+ },
+ {
+  "id": "E-009",
+  "category": "E",
+  "query": "Cite um caller de getExVia (quem o chama e onde).",
+  "gt": {
+   "file": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExClassificacao.java",
+   "line": 202,
+   "callee": "getExVia"
+  }
+ },
+ {
+  "id": "G-009",
+  "category": "G",
+  "query": "Se getExVia mudar, cite um arquivo que precisaria revisão.",
+  "gt": {
+   "files": [
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExClassificacao.java",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga/siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExTemporalidade.java"
+   ],
+   "callee": "getExVia"
+  }
  }
 ]

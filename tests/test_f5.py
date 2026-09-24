@@ -51,10 +51,11 @@ def test_capsule_budget_hard_and_citations_closed(tmp_path):
 
 def test_benchmark_gt_verified():
     qs = json.loads(DEV.read_text(encoding="utf-8"))
-    assert len(qs) >= 50
-    assert {"A", "B", "D"} <= {q["category"] for q in qs}
+    assert len(qs) >= 100
+    assert {"A", "B", "C", "D", "E", "F", "G"} <= {q["category"] for q in qs}
     for q in qs:
-        f = pathlib.Path(q["gt"]["file"])
-        assert f.exists(), q["id"]
-        if "line" in q["gt"]:
-            assert q["gt"]["line"] >= 1
+        gt = q["gt"]
+        files = gt.get("files", [gt["file"]] if "file" in gt else [])
+        assert files, q["id"]
+        for f in files:
+            assert pathlib.Path(f).exists(), (q["id"], f)
