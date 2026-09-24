@@ -5,6 +5,7 @@ import pathlib
 import sqlite3
 
 from archatlas.lexical import bm25_search
+from archatlas.packing import pack_ranked
 from archatlas.query import find_references, find_symbol, read_contents
 from archatlas.telemetry import payload_tokens_for_capsule
 
@@ -13,9 +14,10 @@ def count_tokens(text: str) -> int:
     return max(1, len(text) // 4)
 
 
-def build_capsule(con: sqlite3.Connection, query: str, budget: int, k: int = 20) -> dict:
+def _rank_candidates(con: sqlite3.Connection, query: str, k: int,
+                     disk: dict) -> list[dict]:
+    """Ranking F5–F19 verbatim (E26-02 congela aqui; só packing varia)."""
     import re as _re
-    disk = read_contents(con)  # F19: lê cada arquivo UMA vez; verificação por linha mantida
     cands = bm25_search(con, query, k)
     for c in cands:
         c["tier"] = 1
@@ -54,38 +56,38 @@ def build_capsule(con: sqlite3.Connection, query: str, budget: int, k: int = 20)
                                "provenance": "text-match-verified", "confidence": 0.7, "bm25": 0.0, "tier": 1,
                                "excerpt": r["excerpt"]})
     ranked = sorted(ranked, key=lambda c: (c.get("tier", 1), c.get("bm25", 0), c["file"], c["line"]))
-    symbols, excerpts, citations, relations, log = [], [], [], [], []
-    used = 0
-    for i, c in enumerate(ranked):
-        lines = disk.get(c["file"])
-        try:
-            line_text = lines[c["line"] - 1].strip()[:200]
-        except (TypeError, IndexError):
-            log.append({"stage": "select", "rule": "unreadable", "dropped": c["name"], "reason": c["file"]})
-            continue
-        if c["name"] not in line_text and c["kind"] in ("class", "interface", "enum"):
-            log.append({"stage": "select", "rule": "name-absent", "dropped": c["name"], "reason": c["file"]})
-            continue
-        item = f"{c['file']}:{c['line']} {c['kind']} {c['name']} :: {line_text}"
-        cost = count_tokens(item)
-        if used + cost > budget:
-            log.append({"stage": "pack", "rule": "over_budget", "dropped": c["name"], "reason": f"+{cost} > {budget - used}"})
-            continue
-        symbols.append({**c, "reason": f"bm25 rank {i}", "score": round(float(-c.get('bm25', 0)), 4)})
-        excerpts.append({"id": f"e{i}", "file": c["file"], "start_line": c["line"], "end_line": c["line"],
-                         "tokens": cost, "truncated": False, "text": line_text, "anchors": [c["name"]]})
-        citations.append({"excerpt_id": f"e{i}", "file": c["file"], "line": c["line"], "symbol": c["name"]})
-        rel_kind = "REFERENCES" if c.get("kind") == "ref" else "DEFINES"
-        relations.append({"from": c["file"], "to": c["name"], "kind": rel_kind,
-                          "provenance": c["provenance"], "score": 1.0})
-        used += cost
+    return ranked
+
+
+def build_capsule(con: sqlite3.Connection, query: str, budget: int, k: int = 20,
+                  packing: str = "multi") -> dict:
+    """Monta a cápsula; `packing` ∈ {one_per_file, multi, expanded} (E26-02).
+
+    Default `multi` reproduz o comportamento F5–F19 byte a byte nos campos
+    legados (mesmo ranking, mesmos gates, mesmos ids `e{i}`). Chamadores
+    antigos (harness, strategies, testes) seguem funcionando sem mudanças.
+    """
+    disk = read_contents(con)  # F19: lê cada arquivo UMA vez; verificação por linha mantida
+    ranked = _rank_candidates(con, query, k, disk)
+    decls = None
+    if packing == "expanded":
+        decls = {}
+        for (name, kind, f, line) in con.execute(
+                "SELECT name, kind, file, line FROM symbols WHERE kind IN "
+                "('class','interface','enum','method') ORDER BY file, line").fetchall():
+            decls.setdefault(f, []).append((line, kind, name))
+    packed = pack_ranked(ranked, disk, budget, policy=packing, decls=decls)
+    symbols, excerpts, citations, relations, log = (
+        packed["symbols"], packed["excerpts"], packed["citations"],
+        packed["relations"], packed["truncation_log"])
+    used = packed["used"]
     files = sorted({s["file"] for s in symbols})
     out = {"capsule_version": "1.0", "query": query,
             "budget": {"requested": budget, "used": used, "tokenizer": "chars//4", "hard_enforced": True},
             "symbols": symbols, "files": files, "relations": relations, "call_paths": [],
             "tests": [], "docs": [], "excerpts": excerpts, "citations": citations,
             "truncation_log": log, "stats": {"candidates": len(ranked), "kept": len(symbols),
-                                            "retrieved": len(ranked)}}
+                                            "retrieved": len(ranked), "packing": packing}}
     # P2/E26-00: telemetria da fronteira de entrega (sem mudar ranking/seleção).
     # `used` segue soma de itens (compat); `payload_tokens` mede a serialização
     # inteira entregue. `opened`=leituras explícitas fora da cápsula (0 aqui);
@@ -97,6 +99,7 @@ def build_capsule(con: sqlite3.Connection, query: str, budget: int, k: int = 20)
         sort_keys=True, ensure_ascii=False))
     out["payload_tokens"] = payload_tokens_for_capsule(out)
     out["telemetry"] = {"retrieved": len(ranked), "delivered": len(symbols),
+                        "packing": packing,
                         "delivered_files": files, "payload_chars": blob_chars,
                         "payload_tokens": out["payload_tokens"], "opened": 0,
                         "declared_relevant": None, "history_tokens": None,
