@@ -6,19 +6,19 @@ com dataset, tarefas, pré-registro e resultados próprios. Nenhum aceite copiad
 
 ## Checkpoint
 
-- Etapa atual: **BTC-P6 concluída (desenho + drill)** — portabilidade temporal/ambiente
-  especificada, maquinaria `temporal.py` exercitada, limitações consolidadas; sem corpus.
-- Último aceite e evidências: `research/bitcoin/PORTABILITY.md` (eixos, pré-seleção, matriz nula,
-  não-transferência); `archatlas/bitcoin/temporal.py` + `tests/bitcoin/test_btc_portability.py` (2/2);
-  `experiments/bitcoin/p6_temporal/btc-p6-drill-001/` (manifesto + REPORT: 5/13 invalidados);
-  `research/bitcoin/LIMITATIONS.md` (teto honesto BTC-P0–P6); BTC-P0–P5 inalterados.
-- SHA publicado: `85af030` (BTC-P5) em `origin/codex/bitcoin-context`; este commit BTC-P6 a registrar após push.
-- `run_id`: `btc-p6-drill-001` (sintético, determinístico). Reserva de recursos: nenhuma.
-- Pedido ao core: nenhum.
-- Bloqueio exato: execução temporal real exige `BTC_SHA(t0/t1)` + toolchain + teto + modelos
-  (todos nulos); `main` em `7ba03cc` (P4-infra SIGA) observado, NÃO incorporado.
-- Alternativa independente: BTC-P7 (guia dev + handoff) pode avançar sem dataset.
-- Próximo comando/ação: resolver `BTC_SHA`; revalidar `C_btc` no corpus; depois BTC-P7.
+- Etapa atual: **BTC-P7 concluída (guia + jornada ensaiada + handoff)** — trilha BTC-P0–P7
+  completa em escopo executável sem dataset; execução real segue bloqueada (PIN e pendências).
+- Último aceite e evidências: `research/bitcoin/DEV_GUIDE.md` (instalação, jornadas, capacidades);
+  `archatlas/bitcoin/devflow.py` + `tests/bitcoin/test_btc_devflow.py` (2/2);
+  `experiments/bitcoin/e26_06/btc-e2606-drill-001/` (manifesto + REPORT: jornada ponta a ponta);
+  `research/bitcoin/INTEGRATION_HANDOFF.md` (checkpoint para A; sem merge por B); BTC-P0–P6 inalterados.
+- SHA publicado: `06db15f` (BTC-P6) em `origin/codex/bitcoin-context`; este commit BTC-P7 (fim da
+  trilha executável) a registrar após push.
+- `run_id`: `btc-e2606-drill-001` (ensaio). Reserva de recursos: nenhuma. Pedido ao core: nenhum.
+- Bloqueio exato: uso humano e execução em corpus exigem `BTC_SHA` + toolchain + teto + modelos +
+  custodiante + dev (todos nulos); `main` em `36e8605` (P4-infra SIGA) observado, NÃO incorporado.
+- Alternativa independente: nenhuma — trilha completa; próximos passos dependem de PIN/piloto.
+- Próximo comando/ação: resolver `BTC_SHA`; revalidar `C_btc` no corpus; A integra em checkpoint.
 
 ## Etapas
 
@@ -29,7 +29,7 @@ com dataset, tarefas, pré-registro e resultados próprios. Nenhum aceite copiad
 - [x] BTC-P4 — protótipo e ablações (btc-pack/1 + E26-02 sintético + decisões; E26-03/04/05 com estado honesto; decisão final pendente de piloto).
 - [x] BTC-P5 — confirmatório cego (pré-registro final selável + maquinaria ensaiada; selo real e rodada bloqueados por piloto/custodiante).
 - [x] BTC-P6 — portabilidade temporal e de ambiente Bitcoin (desenho + drill sintético + LIMITATIONS; execução real pendente de snapshots).
-- [ ] BTC-P7 — uso por desenvolvedor e checkpoint de integração.
+- [x] BTC-P7 — uso por desenvolvedor e checkpoint de integração (guia + jornada ensaiada + handoff; sem merge por B; uso humano pendente).
 
 Histórico de transições preservado aqui: 2026-09-24 BTC-P0 concluída (auditoria) com PIN/CENSO
 pendentes; 2026-09-24 BTC-P1 concluída (literatura + pré-registro preliminar, lacunas nulas em §7);
@@ -42,6 +42,8 @@ E26-03/04/05 não executados/indisponíveis com motivo; final pendente de piloto
 2026-09-24 BTC-P5 concluída em preparação (pré-registro final selável, btc-seal/1 ensaiada 3/3;
 selo real e rodada bloqueados por piloto/custodiante);
 2026-09-24 BTC-P6 concluída em desenho + drill (temporal.py 2/2, 5/13 invalidados, fração 0.385;
-LIMITATIONS consolidado; execução real pendente de snapshots).
+LIMITATIONS consolidado; execução real pendente de snapshots);
+2026-09-24 BTC-P7 concluída (guia dev, jornada 2/2, handoff sem merge; trilha BTC-P0–P7 completa
+em escopo sem dataset; execução real e uso humano pendentes de PIN e desbloqueios).
 Nenhuma fase posterior marcada além de BTC-P7. Experimentos BTC-E26-00–06 e E26-06 espelho:
 E26-00/E26-02/drills validados em fixtures sintéticas; nenhum executado em dataset.
