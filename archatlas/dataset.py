@@ -9,10 +9,13 @@ EXT_MAP = {".java": "java", ".py": "python", ".jsp": "jsp", ".tag": "jsp",
            ".c": "cpp", ".h": "cpp", ".hpp": "cpp", ".cpp": "cpp", ".js": "js", ".ts": "js"}
 
 
+EXCLUDE_DIRS = {".git", ".venv", "venv", ".tox", "node_modules", "__pycache__", "target", "build"}
+
+
 def discover(root: pathlib.Path) -> list[tuple[pathlib.Path, str]]:
     out = []
     for f in sorted(root.rglob("*")):
-        if f.is_file() and f.suffix in EXT_MAP and ".git/" not in str(f):
+        if f.is_file() and f.suffix in EXT_MAP and not (EXCLUDE_DIRS & set(f.parts)):
             out.append((f, EXT_MAP[f.suffix]))
     return out
 

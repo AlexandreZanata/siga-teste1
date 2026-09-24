@@ -7,7 +7,8 @@ import re
 from archatlas.extract import METHOD_RE
 
 CALL_RE = re.compile(r"\b([A-Za-z_]\w*)\s*\(")
-SKIP = {"if", "for", "while", "switch", "catch", "return", "new", "super", "this", "class"}
+SKIP = {"if", "for", "while", "switch", "catch", "return", "new", "super", "this", "class",
+        "try", "finally", "throw", "throws", "assert", "synchronized", "else", "do"}
 
 
 def extract_calls(path: pathlib.Path) -> list[dict]:

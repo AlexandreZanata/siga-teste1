@@ -15,7 +15,8 @@ Metodologia fixa: trunk-based, fases ≤1 entrega, DCO (`-s`), `pytest -q` verde
 - [x] **F10** benchmark 100Qs A–G + cegos 3 abordagens + fallback refs (recall 0.92 → 1.00, query ~26ms)
 - [x] **F11** GT-conjunto (40 Qs com sets médios 5.3 arqs) + p50/p95 por query (16/38ms) + recall 1.00
 - [x] **F12** rede generalizada: dataset paramétrico + extrator Python AST + dogfooding (Python+Java mesmo DB)
-- [ ] **F13** bake-off (lexical vs structural vs hybrid vs hybrid+refs) + roteador adaptativo + cego 4 vias
+- [x] **F13** bake-off (lex 0.92/0.2ms, struct 0.92, hybrid 0.92, hybrid+refs 1.00, router 1.00/10ms) + roteador cascata + cego 4 vias + higiene `.venv` + fix keyword-`try`
+- [ ] **F14** performance em escala: índice `siga-ex` completo (504 arqs) + p50/p95 + index size + incremental 10/100 arqs vs rebuild
 - [ ] **F13** bake-off de metodologias (lexical-only vs structural-only vs hybrid vs hybrid+refs, da literatura RepoCoder/CodeRAG/RepoGraph) + roteador adaptativo por categoria + teste cego 4 vias
 - [ ] **F14** performance em escala: índice `siga-ex` completo (504 arqs) + p50/p95 + index size + incremental 10/100 arqs vs rebuild
 - [ ] **F15** freeze `v1-siga` + tabelas de paper (accuracy/tokens/latência por método) + SBOM
