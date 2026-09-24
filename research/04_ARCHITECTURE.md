@@ -1,5 +1,7 @@
 # 04 — Arquitetura Proposta (e alternativas)
 
+> Rascunho de alternativas, não inventário da implementação. O [plano vigente, seção 5](../plans/PESQUISA_CONTEXTO_MODULAR.md#5-arquitetura-a-investigar) define os contratos a investigar, reaproveitando o código atual. Parsers, transportes e mecanismos opcionais só serão introduzidos conforme a necessidade experimental; não presumir que as escolhas abaixo já existem ou foram validadas.
+
 **Status:** DRAFT 2026-09-24. Princípios: correção > verificabilidade > reprodutibilidade > generalização > eficiência > velocidade > simplicidade > extensibilidade. 100% local.
 
 ## 1. Pipeline

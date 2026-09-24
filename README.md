@@ -12,7 +12,7 @@ Memória estrutural externa, determinística, compacta, incremental e navegável
 archatlas/        # código Apache-2.0 (core determinístico, stdlib-first)
 benchmarks/siga/  # PIN.md + CENSO.md (ponteiros, sem blobs)
 tests/            # pytest, tudo reproduzível em 1 comando
-research/         # 15 docs de planejamento (01–15)
+research/         # fundamentos, protocolos e base experimental de papers de 2026
 docs/             # protocolos operacionais (verificação, roadmap)
 experiments/      # capsules por execução (hashes, sem outputs gigantes)
 ```
@@ -25,7 +25,11 @@ experiments/      # capsules por execução (hashes, sem outputs gigantes)
 - **Sem dados pessoais:** nenhum path de máquina no código ou docs; GT usa paths relativos ao dataset.
 
 ## Roadmap por etapas (cada etapa = commit + push)
-Ver `docs/ROADMAP_ETAPAS.md` (F0–F19, plano completo) e `docs/VERIFICATION_PROTOCOL.md` (anti-alucinação).
+O [plano vigente de pesquisa para contexto modular](plans/PESQUISA_CONTEXTO_MODULAR.md) orienta as próximas etapas: auditoria das evidências, literatura primária, tarefas reais de edição, avaliação cega e transferência para outros projetos. Define contratos e critérios de ganho; sua inclusão é apenas planejamento, sem implementação ou experimentos novos.
+
+A [base experimental de 2026](research/16_BASE_EXPERIMENTAL_2026.md) reúne nove papers, incluindo trabalhos de setembro. O [roteiro de experimentos e entrega para devs](plans/EXPERIMENTOS_2026.md) converte os métodos em testes de seleção de contexto, empacotamento, poda, histórico e uso real, com controles e critérios de decisão.
+
+Ver também `docs/ROADMAP_ETAPAS.md` (histórico F0–F20 e ligação com F21) e `docs/VERIFICATION_PROTOCOL.md` (verificação de evidências). Resultados históricos de recuperação não comprovam, isoladamente, economia ou correção em tarefas de desenvolvimento.
 
 ## Uso rápido
 ```bash

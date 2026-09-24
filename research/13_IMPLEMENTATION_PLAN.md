@@ -1,5 +1,7 @@
 # 13 — Plano de Implementação (microfases)
 
+> Sequência histórica. Não reiniciar P0–P22 deste arquivo: o projeto já possui implementação e experimentos. Seguir exclusivamente a [sequência P0–P7 do plano vigente](../plans/PESQUISA_CONTEXTO_MODULAR.md#8-etapas-pequenas-para-os-agentes-de-execução), começando pela auditoria do que existe. Nenhum clone, refatoração, execução ou publicação é autorizado automaticamente pela revisão documental.
+
 **Status:** DRAFT 2026-09-24. Cada fase: objetivo pequeno, artefato verificável, testes, done-criteria, sem irreversibilidade.
 
 ## 1. Estrutura de repo (revisada)

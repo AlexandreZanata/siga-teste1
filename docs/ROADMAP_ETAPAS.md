@@ -1,6 +1,10 @@
 # Roadmap por etapas (cada etapa = commit local + push; metodologia de ponta)
 
+> Atualização de planejamento — 2026-09-24: a sequência futura e os critérios científicos estão no [plano de pesquisa para contexto modular](../plans/PESQUISA_CONTEXTO_MODULAR.md). F0–F20 abaixo preservam registros históricos, sem revalidação nesta revisão. A próxima etapa é P0 (auditoria), seguida de P1–P2 (literatura e medição), antes do piloto F21/P3. Esta revisão documental não executa etapas nem implica commit/push.
+
 Metodologia fixa: trunk-based, fases ≤1 entrega, DCO (`-s`), `pytest -q` verde offline, stdlib-first, determinismo por hash, evidência `arquivo:linha@SHA`, dataset `/siga/` read-only em `e3be22828`.
+
+Detalhamento atual: [papers de 2026](../research/16_BASE_EXPERIMENTAL_2026.md) → [E26-00–E26-06](../plans/EXPERIMENTOS_2026.md). Seleção bibliográfica concluída nesta revisão; auditoria, instrumentação, experimentos e produto continuam planejados. Ordem: E26-00/01 em P2–P3; E26-02 primeiro em P4; E26-03/04/05 conforme evidência do piloto; E26-06 em integração e transferência.
 
 - [x] **F0** bootstrap (LICENSE/README/CONTRIBUTING/CI/skeleton) — `fca3ccf`
 - [x] **F1** PIN+CENSO verificados — `eb56e0a`
@@ -23,7 +27,7 @@ Metodologia fixa: trunk-based, fases ≤1 entrega, DCO (`-s`), `pytest -q` verde
 - [x] **F18** 3 módulos (153Qs A–H, recall 1.00, index 841 arqs 5s, p95 372ms) + ranking tierado + fallback restaurado
 - [x] **F19** privacidade (config env, GT relativo, README sem paths) + latência (cache disco único + co-ocorrência: p95 372→119ms, recall 1.00)
 - [x] **F20** sweep budgets (500:.915, 1k:.948, 2k+:1.00, satura em ~1934tk) + comparativo
-- [ ] **F21** (aberta) tarefas de edição reais (frontend/backend) + cego de eficiência de edição
+- [ ] **F21 / P3** (planejada; depende de P0–P2) tarefas de edição reais frontend/backend + avaliação cega de patches, com custo ponta a ponta, qualidade e protocolo pré-registrado; ver plano vigente.
 - [ ] **FUTURO (pós-SIGA)** Bitcoin transfer (sem redesign) + `LIMITATIONS_BITCOIN.md`; ablações (9) + paper + SBOM + `v1` (só via RFC) — Bitcoin removido das etapas executáveis por decisão 2026-09-24: foco 100% SIGA-Doc até fidelidade comprovada
 
 Agente responsável por etapa: executa `docs/VERIFICATION_PROTOCOL.md` (4 portões) e anexa evidências no corpo do commit. Sem evidência, sem push.

@@ -1,6 +1,8 @@
 # 02 — Trabalho Relacionado (ArchAtlas)
 
-**Status:** DRAFT 2026-09-24. Levantamento verificado set/2026. Sem reivindicação de superioridade.
+> Ressalva de auditoria — 2026-09-24: o conteúdo abaixo é um catálogo histórico de candidatos, não uma revisão integral validada. Custos, capacidades ausentes, afirmações de novidade e referências ainda sem comprovação não devem fundamentar conclusões. O [plano vigente, seção 4](../plans/PESQUISA_CONTEXTO_MODULAR.md#4-literatura-inicial-e-como-combiná-la) reúne os fundamentos e aponta para as fichas de 2026. O antigo rótulo “verificado” foi substituído por um status de auditoria; cada afirmação exige sua própria evidência.
+
+**Status:** catálogo histórico em auditoria, 2026-09-24. Para decisões atuais, usar a [base experimental de 2026](16_BASE_EXPERIMENTAL_2026.md), com versões, fontes e limites, e os [experimentos derivados](../plans/EXPERIMENTOS_2026.md). FeatLens e SWE-Pruner agora têm fichas específicas; isso não valida automaticamente as comparações e alegações de novidade da tabela histórica abaixo.
 
 ## 1. Tabela comparativa
 

@@ -1,5 +1,7 @@
 # Protocolo de Verificação — anti-falso-positivo (v0.1)
 
+> Limite metodológico: releitura, hash e nome na linha verificam localização e integridade; não provam resolução semântica nem ausência universal de falsos positivos. Valores de `confidence` abaixo são rótulos históricos, não probabilidades calibradas. Complementar este protocolo com a auditoria e os critérios do [plano vigente](../plans/PESQUISA_CONTEXTO_MODULAR.md). Após edições locais, verificar também hashes da árvore efetiva, pois o SHA base não representa sozinho o código alterado.
+
 Toda afirmação estrutural passa por 4 portões, executados pelo agente responsável **antes** de qualquer commit:
 
 1. **Ler bytes reais:** `path.read_bytes()` no dataset pinado (`e3be22828`). Proibido afirmar símbolo sem abrir o arquivo.

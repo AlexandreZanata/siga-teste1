@@ -1,5 +1,7 @@
 # MEMORY — visão do produto + system prompt instalável (EN)
 
+> Visão de produto, ainda não garantia de portabilidade ou ganho. O [plano vigente de pesquisa](PESQUISA_CONTEXTO_MODULAR.md) define a sequência executável e substitui a aplicação imediata do instalador abaixo. Primeiro medir utilidade em edição real no SIGA; depois validar transferência com capacidades declaradas. Bitcoin permanece candidato futuro opcional.
+
 ## Goal
 A project-level **context memory** that is always available, triggerable on user request, constantly updatable as the project evolves, and installable into ANY repository. End state: user says "install \<project\> in this repository" and the agent maps the whole project under rigid criteria, producing measurable LLM-agent efficiency gains (fewer tokens, fewer tool calls, same-or-better correctness).
 

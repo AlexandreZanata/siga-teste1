@@ -1,5 +1,7 @@
 # 10 — Protocolo Experimental
 
+> Protocolo histórico, substituído para novas rodadas pela [seção 6 do plano vigente](../plans/PESQUISA_CONTEXTO_MODULAR.md#6-desenho-experimental). A CLI abaixo é proposta, não garantia de comando existente. Usar IDs efetivos de modelo, orçamento total, isolamento real do holdout, métricas de edição e regras pré-registradas de falha. Repetições não são amostras independentes; seeds/temperatura zero não garantem reprodução de respostas LLM.
+
 **Status:** DRAFT 2026-09-24. Principal: Muse Spark 1.3 × condições (A-grep, B-BM25, C-vector, E-Atlas; D se 5 braços) + sweeps.
 
 ## 1. Congelamento (bloqueante)
