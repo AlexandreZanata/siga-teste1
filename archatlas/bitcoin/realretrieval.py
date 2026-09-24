@@ -15,6 +15,7 @@ import sqlite3
 
 from archatlas.bitcoin.bm25text import bm25_lines
 from archatlas.bitcoin.cpp_lex import CORE_SHA, discover_cpp, extract_cpp_lexical
+from archatlas.bitcoin.vocab import expand_query
 from archatlas.dataset import EXCLUDE_DIRS
 from archatlas.telemetry import build_manifest, score_delivery
 
@@ -129,8 +130,12 @@ def verify_gold(tasks: list, texts: dict[str, str]) -> None:
 
 def run_all(root: pathlib.Path, tasks: list, budgets=(2000, 8000), seed: int = 7,
             cap: int = FANIN_CAP, extra_arms: tuple = (),
-            db_path: pathlib.Path | None = None) -> tuple[list, list]:
-    """Tarefas × (ARMS + extras) × budgets. Retorna (runs, manifests). Sem modelo."""
+            db_path: pathlib.Path | None = None, split_ids: bool = False) -> tuple[list, list]:
+    """Tarefas × (ARMS + extras) × budgets. Retorna (runs, manifests). Sem modelo.
+
+    `split_ids=True` expande a query com partes de identificadores (`vocab`,
+    mecânico, sem semântica); registrado por rodada.
+    """
     root = pathlib.Path(root)
     texts = corpus_texts(root)
     verify_gold(tasks, texts)
@@ -153,7 +158,10 @@ def run_all(root: pathlib.Path, tasks: list, budgets=(2000, 8000), seed: int = 7
             order += 1
             task = next(t for t in tasks if t["id"] == task_id)
             mans.append(build_manifest(task_id, arm, 1, order, budget, CORE_SHA, TOKENIZER))
-            delivered, note = exec_arm(arm, root, texts, task["query"], fanin, cap, ranker)
+            query, added = task["query"], []
+            if split_ids:
+                query, added = expand_query(task["query"])
+            delivered, note = exec_arm(arm, root, texts, query, fanin, cap, ranker)
             m = re.search(r"hubs_skipped=(\d+)", note)
             hubs = int(m.group(1)) if m else 0
             if task.get("type") == "negative":
@@ -167,7 +175,8 @@ def run_all(root: pathlib.Path, tasks: list, budgets=(2000, 8000), seed: int = 7
                        "precision_set": sc["precision_set"]}
             runs.append({"task_id": task_id, "condition": arm, "budget": budget,
                          "order": order, "sha": CORE_SHA, "tokenizer": TOKENIZER,
-                         "fanin_cap": cap,
+                         "fanin_cap": cap, "split_ids": split_ids,
+                         "added_tokens": added,
                          "type": task.get("type"), "delivered": sorted(delivered),
                          "opened": sorted(delivered), "executor_note": note,
                          "hubs_skipped": hubs,
