@@ -6,18 +6,19 @@ com dataset, tarefas, pré-registro e resultados próprios. Nenhum aceite copiad
 
 ## Checkpoint
 
-- Etapa atual: **BTC-P5 concluída (preparação selável)** — pré-registro final pronto para selar,
-  maquinaria `btc-seal/1` ensaiada; selo real e rodada bloqueados.
-- Último aceite e evidências: `research/bitcoin/PREREGISTRATION_FINAL.md` (congelamento, amostra,
-  cegamento, decisão; lacunas nulas); `archatlas/bitcoin/seal.py` + `tests/bitcoin/test_btc_seal.py` (3/3);
-  `experiments/bitcoin/p5_seal/btc-p5-rehearsal-001/` (`sealed.json` VOID + REPORT); BTC-P0–P4 inalterados.
-- SHA publicado: `2668387` (BTC-P4) em `origin/codex/bitcoin-context`; este commit BTC-P5 a registrar após push.
-- `run_id`: `btc-p5-rehearsal-001` (ensaio, sem medição). Reserva de recursos: nenhuma.
+- Etapa atual: **BTC-P6 concluída (desenho + drill)** — portabilidade temporal/ambiente
+  especificada, maquinaria `temporal.py` exercitada, limitações consolidadas; sem corpus.
+- Último aceite e evidências: `research/bitcoin/PORTABILITY.md` (eixos, pré-seleção, matriz nula,
+  não-transferência); `archatlas/bitcoin/temporal.py` + `tests/bitcoin/test_btc_portability.py` (2/2);
+  `experiments/bitcoin/p6_temporal/btc-p6-drill-001/` (manifesto + REPORT: 5/13 invalidados);
+  `research/bitcoin/LIMITATIONS.md` (teto honesto BTC-P0–P6); BTC-P0–P5 inalterados.
+- SHA publicado: `85af030` (BTC-P5) em `origin/codex/bitcoin-context`; este commit BTC-P6 a registrar após push.
+- `run_id`: `btc-p6-drill-001` (sintético, determinístico). Reserva de recursos: nenhuma.
 - Pedido ao core: nenhum.
-- Bloqueio exato: selo/rodada exigem piloto real, `BTC_SHA`, toolchain, modelo, teto e custodiante
+- Bloqueio exato: execução temporal real exige `BTC_SHA(t0/t1)` + toolchain + teto + modelos
   (todos nulos); `main` em `7ba03cc` (P4-infra SIGA) observado, NÃO incorporado.
-- Alternativa independente: BTC-P6 pode preparar desenho temporal/ambiente sem dataset.
-- Próximo comando/ação: resolver `BTC_SHA`; executar piloto; só então selo real único + rodada cega.
+- Alternativa independente: BTC-P7 (guia dev + handoff) pode avançar sem dataset.
+- Próximo comando/ação: resolver `BTC_SHA`; revalidar `C_btc` no corpus; depois BTC-P7.
 
 ## Etapas
 
@@ -27,7 +28,7 @@ com dataset, tarefas, pré-registro e resultados próprios. Nenhum aceite copiad
 - [x] BTC-P3 — piloto de edição (especificação + dryrun offline 72 rodadas concluídos; piloto real com modelo bloqueado por PIN/ambiente/teto).
 - [x] BTC-P4 — protótipo e ablações (btc-pack/1 + E26-02 sintético + decisões; E26-03/04/05 com estado honesto; decisão final pendente de piloto).
 - [x] BTC-P5 — confirmatório cego (pré-registro final selável + maquinaria ensaiada; selo real e rodada bloqueados por piloto/custodiante).
-- [ ] BTC-P6 — portabilidade temporal e de ambiente Bitcoin.
+- [x] BTC-P6 — portabilidade temporal e de ambiente Bitcoin (desenho + drill sintético + LIMITATIONS; execução real pendente de snapshots).
 - [ ] BTC-P7 — uso por desenvolvedor e checkpoint de integração.
 
 Histórico de transições preservado aqui: 2026-09-24 BTC-P0 concluída (auditoria) com PIN/CENSO
@@ -39,5 +40,8 @@ piloto real bloqueado por PIN/ambiente/modelos/teto/custodiante);
 2026-09-24 BTC-P4 concluída em escopo sintético (btc-pack/1, E26-02 4/4, candidato congelado;
 E26-03/04/05 não executados/indisponíveis com motivo; final pendente de piloto);
 2026-09-24 BTC-P5 concluída em preparação (pré-registro final selável, btc-seal/1 ensaiada 3/3;
-selo real e rodada bloqueados por piloto/custodiante).
-Nenhuma fase posterior marcada. Experimentos BTC-E26-00–06: E26-00 validado em fixtures sintéticas, demais planejados, nenhum executado em dataset.
+selo real e rodada bloqueados por piloto/custodiante);
+2026-09-24 BTC-P6 concluída em desenho + drill (temporal.py 2/2, 5/13 invalidados, fração 0.385;
+LIMITATIONS consolidado; execução real pendente de snapshots).
+Nenhuma fase posterior marcada além de BTC-P7. Experimentos BTC-E26-00–06 e E26-06 espelho:
+E26-00/E26-02/drills validados em fixtures sintéticas; nenhum executado em dataset.
