@@ -20,8 +20,13 @@ def run(dev_json: pathlib.Path, db: pathlib.Path, out_jsonl: pathlib.Path, budge
     qs = json.loads(dev_json.read_text(encoding="utf-8"))
     ds = dataset_root()
     files = []
-    for rel in ("siga-ex/src/main/java", "siga-cp/src/main/java", "siga-wf/src/main/java"):
-        files += sorted((ds / rel).rglob("*.java"))
+    # P4-infra(b): main + test como fontes recuperáveis (E26-01 achado 1).
+    # Limite declarado: mesmo extrator/kinds, sem distinção main-vs-test no ranking.
+    for rel in ("siga-ex/src/main/java", "siga-cp/src/main/java", "siga-wf/src/main/java",
+                "siga-ex/src/test/java", "siga-cp/src/test"):
+        d = ds / rel
+        if d.is_dir():
+            files += sorted(d.rglob("*.java"))
     con = open_db(db)
     t0 = time.perf_counter()
     counts = index_many(con, files, SHA)

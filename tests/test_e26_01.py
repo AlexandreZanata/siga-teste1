@@ -62,6 +62,28 @@ def test_protocol_28x5_and_no_recall_on_zero_denominator():
         assert {"task_id", "condition", "budget", "sha"} <= set(m)
 
 
+def test_repeat_r2_with_tests_indexed():
+    """R2: mesmo protocolo, índice com src/test; code2test desbloqueia parcial."""
+    r2 = [json.loads(l) for l in
+          pathlib.Path("experiments/e26_01/runs_r2.jsonl").read_text(encoding="utf-8").splitlines()]
+    m2 = [json.loads(l) for l in
+          pathlib.Path("experiments/e26_01/manifest_r2.jsonl").read_text(encoding="utf-8").splitlines()]
+    assert len(r2) == 140 and len(m2) == 140
+    assert {(r["case_id"], r["condition"]) for r in r2} == \
+        {(r["case_id"], r["condition"]) for r in
+         [json.loads(l) for l in RUNS.read_text(encoding="utf-8").splitlines()]}
+    ct = [r for r in r2 if r["case_id"].startswith("E01-C2T-")
+          and r["condition"] == "ATLAS-multi-2000"]
+    assert sum(r["hit"] for r in ct) == 3  # era 0/5 em R1
+    assert all(r["recall_set"] is None for r in r2 if r["expected_count"] == 0)
+    cases = {c["id"]: (c["expected_additional"], c["given_files"])
+             for c in json.loads(CASES.read_text(encoding="utf-8"))}
+    for r in r2[:20]:
+        exp, giv = cases[r["case_id"]]
+        sc = score_additional(set(r["delivered"]), exp, giv)
+        assert sc["hit"] == r["hit"] and sc["recall_set"] == r["recall_set"]
+
+
 def test_replay_and_additional_unit():
     cases, runs, _ = _load()
     gold = {c["id"]: (c["expected_additional"], c["given_files"]) for c in cases}
