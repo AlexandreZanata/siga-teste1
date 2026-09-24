@@ -6,6 +6,7 @@ import sqlite3
 
 from archatlas.lexical import bm25_search
 from archatlas.query import find_references, find_symbol, read_contents
+from archatlas.telemetry import payload_tokens_for_capsule
 
 
 def count_tokens(text: str) -> int:
@@ -79,8 +80,25 @@ def build_capsule(con: sqlite3.Connection, query: str, budget: int, k: int = 20)
                           "provenance": c["provenance"], "score": 1.0})
         used += cost
     files = sorted({s["file"] for s in symbols})
-    return {"capsule_version": "1.0", "query": query,
+    out = {"capsule_version": "1.0", "query": query,
             "budget": {"requested": budget, "used": used, "tokenizer": "chars//4", "hard_enforced": True},
             "symbols": symbols, "files": files, "relations": relations, "call_paths": [],
             "tests": [], "docs": [], "excerpts": excerpts, "citations": citations,
-            "truncation_log": log, "stats": {"candidates": len(ranked), "kept": len(symbols)}}
+            "truncation_log": log, "stats": {"candidates": len(ranked), "kept": len(symbols),
+                                            "retrieved": len(ranked)}}
+    # P2/E26-00: telemetria da fronteira de entrega (sem mudar ranking/seleção).
+    # `used` segue soma de itens (compat); `payload_tokens` mede a serialização
+    # inteira entregue. `opened`=leituras explícitas fora da cápsula (0 aqui);
+    # histórico/instruções não entram neste número (nulos com motivo).
+    blob_chars = len(__import__("json").dumps(
+        {"excerpts": excerpts, "citations": citations,
+         "symbols": [{"file": s.get("file"), "line": s.get("line"),
+                      "kind": s.get("kind"), "name": s.get("name")} for s in symbols]},
+        sort_keys=True, ensure_ascii=False))
+    out["payload_tokens"] = payload_tokens_for_capsule(out)
+    out["telemetry"] = {"retrieved": len(ranked), "delivered": len(symbols),
+                        "delivered_files": files, "payload_chars": blob_chars,
+                        "payload_tokens": out["payload_tokens"], "opened": 0,
+                        "declared_relevant": None, "history_tokens": None,
+                        "history_note": "historico/instrucoes nao incluidos; P3 medira custo total"}
+    return out
