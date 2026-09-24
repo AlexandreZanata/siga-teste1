@@ -17,7 +17,7 @@ Metodologia fixa: trunk-based, fases ≤1 entrega, DCO (`-s`), `pytest -q` verde
 - [x] **F12** rede generalizada: dataset paramétrico + extrator Python AST + dogfooding (Python+Java mesmo DB)
 - [x] **F13** bake-off (lex 0.92/0.2ms, struct 0.92, hybrid 0.92, hybrid+refs 1.00, router 1.00/10ms) + roteador cascata + cego 4 vias + higiene `.venv` + fix keyword-`try`
 - [x] **F14** escala: full 504 arqs 0.92s, DB 2.5MB, router p50 26ms/p95 332ms, incr-10 0.03s (30x), incr-100 0.23s (4x)
-- [ ] **F15** freeze `v1-siga` + tabelas accuracy/tokens/latência + SBOM
+- [x] **F15** freeze `v1-siga` + tabelas accuracy/tokens/latência + SBOM
 - [ ] **FUTURO (pós-SIGA)** Bitcoin transfer (sem redesign) + `LIMITATIONS_BITCOIN.md`; ablações (9) + paper + SBOM + `v1` (só via RFC) — Bitcoin removido das etapas executáveis por decisão 2026-09-24: foco 100% SIGA-Doc até fidelidade comprovada
 
 Agente responsável por etapa: executa `docs/VERIFICATION_PROTOCOL.md` (4 portões) e anexa evidências no corpo do commit. Sem evidência, sem push.
