@@ -6,24 +6,29 @@ com dataset, tarefas, pré-registro e resultados próprios. Nenhum aceite copiad
 
 ## Checkpoint
 
-- Etapa atual: **BTC-E26-01-real (retrieval no corpus, sem modelo)** — 12 sondas dev
-  (`benchmarks/bitcoin/e26_01_real.json`, ouro com bytes lidos, sem holdout) ×
-  A_busca/B_freq/C_adapter × 2 reps = 72 rodadas em `/tmp/btc-readonly` (HEAD
-  `9be056a8`, limpo); C_adapter hit 0.917/recall 0.833 (precision 0.006);
-  A recall 1.0 inutilizável (1432 arqs); B_freq 0.5/0.292; miss sistemático
-  BTC-R12 (`addrman` + explosão de `#include`); patch/custo nulos.
-- Último aceite e evidências: `archatlas/bitcoin/realretrieval.py` (textos do corpus +
-  3 braços) + `experiments/bitcoin/e26_01_real/btc-e26-01-real-001/` (manifest+runs+REPORT)
-  + `tests/bitcoin/test_btc_e26_01_real.py` (3/3 herméticos + skip de corpus);
-  BTC-P0–P7, índice e triagem inalterados.
-- SHA publicado: nenhum novo (commit a registrar após push); base `8d1a58b`.
-- `run_id`: `btc-e26-01-real-001`. Reserva de recursos: nenhuma. Pedido ao core: nenhum.
-- Bloqueio exato: modelos/teto/custodiante/dev (nulos); rascunho paralelo não commitado
-  (`benchmarks/bitcoin/e26_01_dev.json`, `pilot_p3_dev.json`, `tests/bitcoin/test_btc_e26_01.py`
-  com 2 testes vermelhos por artefatos ausentes) observado e NÃO tocado/commitado.
-- Alternativa independente: nenhuma nesta etapa (retrieval direto, sem build).
-- Próximo comando/ação: teto de fan-in no salto por includes + repetir; depois tarefas
-  de edição BTC-P3 (bloqueadas).
+- Etapa atual: **E26-01 medido no corpus em duas rodadas** — sonda 12 tarefas (4f9034d) +
+  rodada 34 tarefas deste commit; C_adapter candidato; sem edição, sem modelo.
+- Último aceite e evidências: `benchmarks/bitcoin/e26_01_dev.json` (34 tarefas: 26+8; 12
+  adotadas do commit 4f9034d após auditoria item a item, resto ouro próprio — todos os paths
+  verificados no tag); `archatlas/bitcoin/realretrieval.py` (run_all + verify_gold);
+  `tests/bitcoin/test_btc_e26_01.py` (5/5) + `test_btc_e26_01_real.py` (3/3, do commit anterior);
+  `experiments/bitcoin/e26_01/btc-e2601-001/` (204 rodadas + REPORT) e
+  `experiments/bitcoin/e26_01_real/btc-e26-01-real-001/` (72 rodadas + REPORT, commit anterior).
+- Resultados 34 tarefas @2000 (8k idêntico em conjuntos): A hit 0.962/recall 0.942/prec 0.0018
+  (1427 arqs); B 0.385/0.231/0.1058; C hit 0.808/recall 0.731/prec 0.0071 (238 arqs),
+  por tipo code2test 1.0, edit2ripple 1.0, comment2context 0.7, trace2code 0.312;
+  abstenção só N05 sob C; `used` por arquivo inteiro (B 0 = artefato).
+- SHA publicado: `4f9034d` (sonda 12) em `origin/codex/bitcoin-context`; este commit (34 tarefas)
+  a registrar após push.
+- `run_id`: `btc-e2601-001` (leitura, 230s). Reserva: nenhuma. Pedido ao core: nenhum.
+- Bloqueio exato: edição/piloto exigem teto + modelos + custodiante + dev (nulos); `main`
+  observado, NÃO incorporado.
+- Incidente de isolamento RESOLVIDO: dois escritores atuaram na mesma worktree/branch sem
+  coordenação (rascunho 13:51 + commit 4f9034d 13:58 absorvendo `run_all`/`verify_gold` deste
+  agente via `add -A`). Sem reescrita de história: commit anterior mantido; este commit só
+  adiciona paths novos + STATUS. Daqui em diante: um escritor por worktree/branch.
+- Alternativa independente: E26-02 com spans no corpus; teto de fan-in; vocabulário de domínio.
+- Próximo comando/ação: fan-in cap + repetir; E26-02 real; ou build isolado.
 
 ## Etapas
 
@@ -58,8 +63,10 @@ e 368 pares em 1409 C++; `.cc` como pendência local; build segue pendente);
 BUILD_ENV (CMake/deps/regtest, nada compilado) e COVERAGE (áreas, 371 arqs de teste) registrados;
 2026-09-24 índice do corpus (1873 arqs, 3,6s, 4049 símbolos PY, C++/JS zero; incremental == rebuild;
 toolchain disponível sem clang++; build não tentado);
-2026-09-24 E26-01-real no corpus (12 sondas × 3 braços × 2 reps = 72 rodadas, 0 erros;
-C_adapter 0.917/0.833, A 1.0 inutilizável, B 0.5/0.292; R12 `addrman` sistemático;
-patch/custo nulos; rascunho paralelo alheio com mesmos IDs observado, intocado).
+2026-09-24 E26-01-real no corpus, rodada 1 (12 sondas × 3 braços × 2 reps = 72 rodadas;
+C_adapter 0.917/0.833, A 1.0 inutilizável, B 0.5/0.292; R12 `addrman` sistemático);
+2026-09-24 E26-01 no corpus, rodada 2 (34 tarefas 26+8 × 3 braços × 2k/8k = 204 rodadas;
+C 0.808/0.731, trace2code 0.312, abstenção só N05; escrita dupla na worktree resolvida sem
+reescrita — commit anterior mantido, este só adiciona).
 Nenhuma fase posterior marcada além de BTC-P7. Experimentos BTC-E26-00–06 e E26-06 espelho:
-E26-00/E26-02/drills validados em fixtures sintéticas; nenhum executado em dataset.
+E26-00/E26-02/drills sintéticos + E26-01 em dataset (2 rodadas); edição segue sem modelo.
