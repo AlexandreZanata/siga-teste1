@@ -23,6 +23,8 @@ Suíte total: **76 testes verdes** em `cargo test --release` — 50 unitários +
 
 **No harness de medição** (produto de pesquisa): `freeze_corpus.py`, `gen_queries.py`, `measure.py` (sete modos: `query`, `index`, `update`, `expand`, `verify`, `scale`, `doctor`), `report.py` e um driver `run_round.py` que executa a rodada inteira e **aborta** se o corpus não for equivalente. A ordem, os orçamentos e as flags ficam registrados em `manifest_round.json`, junto do `sha256` do binário medido — sem isso, dois relatórios de R2 não saberiam se mediram a mesma coisa.
 
+**No runner do piloto** (a outra metade do aceite de R2): [`runner.py`](../../benchmarks/rust/runner.py) executa **uma tentativa** — valida snapshot e workspace, monta as ferramentas, mede o executor por fora, mata no primeiro teto, captura o patch, aplica em base limpa e escreve o manifesto. A parte que não depende de modelo do aceite ("captura todas as chamadas, custos e patches sem acesso ao ouro") está implementada e ensaiada com executor declarado como stub: **13 testes** em [`tests/test_rust_runner.py`](../../tests/test_rust_runner.py), incluindo a integração com o binário Rust real, que exige que o `delivered` medido pelo runner feche com o que o produto declara. Contrato completo, o que ele mede por fora em vez de acreditar e o que ele **não** garante: [`RUNNER_PILOTO.md`](RUNNER_PILOTO.md). A execução com modelo real segue bloqueada por P1/P2.
+
 ## 2. Corpus congelado e verificado — Q1 fechado
 
 O problema era concreto: a referência Python indexa `siga-ex/src/main/java/**/*.java` (504 arquivos) e a descoberta do Rust é genérica (6 916 no repositório). Comparar "como está" mediria tamanho de corpus, não implementação.
@@ -147,6 +149,8 @@ A árvore do corpus é copiada para um diretório de trabalho por (cenário, rep
 Os dois lados declaram exatamente a mesma contagem em todos os cenários (1/10/100 reindexados, `pruned_files: 1` em delete e rename), o que é a evidência de que a semântica de invalidação bate. E cada execução medida foi conferida contra uma reindexação do zero na mesma árvore mutada: para o Rust, `generation(rebuild --force) == generation(incremental)`; para a referência, que não publica geração, o conjunto de arquivos dentro do índice tem de ser exatamente o do disco. **36 de 36 verificações passaram** — o ganho de tempo não é obtido por perda de correção.
 
 Este é o único eixo da rodada em que a diferença de ordem de grandeza encolhe: em `edit_1` a razão é 2,5x, não 10x. O custo fixo do processo domina dos dois lados, e `edit_10`/`edit_100` mostram que o custo marginal por arquivo é o que separa as implementações.
+
+O mesmo caminho de atualização que este quadro mede em custo tem a correção verificada em [`RUNNER_PILOTO.md`](RUNNER_PILOTO.md): o runner de tentativa captura o patch do workspace e o aplica numa base limpa antes de rodar o teste de aceitação, em vez de confiar no estado em que o agente deixou a árvore.
 
 ## 8. `expand` e `verify`: o segundo passo do ciclo
 
@@ -273,7 +277,7 @@ Cada linha tem teste que a executa ([`tests/r2.rs`](../../rust/archatlas/tests/r
 
 | Gate | Planejado | Implementado | Ensaiado | Executado | Avaliado | Conclusão científica |
 |---|---|---|---|---|---|---|
-| R2 | x | **x** | **x** | **parcial** (microbenchmarks em 6 tamanhos; runner com modelo não) | — | não avaliada |
+| R2 | x | **x** | **x** | **parcial** (microbenchmarks em 6 tamanhos; runner ensaiado com stub, sem modelo) | — | não avaliada |
 
 Executado **parcialmente**, e a distinção é o ponto: os microbenchmarks foram executados — **3 545 execuções com artefato bruto auditável** (1 800 de consulta, 875 de `verify`, 700 de `expand`, 94 de escala, 36 de atualização, 20 de índice, 20 de `doctor`) —, mas a segunda metade do aceite de R2 — "integrar por shell a um único executor/modelo real" e "runner captura todas as chamadas, custos e patches sem acesso ao ouro" — **não foi executada**, porque depende de P1/P2 (modelo efetivo e teto financeiro, decisões do usuário).
 
@@ -287,7 +291,7 @@ Pendências ao fim de R2:
 | Q4 | Cache frio e cgroup isolado (P8) | usuário | aberta — exige máquina dedicada/root |
 | Q8 | Corpus de escala sintético e `n=1` nos dois maiores tamanhos | A | aberta — replicar em ×30/×100 com mais repetições e, se houver projeto real grande, medir um corpus não copiado |
 | Q5 | Microbenchmark de `expand` e `verify` | A | **fechada** (§8: 700 + 875 execuções, 875/875 códigos previstos) |
-| Q6 | Integração com o runner real | usuário (P1/P2) → A | aberta — bloqueia a metade restante de R2 e todo o R3 |
+| Q6 | Integração com o runner real | A (infra) + usuário (P1/P2) | **infraestrutura pronta e ensaiada** ([`RUNNER_PILOTO.md`](RUNNER_PILOTO.md)); falta executor/modelo, rubrica e teto financeiro |
 | Q7 | `evidence_wanted=references` inerte quando `known_refs` consomem o teto | A | aberta (§8.1: 39/70 pares idênticos a `context`; decidir se é comportamento desejado ou ordem a mudar) |
 
 Próxima ação: **R3** (smoke com modelo, 3 condições × 4 tarefas = 12 execuções por trilha) assim que o modelo efetivo e o teto financeiro existirem. R3 não pode começar por documentação. De R2 seguem abertos apenas Q6 (runner real, bloqueado por P1/P2) e Q8 (mais repetições no ensaio de escala); Q7 é decisão de política, não lacuna de medição.

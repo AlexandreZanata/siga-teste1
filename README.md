@@ -60,6 +60,14 @@ Rodada de medição reproduzível (corpus congelado, pareamento e ordem alternad
 ARCHATLAS_DATASET=/caminho/para/siga python benchmarks/rust/run_round.py --run-id 2026-09-29-r2-queries
 ```
 
+Runner de uma tentativa do piloto real — tetos primeiro, `opened` só de leitura real, patch aplicado em base limpa, ouro fora do workspace. Contrato em [RUNNER_PILOTO.md](research/rust/RUNNER_PILOTO.md); sem modelo, ele se recusa a produzir evidência:
+
+```bash
+python benchmarks/rust/runner.py --tasks tarefas.json --task s01 --condition CTX-RS \
+  --workspace /caminho/worktree --out /caminho/saida --atlas-index /tmp/idx.sqlite \
+  --executor-cmd 'meu-agente --enunciado {statement_file} --dir {workspace}' --gold /caminho/ouro
+```
+
 ## Uso rápido
 ```bash
 export ARCHATLAS_DATASET=/caminho/para/siga-doc   # checkout read-only da versão modificada (SHA e3be22828)
