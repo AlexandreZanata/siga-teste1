@@ -1,0 +1,266 @@
+{
+ "schema": "atlas-round/1",
+ "run_id": "2026-09-29-r2-queries",
+ "invocation": [
+  "python",
+  "benchmarks/rust/run_round.py",
+  "--run-id",
+  "2026-09-29-r2-queries"
+ ],
+ "specs": [
+  {
+   "policy": "CTX-RS",
+   "budgets": "1000,4000",
+   "reps": 5
+  },
+  {
+   "policy": "CTX-RS",
+   "budgets": "2000",
+   "reps": 10
+  },
+  {
+   "policy": "LEX-RS",
+   "budgets": "2000",
+   "reps": 5
+  }
+ ],
+ "edge_queries": true,
+ "index_reps": 10,
+ "update_reps": 3,
+ "doctor_reps": 10,
+ "inputs": {
+  "dataset": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga",
+  "rust_bin": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/rust/archatlas/target/release/archatlas",
+  "rust_bin_sha256": "66b28152769cdb31e40afabb1f14d0a62e29abcca004e907c525efce87bd8f5a",
+  "python_bin": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/.venv/bin/python"
+ },
+ "steps": [
+  {
+   "step": "corpus",
+   "argv": [
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/.venv/bin/python",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/benchmarks/rust/freeze_corpus.py",
+    "--out",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/experiments/rust/siga/2026-09-29-r2-queries",
+    "--dataset",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/../siga",
+    "--rust-bin",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/rust/archatlas/target/release/archatlas",
+    "--python-bin",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/.venv/bin/python",
+    "--keep-indexes"
+   ],
+   "exit_code": 0,
+   "seconds": 1.78
+  },
+  {
+   "step": "consultas",
+   "argv": [
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/.venv/bin/python",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/benchmarks/rust/gen_queries.py",
+    "--corpus",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/experiments/rust/siga/2026-09-29-r2-queries/corpus.json",
+    "--out",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/experiments/rust/siga/2026-09-29-r2-queries",
+    "--dataset",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/../siga"
+   ],
+   "exit_code": 0,
+   "seconds": 0.071
+  },
+  {
+   "step": "índice",
+   "argv": [
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/.venv/bin/python",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/benchmarks/rust/measure.py",
+    "--mode",
+    "index",
+    "--out",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/experiments/rust/siga/2026-09-29-r2-queries",
+    "--reps",
+    "10",
+    "--dataset",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/../siga",
+    "--rust-bin",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/rust/archatlas/target/release/archatlas",
+    "--python-bin",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/.venv/bin/python"
+   ],
+   "exit_code": 0,
+   "seconds": 34.131
+  },
+  {
+   "step": "ciclo editar/testar",
+   "argv": [
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/.venv/bin/python",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/benchmarks/rust/measure.py",
+    "--mode",
+    "update",
+    "--out",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/experiments/rust/siga/2026-09-29-r2-queries",
+    "--reps",
+    "3",
+    "--dataset",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/../siga",
+    "--rust-bin",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/rust/archatlas/target/release/archatlas",
+    "--python-bin",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/.venv/bin/python",
+    "--corpus",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/experiments/rust/siga/2026-09-29-r2-queries/corpus.json"
+   ],
+   "exit_code": 0,
+   "seconds": 126.922
+  },
+  {
+   "step": "consultas CTX-RS_b1000-4000_r5",
+   "argv": [
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/.venv/bin/python",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/benchmarks/rust/measure.py",
+    "--mode",
+    "query",
+    "--out",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/experiments/rust/siga/2026-09-29-r2-queries",
+    "--policy",
+    "CTX-RS",
+    "--budgets",
+    "1000,4000",
+    "--reps",
+    "5",
+    "--queries",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/experiments/rust/siga/2026-09-29-r2-queries/queries.json",
+    "--dataset",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/../siga",
+    "--rust-bin",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/rust/archatlas/target/release/archatlas",
+    "--python-bin",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/.venv/bin/python",
+    "--rust-index",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/experiments/rust/siga/2026-09-29-r2-queries/index_rust.sqlite",
+    "--python-index",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/experiments/rust/siga/2026-09-29-r2-queries/index_python.sqlite",
+    "--include-edge"
+   ],
+   "exit_code": 0,
+   "seconds": 35.695
+  },
+  {
+   "step": "consultas CTX-RS_b2000_r10",
+   "argv": [
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/.venv/bin/python",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/benchmarks/rust/measure.py",
+    "--mode",
+    "query",
+    "--out",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/experiments/rust/siga/2026-09-29-r2-queries",
+    "--policy",
+    "CTX-RS",
+    "--budgets",
+    "2000",
+    "--reps",
+    "10",
+    "--queries",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/experiments/rust/siga/2026-09-29-r2-queries/queries.json",
+    "--dataset",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/../siga",
+    "--rust-bin",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/rust/archatlas/target/release/archatlas",
+    "--python-bin",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/.venv/bin/python",
+    "--rust-index",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/experiments/rust/siga/2026-09-29-r2-queries/index_rust.sqlite",
+    "--python-index",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/experiments/rust/siga/2026-09-29-r2-queries/index_python.sqlite",
+    "--include-edge"
+   ],
+   "exit_code": 0,
+   "seconds": 34.47
+  },
+  {
+   "step": "consultas LEX-RS_b2000_r5",
+   "argv": [
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/.venv/bin/python",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/benchmarks/rust/measure.py",
+    "--mode",
+    "query",
+    "--out",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/experiments/rust/siga/2026-09-29-r2-queries",
+    "--policy",
+    "LEX-RS",
+    "--budgets",
+    "2000",
+    "--reps",
+    "5",
+    "--queries",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/experiments/rust/siga/2026-09-29-r2-queries/queries.json",
+    "--dataset",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/../siga",
+    "--rust-bin",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/rust/archatlas/target/release/archatlas",
+    "--python-bin",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/.venv/bin/python",
+    "--rust-index",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/experiments/rust/siga/2026-09-29-r2-queries/index_rust.sqlite",
+    "--python-index",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/experiments/rust/siga/2026-09-29-r2-queries/index_python.sqlite",
+    "--include-edge"
+   ],
+   "exit_code": 0,
+   "seconds": 19.495
+  },
+  {
+   "step": "doctor",
+   "argv": [
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/.venv/bin/python",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/benchmarks/rust/measure.py",
+    "--mode",
+    "doctor",
+    "--out",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/experiments/rust/siga/2026-09-29-r2-queries",
+    "--reps",
+    "10",
+    "--dataset",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/../siga",
+    "--rust-bin",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/rust/archatlas/target/release/archatlas",
+    "--python-bin",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/.venv/bin/python",
+    "--rust-index",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/experiments/rust/siga/2026-09-29-r2-queries/index_rust.sqlite",
+    "--python-index",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/experiments/rust/siga/2026-09-29-r2-queries/index_python.sqlite"
+   ],
+   "exit_code": 0,
+   "seconds": 0.39
+  },
+  {
+   "step": "tabelas",
+   "argv": [
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/.venv/bin/python",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/benchmarks/rust/report.py",
+    "--run",
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/experiments/rust/siga/2026-09-29-r2-queries"
+   ],
+   "exit_code": 0,
+   "seconds": 0.052
+  }
+ ],
+ "environment": {
+  "os": "Linux-7.1.5-76070105-generic-x86_64-with-glibc2.39",
+  "kernel": "7.1.5-76070105-generic",
+  "machine": "x86_64",
+  "cpu_model": "13th Gen Intel(R) Core(TM) i7-13620H",
+  "nproc": 16,
+  "meminfo": {
+   "MemTotal": "32556580 kB",
+   "MemAvailable": "10026500 kB"
+  },
+  "rustc": "rustc 1.96.0 (ac68faa20 2026-05-25)",
+  "cargo": "cargo 1.96.0 (30a34c682 2026-05-25)",
+  "python": "3.12.3",
+  "gnu_time": "time (GNU Time) UNKNOWN\nCopyright (C) 2018 Free Software Foundation, Inc.\nLicense GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>.\nThis is free software: you are free to change and redistribute it.\nThere is NO WARRANTY, to the extent permitted by law.\n\nWritten by David Keppel, David MacKenzie, and Assaf Gordon.",
+  "git_head": "35a8b64d73615c6562b3b43e76cf0cea1057efc4",
+  "git_head_short": "35a8b64",
+  "git_dirty": true
+ }
+}

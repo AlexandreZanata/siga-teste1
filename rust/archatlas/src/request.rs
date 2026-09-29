@@ -41,9 +41,16 @@ pub struct RefSpec {
     pub file: String,
     #[serde(default)]
     pub line: Option<u32>,
+    /// Presente em `delivered_refs`, onde permite deduplicar spans já entregues em vez de
+    /// repeti-los. Opcional para que uma referência pontual continue válida sem fim.
+    #[serde(default)]
+    pub end_line: Option<u32>,
     #[serde(default)]
     pub hash: Option<String>,
 }
+
+/// O que `expand` deve buscar. Vocabulário fechado: um valor novo é mudança de contrato.
+pub const EVIDENCE_KINDS: &[&str] = &["context", "references", "tests"];
 
 /// Snapshot que o agente acredita estar consultando.
 #[derive(Debug, Clone, Default, Deserialize)]
@@ -73,6 +80,9 @@ pub struct Request {
     pub policy: String,
     #[serde(default)]
     pub delivered_refs: Vec<RefSpec>,
+    /// Só usado por `expand`: qual evidência ampliar a partir de `known_refs`.
+    #[serde(default)]
+    pub evidence_wanted: Option<String>,
 }
 
 /// Pedido já validado, com a política convertida.
@@ -120,7 +130,23 @@ pub fn parse(raw: &str) -> Result<ValidRequest, String> {
     }
     // Um pedido sem termo buscável e sem referência não tem o que recuperar. Recusar aqui
     // evita devolver `state: ok` com lista vazia, que é indistinguível de "não existe".
-    if crate::retrieve::tokenize(&req.query).is_empty() && req.known_refs.is_empty() {
+    if let Some(kind) = &req.evidence_wanted {
+        if !EVIDENCE_KINDS.contains(&kind.as_str()) {
+            return Err(format!(
+                "evidence_wanted desconhecido: {kind}; esperado um de {}",
+                EVIDENCE_KINDS.join("|")
+            ));
+        }
+    }
+    // `references` e `tests` procuram por termo; sem termo buscável não há o que achar.
+    // `context` só precisa das referências apontadas.
+    let expand_needs_query = matches!(
+        req.evidence_wanted.as_deref(),
+        Some("references") | Some("tests")
+    );
+    if (crate::retrieve::tokenize(&req.query).is_empty() && req.known_refs.is_empty())
+        || (expand_needs_query && crate::retrieve::tokenize(&req.query).is_empty())
+    {
         return Err("query sem termo buscavel e sem known_refs".into());
     }
 
@@ -181,6 +207,34 @@ mod tests {
     #[test]
     fn recusa_json_malformado() {
         assert!(parse("{nao json").is_err());
+    }
+
+    #[test]
+    fn valida_evidence_wanted_e_end_line() {
+        let com_kind = base().replace(
+            "\"policy\"",
+            "\"evidence_wanted\":\"references\",\"policy\"",
+        );
+        assert!(parse(&com_kind).is_ok());
+
+        let kind_ruim =
+            base().replace("\"policy\"", "\"evidence_wanted\":\"adivinhar\",\"policy\"");
+        assert!(parse(&kind_ruim).is_err());
+
+        // `references` sem termo buscavel nao tem o que procurar.
+        let sem_termo = base().replace("ExMovimentacao", "###").replace(
+            "\"policy\"",
+            "\"evidence_wanted\":\"references\",\"known_refs\":[{\"file\":\"a.java\"}],\"policy\"",
+        );
+        assert!(parse(&sem_termo).is_err());
+
+        // `delivered_refs` com end_line e aceito (dedup de spans).
+        let refs = base().replace(
+            "\"policy\"",
+            "\"delivered_refs\":[{\"file\":\"a.java\",\"line\":1,\"end_line\":9}],\"policy\"",
+        );
+        let v = parse(&refs).unwrap();
+        assert_eq!(v.raw.delivered_refs[0].end_line, Some(9));
     }
 
     #[test]

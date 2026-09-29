@@ -162,3 +162,58 @@ A proibição de campo desconhecido (`§4`) vale por id de `schema`: o cliente q
 `retrieved` (candidatos internos), `delivered` (bytes realmente enviados na resposta), `opened` (leitura explícita capturada pelo runner), `declared_relevant` (relato do agente, `null` por padrão).
 
 Regra que motivou a seção: **`opened` exige evento real de leitura capturado pelo runner.** Derivar `opened` de `delivered` por fórmula sobre logs é proibido e invalida o cegamento do piloto.
+
+## 10. Esclarecimentos de R2
+
+Como em §8: nada aqui altera campo, nome ou código já descrito — preenche lacunas que a implementação de `expand` e `verify` encontrou. Relatório medido em [`R2_REPORT.md`](R2_REPORT.md).
+
+### 10.1 `verify` — payload e veredito
+
+Payload com `"schema": "atlas-verify/1"`, mesma forma de §5, mais `reference` e `checks`. Cada item de `checks` é um **fato medido**, não um rótulo:
+
+| Campo | Significado |
+|---|---|
+| `inside_root` | o caminho resolvido fica dentro da raiz do repo |
+| `file_exists` | o arquivo existe no disco agora |
+| `registered_in_index` | o caminho relativo está registrado no índice |
+| `hash_matches_index` | o `sha256` do disco é igual ao registrado; `null` se não há um dos dois |
+| `hash_matches_arg` | o hash passado em `@` bate com o do disco; `null` se não foi passado |
+| `line_in_range` / `line_count` | a linha citada existe no arquivo, e quantas linhas ele tem |
+| `name_on_line` | **sempre `null`**: a forma `arquivo:linha[@hash]` não carrega nome de símbolo; inventar esse campo violaria a regra de não afirmar o que não foi lido |
+
+Forma do argumento: `arquivo:linha[@hash]`, decomposto **da direita para a esquerda** (`dir/A.java:42`, e `sha256:` no hash não pode ser confundido com o separador de linha). `@` aceita `sha256:<hex>` ou `<hex>`, normalizado para minúsculas. Linha `0`, linha não numérica, `--ref` vazio e `--ref` sem `:` são código 2.
+
+Veredito: **qualquer item verificável reprovado → código 5**, com `omitted.reasons` nomeando o motivo (`file_missing`, `not_indexed`, `stale_source`, `hash_divergent`, `line_out_of_range`) e um `hint` dizendo para não usar o trecho como fato. Caminho que escapa da raiz é `outside_root`, também código 5 — é violação de integridade, não "arquivo ausente". Quando a referência passa, a linha citada volta como **uma unidade** em `units`: verificar sem mostrar o que foi verificado obrigaria o chamador a reabrir o arquivo.
+
+Limite declarado: `verify` confere **localização e integridade**. Não prova resolução semântica nem ausência de falso positivo.
+
+### 10.2 `expand` — o que `evidence_wanted` significa
+
+Vocabulário **fechado**: `context` (padrão), `references`, `tests`. Valor fora da lista é código 2 — um valor novo é mudança de contrato, não extensão silenciosa.
+
+| `evidence_wanted` | De onde vem a evidência |
+|---|---|
+| `context` | ao redor das linhas apontadas por `known_refs` |
+| `references` | arquivos que a consulta alcança, procurando pelo termo |
+| `tests` | idem, restrito a caminhos que a heurística classifica como teste |
+
+Regras de recusa, todas código 2, porque devolver vazio pareceria "nada encontrado":
+
+- `expand` com `evidence_wanted` ausente ou `context` **exige** `known_refs` não vazio — sem referência apontada não há o que ampliar.
+- `references` e `tests` procuram por termo, logo exigem `query` com pelo menos um token buscável.
+- `end_line` (opcional) amplia por intervalo; `end_line < line` é normalizado para `line`.
+
+Deduplicação em duas frentes: contra `delivered_refs` (o que o agente já recebeu) e contra os spans da própria chamada. `context` não é expansão ilimitada de trechos incluídos; cada unidade entregue tem `reason`.
+
+### 10.3 `--include`
+
+Lista por vírgula, validada contra o vocabulário de linguagens reconhecidas; item vazio ou desconhecido é erro de uso. Item descartado pelo filtro **nunca é descartado em silêncio**: `counts.excluded_by_filter` reporta quantos arquivos reconhecidos ficaram fora. É esse campo que permitiu congelar o corpus comum com a referência Python (504 arquivos) em vez do repositório inteiro (6 916).
+
+### 10.4 O que o envelope fechado passou a valer, medido
+
+§6 descreve a ordem obrigatória. R2 a mediu em 900 execuções por lado, com `chars//4` como unidade comum aos dois:
+
+- Rust: `used_bytes` == tamanho do stdout emitido em **900/900**; razão declarado/entregue = **1,00** em mediana e em máximo; **0/900** acima de `max_bytes`.
+- Referência Python: declara **438** tokens para um payload de 978 tokens pela própria heurística (razão **0,45**), não publica bytes entregues, e **315/900** execuções entregam mais que o teto de bytes que o outro braço respeitou.
+
+Fica registrado que a interface Python **não recebe** `max_bytes`: a divergência é de contrato entre produtos, não descumprimento de um teto aceito. A comparação de R2 é, por isso, entre produtos distintos — conforme a cláusula de não equivalência do plano §6.

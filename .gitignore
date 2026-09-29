@@ -1,6 +1,9 @@
 # nunca commitar: índices, outputs, worktrees, blobs de terceiros, segredos
 *.sqlite
 *.sqlite-journal
+# WAL/SHM acompanham o índice; commitá-los versionaria estado de processo, não artefato
+*.sqlite-wal
+*.sqlite-shm
 *.db
 # artefatos do build Rust: o binário é distribuído por release, não por commit
 rust/target/

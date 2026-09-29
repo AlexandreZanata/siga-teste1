@@ -11,10 +11,11 @@
 
 use crate::discovery::{self, DEFAULT_MAX_FILE_BYTES};
 use crate::languages;
-use crate::pack::{self, PackError};
+use crate::pack;
 use crate::request;
 use crate::snapshot;
 use crate::store::{self, Mode, Store};
+use crate::verify;
 use crate::{SCHEMA_VERSION, TOOL, TOOL_VERSION};
 use serde::Serialize;
 use std::ffi::OsString;
@@ -38,14 +39,18 @@ COMANDOS:
   doctor   estado do ambiente, do indice e das linguagens suportadas
   index    constroi ou atualiza o indice do repositorio
   context  responde a um pedido dentro do orcamento declarado
+  expand   amplia uma referencia ja entregue, sem repetir trechos
+  verify   reler e conferir uma citacao arquivo:linha[@hash]
 
 OPCOES:
   --repo <dir>              raiz do repositorio (obrigatorio)
   --index <arq>             arquivo do indice (obrigatorio)
-  --request <arq>           pedido JSON (obrigatorio em context)
+  --request <arq>           pedido JSON (obrigatorio em context e expand)
+  --ref <spec>              arquivo:linha[@hash] (obrigatorio em verify)
   --format json|text        formato da saida de doctor (padrao json)
   --workers <n>             workers de leitura e hash no index (padrao 1)
   --max-file-bytes <n>      limite por arquivo (padrao 2097152)
+  --include <langs>         restringe o index a estas linguagens (ex: java,python)
   --incremental             atualiza reaproveitando o indice (padrao)
   --force                   descarta o conteudo e reconstroi do zero
   -h, --help                esta ajuda
@@ -69,9 +74,11 @@ struct Args {
     repo: PathBuf,
     index: PathBuf,
     request: Option<PathBuf>,
+    reference: Option<String>,
     format: String,
     workers: usize,
     max_file_bytes: u64,
+    include: Vec<String>,
     force: bool,
 }
 
@@ -96,16 +103,9 @@ pub fn run(argv: Vec<OsString>) -> i32 {
         Parsed::Run(args) => match args.cmd.as_str() {
             "doctor" => cmd_doctor(&args),
             "index" => cmd_index(&args),
-            "context" => cmd_context(&args),
-            // Declarados no contrato, implementados em R2. Falhar alto é melhor que aceitar
-            // o pedido e devolver algo que não é o contratado.
-            "expand" | "verify" => {
-                eprintln!(
-                    "{TOOL}: comando '{}' pertence a R2 e nao existe nesta versao",
-                    args.cmd
-                );
-                EXIT_BAD_REQUEST
-            }
+            "context" => cmd_pack(&args, false),
+            "expand" => cmd_pack(&args, true),
+            "verify" => cmd_verify(&args),
             other => {
                 eprintln!("{TOOL}: comando desconhecido: {other}");
                 EXIT_BAD_REQUEST
@@ -127,9 +127,11 @@ fn parse(argv: &[OsString]) -> Parsed {
     let mut repo: Option<PathBuf> = None;
     let mut index: Option<PathBuf> = None;
     let mut request_path: Option<PathBuf> = None;
+    let mut reference: Option<String> = None;
     let mut format = "json".to_string();
     let mut workers: usize = 1;
     let mut max_file_bytes: u64 = DEFAULT_MAX_FILE_BYTES;
+    let mut include: Vec<String> = Vec::new();
     let mut force = false;
 
     // Um flag repetido é erro: aceitar "o último vence" faria um pedido malformado parecer
@@ -182,6 +184,38 @@ fn parse(argv: &[OsString]) -> Parsed {
                     Err(e) => return Parsed::Err(e),
                 }
             }
+            "--ref" => {
+                if let Err(e) = set_once("ref", &mut seen) {
+                    return Parsed::Err(e);
+                }
+                match value(&mut it) {
+                    Ok(v) => reference = Some(v),
+                    Err(e) => return Parsed::Err(e),
+                }
+            }
+            "--include" => {
+                match value(&mut it) {
+                    Ok(v) => {
+                        // Lista separada por virgula: `--include java,python`. O filtro é
+                        // registrado na resposta, então a configuração fica auditável.
+                        for part in v.split(',') {
+                            let p = part.trim();
+                            if p.is_empty() {
+                                return Parsed::Err("--include com item vazio".into());
+                            }
+                            if !languages::RECOGNIZED.iter().any(|(l, _)| *l == p) {
+                                return Parsed::Err(format!(
+                                    "linguagem desconhecida em --include: {p}"
+                                ));
+                            }
+                            if !include.iter().any(|x| x == p) {
+                                include.push(p.to_string());
+                            }
+                        }
+                    }
+                    Err(e) => return Parsed::Err(e),
+                }
+            }
             "--format" => {
                 if let Err(e) = set_once("format", &mut seen) {
                     return Parsed::Err(e);
@@ -218,31 +252,29 @@ fn parse(argv: &[OsString]) -> Parsed {
     let Some(index) = index else {
         return Parsed::Err("--index e obrigatorio".into());
     };
-    if first == "context" && request_path.is_none() {
-        return Parsed::Err("--request e obrigatorio em context".into());
-    }
-    if first != "doctor" && first != "index" && first != "context" {
-        // Deixa o despacho reportar o comando desconhecido com o código certo.
-        return Parsed::Run(Box::new(Args {
-            cmd: first,
-            repo,
-            index,
-            request: request_path,
-            format,
-            workers,
-            max_file_bytes,
-            force,
-        }));
+    // Cada comando declara o que exige; a exigência é checada aqui para que a mensagem
+    // aponte a opção que falta, em vez de o comando falhar depois por campo ausente.
+    match first.as_str() {
+        "context" | "expand" if request_path.is_none() => {
+            return Parsed::Err(format!("--request e obrigatorio em {first}"));
+        }
+        "verify" if reference.is_none() => {
+            return Parsed::Err("--ref e obrigatorio em verify".into());
+        }
+        _ => {}
     }
 
+    // Comando desconhecido segue para o despacho, que responde com o código certo.
     Parsed::Run(Box::new(Args {
         cmd: first,
         repo,
         index,
         request: request_path,
+        reference,
         format,
         workers,
         max_file_bytes,
+        include,
         force,
     }))
 }
@@ -380,12 +412,15 @@ struct Counts {
     binary: u64,
     too_large: u64,
     unsupported: u64,
+    /// Reconhecido, mas fora do filtro `--include`.
+    excluded_by_filter: u64,
     unreadable: u64,
     ignored: Option<u64>,
     ignored_reason: &'static str,
     mode: String,
     workers: usize,
     max_file_bytes: u64,
+    include: Vec<String>,
 }
 
 #[derive(Serialize)]
@@ -404,7 +439,8 @@ fn cmd_index(args: &Args) -> i32 {
         return EXIT_IO;
     }
     let exclude = vec![args.index.clone()];
-    let found = match discovery::discover(&args.repo, args.max_file_bytes, &exclude) {
+    let found = match discovery::discover(&args.repo, args.max_file_bytes, &exclude, &args.include)
+    {
         Ok(d) => d,
         Err(e) => {
             eprintln!("{TOOL}: falha na varredura: {e}");
@@ -450,20 +486,26 @@ fn cmd_index(args: &Args) -> i32 {
             binary: found.binary,
             too_large: found.too_large,
             unsupported: found.unsupported,
+            excluded_by_filter: found.excluded_by_filter,
             unreadable: found.unreadable,
             ignored: found.ignored,
             ignored_reason: discovery::Discovery::ignored_reason(),
             mode: report.mode.to_string(),
             workers: args.workers,
             max_file_bytes: args.max_file_bytes,
+            include: args.include.clone(),
         },
     };
     emit(&resp)
 }
 
-// --- context ----------------------------------------------------------------------
+// --- context e expand ---------------------------------------------------------------
 
-fn cmd_context(args: &Args) -> i32 {
+/// `context` e `expand` compartilham leitura de pedido, estado do índice e mapeamento de
+/// erro; só divergem no construtor de resposta. Um único caminho evita que os dois comandos
+/// passem a tratar código de saída de formas diferentes sem ninguém notar.
+fn cmd_pack(args: &Args, expand: bool) -> i32 {
+    let nome = if expand { "expand" } else { "context" };
     let state = store::probe(&args.index);
     if !state.can_serve() {
         // Índice indisponível: diagnóstico explícito e código 3 — nunca lista vazia fingida.
@@ -490,7 +532,7 @@ fn cmd_context(args: &Args) -> i32 {
     }
 
     let Some(req_path) = &args.request else {
-        eprintln!("{TOOL}: --request e obrigatorio em context");
+        eprintln!("{TOOL}: --request e obrigatorio em {nome}");
         return EXIT_BAD_REQUEST;
     };
     let raw = match std::fs::read_to_string(req_path) {
@@ -508,7 +550,17 @@ fn cmd_context(args: &Args) -> i32 {
         }
     };
 
-    // Leitura do índice em modo somente leitura: `context` nunca escreve, nem para
+    // `expand` no modo `context` amplia referências apontadas. Sem referência não há o que
+    // ampliar: recusar aqui é mais útil que devolver vazio e parecer "nada encontrado".
+    if expand
+        && matches!(valid.raw.evidence_wanted.as_deref(), None | Some("context"))
+        && valid.raw.known_refs.is_empty()
+    {
+        eprintln!("{TOOL}: expand com evidence_wanted=context exige known_refs");
+        return EXIT_BAD_REQUEST;
+    }
+
+    // Leitura do índice em modo somente leitura: nenhum dos dois escreve, nem para
     // "consertar" o schema. Consertar é `index`, explicitamente pedido.
     let snap = store::inspect(&args.index, Some(&args.repo));
     let store = match Store::open_readonly(&args.index) {
@@ -528,15 +580,53 @@ fn cmd_context(args: &Args) -> i32 {
         requested_sha_base: valid.raw.snapshot.sha_base.clone(),
     };
 
-    match pack::build_context(&args.repo, &store, &valid, ctx) {
+    let built = if expand {
+        pack::build_expand(&args.repo, &store, &valid, ctx)
+    } else {
+        pack::build_context(&args.repo, &store, &valid, ctx)
+    };
+    match built {
         Ok(resp) => emit(&resp),
         Err(e) => {
             // O motivo vai para stderr; o código carrega a decisão do contrato.
             eprintln!("{TOOL}: {e}");
-            match &e {
-                PackError::Integrity(_) => EXIT_INTEGRITY,
-                PackError::Io(_) => EXIT_IO,
+            e.code()
+        }
+    }
+}
+
+// --- verify ----------------------------------------------------------------------
+
+fn cmd_verify(args: &Args) -> i32 {
+    let state = store::probe(&args.index);
+    if !state.can_serve() {
+        eprintln!(
+            "{TOOL}: indice {}: {}; verify precisa do indice para comparar o hash registrado",
+            state.as_str(),
+            state.advice().unwrap_or("indisponivel")
+        );
+        return EXIT_INDEX_UNAVAILABLE;
+    }
+    let Some(spec) = &args.reference else {
+        eprintln!("{TOOL}: --ref e obrigatorio em verify");
+        return EXIT_BAD_REQUEST;
+    };
+    match verify::check(&args.repo, &args.index, spec) {
+        Ok((resp, pass)) => {
+            let code = emit(&resp);
+            if code != EXIT_OK {
+                return code;
             }
+            if pass {
+                EXIT_OK
+            } else {
+                eprintln!("{TOOL}: citacao nao confirmada em {spec}");
+                EXIT_INTEGRITY
+            }
+        }
+        Err(e) => {
+            eprintln!("{TOOL}: {e}");
+            e.code()
         }
     }
 }

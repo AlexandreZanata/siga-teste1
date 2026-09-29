@@ -1,0 +1,51 @@
+{
+ "schema": "atlas-run/1",
+ "mode": "query",
+ "tag": "CTX-RS_b1000-4000_r5",
+ "policy": "CTX-RS",
+ "budgets": [
+  1000,
+  4000
+ ],
+ "rows": 720,
+ "warmups": 144,
+ "exit_zero": 720,
+ "exit_nonzero": 0,
+ "queries": {
+  "file": "queries.json",
+  "count": 36,
+  "source_fingerprint": "bb7a99fbe4582c972b0c0263665156a26c15e0541e237722b27928fdcf13caba"
+ },
+ "inputs": {
+  "rust_bin": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/rust/archatlas/target/release/archatlas",
+  "rust_index": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/experiments/rust/siga/2026-09-29-r2-queries/index_rust.sqlite",
+  "python_index": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/experiments/rust/siga/2026-09-29-r2-queries/index_python.sqlite",
+  "python_bin": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/.venv/bin/python",
+  "repo_subtree": "siga-ex/src/main/java",
+  "max_bytes_rule": "4 * budget_tokens"
+ },
+ "measurement": {
+  "external_process": true,
+  "filesystem_cache": "aquecido (processo novo); cache frio NAO medido",
+  "order": "alternada por repeticao",
+  "quantile_convention": "posto mais proximo; p50 = mediana (media dos centrais se n par)"
+ },
+ "environment": {
+  "os": "Linux-7.1.5-76070105-generic-x86_64-with-glibc2.39",
+  "kernel": "7.1.5-76070105-generic",
+  "machine": "x86_64",
+  "cpu_model": "13th Gen Intel(R) Core(TM) i7-13620H",
+  "nproc": 16,
+  "meminfo": {
+   "MemTotal": "32556580 kB",
+   "MemAvailable": "10102828 kB"
+  },
+  "rustc": "rustc 1.96.0 (ac68faa20 2026-05-25)",
+  "cargo": "cargo 1.96.0 (30a34c682 2026-05-25)",
+  "python": "3.12.3",
+  "gnu_time": "time (GNU Time) UNKNOWN\nCopyright (C) 2018 Free Software Foundation, Inc.\nLicense GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>.\nThis is free software: you are free to change and redistribute it.\nThere is NO WARRANTY, to the extent permitted by law.\n\nWritten by David Keppel, David MacKenzie, and Assaf Gordon.",
+  "git_head": "35a8b64d73615c6562b3b43e76cf0cea1057efc4",
+  "git_head_short": "35a8b64",
+  "git_dirty": true
+ }
+}

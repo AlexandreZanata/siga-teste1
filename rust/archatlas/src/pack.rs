@@ -39,6 +39,9 @@ const MAX_HINTS: usize = 5;
 /// Falha com código de saída associado, decidido no contrato §3.
 #[derive(Debug)]
 pub enum PackError {
+    /// Pedido malformado na camada de conteúdo (código 2) — distinto de pedido inválido de
+    /// linha de comando, que o CLI já barra antes de chegar aqui.
+    BadRequest(String),
     /// Integridade violada (código 5): caminho fora da raiz, ou nenhuma fonte verificável.
     Integrity(String),
     /// Erro de I/O (código 4).
@@ -48,6 +51,7 @@ pub enum PackError {
 impl PackError {
     pub fn code(&self) -> i32 {
         match self {
+            PackError::BadRequest(_) => 2,
             PackError::Integrity(_) => 5,
             PackError::Io(_) => 4,
         }
@@ -57,7 +61,9 @@ impl PackError {
 impl std::fmt::Display for PackError {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            PackError::Integrity(m) | PackError::Io(m) => write!(f, "{m}"),
+            PackError::BadRequest(m) | PackError::Integrity(m) | PackError::Io(m) => {
+                write!(f, "{m}")
+            }
         }
     }
 }
@@ -391,15 +397,30 @@ fn candidates(
 /// própria serialização (mais dígitos). Paramos quando o valor gravado é igual ao tamanho
 /// medido — é essa igualdade que torna a alegação de orçamento verificável.
 fn fixpoint(resp: &mut Response) -> (usize, u64) {
-    let mut used_bytes: usize = 0;
+    settle_budget(resp, |r, bytes, tokens| {
+        r.budget.used_bytes = bytes;
+        r.budget.used_tokens = tokens;
+    })
+}
+
+/// Serializa, mede, grava a medida no próprio valor e repete até estabilizar.
+///
+/// Genérico porque `context`, `expand` e `verify` publicam o mesmo campo `budget` e a regra
+/// é idêntica: o número publicado descreve a serialização que o contém. O ponto fixo existe
+/// porque preencher os campos altera o tamanho da própria serialização (mais dígitos).
+pub fn settle_budget<T, F>(value: &mut T, mut set: F) -> (usize, u64)
+where
+    T: Serialize,
+    F: FnMut(&mut T, u64, u64),
+{
+    let mut used: usize = 0;
     loop {
-        resp.budget.used_bytes = used_bytes as u64;
-        resp.budget.used_tokens = token_estimate(used_bytes);
-        let measured = serde_json::to_vec(resp).map(|v| v.len()).unwrap_or(0);
-        if measured == used_bytes {
+        set(value, used as u64, token_estimate(used));
+        let measured = serde_json::to_vec(value).map(|v| v.len()).unwrap_or(0);
+        if measured == used {
             return (measured, token_estimate(measured));
         }
-        used_bytes = measured;
+        used = measured;
     }
 }
 
@@ -556,16 +577,228 @@ impl Fit<'_> {
     }
 }
 
-/// Monta a resposta de `context` dentro do orçamento, ou falha com o código do contrato.
-pub fn build_context(
+/// Janela de contexto ampliada usada por `expand`.
+const EXPAND_CONTEXT_LINES: usize = 20;
+
+/// `true` quando o caminho parece de teste. Heurística **de caminho**, declarada como tal:
+/// não lê o conteúdo nem promete que o arquivo é um teste.
+fn looks_like_test(rel: &str) -> bool {
+    let lower = rel.to_ascii_lowercase();
+    lower.contains("test") || lower.contains("spec")
+}
+
+/// Subtrai de `span` os intervalos já entregues. Fatiar em vez de descartar evita
+/// reentregar o mesmo trecho só porque a nova janela o cobriu em parte.
+fn subtract_covered(span: Span, covered: &[(u32, u32)]) -> Vec<Span> {
+    let mut pieces = vec![span];
+    for (cs, ce) in covered {
+        let mut next: Vec<Span> = Vec::new();
+        for p in pieces {
+            // Sem sobreposição: o pedaço passa inteiro.
+            if *ce < p.start as u32 || *cs > p.end as u32 {
+                next.push(p);
+                continue;
+            }
+            if *cs > p.start as u32 {
+                next.push(Span {
+                    start: p.start,
+                    end: (*cs as usize - 1).max(p.start),
+                });
+            }
+            if *ce < p.end as u32 {
+                next.push(Span {
+                    start: (*ce as usize + 1).max(p.start),
+                    end: p.end,
+                });
+            }
+        }
+        pieces = next;
+    }
+    pieces.retain(|p| p.end > p.start || (p.end == p.start && p.start > 0));
+    pieces
+}
+
+/// Intervalos já entregues, por arquivo, para deduplicação.
+fn delivered_spans(refs: &[crate::request::RefSpec]) -> HashMap<String, Vec<(u32, u32)>> {
+    let mut out: HashMap<String, Vec<(u32, u32)>> = HashMap::new();
+    for r in refs {
+        let clean = r.file.trim_start_matches("./").to_string();
+        let start = r.line.unwrap_or(1);
+        let end = r.end_line.unwrap_or(start).max(start);
+        out.entry(clean).or_default().push((start, end));
+    }
+    out
+}
+
+/// Candidatos de `expand`: refs apontadas, ampliadas, mais a evidência pedida.
+///
+/// `delivered_refs` é deduzido do que sai: o agente que já recebeu um trecho não deve
+/// pagar por ele de novo, e o orçamento gasto nele é desperdiçado.
+fn expand_candidates(
     repo: &Path,
     store: &Store,
     req: &ValidRequest,
-    ctx: Ctx,
-) -> Result<Response, PackError> {
-    let tokens = retrieve::tokenize(&req.raw.query);
-    let cands = candidates(repo, store, req, &tokens)?;
+    tokens: &[String],
+) -> Result<Candidates, PackError> {
+    let known: HashMap<String, String> = store
+        .logical_dump()
+        .map_err(|e| PackError::Io(format!("falha ao ler o indice: {e}")))?
+        .into_iter()
+        .collect();
+    let delivered = delivered_spans(&req.raw.delivered_refs);
+    let kind = req.raw.evidence_wanted.as_deref().unwrap_or("context");
 
+    // Referências apontadas primeiro; depois, quando o tipo de evidência pede busca,
+    // os arquivos que a consulta alcança.
+    let mut order: Vec<(String, String, Option<(u32, u32)>)> = Vec::new();
+    for r in &req.raw.known_refs {
+        let clean = r.file.trim_start_matches("./").to_string();
+        if !order.iter().any(|(p, ..)| p == &clean) {
+            let span = r.line.map(|l| (l, r.end_line.unwrap_or(l).max(l)));
+            order.push((clean, "known_ref".to_string(), span));
+        }
+    }
+    if kind != "context" {
+        let hits = retrieve::search(&store.conn, &req.raw.query, retrieve::CANDIDATE_LIMIT)
+            .map_err(|e| PackError::Io(format!("busca lexical falhou: {e}")))?;
+        for h in hits {
+            if kind == "tests" && !looks_like_test(&h.path) {
+                continue;
+            }
+            if !order.iter().any(|(p, ..)| p == &h.path) {
+                order.push((h.path.clone(), format!("lexical:{kind}"), None));
+            }
+        }
+    }
+    order.truncate(MAX_CANDIDATE_FILES);
+
+    let mut units: Vec<Unit> = Vec::new();
+    let mut emitted: HashMap<String, Vec<(u32, u32)>> = HashMap::new();
+    let mut dropped = 0u64;
+    let mut reasons: Vec<String> = Vec::new();
+    let mut dropped_refs: Vec<String> = Vec::new();
+    let mut stale = false;
+    let mut verified_any = false;
+
+    for (rel, origin, asked) in &order {
+        let abs = resolve_within(repo, rel)
+            .map_err(|e| PackError::Integrity(format!("referencia insegura ({rel}): {e}")))?;
+        let Some(expected) = known.get(rel) else {
+            stale = true;
+            dropped += 1;
+            push_reason(&mut reasons, "not_indexed");
+            dropped_refs.push(rel.clone());
+            continue;
+        };
+        let Some((hash, text)) = load_verified(&abs) else {
+            stale = true;
+            dropped += 1;
+            push_reason(&mut reasons, "stale_source");
+            dropped_refs.push(rel.clone());
+            continue;
+        };
+        if &hash != expected {
+            stale = true;
+            dropped += 1;
+            push_reason(&mut reasons, "stale_source");
+            dropped_refs.push(rel.clone());
+            continue;
+        }
+        verified_any = true;
+        let total_lines = text.lines().count().max(1);
+        // `match_lines` é calculado antes de `text` ir para o `Verified`, senão o valor
+        // estaria movido.
+        let match_lines = retrieve::locate_lines(&text, tokens);
+        let v = Verified {
+            rel: rel.clone(),
+            hash,
+            text,
+            match_lines,
+            origin: origin.clone(),
+        };
+
+        // Janelas: pedida pela ref, ou em torno das ocorrências do termo.
+        let mut spans: Vec<Span> = Vec::new();
+        if let Some((s, e)) = asked {
+            let start = (*s as usize).saturating_sub(EXPAND_CONTEXT_LINES).max(1);
+            let end = (*e as usize + EXPAND_CONTEXT_LINES).min(total_lines);
+            let mut cursor = start;
+            while cursor <= end {
+                let stop = (cursor + MAX_UNIT_LINES - 1).min(end);
+                spans.push(Span {
+                    start: cursor,
+                    end: stop,
+                });
+                cursor = stop + 1;
+            }
+        } else if !v.match_lines.is_empty() {
+            spans = spans_from_lines(&v.match_lines, EXPAND_CONTEXT_LINES, total_lines);
+        }
+        if spans.is_empty() {
+            // Sem ocorrência literal e sem linha apontada: nada verificável a ampliar.
+            dropped += 1;
+            push_reason(&mut reasons, "no_literal_match");
+            dropped_refs.push(rel.clone());
+            continue;
+        }
+
+        // Dedup contra o que já foi entregue e contra o que esta própria chamada emite.
+        let mut covered = delivered.get(rel).cloned().unwrap_or_default();
+        covered.extend(emitted.get(rel).cloned().unwrap_or_default());
+        for span in spans {
+            let mut kept_any = false;
+            for piece in subtract_covered(span, &covered) {
+                if piece.end < piece.start {
+                    continue;
+                }
+                let n_matches = v
+                    .match_lines
+                    .iter()
+                    .filter(|l| **l >= piece.start && **l <= piece.end)
+                    .count();
+                let reason = if n_matches > 0 {
+                    format!("{}; {n_matches} ocorrencia(s)", v.origin)
+                } else {
+                    format!("{}; janela ampliada", v.origin)
+                };
+                units.push(make_unit(&v, piece, tokens, reason));
+                emitted
+                    .entry(rel.clone())
+                    .or_default()
+                    .push((piece.start as u32, piece.end as u32));
+                kept_any = true;
+            }
+            if !kept_any {
+                dropped += 1;
+                push_reason(&mut reasons, "duplicate");
+            }
+        }
+    }
+
+    // Nada verificável, mas havia referências: não existe resposta verificada a dar.
+    if !verified_any && !order.is_empty() {
+        return Err(PackError::Integrity(
+            "nenhuma referencia passou na verificacao de bytes; \
+             o indice esta desatualizado (rode `archatlas index`)"
+                .to_string(),
+        ));
+    }
+
+    Ok(Candidates {
+        units,
+        dropped,
+        reasons,
+        dropped_refs,
+        stale,
+    })
+}
+
+/// Ajusta as unidades candidatas ao orçamento e devolve a resposta final.
+///
+/// Compartilhado por `context` e `expand`: as duas etapas diferem na **origem** das
+/// unidades, nunca na forma de medir o orçamento. Duplicar essa lógica seria a maneira mais
+/// fácil de as duas divergirem sem que nenhum teste percebesse.
+fn finalize(req: &ValidRequest, ctx: &Ctx, cands: Candidates) -> Response {
     // O snapshot pedido pode não ser o snapshot indexado. Isso é `stale`, e precisa aparecer
     // antes de qualquer outra coisa: um recorte parcial de outro commit engana o agente.
     let sha_mismatch = match (&ctx.requested_sha_base, &ctx.sha_base) {
@@ -582,7 +815,7 @@ pub fn build_context(
     let no_match = cands.units.is_empty() && reasons.is_empty();
     let fit = Fit {
         req,
-        ctx: &ctx,
+        ctx,
         all: &cands.units,
         base_dropped: cands.dropped,
         base_reasons: &reasons,
@@ -602,14 +835,14 @@ pub fn build_context(
         let mut all_reasons = reasons.clone();
         push_reason(&mut all_reasons, "envelope_too_large");
         let state = if stale { "stale" } else { "partial" };
-        let mut resp = assemble(req, &ctx, &[], cands.dropped, &all_reasons, &minimal, state);
+        let mut resp = assemble(req, ctx, &[], cands.dropped, &all_reasons, &minimal, state);
         let _ = fixpoint(&mut resp);
-        return Ok(resp);
+        return resp;
     }
 
     let full = fit.render(cands.units.len());
     if fits(full.bytes, full.tokens, req) {
-        return Ok(full.resp);
+        return full.resp;
     }
 
     // Busca binária pelo maior prefixo que cabe. Substitui o "remove uma unidade e
@@ -654,7 +887,31 @@ pub fn build_context(
         }
     }
 
-    Ok(best.resp)
+    best.resp
+}
+
+/// Monta a resposta de `context` dentro do orçamento, ou falha com o código do contrato.
+pub fn build_context(
+    repo: &Path,
+    store: &Store,
+    req: &ValidRequest,
+    ctx: Ctx,
+) -> Result<Response, PackError> {
+    let tokens = retrieve::tokenize(&req.raw.query);
+    let cands = candidates(repo, store, req, &tokens)?;
+    Ok(finalize(req, &ctx, cands))
+}
+
+/// Monta a resposta de `expand` — ampliação por referência já entregue (R2).
+pub fn build_expand(
+    repo: &Path,
+    store: &Store,
+    req: &ValidRequest,
+    ctx: Ctx,
+) -> Result<Response, PackError> {
+    let tokens = retrieve::tokenize(&req.raw.query);
+    let cands = expand_candidates(repo, store, req, &tokens)?;
+    Ok(finalize(req, &ctx, cands))
 }
 
 /// Pistas curtas de expansão. Nunca é um despejo de paths: no máximo `MAX_HINTS`.

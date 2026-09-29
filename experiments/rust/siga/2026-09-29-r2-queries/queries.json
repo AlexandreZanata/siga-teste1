@@ -1,0 +1,259 @@
+{
+ "schema": "atlas-queries/1",
+ "generator": "benchmarks/rust/gen_queries.py",
+ "source_corpus": {
+  "files": 504,
+  "fingerprint": "bb7a99fbe4582c972b0c0263665156a26c15e0541e237722b27928fdcf13caba"
+ },
+ "strata_definition": {
+  "1": {
+   "min": 1,
+   "max": 1
+  },
+  "2-5": {
+   "min": 2,
+   "max": 5
+  },
+  "6-20": {
+   "min": 6,
+   "max": 20
+  },
+  "21-100": {
+   "min": 21,
+   "max": 100
+  },
+  ">100": {
+   "min": 101,
+   "max": null
+  }
+ },
+ "per_stratum": 6,
+ "queries": [
+  {
+   "id": "q01",
+   "text": "ABCDEFGHIJLMNOPQRSTUZ",
+   "stratum": "1",
+   "doc_freq": 1
+  },
+  {
+   "id": "q02",
+   "text": "Reiniciar",
+   "stratum": "1",
+   "doc_freq": 1
+  },
+  {
+   "id": "q03",
+   "text": "designar",
+   "stratum": "1",
+   "doc_freq": 1
+  },
+  {
+   "id": "q04",
+   "text": "htmlImage",
+   "stratum": "1",
+   "doc_freq": 1
+  },
+  {
+   "id": "q05",
+   "text": "predicateMobilRefComoMovimentacaoDeJuntadaEDesentranhamento",
+   "stratum": "1",
+   "doc_freq": 1
+  },
+  {
+   "id": "q06",
+   "text": "zone",
+   "stratum": "1",
+   "doc_freq": 1
+  },
+  {
+   "id": "q07",
+   "text": "ACESSAR",
+   "stratum": "2-5",
+   "doc_freq": 3
+  },
+  {
+   "id": "q08",
+   "text": "LocalDate",
+   "stratum": "2-5",
+   "doc_freq": 3
+  },
+  {
+   "id": "q09",
+   "text": "consultarQuantidadeParaReceberEmLote",
+   "stratum": "2-5",
+   "doc_freq": 2
+  },
+  {
+   "id": "q10",
+   "text": "getNrInicial",
+   "stratum": "2-5",
+   "doc_freq": 2
+  },
+  {
+   "id": "q11",
+   "text": "possuiAssinaturaCossigsSubscritorHoje",
+   "stratum": "2-5",
+   "doc_freq": 2
+  },
+  {
+   "id": "q12",
+   "text": "zero",
+   "stratum": "2-5",
+   "doc_freq": 4
+  },
+  {
+   "id": "q13",
+   "text": "AGENDAMENTO_DE_PUBLICACAO",
+   "stratum": "6-20",
+   "doc_freq": 7
+  },
+  {
+   "id": "q14",
+   "text": "Math",
+   "stratum": "6-20",
+   "doc_freq": 8
+  },
+  {
+   "id": "q15",
+   "text": "converter",
+   "stratum": "6-20",
+   "doc_freq": 18
+  },
+  {
+   "id": "q16",
+   "text": "getJuntados",
+   "stratum": "6-20",
+   "doc_freq": 6
+  },
+  {
+   "id": "q17",
+   "text": "openoffice",
+   "stratum": "6-20",
+   "doc_freq": 6
+  },
+  {
+   "id": "q18",
+   "text": "yyyy",
+   "stratum": "6-20",
+   "doc_freq": 14
+  },
+  {
+   "id": "q19",
+   "text": "AplicacaoException",
+   "stratum": "21-100",
+   "doc_freq": 30
+  },
+  {
+   "id": "q20",
+   "text": "Problem",
+   "stratum": "21-100",
+   "doc_freq": 30
+  },
+  {
+   "id": "q21",
+   "text": "contains",
+   "stratum": "21-100",
+   "doc_freq": 39
+  },
+  {
+   "id": "q22",
+   "text": "getTitular",
+   "stratum": "21-100",
+   "doc_freq": 23
+  },
+  {
+   "id": "q23",
+   "text": "podeMovimentar",
+   "stratum": "21-100",
+   "doc_freq": 32
+  },
+  {
+   "id": "q24",
+   "text": "write",
+   "stratum": "21-100",
+   "doc_freq": 38
+  },
+  {
+   "id": "q25",
+   "text": "CompositeExpressionSupport",
+   "stratum": ">100",
+   "doc_freq": 155
+  },
+  {
+   "id": "q26",
+   "text": "MERCHANTABILITY",
+   "stratum": ">100",
+   "doc_freq": 135
+  },
+  {
+   "id": "q27",
+   "text": "distributed",
+   "stratum": ">100",
+   "doc_freq": 135
+  },
+  {
+   "id": "q28",
+   "text": "later",
+   "stratum": ">100",
+   "doc_freq": 135
+  },
+  {
+   "id": "q29",
+   "text": "result",
+   "stratum": ">100",
+   "doc_freq": 148
+  },
+  {
+   "id": "q30",
+   "text": "your",
+   "stratum": ">100",
+   "doc_freq": 135
+  }
+ ],
+ "edge": [
+  {
+   "id": "e01",
+   "kind": "zero_match",
+   "text": "ZzqR2TokenInexistenteNoCorpus",
+   "note": "ausente do vocabario"
+  },
+  {
+   "id": "e02",
+   "kind": "unicode",
+   "text": "movimentação",
+   "note": "acento nao-ASCII"
+  },
+  {
+   "id": "e03",
+   "kind": "multi_token",
+   "text": "ABCDEFGHIJLMNOPQRSTUZ Reiniciar",
+   "note": "dois tokens"
+  },
+  {
+   "id": "e04",
+   "kind": "long",
+   "text": "ABCDEFGHIJLMNOPQRSTUZ Reiniciar designar htmlImage predicateMobilRefComoMovimentacaoDeJuntadaEDesentranhamento zone ACESSAR LocalDate consultarQuantidadeParaReceberEmLote getNrInicial possuiAssinaturaCossigsSubscritorHoje zero",
+   "note": "12 tokens"
+  },
+  {
+   "id": "e05",
+   "kind": "punctuation",
+   "text": "getId();",
+   "note": "pontuacao de codigo"
+  },
+  {
+   "id": "e06",
+   "kind": "short",
+   "text": "id",
+   "note": "token curto e comum"
+  }
+ ],
+ "vocabulary_size": 12347,
+ "counts_by_stratum": {
+  "1": 7111,
+  "2-5": 3933,
+  "6-20": 1010,
+  "21-100": 215,
+  ">100": 78
+ }
+}

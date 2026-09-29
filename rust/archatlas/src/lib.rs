@@ -18,6 +18,7 @@ pub mod request;
 pub mod retrieve;
 pub mod snapshot;
 pub mod store;
+pub mod verify;
 
 /// Nome do executável, usado em `env.tool` e nas mensagens de stderr.
 pub const TOOL: &str = "archatlas";

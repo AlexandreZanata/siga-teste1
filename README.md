@@ -25,7 +25,7 @@ experiments/      # capsules por execução (hashes, sem outputs gigantes)
 - **Sem dados pessoais:** nenhum path de máquina no código ou docs; GT usa paths relativos ao dataset.
 
 ## Roadmap por etapas (cada etapa = commit + push)
-Próxima entrega planejada: [CLI local em Rust, piloto real e avaliação cega](plans/RUST_CLI_PILOTO_REAL.md), com [protocolo de custo, memória, latência e qualidade dos patches](research/rust/PROTOCOLO_VALIDACAO.md) e [estado próprio](plans/rust/STATUS.md). A escolha de Rust não é uma medição de ganho: comparar implementação e utilidade do agente separadamente. A revisão de 2026-09-29 adiciona somente planejamento.
+Próxima entrega planejada: [CLI local em Rust, piloto real e avaliação cega](plans/RUST_CLI_PILOTO_REAL.md), com [protocolo de custo, memória, latência e qualidade dos patches](research/rust/PROTOCOLO_VALIDACAO.md) e [estado próprio](plans/rust/STATUS.md). A escolha de Rust não é uma medição de ganho: comparar implementação e utilidade do agente separadamente. R0–R2 foram executados (R2 parcialmente); **nada aqui mede utilidade** — isso exige o piloto real de R3, ainda bloqueado por decisão de modelo e orçamento.
 
 O [plano vigente de pesquisa para contexto modular](plans/PESQUISA_CONTEXTO_MODULAR.md) orienta as próximas etapas: auditoria das evidências, literatura primária, tarefas reais de edição, avaliação cega e transferência para outros projetos. Define contratos e critérios de ganho; sua inclusão é apenas planejamento, sem implementação ou experimentos novos.
 
@@ -35,22 +35,30 @@ Para trabalhar com dois agentes: [agente A — continuar SIGA/core](plans/SIGA_E
 
 Ver também `docs/ROADMAP_ETAPAS.md` (histórico F0–F20 e ligação com F21) e `docs/VERIFICATION_PROTOCOL.md` (verificação de evidências). Resultados históricos de recuperação não comprovam, isoladamente, economia ou correção em tarefas de desenvolvimento.
 
-## CLI Rust (R1, implementado)
+## CLI Rust (R1 implementado; R2 parcialmente)
 
-Executável local que o agente invoca por shell: recuperação determinística, sem rede, sem daemon, sem GPU e sem Python no caminho de execução. Fonte em `rust/archatlas/`; contrato congelado em `research/rust/CLI_CONTRACT.md`; estado em `plans/rust/STATUS.md`.
+Executável local que o agente invoca por shell: recuperação determinística, sem rede, sem daemon, sem GPU e sem Python no caminho de execução. Fonte em `rust/archatlas/`; contrato congelado em `research/rust/CLI_CONTRACT.md`; estado em `plans/rust/STATUS.md`; medições em `research/rust/R2_REPORT.md` (compare produtos, não linguagens).
 
 ```bash
 cargo build --release --manifest-path rust/archatlas/Cargo.toml
 B=rust/archatlas/target/release/archatlas
 
-$B index   --repo /caminho/para/repo --index /tmp/atlas.sqlite
+$B index   --repo /caminho/para/repo --index /tmp/atlas.sqlite --include java
 $B doctor  --repo /caminho/para/repo --index /tmp/atlas.sqlite --format text
 $B context --repo /caminho/para/repo --index /tmp/atlas.sqlite --request pedido.json
+$B expand  --repo /caminho/para/repo --index /tmp/atlas.sqlite --request expansao.json
+$B verify  --repo /caminho/para/repo --index /tmp/atlas.sqlite --ref br/gov/jfrj/.../X.java:42
 ```
 
-`pedido.json` traz `schema_version`, `intent`, `query`, `budget_tokens`, `max_bytes` e `policy` (`LEX-RS` ou `CTX-RS`). stdout é **um único objeto JSON**; o orçamento é medido sobre a serialização final, não sobre a soma dos itens. Códigos: `0` resposta válida (`partial`/`stale` são válidos e explícitos), `2` pedido inválido, `3` índice ausente/incompatível/corrompido/vazio, `4` erro de I/O, `5` integridade violada. Limites do que esta fatia entrega estão declarados no [relatório de R1](research/rust/R1_REPORT.md) §7.
+`pedido.json` traz `schema_version`, `intent`, `query`, `budget_tokens`, `max_bytes` e `policy` (`LEX-RS` ou `CTX-RS`); `expansao.json` acrescenta `known_refs`, `delivered_refs` e `evidence_wanted` (`context`/`references`/`tests`). `--include` restringe a indexação a um conjunto de linguagens e reporta em `excluded_by_filter` o que ficou fora. stdout é **um único objeto JSON**; o orçamento é medido sobre a serialização final, não sobre a soma dos itens. Códigos: `0` resposta válida (`partial`/`stale` são válidos e explícitos), `2` pedido inválido, `3` índice ausente/incompatível/corrompido/vazio, `4` erro de I/O, `5` integridade violada (`verify` reprovado, hash divergente, referência fora da raiz). Limites estão declarados no [relatório de R1](research/rust/R1_REPORT.md) §7 e no [de R2](research/rust/R2_REPORT.md) §10.
 
 Testes: `cargo test --release --manifest-path rust/archatlas/Cargo.toml`.
+
+Rodada de medição reproduzível (corpus congelado, pareamento e ordem alternada):
+
+```bash
+ARCHATLAS_DATASET=/caminho/para/siga python benchmarks/rust/run_round.py --run-id 2026-09-29-r2-queries
+```
 
 ## Uso rápido
 ```bash
