@@ -108,6 +108,8 @@ def main() -> int:
         qrows.extend(read_jsonl(path))
     irows = load(run, "runs_index.jsonl")
     urows = load(run, "runs_update.jsonl")
+    xrows = load(run, "runs_expand.jsonl")
+    vrows = load(run, "runs_verify.jsonl")
     drows = load(run, "runs_doctor.jsonl")
     if loaded:
         print(f"artefatos de consulta: {', '.join(loaded)}")
@@ -308,6 +310,100 @@ def main() -> int:
                      "geração, o conjunto de arquivos dentro do índice tem de ser exatamente o do "
                      "disco.")
         parts.append("")
+
+    if xrows:
+        parts.append("## `expand`: segundo passo do ciclo de recuperação")
+        parts.append("")
+        parts.append("Sem braço Python: a CLI de referência não tem `expand`. As tabelas são do "
+                     "braço Rust, e a coluna `no_overlap` é checada no harness por interseção de "
+                     "intervalos — não lida de `omitted.reasons`.")
+        parts.append("")
+        parts.append("| orçamento | `evidence_wanted` | n | wall p50 | wall p95 | RSS p50 (kB) | "
+                     "unidades p50 | bytes p50 | bytes do `context` de setup p50 | "
+                     "razão expand/context | sem sobreposição | `used_bytes` exato |")
+        parts.append("|---|---|---|---|---|---|---|---|---|---|---|---|")
+        combos = sorted({(r["budget_tokens"], r["evidence_wanted"]) for r in xrows})
+        for budget, kind in combos:
+            sub = [r for r in xrows
+                   if r["budget_tokens"] == budget and r["evidence_wanted"] == kind]
+            ok_over = sum(1 for r in sub if r["checks"]["no_overlap_with_delivered"])
+            ok_bytes = sum(1 for r in sub if r["checks"]["bytes_exact"])
+            setup = [r["setup_context_bytes"] for r in sub if r["setup_context_bytes"]]
+            expanded = [r["declared"]["declared_bytes"] for r in sub
+                        if r["declared"]["declared_bytes"]]
+            ratio = [e / s for e, s in zip(expanded, setup) if s]
+            parts.append(
+                f"| {budget} | `{kind}` | {len(sub)} | "
+                f"{fmt(quantiles([r['wall_s'] for r in sub], 0.5))} | "
+                f"{fmt(quantiles([r['wall_s'] for r in sub], 0.95))} | "
+                f"{fmt(quantiles([r['max_rss_kb'] for r in sub], 0.5), 0)} | "
+                f"{fmt(quantiles([r['declared']['units'] for r in sub], 0.5), 0)} | "
+                f"{fmt(quantiles(expanded, 0.5), 0)} | {fmt(quantiles(setup, 0.5), 0)} | "
+                f"{fmt(quantiles(ratio, 0.5), 2)} | {ok_over}/{len(sub)} | {ok_bytes}/{len(sub)} |"
+            )
+        parts.append("")
+        states = Counter(r["declared"].get("state") for r in xrows)
+        parts.append("Estados declarados: " + ", ".join(
+            f"`{k}`={v}" for k, v in sorted(states.items(), key=lambda kv: str(kv[0])))
+            + ". A razão `expand/context` mostra quanto material **novo** a expansão adiciona "
+              "sobre a chamada anterior.")
+        parts.append("")
+        # `references` deveria trazer material que `context` não traz. Se as duas saídas forem
+        # idênticas, o motivo é ordem/consumo de orçamento, e isso é resultado — não anedota.
+        by_key = {(r["query_id"], r["budget_tokens"], r["evidence_wanted"]): r for r in xrows}
+        pairs = [k for k in by_key if k[2] == "references" and (k[0], k[1], "context") in by_key]
+        identical = [k for k in pairs
+                     if by_key[k]["declared"]["declared_bytes"]
+                     == by_key[(k[0], k[1], "context")]["declared"]["declared_bytes"]
+                     and by_key[k]["declared"]["units"]
+                     == by_key[(k[0], k[1], "context")]["declared"]["units"]]
+        if pairs:
+            parts.append(
+                f"Em **{len(identical)} de {len(pairs)}** pares (consulta, orçamento), "
+                "`evidence_wanted=references` devolveu o **mesmo** número de unidades e os "
+                "**mesmos** bytes que `evidence_wanted=context`. As janelas ao redor de "
+                "`known_refs` são geradas primeiro e consomem o teto antes de a busca lexical "
+                "contribuir; nos pares em que os dois diferem, sobrou orçamento para a busca."
+            )
+            parts.append("")
+
+    if vrows:
+        parts.append("## `verify`: portão de integridade")
+        parts.append("")
+        parts.append("Sem braço Python: `verify` existe na referência como autoteste fixo de um "
+                     "arquivo, sem `--ref`. O código de saída esperado de cada cenário foi fixado "
+                     "**antes** da medição, então `saiu como esperado` é checagem do harness.")
+        parts.append("")
+        parts.append("| cenário | n | esperado | saiu como esperado | wall p50 | wall p95 | "
+                     "RSS p50 (kB) | `state` declarado | `used_bytes` exato |")
+        parts.append("|---|---|---|---|---|---|---|---|---|")
+        order = [s for s in ("ok", "sem_hash", "hash_divergente", "linha_fora", "caminho_fora")
+                 if any(r["scenario"] == s for r in vrows)]
+        order += sorted({r["scenario"] for r in vrows} - set(order))
+        for sc in order:
+            sub = [r for r in vrows if r["scenario"] == sc]
+            ok = sum(1 for r in sub if r["exit_as_expected"])
+            ok_bytes = sum(1 for r in sub if r["declared"].get("bytes_exact"))
+            states = Counter(r["declared"].get("state") for r in sub)
+            states_txt = ", ".join(f"{k}={v}" for k, v in sorted(
+                states.items(), key=lambda kv: str(kv[0])))
+            parts.append(
+                f"| `{sc}` | {len(sub)} | exit {sub[0]['expect_exit']} | {ok}/{len(sub)} | "
+                f"{fmt(quantiles([r['wall_s'] for r in sub], 0.5))} | "
+                f"{fmt(quantiles([r['wall_s'] for r in sub], 0.95))} | "
+                f"{fmt(quantiles([r['max_rss_kb'] for r in sub], 0.5), 0)} | "
+                f"{states_txt} | {ok_bytes}/{len(sub)} |"
+            )
+        parts.append("")
+        reasons = Counter()
+        for r in vrows:
+            if r["scenario"] != "ok":
+                for reason in (r["declared"].get("reasons") or []):
+                    reasons[reason] += 1
+        if reasons:
+            parts.append("Motivos agregados de `omitted.reasons` nos cenários reprovados: "
+                         + ", ".join(f"`{k}`={v}" for k, v in sorted(reasons.items())) + ".")
+            parts.append("")
 
     if drows:
         parts.append("## `doctor` (processo novo, cache aquecido)")

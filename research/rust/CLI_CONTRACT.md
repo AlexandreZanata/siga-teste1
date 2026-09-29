@@ -217,3 +217,9 @@ Lista por vírgula, validada contra o vocabulário de linguagens reconhecidas; i
 - Referência Python: declara **438** tokens para um payload de 978 tokens pela própria heurística (razão **0,45**), não publica bytes entregues, e **315/900** execuções entregam mais que o teto de bytes que o outro braço respeitou.
 
 Fica registrado que a interface Python **não recebe** `max_bytes`: a divergência é de contrato entre produtos, não descumprimento de um teto aceito. A comparação de R2 é, por isso, entre produtos distintos — conforme a cláusula de não equivalência do plano §6.
+
+### 10.5 Ordem de `expand` e consequência prática
+
+`known_refs` são processadas **antes** da busca lexical (§10.2). Com muitas referências e orçamento apertado, as janelas ao redor delas consomem o teto e `evidence_wanted=references|tests` não acrescenta nada. Medido em [`R2_REPORT.md`](R2_REPORT.md) §8.1: em 39 de 70 pares (consulta, orçamento), `references` devolveu exatamente o mesmo conjunto e tamanho que `context`.
+
+Consequência para quem chama: para alcançar arquivos por termo, use `context` com a consulta; o valor de `expand` é o material **novo** ao redor de uma referência que o agente já escolheu. Mudar a ordem de prioridade é mudança de política, com nova medição — não é ajuste de formatação.

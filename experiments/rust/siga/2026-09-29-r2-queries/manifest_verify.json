@@ -1,33 +1,24 @@
 {
  "schema": "atlas-run/1",
- "mode": "query",
- "tag": "LEX-RS_b2000_r5",
- "policy": "LEX-RS",
- "budgets": [
-  2000
+ "mode": "verify",
+ "rows": 875,
+ "repetitions": 5,
+ "scenarios": [
+  "ok",
+  "sem_hash",
+  "hash_divergente",
+  "linha_fora",
+  "caminho_fora"
  ],
- "rows": 360,
- "warmups": 72,
- "exit_zero": 360,
- "exit_nonzero": 0,
- "queries": {
-  "file": "queries.json",
-  "count": 36,
-  "source_fingerprint": "bb7a99fbe4582c972b0c0263665156a26c15e0541e237722b27928fdcf13caba"
- },
  "inputs": {
   "rust_bin": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/rust/archatlas/target/release/archatlas",
   "rust_index": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/experiments/rust/siga/2026-09-29-r2-queries/index_rust.sqlite",
-  "python_index": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/experiments/rust/siga/2026-09-29-r2-queries/index_python.sqlite",
-  "python_bin": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/.venv/bin/python",
-  "repo_subtree": "siga-ex/src/main/java",
-  "max_bytes_rule": "4 * budget_tokens"
+  "note": "sem braco Python: verify da referencia e autoteste fixo, sem --ref"
  },
  "measurement": {
   "external_process": true,
-  "filesystem_cache": "aquecido (processo novo); cache frio NAO medido",
-  "order": "alternada por repeticao",
-  "quantile_convention": "posto mais proximo; p50 = mediana (media dos centrais se n par)"
+  "expected_exit": "fixado antes: 0 para ok/sem_hash, 5 para os demais",
+  "dataset": "intocado; reprovacao vem de entrada (hash/linha), nao de mutacao"
  },
  "environment": {
   "os": "Linux-7.1.5-76070105-generic-x86_64-with-glibc2.39",
@@ -37,7 +28,7 @@
   "nproc": 16,
   "meminfo": {
    "MemTotal": "32556580 kB",
-   "MemAvailable": "3921580 kB"
+   "MemAvailable": "1874640 kB"
   },
   "rustc": "rustc 1.96.0 (ac68faa20 2026-05-25)",
   "cargo": "cargo 1.96.0 (30a34c682 2026-05-25)",

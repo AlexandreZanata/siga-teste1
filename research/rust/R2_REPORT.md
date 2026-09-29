@@ -21,7 +21,7 @@ Duas frentes, e a distinção entre elas importa para ler o resto do documento.
 
 Suíte total: **76 testes verdes** em `cargo test --release` — 50 unitários + 16 de integração de contrato + 10 de R2 ([`tests/r2.rs`](../../rust/archatlas/tests/r2.rs)) que spawnam o binário real. `cargo fmt --check` limpo.
 
-**No harness de medição** (produto de pesquisa): `freeze_corpus.py`, `gen_queries.py`, `measure.py`, `report.py` e um driver `run_round.py` que executa a rodada inteira e **aborta** se o corpus não for equivalente. A ordem, os orçamentos e as flags ficam registrados em `manifest_round.json`, junto do `sha256` do binário medido — sem isso, dois relatórios de R2 não saberiam se mediram a mesma coisa.
+**No harness de medição** (produto de pesquisa): `freeze_corpus.py`, `gen_queries.py`, `measure.py` (seis modos: `query`, `index`, `update`, `expand`, `verify`, `doctor`), `report.py` e um driver `run_round.py` que executa a rodada inteira e **aborta** se o corpus não for equivalente. A ordem, os orçamentos e as flags ficam registrados em `manifest_round.json`, junto do `sha256` do binário medido — sem isso, dois relatórios de R2 não saberiam se mediram a mesma coisa.
 
 ## 2. Corpus congelado e verificado — Q1 fechado
 
@@ -49,7 +49,16 @@ Uma verificação de caminhos sozinha teria deixado passar o caso em que o Rust 
 - `max_bytes = 4 × budget_tokens` como entrada canônica, porque sem tokenizer do modelo o teto de bytes e a estimativa de tokens descrevem a mesma fronteira.
 - Quantis por **posto mais próximo**; p50 = mediana (média dos dois centrais quando n é par).
 
-O que este método **não** é: cache frio, cgroup isolado, ambiente dedicado. Ver §10.
+O que este método **não** é: cache frio, cgroup isolado, ambiente dedicado. Ver §11.
+
+### 3.1 Dois defeitos do próprio harness
+
+Nenhum dos dois foi hipótese de projeto; os dois apareceram porque as tabelas foram conferidas contra o artefato bruto.
+
+1. **O lado Python era lido pelo formato errado.** O envelope que a CLI imprime (`refs`, `texts`, `omitted.n`, `budget.used`) não é o dicionário interno de `capsule.py` (`symbols`, `files`, `truncation_log`, `hard_enforced`). Ler o formato interno de um produto que emite o externo devolveu **zero** em duas colunas — e zero falso é pior que campo ausente, porque entra na tabela como se fosse medida. Corrigido, e a regra passou a ser: campo ausente vira `null`, nunca `0`.
+2. **O subcomando medido não era o subcomando pedido.** O construtor de linha de comando tinha `context` fixo como verbo. O modo `expand` media `context` com um pedido de expansão: saída válida, exit 0, bytes exatos — tudo plausível, nada de `expand`. Quem pegou foi a checagem independente de sobreposição de spans, que reprovou 100% das linhas. Um harness em que o comando medido não é o comando pedido não mede nada; a checagem que sobreviveu ao defeito é a que vale.
+
+O terceiro defeito evitado foi de construção: passar `known_refs` sem `end_line` faria o span entregue ser um ponto, e o produto devolveria, corretamente, a janela ao redor dele. A dedup pareceria furada sem estar. O harness passou a usar `end_line`.
 
 ## 4. `context`: latência e memória
 
@@ -139,7 +148,44 @@ Os dois lados declaram exatamente a mesma contagem em todos os cenários (1/10/1
 
 Este é o único eixo da rodada em que a diferença de ordem de grandeza encolhe: em `edit_1` a razão é 2,5x, não 10x. O custo fixo do processo domina dos dois lados, e `edit_10`/`edit_100` mostram que o custo marginal por arquivo é o que separa as implementações.
 
-## 8. Metas do plano §5
+## 8. `expand` e `verify`: o segundo passo do ciclo
+
+**Sem braço Python, por assimetria de produto.** A CLI de referência não tem `expand`, e o `verify` dela é um autoteste fixo de um arquivo (`archatlas/cli.py:22-29`), sem `--ref` e sem conferência de hash. As tabelas desta seção são do braço Rust e não são uma vitória sobre nada: são a única medição que existe do segundo passo do ciclo.
+
+### 8.1 `expand` — 700 execuções
+
+Setup: uma chamada de `context` (não medida) fornece `known_refs`/`delivered_refs` com `end_line`. Duas evidências pedidas (`context`, `references`) em dois orçamentos (2 000, 8 000).
+
+| orçamento | `evidence_wanted` | n | wall p50 | wall p95 | RSS p50 (kB) | unidades p50 | bytes p50 | `context` de setup (bytes p50) | razão | sem sobreposição | `used_bytes` exato |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| 2 000 | `context` | 175 | 0,000 s | 0,000 s | 5 404 | 8 | 7 719 | 7 712 | 1,01 | **175/175** | **175/175** |
+| 2 000 | `references` | 175 | 0,000 s | 0,030 s | 6 292 | 8 | 7 876 | 7 712 | 1,02 | **175/175** | **175/175** |
+| 8 000 | `context` | 175 | 0,000 s | 0,020 s | 5 576 | 29 | 25 871 | 28 783 | 1,00 | **175/175** | **175/175** |
+| 8 000 | `references` | 175 | 0,010 s | 0,050 s | 6 152 | 30 | 30 054 | 28 783 | 1,00 | **175/175** | **175/175** |
+
+- A dedup foi conferida no harness por **interseção de intervalos** contra os spans entregues, não lida de `omitted.reasons`: 700/700 sem sobreposição.
+- `used_bytes` exato em 700/700, e a expansão devolve volume **comparável** à chamada anterior com material novo — expandir não é reenviar o que já foi enviado.
+- São 35 consultas, não 36: `e01` (zero correspondência) não entrega referência nenhuma e não há o que ampliar. A linha é omitida, não contada como falha.
+- **Achado de comportamento:** em **39 de 70** pares (consulta, orçamento), `evidence_wanted=references` devolveu exatamente o mesmo número de unidades e os mesmos bytes que `context`. As janelas ao redor de `known_refs` são geradas primeiro e consomem o teto antes de a busca lexical contribuir — nos pares em que os dois diferem, sobrou orçamento. Não é defeito declarado no contrato, mas é o que limita o valor prático de pedir `references` com muitas referências já em mãos.
+
+### 8.2 `verify` — 875 execuções
+
+Cinco cenários por consulta e repetição, com o **código de saída esperado fixado antes da medição**: 0 para `ok` e `sem_hash`, 5 para os três reprovados.
+
+| cenário | n | esperado | saiu como esperado | wall p50 | wall p95 | RSS p50 (kB) | `state` | unidades | `used_bytes` exato |
+|---|---|---|---|---|---|---|---|---|---|
+| `ok` | 175 | exit 0 | **175/175** | 0,000 s | 0,010 s | 5 372 | ok=175 | 1 | 175/175 |
+| `sem_hash` | 175 | exit 0 | **175/175** | 0,000 s | 0,010 s | 5 340 | ok=175 | 1 | 175/175 |
+| `hash_divergente` | 175 | exit 5 | **175/175** | 0,000 s | 0,010 s | 5 360 | partial=175 | **0** | 175/175 |
+| `linha_fora` | 175 | exit 5 | **175/175** | 0,000 s | 0,010 s | 5 360 | partial=175 | **0** | 175/175 |
+| `caminho_fora` | 175 | exit 5 | **175/175** | 0,000 s | 0,010 s | 5 068 | partial=175 | **0** | 175/175 |
+
+- **875/875 com o código previsto**, e os motivos agregados saem exatos: `hash_divergent`, `line_out_of_range`, `outside_root` (175 cada).
+- **Nas 525 reprovações, zero unidades entregues**; nos 350 casos aprovados, exatamente a linha citada. Reprovar não devolve texto não verificado nem lista vazia fingindo resposta.
+- O custo da reprovação é o mesmo do sucesso (p50 abaixo da resolução, p95 10 ms nos dois): o portão é barato, não é o caminho caro do sistema.
+- **Nada foi modificado no dataset**: hash errado e linha inexistente são *entradas*, não mutações de disco.
+
+## 9. Metas do plano §5
 
 Metas de produto congeladas em R0, medidas aqui pela primeira vez com repetições. Todas as linhas abaixo são do braço Rust:
 
@@ -157,7 +203,7 @@ Três ressalvas que impedem ler a tabela como validação de escala:
 2. **Latências abaixo de 10 ms não estão resolvidas** pelo instrumento usado (GNU time `%e`). As metas de `doctor` e `context` são atendidas com margem ampla, mas o número exato não existe neste relatório.
 3. **RSS em máquina compartilhada não é teto de grupo.** Nada foi medido em cgroup isolado e o page cache não foi derrubado (pendência P8). Os valores são do processo, não do grupo.
 
-## 9. Comportamento verificado, não presumido
+## 10. Comportamento verificado, não presumido
 
 Cada linha tem teste que a executa ([`tests/r2.rs`](../../rust/archatlas/tests/r2.rs), [`tests/contract.rs`](../../rust/archatlas/tests/contract.rs)):
 
@@ -167,25 +213,26 @@ Cada linha tem teste que a executa ([`tests/r2.rs`](../../rust/archatlas/tests/r
 - `--include` restaura o corpus exato da referência Python e reporta `excluded_by_filter` — nunca descarta em silêncio.
 - `name_on_line` permanece `null`: não há extrator de símbolos, e nenhuma resposta pode ser lida como definição.
 
-## 10. Limitações declaradas
+## 11. Limitações declaradas
 
 - **Nada aqui é sobre patches, modelos ou custo.** R2 não executou smoke com modelo, nenhum patch foi produzido, nenhuma telemetria de provedor foi lida. Isso é R3, bloqueado por P1 (modelo efetivo) e P2 (teto financeiro) — decisões do usuário.
 - **Todas as medições são com cache de filesystem aquecido.** Cache frio exigiria `drop_caches` com root em máquina dedicada. O relatório não chama nada de "frio".
 - **Sem cgroup isolado.** RSS é pico do processo; memória do grupo e page cache não foram medidos (pendência P8).
 - **Resolução do instrumento.** `%e` do GNU time entrega 10 ms; qualquer valor do Rust abaixo disso é "abaixo de 10 ms". Isso também explica a coincidência de p50 = 0,000 nas três políticas — não é código sem custo, é teto de medição.
-- **`expand` e `verify` não foram microbenchmarkados.** Têm cobertura de teste e compartilham `finalize`/`settle_budget` com `context`, mas não têm tabela de latência/RSS própria. Fica declarado como lacuna, não como equivalente.
+- **`expand` e `verify` não têm comparação.** Foram medidos (§8), mas só do lado Rust: a referência não tem `expand` nem um `verify` de referência. Latência e RSS existem; 'mais rápido que' não.
+- **`expand` foi medido em dois orçamentos e duas evidências**, não numa grade. Outras políticas e `evidence_wanted=tests` não têm tabela.
 - **Uma única rodada, uma única máquina.** As repetições estão dentro da rodada; não há replicação em outro hardware. O `manifest_round.json` traz o `sha256` do binário, o ambiente e a linha de comando exata para permitir replicação.
 - **Consultas de borda entram nas linhas das tabelas de razão** (com `stratum` = tipo de borda) e portanto no `máx` das linhas de resumo: o pior caso de `CTX-RS` orçamento 1000 é a consulta Unicode, não uma consulta estratificada. As linhas individuais estão separadas; as de resumo, não.
 - **`tokenizer_is_exact: false` em todo o relatório.** Sem tokenizer do modelo, a unidade rígida é byte; nenhuma conclusão sobre "orçamento de tokens" é feita.
 - **Sem CI.** A suíte roda localmente (pendência Q2, do usuário).
 
-## 11. Estado do gate
+## 12. Estado do gate
 
 | Gate | Planejado | Implementado | Ensaiado | Executado | Avaliado | Conclusão científica |
 |---|---|---|---|---|---|---|
 | R2 | x | **x** | **x** | **parcial** | — | não avaliada |
 
-Executado **parcialmente**, e a distinção é o ponto: os microbenchmarks foram executados (1 800 execuções de consulta, 20 de índice, 36 de atualização, 20 de `doctor`, todas com artefato bruto auditável), mas a segunda metade do aceite de R2 — "integrar por shell a um único executor/modelo real" e "runner captura todas as chamadas, custos e patches sem acesso ao ouro" — **não foi executada**, porque depende de P1/P2.
+Executado **parcialmente**, e a distinção é o ponto: os microbenchmarks foram executados — **3 451 execuções com artefato bruto auditável** (1 800 de consulta, 875 de `verify`, 700 de `expand`, 36 de atualização, 20 de índice, 20 de `doctor`) —, mas a segunda metade do aceite de R2 — "integrar por shell a um único executor/modelo real" e "runner captura todas as chamadas, custos e patches sem acesso ao ouro" — **não foi executada**, porque depende de P1/P2 (modelo efetivo e teto financeiro, decisões do usuário).
 
 Pendências ao fim de R2:
 
@@ -195,7 +242,8 @@ Pendências ao fim de R2:
 | Q2 | Workflow de CI para `cargo test` | usuário | aberta |
 | Q3 | Comparação de implementação ou de produto | A | **fechada** (§6: de produto, declarado) |
 | Q4 | Cache frio e cgroup isolado (P8) | usuário | aberta — exige máquina dedicada/root |
-| Q5 | Microbenchmark de `expand` e `verify` | A | aberta (§10) |
+| Q5 | Microbenchmark de `expand` e `verify` | A | **fechada** (§8: 700 + 875 execuções, 875/875 códigos previstos) |
 | Q6 | Integração com o runner real | usuário (P1/P2) → A | aberta — bloqueia a metade restante de R2 e todo o R3 |
+| Q7 | `evidence_wanted=references` inerte quando `known_refs` consomem o teto | A | aberta (§8.1: 39/70 pares idênticos a `context`; decidir se é comportamento desejado ou ordem a mudar) |
 
-Próxima ação: fechar Q5 enquanto P1/P2 não são decididos, e então **R3** (smoke com modelo, 12 execuções por trilha) assim que o modelo efetivo e o teto financeiro existirem. R3 não pode começar por documentação.
+Próxima ação: **R3** (smoke com modelo, 3 condições × 4 tarefas = 12 execuções por trilha) assim que o modelo efetivo e o teto financeiro existirem. R3 não pode começar por documentação, e Q6 é o único item que ainda pertence a R2.

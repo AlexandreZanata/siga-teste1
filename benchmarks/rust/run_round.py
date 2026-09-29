@@ -106,11 +106,14 @@ def main() -> int:
                     help="POLITICA:orcamentos:reps (repetível); padrão = as três combinações de R2")
     ap.add_argument("--index-reps", type=int, default=10)
     ap.add_argument("--update-reps", type=int, default=3)
+    ap.add_argument("--expand-reps", type=int, default=5,
+                    help="repetições de expand/verify (inclui uma chamada de context de setup)")
     ap.add_argument("--doctor-reps", type=int, default=10)
     ap.add_argument("--no-edge", action="store_true",
                     help="mede só as 30 estratificadas, sem as 6 de borda")
     ap.add_argument("--skip-index", action="store_true", help="reaproveita .sqlite já na pasta")
     ap.add_argument("--skip-update", action="store_true")
+    ap.add_argument("--skip-expand", action="store_true")
     ap.add_argument("--skip-doctor", action="store_true")
     args = ap.parse_args()
 
@@ -175,6 +178,22 @@ def main() -> int:
              "--rust-bin", str(rust_bin), "--python-bin", python_bin,
              "--rust-index", str(rust_index), "--python-index", str(py_index), *edge])
 
+    # 4b. `expand` e `verify`: segundo passo do ciclo, sobre o índice Rust da rodada. Não têm
+    #     braço Python (a referência não tem `expand`, e o `verify` dela é autoteste fixo).
+    if not args.skip_expand:
+        # `expand` roda em dois orçamentos de propósito: com `known_refs` presentes, as
+        # janelas ao redor das referências são geradas primeiro e podem consumir todo o teto,
+        # deixando `evidence_wanted=references|tests` sem contribuição. Dois orçamentos mostram
+        # se esse é o caso ou se a busca lexical só não tinha espaço.
+        for mode, budgets in (("expand", "2000,8000"), ("verify", "2000")):
+            run(f"{mode}", [*py, str(HERE / "measure.py"), "--mode", mode, "--out", str(out),
+                            "--reps", str(args.expand_reps), "--policy", "CTX-RS",
+                            "--budgets", budgets,
+                            "--queries", str(out / "queries.json"),
+                            "--dataset", str(args.dataset), "--rust-bin", str(rust_bin),
+                            "--python-bin", python_bin, "--rust-index", str(rust_index),
+                            "--python-index", str(py_index), *edge])
+
     # 5. `doctor`: só faz sentido com os dois índices presentes.
     if not args.skip_doctor:
         run("doctor", [*py, str(HERE / "measure.py"), "--mode", "doctor", "--out", str(out),
@@ -193,6 +212,7 @@ def main() -> int:
         "edge_queries": not args.no_edge,
         "index_reps": args.index_reps,
         "update_reps": args.update_reps,
+        "expand_reps": args.expand_reps,
         "doctor_reps": args.doctor_reps,
         "inputs": {
             "dataset": str(Path(args.dataset).resolve()),

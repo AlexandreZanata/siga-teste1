@@ -35,7 +35,9 @@ Plano: [construção e etapas](../RUST_CLI_PILOTO_REAL.md). Método: [protocolo]
 - **Orçamento, medido em 900 execuções por lado:** Rust declara exatamente o que entrega (razão 1,00 em mediana e máximo; `used_bytes` == stdout em 900/900; 0/900 acima de `max_bytes`). A referência Python declara 0,45 do que entrega, não publica bytes e passa o teto em 315/900. O `budget` responde no Rust (3,8/7,7/14,9 kB nos orçamentos 1k/2k/4k) e é inerte no Python (3 914 B nos três).
 - **Ciclo editar/testar:** os dois lados são incrementais por hash de conteúdo e declaram as mesmas contagens (1/10/100 reindexados, `pruned_files: 1` em delete e rename). Cada execução medida foi conferida contra uma reindexação do zero: **36 de 36 equivalentes** (Rust: mesma geração; Python: índice == disco).
 - **Metas do plano §5:** todas as metas do braço Rust foram atendidas (`doctor` 5,2 MB, `context` p95 0,010 s / p95 8,9 MB, `index` 10,6 MB, atualizar 1 arquivo 0,040 s), com três ressalvas registradas: corpus pequeno (504 arquivos / 4,2 MiB), latências sub-10 ms não resolvidas pelo GNU time, RSS sem cgroup isolado.
-- **NÃO executado:** integração com o runner real e captura de custos/patches — bloqueada por P1/P2 (modelo efetivo e teto financeiro, decisões do usuário). `expand`/`verify` têm teste, não microbenchmark próprio (Q5). Sem smoke com modelo, sem patch, sem custo: nada aqui é conclusão de utilidade.
+- **Segundo passo do ciclo, medido:** `expand` em 700 execuções (700/700 sem sobrepor span já entregue, checado por interseção de intervalos no harness, e 700/700 com `used_bytes` exato) e `verify` em 875 execuções (875/875 com o código de saída previsto antes da medição; nas 525 reprovações, zero unidades entregues). Só braço Rust: a referência não tem `expand` nem um `verify` de referência — logo, sem comparação de velocidade.
+- **Achado (Q7):** em 39 de 70 pares (consulta, orçamento), `evidence_wanted=references` devolveu exatamente o mesmo que `context`, porque as janelas ao redor de `known_refs` consomem o teto antes de a busca lexical contribuir. Comportamento a decidir, não defeito declarado.
+- **NÃO executado:** integração com o runner real e captura de custos/patches — bloqueada por P1/P2 (modelo efetivo e teto financeiro, decisões do usuário). Sem smoke com modelo, sem patch, sem custo: nada aqui é conclusão de utilidade.
 
 ## Gates
 
@@ -51,4 +53,4 @@ Cada gate registra separadamente `planejado / implementado / ensaiado / executad
 
 Na retomada registrar dono, checkpoint, versão/hash do binário, datasets, fase, último aceite, próxima ação, execução ativa e reserva de recursos. Não copiar números dos experimentos Python para resultados Rust.
 
-Pendências ao fim de R2: Q2 (workflow de CI para `cargo test`, dono usuário), Q4 (cache frio e cgroup isolado, dono usuário), Q5 (microbenchmark de `expand`/`verify`, dono A) e Q6 (integração com o runner real, bloqueada por P1/P2). Detalhe em [`R2_REPORT.md`](../../research/rust/R2_REPORT.md) §11.
+Pendências ao fim de R2: Q2 (workflow de CI para `cargo test`, dono usuário), Q4 (cache frio e cgroup isolado, dono usuário), Q6 (integração com o runner real, bloqueada por P1/P2) e Q7 (`references` inerte com muitas `known_refs`, dono A). Q1, Q3 e Q5 fechadas. Detalhe em [`R2_REPORT.md`](../../research/rust/R2_REPORT.md) §12.

@@ -94,9 +94,17 @@ def parse_side(stdout: bytes, impl: str) -> dict:
     }
 
 
-def rust_argv(binary: str, subtree: Path, index: Path, request: Path) -> list[str]:
+def rust_argv(binary: str, subtree: Path, index: Path, request: Path,
+              cmd: str = "context") -> list[str]:
+    """O subcomando é parâmetro, não constante.
+
+    Já custou uma rodada: com `context` fixo, o modo `expand` media `context` com um pedido de
+    expansão e publicava isso como custo de `expand` — o resultado pareceria plausível (exit 0,
+    JSON válido, bytes exatos) e só a checagem independente de sobreposição de spans
+desmascararia. Um harness em que o comando medido não é o comando pedido não mede nada.
+    """
     return [
-        binary, "context",
+        binary, cmd,
         "--repo", str(subtree),
         "--index", str(index),
         "--request", str(request),
@@ -531,6 +539,251 @@ def index_covers_disk(index: Path, tree: Path) -> bool:
     return on_disk == in_index
 
 
+def spans_of(response: dict) -> list[tuple[str, int, int]]:
+    """Spans entregues: `(arquivo, linha, end_line)`. `end_line` ausente = linha única."""
+    out = []
+    for u in response.get("units") or []:
+        if u.get("file") and u.get("line"):
+            start = int(u["line"])
+            out.append((u["file"], start, int(u.get("end_line") or start)))
+    return out
+
+
+def refs_of(response: dict) -> list[dict]:
+    """`known_refs` realistas: com `end_line`, que é o que torna a dedup verificável."""
+    return [{"file": f, "line": s, "end_line": e} for f, s, e in spans_of(response)]
+
+
+def overlap(a: tuple[str, int, int], b: tuple[str, int, int]) -> bool:
+    return a[0] == b[0] and a[1] <= b[2] and b[1] <= a[2]
+
+
+def context_probe(args, query: str, budget: int, req_dir: Path) -> tuple[dict | None, dict]:
+    """Uma chamada de `context` como *setup*: produz as referências que `expand`/`verify`
+    consomem. Não é medida — o custo de `context` já tem tabela própria."""
+    req = req_dir / f"probe-{abs(hash((query, budget))) % 10**10}.json"
+    req.write_text(json.dumps({
+        "schema_version": 1, "intent": "localizar", "query": query,
+        "budget_tokens": budget, "max_bytes": 4 * budget, "policy": args.policy,
+    }))
+    res = run_measured(rust_argv(args.rust_bin, Path(args.dataset).resolve() / SUBTREE,
+                                 Path(args.rust_index).resolve(), req, cmd="context"),
+                       cwd=str(REPO_ROOT))
+    try:
+        return json.loads(res["stdout"].decode()), res["metrics"]
+    except Exception:
+        return None, res["metrics"]
+
+
+def measure_expand(args) -> int:
+    """Custo e correção de `expand`, o segundo passo do ciclo de recuperação.
+
+    O pedido de expansão é construído como o agente o construiria: `known_refs` e
+    `delivered_refs` iguais às unidades que a chamada de `context` acabou de entregar, com
+    `end_line`. Passar só `line` (sem `end_line`) faria a dedup parecer furada — o span
+    entregue seria um ponto, e o produto devolveria, corretamente, a janela ao redor dele.
+
+    Verificação independente do que o produto declara: nenhuma unidade devolvida pode
+    sobrepor um span já entregue. Isso é checado no harness por interseção de intervalos,
+    não lendo `omitted.reasons`.
+
+    Comparabilidade: **não há braço Python**. A CLI de referência não tem `expand`; a
+    comparação de produto que R2 faz no `context` não existe aqui.
+    """
+    subtree = Path(args.dataset).resolve() / SUBTREE
+    rust_index = Path(args.rust_index).resolve()
+    out = Path(args.out).resolve()
+    out.mkdir(parents=True, exist_ok=True)
+    selected = queries_for(args)
+    budgets = [int(b) for b in args.budgets.split(",")]
+    req_dir = Path(tempfile.mkdtemp(prefix="atlas-exp-"))
+    rows: list[dict] = []
+
+    for budget in budgets:
+        for q in selected:
+            qid, text = q["id"], q["text"]
+            for rep in range(args.reps):
+                ctx, _ = context_probe(args, text, budget, req_dir)
+                if ctx is None:
+                    raise SystemExit(f"context de setup falhou em {qid}")
+                delivered = refs_of(ctx)
+                spans = spans_of(ctx)
+                if not delivered:
+                    continue  # nada entregue, nada a expandir — não é falha do produto
+                for kind in ("context", "references"):
+                    req = req_dir / f"{qid}-{budget}-{rep}-{kind}.json"
+                    req.write_text(json.dumps({
+                        "schema_version": 1, "intent": "localizar", "query": text,
+                        "known_refs": delivered, "delivered_refs": delivered,
+                        "evidence_wanted": kind, "budget_tokens": budget,
+                        "max_bytes": 4 * budget, "policy": args.policy,
+                    }))
+                    res = run_measured(rust_argv(args.rust_bin, subtree, rust_index, req,
+                                                 cmd="expand"),
+                                       cwd=str(REPO_ROOT))
+                    m = res["metrics"]
+                    try:
+                        resp = json.loads(res["stdout"].decode())
+                    except Exception:
+                        resp = {}
+                    got = spans_of(resp)
+                    rows.append({
+                        "mode": "expand", "impl": "rust", "query_id": qid,
+                        "query_text": text, "stratum": q.get("stratum") or q.get("kind"),
+                        "budget_tokens": budget, "evidence_wanted": kind,
+                        "repetition": rep, "wall_s": m["wall_s"], "user_s": m["user_s"],
+                        "sys_s": m["sys_s"],
+                        "cpu_s": (m["user_s"] or 0) + (m["sys_s"] or 0),
+                        "max_rss_kb": m["max_rss_kb"], "exit_code": m["exit_status"],
+                        "stdout_bytes": m["stdout_bytes"],
+                        "declared": {
+                            "parse_ok": bool(resp),
+                            "state": resp.get("state"),
+                            "units": len(resp.get("units") or []),
+                            "declared_bytes": (resp.get("budget") or {}).get("used_bytes"),
+                            "declared_tokens": (resp.get("budget") or {}).get("used_tokens"),
+                            "omitted": (resp.get("omitted") or {}).get("n"),
+                            "reasons": (resp.get("omitted") or {}).get("reasons"),
+                        },
+                        "checks": {
+                            "no_overlap_with_delivered": not any(
+                                overlap(g, d) for g in got for d in spans),
+                            "bytes_exact": ((resp.get("budget") or {}).get("used_bytes")
+                                            == m["stdout_bytes"] - 1),
+                            "delivered_refs": len(delivered),
+                            "delivered_spans": len(spans),
+                        },
+                        "setup_context_bytes": (ctx.get("budget") or {}).get("used_bytes"),
+                    })
+            print(f"  budget={budget:5} {qid:4} {text[:24]:24} expand medido", flush=True)
+
+    write_jsonl(out / "runs_expand.jsonl", rows)
+    write_json(out / "manifest_expand.json", {
+        "schema": "atlas-run/1", "mode": "expand", "rows": len(rows),
+        "repetitions": args.reps, "policy": args.policy, "budgets": budgets,
+        "evidence_kinds": ["context", "references"],
+        "inputs": {"rust_bin": args.rust_bin, "rust_index": str(rust_index),
+                   "python_bin": None,
+                   "note": "sem braco Python: a CLI de referencia nao tem `expand`"},
+        "measurement": {"external_process": True, "order": "context setup nao medido; "
+                        "expand medido do spawn ate consumir stdout",
+                        "checks": "no_overlap_with_delivered e bytes_exact sao checados no "
+                                  "harness, nao lidos de omitted.reasons"},
+        "environment": environment_manifest(),
+    })
+    print(f"\n{len(rows)} linhas -> {out / 'runs_expand.jsonl'}")
+    return 0
+
+
+VERIFY_SCENARIOS = ["ok", "sem_hash", "hash_divergente", "linha_fora", "caminho_fora"]
+WRONG_HASH = "sha256:" + "0" * 64
+
+
+def verify_refs(spans: list[tuple[str, int, int]], hashes: dict[str, str]) -> list[dict]:
+    """Cinco refs por arquivo citado, um por cenário. O esperado é declarado **antes** de
+    medir: o harness sabe qual código de saída cada cenário deve produzir."""
+    if not spans:
+        return []
+    f, start, end = spans[0]
+    h = hashes.get(f) or ("sha256:" + "0" * 64)
+    return [
+        {"scenario": "ok", "spec": f"{f}:{start}@{h}", "expect_exit": 0},
+        {"scenario": "sem_hash", "spec": f"{f}:{start}", "expect_exit": 0},
+        {"scenario": "hash_divergente", "spec": f"{f}:{start}@{WRONG_HASH}", "expect_exit": 5},
+        {"scenario": "linha_fora", "spec": f"{f}:{end + 100000}", "expect_exit": 5},
+        {"scenario": "caminho_fora", "spec": f"../{SUBTREE.split('/')[0]}/pom.xml:1",
+         "expect_exit": 5},
+    ]
+
+
+def measure_verify(args) -> int:
+    """Custo do portão de verificação: ler o disco, conferir hash e linha, decidir.
+
+    As referências vêm de uma chamada real de `context` (setup não medido), com o hash
+    correto lido da própria resposta. Os cenários de reprovação **não precisam modificar o
+    dataset**: hash errado e linha inexistente são entradas, não mutações — `caminho_fora`
+    é a única que depende de o caminho resolver fora da raiz.
+
+    O código esperado de cada cenário é fixado antes da medição (`expect_exit`), de modo que
+    "a integridade violada sai 5" vira uma checagem do harness, não uma citação do produto.
+
+    Comparabilidade: **não há braço Python**. `verify` existe na referência, mas é um
+    autoteste fixo de um arquivo (`archatlas/cli.py:22-29`), sem `--ref` e sem conferência
+    de hash — não é o mesmo comando.
+    """
+    subtree = Path(args.dataset).resolve() / SUBTREE
+    rust_index = Path(args.rust_index).resolve()
+    out = Path(args.out).resolve()
+    out.mkdir(parents=True, exist_ok=True)
+    selected = queries_for(args)
+    budgets = [int(b) for b in args.budgets.split(",")]
+    req_dir = Path(tempfile.mkdtemp(prefix="atlas-vfy-"))
+    rows: list[dict] = []
+
+    for budget in budgets:
+        for q in selected:
+            qid, text = q["id"], q["text"]
+            for rep in range(args.reps):
+                ctx, _ = context_probe(args, text, budget, req_dir)
+                if ctx is None:
+                    raise SystemExit(f"context de setup falhou em {qid}")
+                spans = spans_of(ctx)
+                hashes = {u["file"]: u["hash"] for u in (ctx.get("units") or [])
+                          if u.get("file") and u.get("hash")}
+                for case in verify_refs(spans, hashes):
+                    argv = [args.rust_bin, "verify", "--repo", str(subtree),
+                            "--index", str(rust_index), "--ref", case["spec"]]
+                    res = run_measured(argv, cwd=str(REPO_ROOT))
+                    m = res["metrics"]
+                    try:
+                        resp = json.loads(res["stdout"].decode())
+                    except Exception:
+                        resp = {}
+                    exit_code = None if m["exit_status"] is None else int(m["exit_status"])
+                    rows.append({
+                        "mode": "verify", "impl": "rust", "query_id": qid,
+                        "scenario": case["scenario"], "ref": case["spec"],
+                        "budget_tokens": budget, "repetition": rep,
+                        "wall_s": m["wall_s"], "user_s": m["user_s"], "sys_s": m["sys_s"],
+                        "cpu_s": (m["user_s"] or 0) + (m["sys_s"] or 0),
+                        "max_rss_kb": m["max_rss_kb"], "exit_code": exit_code,
+                        "expect_exit": case["expect_exit"],
+                        "exit_as_expected": exit_code == case["expect_exit"],
+                        "stdout_bytes": m["stdout_bytes"],
+                        "declared": {
+                            "parse_ok": bool(resp),
+                            "state": resp.get("state"),
+                            "checks": resp.get("checks"),
+                            "units": len(resp.get("units") or []),
+                            "reasons": (resp.get("omitted") or {}).get("reasons"),
+                            "declared_bytes": (resp.get("budget") or {}).get("used_bytes"),
+                            "bytes_exact": ((resp.get("budget") or {}).get("used_bytes")
+                                            == m["stdout_bytes"] - 1),
+                        },
+                    })
+            print(f"  budget={budget:5} {qid:4} verify medido", flush=True)
+
+    write_jsonl(out / "runs_verify.jsonl", rows)
+    write_json(out / "manifest_verify.json", {
+        "schema": "atlas-run/1", "mode": "verify", "rows": len(rows),
+        "repetitions": args.reps, "scenarios": VERIFY_SCENARIOS,
+        "inputs": {"rust_bin": args.rust_bin, "rust_index": str(rust_index),
+                   "note": "sem braco Python: verify da referencia e autoteste fixo, sem --ref"},
+        "measurement": {"external_process": True,
+                        "expected_exit": "fixado antes: 0 para ok/sem_hash, 5 para os demais",
+                        "dataset": "intocado; reprovacao vem de entrada (hash/linha), nao de mutacao"},
+        "environment": environment_manifest(),
+    })
+    print(f"\n{len(rows)} linhas -> {out / 'runs_verify.jsonl'}")
+    return 0
+
+
+def queries_for(args) -> list[dict]:
+    doc = json.loads(Path(args.queries).read_text())
+    sel = doc["queries"] + (doc["edge"] if args.include_edge else [])
+    return sel[: args.limit] if args.limit else sel
+
+
 def measure_doctor(args) -> int:
     subtree = Path(args.dataset).resolve() / SUBTREE
     out = Path(args.out).resolve()
@@ -567,7 +820,8 @@ def measure_doctor(args) -> int:
 
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--mode", choices=["query", "index", "update", "doctor"], default="query")
+    ap.add_argument("--mode", choices=["query", "index", "update", "expand", "verify",
+                                       "doctor"], default="query")
     ap.add_argument("--out", required=True)
     ap.add_argument("--dataset", default=os.environ.get("ARCHATLAS_DATASET") or str(REPO_ROOT.parent / "siga"))
     ap.add_argument("--queries", default=None)
@@ -595,6 +849,12 @@ def main() -> int:
         return measure_index(args)
     if args.mode == "update":
         return measure_update(args)
+    if args.mode in ("expand", "verify"):
+        if not args.queries:
+            raise SystemExit(f"--queries e obrigatorio em --mode {args.mode}")
+        if not args.rust_index:
+            raise SystemExit(f"--rust-index e obrigatorio em --mode {args.mode}")
+        return measure_expand(args) if args.mode == "expand" else measure_verify(args)
     return measure_doctor(args)
 
 

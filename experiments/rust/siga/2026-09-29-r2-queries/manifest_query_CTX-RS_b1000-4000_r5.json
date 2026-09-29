@@ -38,14 +38,14 @@
   "nproc": 16,
   "meminfo": {
    "MemTotal": "32556580 kB",
-   "MemAvailable": "10102828 kB"
+   "MemAvailable": "3997040 kB"
   },
   "rustc": "rustc 1.96.0 (ac68faa20 2026-05-25)",
   "cargo": "cargo 1.96.0 (30a34c682 2026-05-25)",
   "python": "3.12.3",
   "gnu_time": "time (GNU Time) UNKNOWN\nCopyright (C) 2018 Free Software Foundation, Inc.\nLicense GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>.\nThis is free software: you are free to change and redistribute it.\nThere is NO WARRANTY, to the extent permitted by law.\n\nWritten by David Keppel, David MacKenzie, and Assaf Gordon.",
-  "git_head": "35a8b64d73615c6562b3b43e76cf0cea1057efc4",
-  "git_head_short": "35a8b64",
+  "git_head": "09e18ae7c9e1c7ec6dffa725187aef1d203a9e42",
+  "git_head_short": "09e18ae",
   "git_dirty": true
  }
 }
