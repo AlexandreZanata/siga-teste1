@@ -1,0 +1,6 @@
+# Toolchain pinada para R1 (medida em research/rust/BASELINE.md §2).
+# Alterar exige registrar no relatorio: a comparacao Python/Rust de R2 depende disto.
+[toolchain]
+channel = "1.96.0"
+components = ["rustfmt", "clippy"]
+profile = "minimal"

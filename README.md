@@ -35,6 +35,23 @@ Para trabalhar com dois agentes: [agente A — continuar SIGA/core](plans/SIGA_E
 
 Ver também `docs/ROADMAP_ETAPAS.md` (histórico F0–F20 e ligação com F21) e `docs/VERIFICATION_PROTOCOL.md` (verificação de evidências). Resultados históricos de recuperação não comprovam, isoladamente, economia ou correção em tarefas de desenvolvimento.
 
+## CLI Rust (R1, implementado)
+
+Executável local que o agente invoca por shell: recuperação determinística, sem rede, sem daemon, sem GPU e sem Python no caminho de execução. Fonte em `rust/archatlas/`; contrato congelado em `research/rust/CLI_CONTRACT.md`; estado em `plans/rust/STATUS.md`.
+
+```bash
+cargo build --release --manifest-path rust/archatlas/Cargo.toml
+B=rust/archatlas/target/release/archatlas
+
+$B index   --repo /caminho/para/repo --index /tmp/atlas.sqlite
+$B doctor  --repo /caminho/para/repo --index /tmp/atlas.sqlite --format text
+$B context --repo /caminho/para/repo --index /tmp/atlas.sqlite --request pedido.json
+```
+
+`pedido.json` traz `schema_version`, `intent`, `query`, `budget_tokens`, `max_bytes` e `policy` (`LEX-RS` ou `CTX-RS`). stdout é **um único objeto JSON**; o orçamento é medido sobre a serialização final, não sobre a soma dos itens. Códigos: `0` resposta válida (`partial`/`stale` são válidos e explícitos), `2` pedido inválido, `3` índice ausente/incompatível/corrompido/vazio, `4` erro de I/O, `5` integridade violada. Limites do que esta fatia entrega estão declarados no [relatório de R1](research/rust/R1_REPORT.md) §7.
+
+Testes: `cargo test --release --manifest-path rust/archatlas/Cargo.toml`.
+
 ## Uso rápido
 ```bash
 export ARCHATLAS_DATASET=/caminho/para/siga-doc   # checkout read-only da versão modificada (SHA e3be22828)

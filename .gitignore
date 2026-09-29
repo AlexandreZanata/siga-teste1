@@ -2,6 +2,9 @@
 *.sqlite
 *.sqlite-journal
 *.db
+# artefatos do build Rust: o binário é distribuído por release, não por commit
+rust/target/
+**/target/
 experiments/capsules/*/output*.json
 compile_commands.json
 .worktrees/

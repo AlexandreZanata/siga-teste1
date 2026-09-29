@@ -119,7 +119,45 @@ Sem tokenizer compatível, o limite é **exato em bytes**, `tokenizer_is_exact: 
 - Índice Rust tem schema próprio versionado (`index_generation`). Não abre nem migra DB legado Python.
 - Mudança incompatível de campo ou de código de saída → novo `CLI_CONTRACT/N`. Comparações cruzam versões publicam a versão nos dois lados.
 
-## 8. Eventos de telemetria (nomes congelados)
+## 8. Esclarecimentos de R1
+
+A implementação da fatia R1 encontrou pontos que o contrato não especificava. Ficam fixados aqui para que R2 compare contra uma regra escrita, e não contra o comportamento acidental do binário. Nenhum item altera campo, nome ou código já descrito acima: todos **preenchem lacunas**.
+
+### 8.1 Payloads de `doctor` e `index`
+
+`§5` descreve o envelope de `context`. `doctor` e `index` usam a mesma *forma* de envelope, mas com `schema` próprio — um consumidor deve selecionar pelo id antes de validar campos:
+
+- `doctor` → `"schema": "atlas-doctor/1"`, mais `env`, `index` e `languages`.
+- `index` → `"schema": "atlas-index/1"`, mais `repo_root_id`, `index` e `counts`.
+
+A proibição de campo desconhecido (`§4`) vale por id de `schema`: o cliente que só entende `atlas-context/1` não deve ler um payload de `atlas-doctor/1`.
+
+### 8.2 Semântica de `hash`, `state` e caminhos
+
+- `units[].hash` é `sha256:<hex>` do **conteúdo inteiro do arquivo**, recalculado no disco no momento da entrega. É o mesmo valor que `verify --ref` compara, o que mantém uma única noção de "hash verificado" no contrato.
+- `state`, em ordem de severidade: `unsupported` (índice não pode responder de forma alguma) > `stale` (índice anterior ao snapshot pedido, ou fonte reprovada na verificação) > `partial` (algo foi omitido: orçamento, diversidade, truncamento) > `ok`.
+- **Nenhum comando publica caminho absoluto em JSON.** Caminhos de máquina saem só em `doctor --format text`, que é modo humano. Para comparar raiz sem vazar path, `doctor` e `index` publicam `root_id` (sha256 do caminho canônico, 12 hex) e `index.root_matches`.
+- Tempo decorrido **nunca** entra em stdout. Medição vai para stderr ou para o runner: stdout precisa ser determinístico para replay e hash.
+
+### 8.3 Índice indisponível e verificação reprovada
+
+- `doctor` sai 0 só com índice `ok`; nos demais estados emite o diagnóstico e sai 3.
+- `context` com índice ausente/corrompido/incompatível/vazio emite o envelope com `state: unsupported` e sai 3 — nunca lista vazia fingida.
+- **Nada verificável**: se havia candidatos e nenhuma fonte passou na verificação de bytes, não existe resposta verificada a dar → saída 5, sem JSON de sucesso.
+- **Parcialmente verificável**: se parte das fontes reprovou, as reprovadas saem da resposta, `state` vira `stale` e o motivo `stale_source` é agregado em `omitted.reasons` — a parte verificada ainda é entregue.
+- `expand` e `verify` pertencem a R2. Nesta versão saem 2 com mensagem explícita, em vez de aceitar o pedido e devolver algo diferente do contratado.
+
+### 8.4 Piso do envelope
+
+`max_bytes` pode ser menor que o envelope vazio, que é irreduzível. Nesse caso a resposta é `state: partial`, `units: []`, `omitted.reasons: ["envelope_too_large"]` e as pistas de expansão são omitidas (elas só aumentariam o piso). `budget.used_bytes` reporta o tamanho real, **mesmo quando excede `max_bytes`**: esconder o piso seria pior que reportá-lo. Nenhuma unidade é entregue, então nenhum trecho estoura teto.
+
+### 8.5 Limitações declaradas de R1
+
+- `index --incremental` é o padrão e compara **hash de conteúdo**; `--force` reconstrói do zero. O atalho por `mtime` não existe: ele trocaria correção por velocidade e quebraria a equivalência incremental ≡ rebuild que R1 exige.
+- `index.counts.ignored` é `null` com `ignored_reason`. O walker poda entradas ignoradas antes de reportá-las; contar exigiria uma segunda varredura sem filtro.
+- Todo `file` é indexado no nível **lexical**. Não há extrator de símbolos, então nenhuma resposta pode ser lida como definição ou resolução semântica.
+
+## 9. Eventos de telemetria (nomes congelados)
 
 `retrieved` (candidatos internos), `delivered` (bytes realmente enviados na resposta), `opened` (leitura explícita capturada pelo runner), `declared_relevant` (relato do agente, `null` por padrão).
 

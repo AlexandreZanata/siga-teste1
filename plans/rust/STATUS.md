@@ -15,12 +15,21 @@ Plano: [construção e etapas](../RUST_CLI_PILOTO_REAL.md). Método: [protocolo]
 - R0 **não** executou piloto, custo nem confirmação. Nenhuma conclusão de utilidade existe até R5.
 - Bloqueios de ambiente: RAM disponível restringe medições de RSS; build Bitcoin segue bloqueado (sem `depends`/sudo) — SIGA não espera.
 - Pendências de dono **usuário**: modelo efetivo (P1), teto financeiro (P2), custodiante do holdout (P4). As demais têm dono A ou B e estão em `BASELINE.md` §5.
-- Próxima ação executora: **R1** — fatia mínima em Rust (`doctor`, `index`, `context`), sem modelo e sem gasto.
+- Próxima ação executora: **R2** — microbenchmarks pareados com corpus congelado, `expand`/`verify`, integração com o runner real.
+
+## R1 executado (2026-09-29)
+
+- Binário em `rust/archatlas/` (7 módulos), toolchain pinada em `rust-toolchain.toml` (1.96.0). O caminho de execução **não chama Python**. Relatório: [`R1_REPORT.md`](../../research/rust/R1_REPORT.md).
+- **60 testes verdes** em `cargo test --release` (44 unitários + 16 de integração que spawnam o binário real). Orçamento verificado em **8 de 8** configurações, com utilização de 0,77 a 1,00.
+- Três defeitos encontrados e corrigidos durante a própria etapa: `state` atribuído depois da medição (desvio de 5 bytes); `DELETE` no FTS5 a cada arquivo, O(n²) — indexação do repo inteiro **110,58 s → 1,71 s**; ajuste de orçamento O(n²) — `context` **3,64 s → 0,09 s**.
+- Recursos medidos (execução única, **não** benchmark): `doctor` 0,00 s / RSS 5,3 MB; `context` 0,049–0,096 s / RSS ~17 MB; `index` repo inteiro 1,71 s / RSS 20,7 MB; binário 4,59 MB.
+- Comparação com Python **ainda não válida** e registrada como hipótese, não resultado: corpus difere (511 contra 504) e é execução única. Corpus comum é pendência Q1 para R2.
+- R1 **não** executou smoke com modelo, patch ou custo. R3 segue bloqueado por P1/P2 (modelo e teto financeiro, decisões do usuário).
 
 ## Gates
 
 - [x] R0 — contrato, estados reconciliados e ambiente evidenciado.
-- [ ] R1 — CLI Rust mínima funcional com orçamento aplicado.
+- [x] R1 — CLI Rust mínima funcional com orçamento aplicado (implementado e ensaiado; sem execução real).
 - [ ] R2 — comparação técnica e runner com telemetria.
 - [ ] R3 — smoke e piloto com patches reais (status separado por trilha).
 - [ ] R4 — análise, candidato e dimensão confirmatória.
