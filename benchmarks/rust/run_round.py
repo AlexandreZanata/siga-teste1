@@ -115,6 +115,9 @@ def main() -> int:
     ap.add_argument("--skip-update", action="store_true")
     ap.add_argument("--skip-expand", action="store_true")
     ap.add_argument("--skip-doctor", action="store_true")
+    ap.add_argument("--with-scale", action="store_true",
+                    help="inclui o ensaio de escala (copia o corpus ×N; é o passo mais caro)")
+    ap.add_argument("--scale-sizes", default="1,10,30,100")
     args = ap.parse_args()
 
     python_bin = args.python_bin
@@ -201,6 +204,17 @@ def main() -> int:
                        "--rust-bin", str(rust_bin), "--python-bin", python_bin,
                        "--rust-index", str(rust_index), "--python-index", str(py_index)])
 
+    # 5b. Escala: opcional porque é o único passo que escreve centenas de MiB em cópias do
+    #     corpus. Fica registrado no manifest da rodada que ele rodou ou não.
+    if args.with_scale:
+        run("escala", [*py, str(HERE / "measure.py"), "--mode", "scale", "--out", str(out),
+                       "--reps", str(args.expand_reps),
+                       "--scale-sizes", args.scale_sizes,
+                       "--queries", str(out / "queries.json"),
+                       "--corpus", str(out / "corpus.json"),
+                       "--dataset", str(args.dataset), "--rust-bin", str(rust_bin),
+                       "--python-bin", python_bin, "--policy", "CTX-RS"])
+
     # 6. Tabelas: só agregam o que está nos jsonl.
     run("tabelas", [*py, str(HERE / "report.py"), "--run", str(out)])
 
@@ -214,6 +228,7 @@ def main() -> int:
         "update_reps": args.update_reps,
         "expand_reps": args.expand_reps,
         "doctor_reps": args.doctor_reps,
+        "scale": {"enabled": args.with_scale, "sizes": args.scale_sizes},
         "inputs": {
             "dataset": str(Path(args.dataset).resolve()),
             "rust_bin": str(rust_bin),

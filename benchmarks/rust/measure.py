@@ -778,6 +778,161 @@ def measure_verify(args) -> int:
     return 0
 
 
+def measure_scale(args) -> int:
+    """Escala: como `index` e `context` custam quando o corpus cresce.
+
+    O plano §5 fixa dois tetos para a coorte (5 mil arquivos **e** 256 MiB de texto) e §6 pede
+    medir "corpus maior". Os dois tetos **não** caem no mesmo ponto: o corpus base é 504
+    arquivos / 2,4 MiB, ou seja 4,8 kB por arquivo, e o plano sugere~52 kB de média. A série
+    multiplica o mesmo corpus (×1, ×10, ×30, ×100), cruzando o teto de **contagem** em ×10
+    (5 040 arquivos ≈ 24 MiB) e o de **volume** em ×100 (240 MiB ≈ 50 400 arquivos). Medir os
+    dois separadamente é o que diz qual deles manda no custo.
+
+    O corpus sintético é uma **cópia**: cada arquivo aparece N vezes, então `doc_freq` e o
+    ranking não são os de um projeto real. O que se interpreta aqui é **custo** — tempo, RSS e
+    bytes de índice por arquivo e por MiB —, não qualidade de resultado. Cada ponto declara
+    arquivos e bytes, como o plano exige.
+
+    O dataset continua intocado: tudo é construído em cópias sob um diretório temporário, e a
+    árvore de cada tamanho é removida antes do próximo. O índice em disco é registrado antes.
+    """
+    import shutil
+
+    subtree = Path(args.dataset).resolve() / SUBTREE
+    out = Path(args.out).resolve()
+    out.mkdir(parents=True, exist_ok=True)
+    corpus = json.loads(Path(args.corpus).read_text()) if args.corpus else None
+    if corpus is None:
+        raise SystemExit("modo scale exige --corpus (lista de caminhos do corpus congelado)")
+    paths = sorted(corpus["corpus"]["paths"])
+    base_bytes = sum((subtree / rel).stat().st_size for rel in paths)
+    mults = [int(m) for m in args.scale_sizes.split(",")]
+    qdoc = json.loads(Path(args.queries).read_text())
+    selected = qdoc["queries"]  # só as estratificadas: as de borda medem outra coisa
+    req_dir = Path(tempfile.mkdtemp(prefix="atlas-scl-req-"))
+    work = Path(tempfile.mkdtemp(prefix="atlas-scl-"))
+    py_env = dict(os.environ, PYTHONPATH=str(REPO_ROOT))
+    rows: list[dict] = []
+
+    print(f"corpus base: {len(paths)} arquivos / {base_bytes / 1048576:.1f} MiB")
+    for i, mult in enumerate(mults):
+        # Menos repetições nos tamanhos maiores: o ponto caro é o de escala, e repetir 3x um
+        # índice de 252 MiB gastaria minutos para reduzir ruído que a curva já mostra.
+        index_reps = max(1, args.index_reps - i)
+        root = work / f"x{mult}"
+        tree = root / SUBTREE
+        tree.mkdir(parents=True, exist_ok=True)
+        for r in range(mult):
+            for rel in paths:
+                dst = tree / f"rep{r}" / rel
+                dst.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(subtree / rel, dst)
+        n_files = mult * len(paths)
+        c_bytes = mult * base_bytes
+        print(f"\n[{mult}x] {n_files} arquivos / {c_bytes / 1048576:.1f} MiB", flush=True)
+
+        for rep in range(index_reps):
+            order = ("python", "rust") if rep % 2 == 0 else ("rust", "python")
+            for impl in order:
+                idx = root / f"index-{impl}-{rep}.sqlite"
+                idx.unlink(missing_ok=True)
+                argv = ([args.rust_bin, "index", "--repo", str(tree), "--index", str(idx),
+                         "--include", "java"]
+                        if impl == "rust"
+                        else [args.python_bin, "-m", "archatlas.cli", "index",
+                              "--db", str(idx), "--dataset", str(root)])
+                res = run_measured(argv, env=py_env, cwd=str(REPO_ROOT))
+                m = res["metrics"]
+                rows.append(_scale_row(
+                    impl=impl, phase="index", mult=mult, files=n_files,
+                    corpus_bytes=c_bytes, repetition=rep, order_position=order.index(impl),
+                    query_id=None, budget_tokens=None, metrics=m,
+                    declared=parse_index_side(res["stdout"], impl), args=args,
+                    index_bytes=idx.stat().st_size if idx.exists() else None,
+                    index_wal_bytes=(Path(str(idx) + "-wal").stat().st_size
+                                     if Path(str(idx) + "-wal").exists() else 0),
+                ))
+                print(f"  {impl:7} index  rep={rep} wall={m['wall_s']} "
+                      f"rss={m['max_rss_kb']}kB idx={rows[-1]['index_bytes']}B", flush=True)
+
+        # Latência de consulta no tamanho atual: uma consulta de menor frequência e uma de
+        # maior, das estratificadas — a curva de custo depende de quantos candidatos a consulta
+        # alcança. A árvore inteira (com os índices dentro) sai ao fim deste tamanho.
+        probe_queries = [selected[0], selected[-1]]
+        rust_index = root / "index-rust-0.sqlite"
+        py_index = root / f"index-python-{index_reps - 1}.sqlite"
+        for q in probe_queries:
+            for rep in range(args.reps):
+                order = ("python", "rust") if rep % 2 == 0 else ("rust", "python")
+                for impl in order:
+                    req = req_dir / f"scl-{mult}-{q['id']}.json"
+                    req.write_text(json.dumps({
+                        "schema_version": 1, "intent": "localizar", "query": q["text"],
+                        "budget_tokens": 2000, "max_bytes": 8000, "policy": args.policy,
+                    }))
+                    argv = ([args.rust_bin, "context", "--repo", str(tree),
+                             "--index", str(rust_index), "--request", str(req)]
+                            if impl == "rust"
+                            else [args.python_bin, "-m", "archatlas.cli", "context",
+                                  "--db", str(py_index), "--query", q["text"], "--budget", "2000"])
+                    res = run_measured(argv, env=py_env, cwd=str(REPO_ROOT))
+                    m = res["metrics"]
+                    rows.append(_scale_row(
+                        impl=impl, phase="context", mult=mult, files=n_files,
+                        corpus_bytes=c_bytes, repetition=rep,
+                        order_position=order.index(impl), query_id=q["id"],
+                        budget_tokens=2000, metrics=m,
+                        declared=parse_side(res["stdout"], impl), args=args,
+                        index_bytes=None, index_wal_bytes=None,
+                    ))
+            print(f"  consulta {q['id']:4} {q['text'][:20]:20} medida", flush=True)
+
+        shutil.rmtree(root, ignore_errors=True)  # árvore fora; os números ficam
+
+    write_jsonl(out / "runs_scale.jsonl", rows)
+    write_json(out / "manifest_scale.json", {
+        "schema": "atlas-run/1", "mode": "scale", "rows": len(rows),
+        "invocation": ["python", "benchmarks/rust/measure.py", *sys.argv[1:]],
+        "sizes": [{"multiplier": m, "files": m * len(paths), "corpus_bytes": m * base_bytes}
+                  for m in mults],
+        "base_corpus": {"files": len(paths), "bytes": base_bytes, "subtree": SUBTREE,
+                        "fingerprint": corpus["corpus"]["content_fingerprint_sha256"]},
+        "repetitions": {"context": args.reps,
+                        "index": f"max(1, {args.index_reps} - indice_do_tamanho) -> "
+                                 + ", ".join(str(max(1, args.index_reps - i))
+                                             for i in range(len(mults)))},
+        "measurement": {
+            "external_process": True,
+            "synthetic": "cada arquivo do corpus base e copiado N vezes; doc_freq e ranking nao "
+                         "correspondem a um projeto real — interpretar CUSTO, nao qualidade",
+            "dataset": "intocado; arvores em diretorio temporario, removidas por tamanho",
+            "cache": "aquecido (processo novo)",
+        },
+        "environment": environment_manifest(),
+    })
+    print(f"\n{len(rows)} linhas -> {out / 'runs_scale.jsonl'}")
+    return 0
+
+
+def _scale_row(*, impl, phase, mult, files, corpus_bytes, repetition, order_position,
+               query_id, budget_tokens, metrics, declared, args,
+               index_bytes, index_wal_bytes) -> dict:
+    m = metrics
+    return {
+        "mode": "scale", "impl": impl, "phase": phase, "multiplier": mult,
+        "files": files, "corpus_bytes": corpus_bytes, "repetition": repetition,
+        "order_position": order_position, "query_id": query_id,
+        "budget_tokens": budget_tokens, "policy": args.policy,
+        "wall_s": m["wall_s"], "user_s": m["user_s"], "sys_s": m["sys_s"],
+        "cpu_s": (m["user_s"] or 0) + (m["sys_s"] or 0),
+        "max_rss_kb": m["max_rss_kb"], "minor_faults": m["minor_faults"],
+        "major_faults": m["major_faults"], "fs_in_blocks": m["fs_in_blocks"],
+        "fs_out_blocks": m["fs_out_blocks"], "exit_code": m["exit_status"],
+        "stdout_bytes": m["stdout_bytes"], "declared": declared,
+        "index_bytes": index_bytes, "index_wal_bytes": index_wal_bytes,
+    }
+
+
 def queries_for(args) -> list[dict]:
     doc = json.loads(Path(args.queries).read_text())
     sel = doc["queries"] + (doc["edge"] if args.include_edge else [])
@@ -821,11 +976,16 @@ def measure_doctor(args) -> int:
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--mode", choices=["query", "index", "update", "expand", "verify",
-                                       "doctor"], default="query")
+                                       "scale", "doctor"], default="query")
     ap.add_argument("--out", required=True)
     ap.add_argument("--dataset", default=os.environ.get("ARCHATLAS_DATASET") or str(REPO_ROOT.parent / "siga"))
     ap.add_argument("--queries", default=None)
-    ap.add_argument("--corpus", default=None, help="corpus.json (obrigatório em --mode update)")
+    ap.add_argument("--corpus", default=None,
+                    help="corpus.json (obrigatório em --mode update e --mode scale)")
+    ap.add_argument("--scale-sizes", default="1,10,30,100",
+                    help="multiplicadores do corpus base em --mode scale")
+    ap.add_argument("--index-reps", type=int, default=3,
+                    help="repetições de indexação no maior tamanho (decresce 1 por tamanho)")
     ap.add_argument("--rust-bin", default=str(REPO_ROOT / "rust/archatlas/target/release/archatlas"))
     ap.add_argument("--python-bin", default=sys.executable)
     ap.add_argument("--rust-index", default=None)
@@ -855,6 +1015,10 @@ def main() -> int:
         if not args.rust_index:
             raise SystemExit(f"--rust-index e obrigatorio em --mode {args.mode}")
         return measure_expand(args) if args.mode == "expand" else measure_verify(args)
+    if args.mode == "scale":
+        if not args.queries:
+            raise SystemExit("--queries e obrigatorio em --mode scale")
+        return measure_scale(args)
     return measure_doctor(args)
 
 

@@ -1,6 +1,7 @@
 # R2 — tabelas geradas
 
 Rodada: `2026-09-29-r2-queries`. Gerado por `benchmarks/rust/report.py`; nenhum número deste arquivo foi escrito à mão.
+Artefatos agregados: `runs_doctor.jsonl`, `runs_expand.jsonl`, `runs_index.jsonl`, `runs_query_CTX-RS_b1000-4000_r5.jsonl`, `runs_query_CTX-RS_b2000_r10.jsonl`, `runs_query_LEX-RS_b2000_r5.jsonl`, `runs_scale.jsonl`, `runs_update.jsonl`, `runs_verify.jsonl`.
 
 ## Integridade da medição
 
@@ -364,6 +365,56 @@ Sem braço Python: `verify` existe na referência como autoteste fixo de um arqu
 | `caminho_fora` | 175 | exit 5 | 175/175 | 0.000 | 0.010 | 5068 | partial=175 | 175/175 |
 
 Motivos agregados de `omitted.reasons` nos cenários reprovados: `hash_divergent`=175, `line_out_of_range`=175, `outside_root`=175.
+
+## Escala: o que acontece quando o corpus cresce
+
+| × | arquivos | MiB de texto |
+|---|---|---|
+| ×1 | 504 | 2.4 |
+| ×10 | 5040 | 23.9 |
+| ×30 | 15120 | 71.6 |
+| ×100 | 50400 | 238.7 |
+
+O corpus é uma **cópia** do mesmo conjunto: cada arquivo aparece N vezes, então `doc_freq` e ranking não são os de um projeto real. Interpretar **custo** (tempo, RSS, bytes de índice), não qualidade de resultado.
+
+### Indexação
+
+| × | arquivos | impl | n | wall p50 | wall p95 | wall máx | RSS p50 (kB) | RSS máx (kB) | CPU p50 |
+|---|---|---|---|---|---|---|---|---|---|
+| ×1 | 504 | python | 3 | 1.200 | 3.190 | 3.190 | 21692 | 21716 | 0.350 |
+| ×1 | 504 | rust | 3 | 0.050 | 0.060 | 0.060 | 10656 | 10756 | 0.040 |
+| ×10 | 5040 | python | 2 | 23.255 | 31.490 | 31.490 | 31264 | 31400 | 3.570 |
+| ×10 | 5040 | rust | 2 | 0.635 | 0.670 | 0.670 | 14792 | 14796 | 0.525 |
+| ×30 | 15120 | python | 1 | 92.850 | 92.850 | 92.850 | 48372 | 48372 | 9.680 |
+| ×30 | 15120 | rust | 1 | 1.540 | 1.540 | 1.540 | 23148 | 23148 | 1.460 |
+| ×100 | 50400 | python | 1 | 283.840 | 283.840 | 283.840 | 111192 | 111192 | 30.000 |
+| ×100 | 50400 | rust | 1 | 5.550 | 5.550 | 5.550 | 54416 | 54416 | 4.980 |
+
+### Consulta (`context`, orçamento 2 000)
+
+| × | arquivos | impl | n | wall p50 | wall p95 | wall máx | RSS p50 (kB) | RSS máx (kB) | CPU p50 |
+|---|---|---|---|---|---|---|---|---|---|
+| ×1 | 504 | python | 10 | 0.070 | 0.090 | 0.090 | 26356 | 34212 | 0.060 |
+| ×1 | 504 | rust | 10 | 0.005 | 0.010 | 0.010 | 7364 | 8984 | 0.000 |
+| ×10 | 5040 | python | 10 | 0.485 | 0.790 | 0.790 | 82962 | 145128 | 0.475 |
+| ×10 | 5040 | rust | 10 | 0.010 | 0.010 | 0.010 | 8918 | 9484 | 0.000 |
+| ×30 | 15120 | python | 10 | 1.295 | 2.050 | 2.050 | 208168 | 394564 | 1.285 |
+| ×30 | 15120 | rust | 10 | 0.020 | 0.020 | 0.020 | 12638 | 13536 | 0.010 |
+| ×100 | 50400 | python | 10 | 4.300 | 7.330 | 7.330 | 645670 | 1263916 | 4.295 |
+| ×100 | 50400 | rust | 10 | 0.050 | 0.070 | 0.070 | 22740 | 26148 | 0.045 |
+
+### Custo normalizado
+
+| impl | × | wall p50 por 1 000 arquivos | RSS p50 por 1 000 arquivos (kB) | índice (B) | índice por arquivo (B) | `context` bytes p50 |
+|---|---|---|---|---|---|---|
+| python | ×1 | 2.381 | 43039.7 | 1667072 | 3307.7 | nao medido |
+| rust | ×1 | 0.099 | 21142.9 | 3743744 | 7428.1 | 5427 |
+| python | ×10 | 4.614 | 6203.2 | 16658432 | 3305.2 | nao medido |
+| rust | ×10 | 0.126 | 2934.9 | 37400576 | 7420.7 | 7926 |
+| python | ×30 | 6.141 | 3199.2 | 50257920 | 3323.9 | nao medido |
+| rust | ×30 | 0.102 | 1531.0 | 108802048 | 7195.9 | 7928 |
+| python | ×100 | 5.632 | 2206.2 | 168869888 | 3350.6 | nao medido |
+| rust | ×100 | 0.110 | 1079.7 | 359108608 | 7125.2 | 7928 |
 
 ## `doctor` (processo novo, cache aquecido)
 

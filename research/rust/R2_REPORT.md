@@ -21,7 +21,7 @@ Duas frentes, e a distinção entre elas importa para ler o resto do documento.
 
 Suíte total: **76 testes verdes** em `cargo test --release` — 50 unitários + 16 de integração de contrato + 10 de R2 ([`tests/r2.rs`](../../rust/archatlas/tests/r2.rs)) que spawnam o binário real. `cargo fmt --check` limpo.
 
-**No harness de medição** (produto de pesquisa): `freeze_corpus.py`, `gen_queries.py`, `measure.py` (seis modos: `query`, `index`, `update`, `expand`, `verify`, `doctor`), `report.py` e um driver `run_round.py` que executa a rodada inteira e **aborta** se o corpus não for equivalente. A ordem, os orçamentos e as flags ficam registrados em `manifest_round.json`, junto do `sha256` do binário medido — sem isso, dois relatórios de R2 não saberiam se mediram a mesma coisa.
+**No harness de medição** (produto de pesquisa): `freeze_corpus.py`, `gen_queries.py`, `measure.py` (sete modos: `query`, `index`, `update`, `expand`, `verify`, `scale`, `doctor`), `report.py` e um driver `run_round.py` que executa a rodada inteira e **aborta** se o corpus não for equivalente. A ordem, os orçamentos e as flags ficam registrados em `manifest_round.json`, junto do `sha256` do binário medido — sem isso, dois relatórios de R2 não saberiam se mediram a mesma coisa.
 
 ## 2. Corpus congelado e verificado — Q1 fechado
 
@@ -185,7 +185,49 @@ Cinco cenários por consulta e repetição, com o **código de saída esperado f
 - O custo da reprovação é o mesmo do sucesso (p50 abaixo da resolução, p95 10 ms nos dois): o portão é barato, não é o caminho caro do sistema.
 - **Nada foi modificado no dataset**: hash errado e linha inexistente são *entradas*, não mutações de disco.
 
-## 9. Metas do plano §5
+## 9. Escala: o que acontece quando o corpus cresce
+
+O plano §6 pede medir "corpus maior" e §5 fixa **dois** tetos para a coorte — 5 mil arquivos **e** 256 MiB de texto. Os dois não caem no mesmo ponto: o corpus base tem 504 arquivos / 2,4 MiB (4,8 kB por arquivo), enquanto os dois tetos juntos implicariam ~52 kB de média. A série multiplica o mesmo corpus por 1, 10, 30 e 100, cruzando o teto de **contagem** em ×10 (5 040 arquivos) e chegando a 238,7 MiB em ×100 (50 400 arquivos) — 56% acima do teto de volume e 10x o de contagem.
+
+O corpus sintético é uma **cópia**: cada arquivo aparece N vezes, logo `doc_freq` e ranking não são os de um projeto real. Tudo o que está abaixo é **custo** — tempo, RSS, bytes de índice —, não qualidade de resultado. As árvores são construídas em diretório temporário e removidas a cada tamanho; o dataset não é tocado.
+
+Proveniência: este passo foi executado em **invocação separada** da rodada principal, por ser o mais caro, e o `manifest_scale.json` registra os tamanhos, as repetições e o ambiente. A linha de comando foi `benchmarks/rust/measure.py --mode scale --scale-sizes 1,10,30,100 --index-reps 3 --reps 5 --policy CTX-RS`; o driver `run_round.py` tem o mesmo passo atrás de `--with-scale`. `tables.md` agrega os dois conjuntos e lista os arquivos de origem no cabeçalho.
+
+### 9.1 Indexação
+
+| × | arquivos | MiB | impl | n | wall p50 | wall máx | RSS p50 (MB) | CPU p50 | índice (MB) | índice/arquivo (B) |
+|---|---|---|---|---|---|---|---|---|---|---|
+| ×1 | 504 | 2,4 | python | 3 | 1,200 s | 3,190 s | 21,2 | 0,35 s | 1,59 | 3 308 |
+| ×1 | 504 | 2,4 | rust | 3 | 0,050 s | 0,060 s | 10,4 | 0,04 s | 3,57 | 7 428 |
+| ×10 | 5 040 | 23,9 | python | 2 | 23,255 s | 31,490 s | 30,5 | 3,57 s | 15,9 | 3 305 |
+| ×10 | 5 040 | 23,9 | rust | 2 | 0,635 s | 0,670 s | 14,4 | 0,53 s | 35,7 | 7 421 |
+| ×30 | 15 120 | 71,6 | python | 1 | 92,850 s | 92,850 s | 47,2 | 9,68 s | 47,9 | 3 324 |
+| ×30 | 15 120 | 71,6 | rust | 1 | 1,540 s | 1,540 s | 22,6 | 1,46 s | 103,8 | 7 196 |
+| ×100 | 50 400 | 238,7 | python | 1 | 283,840 s | 283,840 s | 108,6 | 30,00 s | 161,0 | 3 351 |
+| ×100 | 50 400 | 238,7 | rust | 1 | 5,550 s | 5,550 s | 53,1 | 4,98 s | 342,5 | 7 125 |
+
+- **A indexação é o eixo onde os dois produtos fazem o mesmo trabalho** — mesmo conjunto de arquivos, mesmo incremental por hash de conteúdo, contagens declaradas idênticas e equivalência a rebuild conferida (§7). Por isso, e só por isso, os dois lados deste quadro são comparáveis; no `context` não são.
+- Os dois escalam **linearmente** em tempo e RSS; o que difere é a constante: ~5,6 ms por arquivo contra ~0,11 ms, e ~12/2,1 KB de RSS por arquivo. A razão de tempo cresce de 24x (×1, onde o custo fixo de iniciar o interpretador domina) e se estabiliza em ~50x a partir de 5 mil arquivos.
+- **O índice Rust é 2,2x maior em disco, e a razão é estável** (7,1–7,4 kB contra 3,3 kB por arquivo, em todos os tamanhos). É o custo real da escolha de schema e aparece em 342 MB contra 161 MB no maior ponto — a decisão de disco não é gratuita, e não existe meta de disco no plano.
+
+### 9.2 `context` — onde o alvo é de produto
+
+| × | arquivos | impl | n | wall p50 | wall p95 | RSS p50 (MB) | RSS máx (MB) |
+|---|---|---|---|---|---|---|---|
+| ×1 | 504 | python | 10 | 0,070 s | 0,090 s | 25,7 | 33,4 |
+| ×1 | 504 | rust | 10 | **0,005 s** | 0,010 s | 7,2 | 8,8 |
+| ×10 | 5 040 | python | 10 | 0,485 s | 0,790 s | 81,0 | 141,7 |
+| ×10 | 5 040 | rust | 10 | **0,010 s** | 0,010 s | 8,7 | 9,3 |
+| ×30 | 15 120 | python | 10 | 1,295 s | 2,050 s | 203,3 | 385,3 |
+| ×30 | 15 120 | rust | 10 | **0,020 s** | 0,020 s | 12,3 | 13,2 |
+| ×100 | 50 400 | python | 10 | 4,300 s | 7,330 s | **630,5** | **1 234,3** |
+| ×100 | 50 400 | rust | 10 | **0,050 s** | 0,070 s | 22,2 | 25,5 |
+
+- **A meta de `context` do plano §5 (p95 ≤ 150 ms, RSS ≤ 96 MiB) sobrevive a 10x o teto de arquivos da coorte:** no ×100, Rust entrega p95 de 0,070 s e pico de RSS de 25,5 MB. Medido — não projetado.
+- A partir de ×30 as latências do Rust **saem do piso do instrumento** (20 ms, 50 ms): aqui a curva é um número, não um limite superior.
+- A referência Python estoura os dois alvos no maior ponto: p95 de 7,33 s (49x o teto de 150 ms) e pico de RSS de 1,23 GB (13x o teto de 96 MiB). Como no §6, isso **não** é "Rust venceu": são produtos diferentes, com semânticas de payload diferentes, e o que a série mostra é uma constante por arquivo de ~12,8 kB de RSS contra ~0,45 kB.
+
+## 10. Metas do plano §5
 
 Metas de produto congeladas em R0, medidas aqui pela primeira vez com repetições. Todas as linhas abaixo são do braço Rust:
 
@@ -199,11 +241,11 @@ Metas de produto congeladas em R0, medidas aqui pela primeira vez com repetiçõ
 
 Três ressalvas que impedem ler a tabela como validação de escala:
 
-1. **O corpus é pequeno.** 504 arquivos e 4,2 MiB de texto — ~10% do teto de 5 mil arquivos da coorte do plano e ~1,6% do teto de 256 MiB. Nada aqui sustenta conclusão sobre escala; o plano já reserva "coortes maiores" como ensaio separado.
+1. **O corpus base é pequeno.** 504 arquivos e 2,4 MiB de texto, contra os dois tetos da coorte (5 mil arquivos e 256 MiB). Este quadro vale para essa coorte; a extrapolação é medida à parte em §9, sobre corpus sintético, e é lá que ela deve ser lida.
 2. **Latências abaixo de 10 ms não estão resolvidas** pelo instrumento usado (GNU time `%e`). As metas de `doctor` e `context` são atendidas com margem ampla, mas o número exato não existe neste relatório.
 3. **RSS em máquina compartilhada não é teto de grupo.** Nada foi medido em cgroup isolado e o page cache não foi derrubado (pendência P8). Os valores são do processo, não do grupo.
 
-## 10. Comportamento verificado, não presumido
+## 11. Comportamento verificado, não presumido
 
 Cada linha tem teste que a executa ([`tests/r2.rs`](../../rust/archatlas/tests/r2.rs), [`tests/contract.rs`](../../rust/archatlas/tests/contract.rs)):
 
@@ -213,7 +255,7 @@ Cada linha tem teste que a executa ([`tests/r2.rs`](../../rust/archatlas/tests/r
 - `--include` restaura o corpus exato da referência Python e reporta `excluded_by_filter` — nunca descarta em silêncio.
 - `name_on_line` permanece `null`: não há extrator de símbolos, e nenhuma resposta pode ser lida como definição.
 
-## 11. Limitações declaradas
+## 12. Limitações declaradas
 
 - **Nada aqui é sobre patches, modelos ou custo.** R2 não executou smoke com modelo, nenhum patch foi produzido, nenhuma telemetria de provedor foi lida. Isso é R3, bloqueado por P1 (modelo efetivo) e P2 (teto financeiro) — decisões do usuário.
 - **Todas as medições são com cache de filesystem aquecido.** Cache frio exigiria `drop_caches` com root em máquina dedicada. O relatório não chama nada de "frio".
@@ -222,17 +264,18 @@ Cada linha tem teste que a executa ([`tests/r2.rs`](../../rust/archatlas/tests/r
 - **`expand` e `verify` não têm comparação.** Foram medidos (§8), mas só do lado Rust: a referência não tem `expand` nem um `verify` de referência. Latência e RSS existem; 'mais rápido que' não.
 - **`expand` foi medido em dois orçamentos e duas evidências**, não numa grade. Outras políticas e `evidence_wanted=tests` não têm tabela.
 - **Uma única rodada, uma única máquina.** As repetições estão dentro da rodada; não há replicação em outro hardware. O `manifest_round.json` traz o `sha256` do binário, o ambiente e a linha de comando exata para permitir replicação.
+- **A escala (§9) usa corpus sintético por cópia** e nos dois maiores tamanhos há **uma** execução por lado (`n=1` no ×30 e ×100). Ali a curva de tendência é o resultado; o valor de um ponto isolado não é. `doc_freq` e ranking do corpus copiado não são os de um projeto real, então nada da §9 fala de qualidade de recuperação.
 - **Consultas de borda entram nas linhas das tabelas de razão** (com `stratum` = tipo de borda) e portanto no `máx` das linhas de resumo: o pior caso de `CTX-RS` orçamento 1000 é a consulta Unicode, não uma consulta estratificada. As linhas individuais estão separadas; as de resumo, não.
 - **`tokenizer_is_exact: false` em todo o relatório.** Sem tokenizer do modelo, a unidade rígida é byte; nenhuma conclusão sobre "orçamento de tokens" é feita.
 - **Sem CI.** A suíte roda localmente (pendência Q2, do usuário).
 
-## 12. Estado do gate
+## 13. Estado do gate
 
 | Gate | Planejado | Implementado | Ensaiado | Executado | Avaliado | Conclusão científica |
 |---|---|---|---|---|---|---|
-| R2 | x | **x** | **x** | **parcial** | — | não avaliada |
+| R2 | x | **x** | **x** | **parcial** (microbenchmarks em 6 tamanhos; runner com modelo não) | — | não avaliada |
 
-Executado **parcialmente**, e a distinção é o ponto: os microbenchmarks foram executados — **3 451 execuções com artefato bruto auditável** (1 800 de consulta, 875 de `verify`, 700 de `expand`, 36 de atualização, 20 de índice, 20 de `doctor`) —, mas a segunda metade do aceite de R2 — "integrar por shell a um único executor/modelo real" e "runner captura todas as chamadas, custos e patches sem acesso ao ouro" — **não foi executada**, porque depende de P1/P2 (modelo efetivo e teto financeiro, decisões do usuário).
+Executado **parcialmente**, e a distinção é o ponto: os microbenchmarks foram executados — **3 545 execuções com artefato bruto auditável** (1 800 de consulta, 875 de `verify`, 700 de `expand`, 94 de escala, 36 de atualização, 20 de índice, 20 de `doctor`) —, mas a segunda metade do aceite de R2 — "integrar por shell a um único executor/modelo real" e "runner captura todas as chamadas, custos e patches sem acesso ao ouro" — **não foi executada**, porque depende de P1/P2 (modelo efetivo e teto financeiro, decisões do usuário).
 
 Pendências ao fim de R2:
 
@@ -242,8 +285,9 @@ Pendências ao fim de R2:
 | Q2 | Workflow de CI para `cargo test` | usuário | aberta |
 | Q3 | Comparação de implementação ou de produto | A | **fechada** (§6: de produto, declarado) |
 | Q4 | Cache frio e cgroup isolado (P8) | usuário | aberta — exige máquina dedicada/root |
+| Q8 | Corpus de escala sintético e `n=1` nos dois maiores tamanhos | A | aberta — replicar em ×30/×100 com mais repetições e, se houver projeto real grande, medir um corpus não copiado |
 | Q5 | Microbenchmark de `expand` e `verify` | A | **fechada** (§8: 700 + 875 execuções, 875/875 códigos previstos) |
 | Q6 | Integração com o runner real | usuário (P1/P2) → A | aberta — bloqueia a metade restante de R2 e todo o R3 |
 | Q7 | `evidence_wanted=references` inerte quando `known_refs` consomem o teto | A | aberta (§8.1: 39/70 pares idênticos a `context`; decidir se é comportamento desejado ou ordem a mudar) |
 
-Próxima ação: **R3** (smoke com modelo, 3 condições × 4 tarefas = 12 execuções por trilha) assim que o modelo efetivo e o teto financeiro existirem. R3 não pode começar por documentação, e Q6 é o único item que ainda pertence a R2.
+Próxima ação: **R3** (smoke com modelo, 3 condições × 4 tarefas = 12 execuções por trilha) assim que o modelo efetivo e o teto financeiro existirem. R3 não pode começar por documentação. De R2 seguem abertos apenas Q6 (runner real, bloqueado por P1/P2) e Q8 (mais repetições no ensaio de escala); Q7 é decisão de política, não lacuna de medição.

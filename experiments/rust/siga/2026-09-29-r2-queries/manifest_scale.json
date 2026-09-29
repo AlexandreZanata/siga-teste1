@@ -1,0 +1,61 @@
+{
+ "schema": "atlas-run/1",
+ "mode": "scale",
+ "rows": 94,
+ "sizes": [
+  {
+   "multiplier": 1,
+   "files": 504,
+   "corpus_bytes": 2503299
+  },
+  {
+   "multiplier": 10,
+   "files": 5040,
+   "corpus_bytes": 25032990
+  },
+  {
+   "multiplier": 30,
+   "files": 15120,
+   "corpus_bytes": 75098970
+  },
+  {
+   "multiplier": 100,
+   "files": 50400,
+   "corpus_bytes": 250329900
+  }
+ ],
+ "base_corpus": {
+  "files": 504,
+  "bytes": 2503299,
+  "subtree": "siga-ex/src/main/java",
+  "fingerprint": "bb7a99fbe4582c972b0c0263665156a26c15e0541e237722b27928fdcf13caba"
+ },
+ "repetitions": {
+  "context": 5,
+  "index": "max(1, 3 - indice_do_tamanho) -> 3, 2, 1, 1"
+ },
+ "measurement": {
+  "external_process": true,
+  "synthetic": "cada arquivo do corpus base e copiado N vezes; doc_freq e ranking nao correspondem a um projeto real — interpretar CUSTO, nao qualidade",
+  "dataset": "intocado; arvores em diretorio temporario, removidas por tamanho",
+  "cache": "aquecido (processo novo)"
+ },
+ "environment": {
+  "os": "Linux-7.1.5-76070105-generic-x86_64-with-glibc2.39",
+  "kernel": "7.1.5-76070105-generic",
+  "machine": "x86_64",
+  "cpu_model": "13th Gen Intel(R) Core(TM) i7-13620H",
+  "nproc": 16,
+  "meminfo": {
+   "MemTotal": "32556580 kB",
+   "MemAvailable": "11051788 kB"
+  },
+  "rustc": "rustc 1.96.0 (ac68faa20 2026-05-25)",
+  "cargo": "cargo 1.96.0 (30a34c682 2026-05-25)",
+  "python": "3.12.3",
+  "gnu_time": "time (GNU Time) UNKNOWN\nCopyright (C) 2018 Free Software Foundation, Inc.\nLicense GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>.\nThis is free software: you are free to change and redistribute it.\nThere is NO WARRANTY, to the extent permitted by law.\n\nWritten by David Keppel, David MacKenzie, and Assaf Gordon.",
+  "git_head": "aa3c148374d29f1f3a6830de32e2c765c167a27f",
+  "git_head_short": "aa3c148",
+  "git_dirty": true
+ }
+}

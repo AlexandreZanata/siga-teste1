@@ -110,6 +110,7 @@ def main() -> int:
     urows = load(run, "runs_update.jsonl")
     xrows = load(run, "runs_expand.jsonl")
     vrows = load(run, "runs_verify.jsonl")
+    srows = load(run, "runs_scale.jsonl")
     drows = load(run, "runs_doctor.jsonl")
     if loaded:
         print(f"artefatos de consulta: {', '.join(loaded)}")
@@ -117,6 +118,12 @@ def main() -> int:
     parts: list[str] = ["# R2 — tabelas geradas", ""]
     parts.append(f"Rodada: `{run.name}`. Gerado por `benchmarks/rust/report.py`; nenhum "
                  "número deste arquivo foi escrito à mão.")
+    # Proveniência: este arquivo agrega **todos** os `runs_*.jsonl` da pasta, e cada um tem o
+    # próprio manifesto com a invocação. Um leitor que duvide de uma linha sabe onde olhar —
+    # inclusive quando um passo foi rodado numa invocação separada.
+    artefacts = sorted(p.name for p in run.glob("runs_*.jsonl"))
+    if artefacts:
+        parts.append("Artefatos agregados: " + ", ".join(f"`{a}`" for a in artefacts) + ".")
     parts.append("")
 
     if qrows:
@@ -404,6 +411,69 @@ def main() -> int:
             parts.append("Motivos agregados de `omitted.reasons` nos cenários reprovados: "
                          + ", ".join(f"`{k}`={v}" for k, v in sorted(reasons.items())) + ".")
             parts.append("")
+
+    if srows:
+        parts.append("## Escala: o que acontece quando o corpus cresce")
+        parts.append("")
+        sizes = sorted({(r["multiplier"], r["files"], r["corpus_bytes"]) for r in srows})
+        parts.append("| × | arquivos | MiB de texto |")
+        parts.append("|---|---|---|")
+        for mult, files, nbytes in sizes:
+            parts.append(f"| ×{mult} | {files} | {nbytes / 1048576:.1f} |")
+        parts.append("")
+        parts.append("O corpus é uma **cópia** do mesmo conjunto: cada arquivo aparece N vezes, então "
+                     "`doc_freq` e ranking não são os de um projeto real. Interpretar **custo** "
+                     "(tempo, RSS, bytes de índice), não qualidade de resultado.")
+        parts.append("")
+        for phase, title in (("index", "Indexação"), ("context", "Consulta (`context`, orçamento 2 000)")):
+            sub = [r for r in srows if r["phase"] == phase]
+            if not sub:
+                continue
+            parts.append(f"### {title}")
+            parts.append("")
+            parts.append("| × | arquivos | impl | n | wall p50 | wall p95 | wall máx | "
+                         "RSS p50 (kB) | RSS máx (kB) | CPU p50 |")
+            parts.append("|---|---|---|---|---|---|---|---|---|---|")
+            for mult, files, _ in sizes:
+                for impl in ("python", "rust"):
+                    cell = [r for r in sub if r["multiplier"] == mult and r["impl"] == impl]
+                    if not cell:
+                        continue
+                    parts.append(
+                        f"| ×{mult} | {files} | {impl} | {len(cell)} | "
+                        f"{fmt(quantiles([r['wall_s'] for r in cell], 0.5))} | "
+                        f"{fmt(quantiles([r['wall_s'] for r in cell], 0.95))} | "
+                        f"{fmt(max(r['wall_s'] for r in cell))} | "
+                        f"{fmt(quantiles([r['max_rss_kb'] for r in cell], 0.5), 0)} | "
+                        f"{fmt(max(r['max_rss_kb'] for r in cell), 0)} | "
+                        f"{fmt(quantiles([r['cpu_s'] for r in cell], 0.5))} |"
+                    )
+            parts.append("")
+        parts.append("### Custo normalizado")
+        parts.append("")
+        parts.append("| impl | × | wall p50 por 1 000 arquivos | RSS p50 por 1 000 arquivos (kB) | "
+                     "índice (B) | índice por arquivo (B) | `context` bytes p50 |")
+        parts.append("|---|---|---|---|---|---|---|")
+        for mult, files, _ in sizes:
+            for impl in ("python", "rust"):
+                idx = [r for r in srows if r["multiplier"] == mult and r["impl"] == impl
+                       and r["phase"] == "index"]
+                ctx = [r for r in srows if r["multiplier"] == mult and r["impl"] == impl
+                       and r["phase"] == "context"]
+                if not idx and not ctx:
+                    continue
+                wall = quantiles([r["wall_s"] for r in idx], 0.5) if idx else None
+                rss = quantiles([r["max_rss_kb"] for r in idx], 0.5) if idx else None
+                ibytes = quantiles([r["index_bytes"] for r in idx], 0.5) if idx else None
+                dbytes = quantiles([r["declared"].get("declared_bytes") for r in ctx], 0.5)
+                parts.append(
+                    f"| {impl} | ×{mult} | {fmt(wall * 1000 / files if wall is not None else None, 3)} | "
+                    f"{fmt(rss * 1000 / files if rss is not None else None, 1)} | "
+                    f"{fmt(ibytes, 0)} | "
+                    f"{fmt(ibytes / files if ibytes is not None else None, 1)} | "
+                    f"{fmt(dbytes, 0)} |"
+                )
+        parts.append("")
 
     if drows:
         parts.append("## `doctor` (processo novo, cache aquecido)")
