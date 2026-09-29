@@ -599,3 +599,345 @@ fn include_restaura_corpus_exato_e_reporta_o_descarte() {
 
     std::fs::remove_dir_all(repo.parent().unwrap()).ok();
 }
+
+// --- ocorrências fora da janela num arquivo já citado --------------------------------
+
+/// Arquivo com a mesma ocorrência do termo em duas pontas, longe uma da outra.
+fn fixture_duas_ocorrencias(tag: &str) -> (PathBuf, PathBuf) {
+    let d = tmp(tag);
+    let repo = d.join("repo");
+    let mut linhas = vec!["public class Longe {".to_string()];
+    for i in 0..18 {
+        linhas.push(format!("  private int inicio{i};"));
+    }
+    linhas.push("  public Long alvotoken() { return 1L; }".to_string());
+    for i in 0..150 {
+        linhas.push(format!("  private int meio{i};"));
+    }
+    linhas.push("  public void usaDeNovo() { alvotoken(); }".to_string());
+    for i in 0..20 {
+        linhas.push(format!("  private int fim{i};"));
+    }
+    linhas.push("}".to_string());
+    write(&repo.join("src/Longe.java"), &(linhas.join("\n") + "\n"));
+    write(
+        &repo.join("src/Outro.java"),
+        "public class Outro {\n  void usa() { alvotoken(); }\n}\n",
+    );
+    let index = d.join("idx.sqlite");
+    (repo, index)
+}
+
+/// Intervalos entregues por uma resposta, por arquivo.
+fn intervalos(v: &Value) -> Vec<(String, u64, u64)> {
+    v["units"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .map(|u| {
+            (
+                u["file"].as_str().unwrap().to_string(),
+                u["line"].as_u64().unwrap(),
+                u["end_line"].as_u64().unwrap(),
+            )
+        })
+        .collect()
+}
+
+fn sobrepoe(a: (u64, u64), b: (u64, u64)) -> bool {
+    a.0 <= b.1 && b.0 <= a.1
+}
+
+/// O defeito medido no ensaio: `known_refs` vindo do `context` são **os próprios arquivos**
+/// que a busca alcança (70/70 pares), então o único material novo que `references` pode
+/// trazer é ocorrência **fora da janela** de um arquivo já citado. Antes, um arquivo de
+/// `known_refs` só produzia a janela pedida — o segundo grupo de spans não existia.
+#[test]
+fn expand_traz_ocorrencia_fora_da_janela_do_arquivo_ja_citado() {
+    let (repo, index) = fixture_duas_ocorrencias("ocorrencias");
+    let rs = repo.to_str().unwrap();
+    let is = index.to_str().unwrap();
+    run(&["index", "--repo", rs, "--index", is]);
+
+    // Setup: o `context` entrega o arquivo com a ocorrência do termo.
+    let cp = req(
+        &repo,
+        "ctx.json",
+        r#"{"schema_version":1,"intent":"localizar","query":"alvotoken",
+            "budget_tokens":2000,"max_bytes":8000,"policy":"CTX-RS"}"#,
+    );
+    let ctx = run(&[
+        "context",
+        "--repo",
+        rs,
+        "--index",
+        is,
+        "--request",
+        cp.to_str().unwrap(),
+    ]);
+    assert_eq!(ctx.code, 0, "stderr={}", ctx.stderr);
+    let entregue = intervalos(&ctx.json());
+    assert!(
+        entregue.iter().any(|(f, _, _)| f == "src/Longe.java"),
+        "o setup precisa entregar o arquivo da ocorrencia: {entregue:?}"
+    );
+    let known: Vec<Value> = ctx.json()["units"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .map(|u| {
+            serde_json::json!({"file": u["file"], "line": u["line"], "end_line": u["end_line"]})
+        })
+        .collect();
+
+    let body = serde_json::json!({
+        "schema_version": 1, "intent": "localizar", "query": "alvotoken",
+        "known_refs": known, "delivered_refs": known,
+        "evidence_wanted": "references",
+        "budget_tokens": 2000, "max_bytes": 8000, "policy": "CTX-RS",
+    });
+    let ep = req(&repo, "exp.json", &body.to_string());
+    let exp = run(&[
+        "expand",
+        "--repo",
+        rs,
+        "--index",
+        is,
+        "--request",
+        ep.to_str().unwrap(),
+    ]);
+    assert_eq!(exp.code, 0, "stderr={}", exp.stderr);
+    let v = exp.json();
+
+    // A segunda ocorrência do termo no MESMO arquivo precisa chegar, e ela está fora de
+    // qualquer janela da primeira (linha 20 contra linha ~171).
+    let lexicais_longe: Vec<(u64, u64)> = v["units"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .filter(|u| {
+            u["file"] == "src/Longe.java" && u["reason"].as_str().unwrap().starts_with("lexical")
+        })
+        .map(|u| (u["line"].as_u64().unwrap(), u["end_line"].as_u64().unwrap()))
+        .collect();
+    assert!(
+        lexicais_longe.iter().any(|(_, e)| *e >= 171),
+        "a ocorrencia fora da janela deveria vir: {} {lexicais_longe:?}",
+        v["units"]
+    );
+
+    // Nada do que já foi entregue volta, e a própria resposta não se sobrepõe.
+    let novos = intervalos(&v);
+    for (f, s, e) in &novos {
+        for (df, ds, de) in &entregue {
+            assert!(
+                f != df || !sobrepoe((*s, *e), (*ds, *de)),
+                "unidade {f}:{s}-{e} sobrepoe o que ja foi entregue: {df}:{ds}-{de}"
+            );
+        }
+    }
+    for i in 0..novos.len() {
+        for j in (i + 1)..novos.len() {
+            let (fa, sa, ea) = novos[i].clone();
+            let (fb, sb, eb) = novos[j].clone();
+            assert!(
+                fa != fb || !sobrepoe((sa, ea), (sb, eb)),
+                "a propria resposta se sobrepoe: {fa}:{sa}-{ea} e {fb}:{sb}-{eb}"
+            );
+        }
+    }
+
+    std::fs::remove_dir_all(repo.parent().unwrap()).ok();
+}
+
+// --- reserva de evidência (Q7 de R2) -------------------------------------------------
+
+/// Pedido de `expand` com a ref que cobre o arquivo inteiro e, opcionalmente, a reserva.
+///
+/// O teto de 3000 bytes é escolhido para que ele **vincule**: as duas janelas de 60 linhas do
+/// `Alvo.java` gastam ~2875 bytes sozinhas, então sem reserva não sobra nada para a busca. Com
+/// reserva de 50% o teto das janelas é 1500 bytes: a primeira janela (~2147) já não cabe
+/// inteira e a segunda não cabe — a busca entra no espaço liberado.
+fn expand_com_reserva(repo: &Path, index: &Path, nome: &str, reserve: Option<u8>) -> Out {
+    let campo = match reserve {
+        Some(pct) => format!(",\"evidence_reserve_pct\":{pct}"),
+        None => String::new(),
+    };
+    let body = format!(
+        r#"{{"schema_version":1,"intent":"impacto","query":"alvotoken",
+            "evidence_wanted":"references",
+            "known_refs":[{{"file":"src/Alvo.java","line":1,"end_line":103}}]{campo},
+            "budget_tokens":1000,"max_bytes":3000,"policy":"CTX-RS"}}"#
+    );
+    let p = req(repo, nome, &body);
+    run(&[
+        "expand",
+        "--repo",
+        repo.to_str().unwrap(),
+        "--index",
+        index.to_str().unwrap(),
+        "--request",
+        p.to_str().unwrap(),
+    ])
+}
+
+/// Quantas unidades vieram da busca lexical (em oposição às janelas de `known_refs`).
+fn lexicais(v: &Value) -> usize {
+    v["units"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .filter(|u| u["reason"].as_str().unwrap_or("").starts_with("lexical"))
+        .count()
+}
+
+/// Q7 de R2: as janelas de `known_refs` são geradas primeiro e, sem reserva, consomem o teto
+/// inteiro — no ensaio isso aconteceu em 39 de 70 pares, e `references` devolvia exatamente o
+/// mesmo que `context`. O teste mede a diferença em vez de confiar na intenção: mesmo pedido,
+/// mesmo índice, mesmo teto, só a reserva muda.
+#[test]
+fn reserva_devolve_evidencia_lexical_que_sem_ela_ficava_de_fora() {
+    let (repo, index) = fixture("reserve-contra");
+    run(&[
+        "index",
+        "--repo",
+        repo.to_str().unwrap(),
+        "--index",
+        index.to_str().unwrap(),
+    ]);
+
+    let sem = expand_com_reserva(&repo, &index, "sem.json", None);
+    assert_eq!(sem.code, 0, "stderr={}", sem.stderr);
+    let vs = sem.json();
+    assert_eq!(
+        lexicais(&vs),
+        0,
+        "sem reserva a janela ocupa o teto e a busca fica de fora: {}",
+        vs["units"]
+    );
+
+    let com = expand_com_reserva(&repo, &index, "com.json", Some(50));
+    assert_eq!(com.code, 0, "stderr={}", com.stderr);
+    let vc = com.json();
+    assert!(
+        lexicais(&vc) >= 1,
+        "com reserva a busca precisa entrar: {}",
+        vc["units"]
+    );
+    // A reserva **distribui** o teto, não troca as janelas pela busca: pelo menos uma janela de
+    // `known_refs` continua na resposta.
+    assert!(
+        vc["units"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|u| u["reason"].as_str().unwrap().starts_with("known_ref")),
+        "a reserva nao pode zerar as janelas: {}",
+        vc["units"]
+    );
+    // A busca de fato alcança outro arquivo — não é uma unidade a mais da mesma janela.
+    let arquivos: Vec<&str> = vc["units"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .map(|u| u["file"].as_str().unwrap())
+        .collect();
+    assert!(
+        arquivos.contains(&"src/Consumidor.java"),
+        "a evidencia reservada deveria alcancar o consumidor: {arquivos:?}"
+    );
+
+    // O que foi barrado aparece declarado, e o motivo nomeia a reserva — barrado em silêncio
+    // seria indistinguível de "não havia nada".
+    let motivos: Vec<&str> = vc["omitted"]["reasons"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .filter_map(|r| r.as_str())
+        .collect();
+    assert!(
+        motivos.contains(&"evidence_reserved"),
+        "o que a reserva barrou precisa aparecer declarado: {motivos:?}"
+    );
+    assert!(
+        vc["omitted"]["n"].as_u64().unwrap() >= 1,
+        "a contagem de omitidos nao pode ficar em zero com motivo declarado"
+    );
+
+    // E o teto continua valendo para o total, não só para as janelas: a reserva é uma fatia de
+    // `max_bytes`, nunca uma licença para passar dele.
+    assert_eq!(vc["budget"]["max_bytes"], 3000);
+    // Mesma identidade que R1/R2 usam em toda parte: `used_bytes` é o JSON emitido, sem a
+    // quebra de linha final.
+    assert_eq!(
+        vc["budget"]["used_bytes"].as_u64().unwrap() as usize,
+        com.stdout.len() - 1,
+        "o declarado tem de ser o entregue"
+    );
+    assert!(
+        com.stdout.len() <= 3000,
+        "entregou {} bytes",
+        com.stdout.len()
+    );
+
+    std::fs::remove_dir_all(repo.parent().unwrap()).ok();
+}
+
+/// Ausente e zero são o mesmo pedido: a extensão é **aditiva**, e nenhuma rodada de R2
+/// anterior a ela muda de resultado. Comparo os bytes de stdout em vez de confiar nisso.
+#[test]
+fn reserva_ausente_e_igual_a_zero() {
+    let (repo, index) = fixture("reserve-zero");
+    run(&[
+        "index",
+        "--repo",
+        repo.to_str().unwrap(),
+        "--index",
+        index.to_str().unwrap(),
+    ]);
+    let ausente = expand_com_reserva(&repo, &index, "ausente.json", None);
+    let zero = expand_com_reserva(&repo, &index, "zero.json", Some(0));
+    assert_eq!(ausente.code, 0, "stderr={}", ausente.stderr);
+    assert_eq!(zero.code, 0, "stderr={}", zero.stderr);
+    assert_eq!(ausente.stdout, zero.stdout);
+    std::fs::remove_dir_all(repo.parent().unwrap()).ok();
+}
+
+/// Reservar orçamento para uma busca que não vai acontecer é pedido incoerente: recusa em vez
+/// de ignorar, porque ignorar em silêncio faria o chamador acreditar que reservou.
+#[test]
+fn reserva_incoerente_e_recusada() {
+    let (repo, index) = fixture("reserve-erro");
+    run(&[
+        "index",
+        "--repo",
+        repo.to_str().unwrap(),
+        "--index",
+        index.to_str().unwrap(),
+    ]);
+
+    // `context` nao busca: reservar nao faz sentido.
+    let body = r#"{"schema_version":1,"intent":"impacto","query":"alvotoken",
+        "evidence_wanted":"context","evidence_reserve_pct":40,
+        "known_refs":[{"file":"src/Alvo.java","line":62}],
+        "budget_tokens":1000,"max_bytes":4000,"policy":"CTX-RS"}"#;
+    let p = req(&repo, "ctx.json", body);
+    let o = run(&[
+        "expand",
+        "--repo",
+        repo.to_str().unwrap(),
+        "--index",
+        index.to_str().unwrap(),
+        "--request",
+        p.to_str().unwrap(),
+    ]);
+    assert_eq!(o.code, 2, "stderr={}", o.stderr);
+    assert!(o.stderr.contains("evidence_reserve_pct"), "{}", o.stderr);
+
+    // Fora de 0..100 idem, antes de tocar o indice.
+    let fora = expand_com_reserva(&repo, &index, "fora.json", Some(101));
+    assert_eq!(fora.code, 2, "stderr={}", fora.stderr);
+    assert!(fora.stderr.contains("0..100"), "{}", fora.stderr);
+
+    std::fs::remove_dir_all(repo.parent().unwrap()).ok();
+}

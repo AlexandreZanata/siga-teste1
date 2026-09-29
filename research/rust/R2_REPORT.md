@@ -2,7 +2,8 @@
 
 Data: 2026-09-29. ID: `R2-REPORT/1`. Etapa: **R2** de [`RUST_CLI_PILOTO_REAL.md`](../../plans/RUST_CLI_PILOTO_REAL.md) §6.
 Contrato implementado: [`CLI_CONTRACT/1`](CLI_CONTRACT.md) (+ esclarecimentos §8 e §10).
-Base: `main` após `35a8b64` (R1). Dataset: `../siga` @ `e3be22828` (read-only, não modificado).
+Base: `main` após `97a5d38` (R2, runner do piloto). Dataset: `../siga` @ `e3be22828` (read-only, não modificado).
+Revisto em 2026-09-29 após a rodada de `expand` em §8.1 (Q7 fechada, Q9 aberta).
 Artefatos brutos: [`experiments/rust/siga/2026-09-29-r2-queries/`](../../experiments/rust/siga/2026-09-29-r2-queries/).
 
 ## 1. O que foi entregue
@@ -15,11 +16,13 @@ Duas frentes, e a distinção entre elas importa para ler o resto do documento.
 |---|---|
 | `verify --ref arquivo:linha[@hash]` | relê o disco e confirma a citação; código 5 em qualquer item reprovado |
 | `expand` (`evidence_wanted` ∈ `context`/`references`/`tests`) | amplia por referência já entregue, deduplicando spans já mostrados |
+| `evidence_reserve_pct` | fatia de `max_bytes` reservada à evidência de busca; barrado sai como `evidence_reserved` |
+| grupos de spans por arquivo citado | um arquivo em `known_refs` contribui também com as ocorrências do termo fora da janela |
 | `--include <langs>` | restringe a indexação; `excluded_by_filter` reporta o que foi descartado |
 | `RefSpec.end_line` | expansão por intervalo de linhas |
-| `PackError::BadRequest` | código 2 para pedido incoerente (ex.: `expand` sem `known_refs`) |
+| `PackError::BadRequest` | código 2 para pedido incoerente (ex.: `expand` sem `known_refs`, reserva com `context`) |
 
-Suíte total: **76 testes verdes** em `cargo test --release` — 50 unitários + 16 de integração de contrato + 10 de R2 ([`tests/r2.rs`](../../rust/archatlas/tests/r2.rs)) que spawnam o binário real. `cargo fmt --check` limpo.
+Suíte total: **80 testes verdes** em `cargo test --release` — 50 unitários + 16 de integração de contrato + 14 de R2 ([`tests/r2.rs`](../../rust/archatlas/tests/r2.rs)) que spawnam o binário real. `cargo fmt --check` limpo, `pytest -q` 76 passed / 4 skipped.
 
 **No harness de medição** (produto de pesquisa): `freeze_corpus.py`, `gen_queries.py`, `measure.py` (sete modos: `query`, `index`, `update`, `expand`, `verify`, `scale`, `doctor`), `report.py` e um driver `run_round.py` que executa a rodada inteira e **aborta** se o corpus não for equivalente. A ordem, os orçamentos e as flags ficam registrados em `manifest_round.json`, junto do `sha256` do binário medido — sem isso, dois relatórios de R2 não saberiam se mediram a mesma coisa.
 
@@ -156,21 +159,56 @@ O mesmo caminho de atualização que este quadro mede em custo tem a correção 
 
 **Sem braço Python, por assimetria de produto.** A CLI de referência não tem `expand`, e o `verify` dela é um autoteste fixo de um arquivo (`archatlas/cli.py:22-29`), sem `--ref` e sem conferência de hash. As tabelas desta seção são do braço Rust e não são uma vitória sobre nada: são a única medição que existe do segundo passo do ciclo.
 
-### 8.1 `expand` — 700 execuções
+### 8.1 `expand` — 1 400 execuções, quatro variantes
 
-Setup: uma chamada de `context` (não medida) fornece `known_refs`/`delivered_refs` com `end_line`. Duas evidências pedidas (`context`, `references`) em dois orçamentos (2 000, 8 000).
+Setup: uma chamada de `context` (não medida) fornece `known_refs`/`delivered_refs` com `end_line`. Quatro variantes em dois orçamentos (2 000, 8 000): `context`, `references` sem reserva, `references` com `evidence_reserve_pct` 30 e 50.
 
-| orçamento | `evidence_wanted` | n | wall p50 | wall p95 | RSS p50 (kB) | unidades p50 | bytes p50 | `context` de setup (bytes p50) | razão | sem sobreposição | `used_bytes` exato |
-|---|---|---|---|---|---|---|---|---|---|---|---|
-| 2 000 | `context` | 175 | 0,000 s | 0,000 s | 5 404 | 8 | 7 719 | 7 712 | 1,01 | **175/175** | **175/175** |
-| 2 000 | `references` | 175 | 0,000 s | 0,030 s | 6 292 | 8 | 7 876 | 7 712 | 1,02 | **175/175** | **175/175** |
-| 8 000 | `context` | 175 | 0,000 s | 0,020 s | 5 576 | 29 | 25 871 | 28 783 | 1,00 | **175/175** | **175/175** |
-| 8 000 | `references` | 175 | 0,010 s | 0,050 s | 6 152 | 30 | 30 054 | 28 783 | 1,00 | **175/175** | **175/175** |
+| orçamento | `evidence_wanted` | reserva | n | wall p50 | wall p95 | RSS p50 (kB) | unidades p50 | bytes p50 | `context` de setup (bytes p50) | razão | sem sobreposição | `used_bytes` exato |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| 2 000 | `context` | — | 175 | 0,000 s | 0,000 s | 5 376 | 8 | 7 719 | 7 712 | 1,01 | **175/175** | **175/175** |
+| 2 000 | `references` | — | 175 | 0,000 s | 0,030 s | 6 352 | 7 | 7 707 | 7 712 | 1,01 | **175/175** | **175/175** |
+| 2 000 | `references` | 30% | 175 | 0,000 s | 0,030 s | 6 504 | 7 | 7 727 | 7 712 | 1,01 | **175/175** | **175/175** |
+| 2 000 | `references` | 50% | 175 | 0,000 s | 0,030 s | 6 532 | 7 | 7 683 | 7 712 | 1,01 | **175/175** | **175/175** |
+| 8 000 | `context` | — | 175 | 0,000 s | 0,000 s | 5 516 | 29 | 25 871 | 28 783 | 1,00 | **175/175** | **175/175** |
+| 8 000 | `references` | — | 175 | 0,000 s | 0,020 s | 6 424 | 22 | 31 377 | 28 783 | 1,10 | **175/175** | **175/175** |
+| 8 000 | `references` | 30% | 175 | 0,000 s | 0,030 s | 6 552 | 22 | 31 377 | 28 783 | 1,10 | **175/175** | **175/175** |
+| 8 000 | `references` | 50% | 175 | 0,000 s | 0,020 s | 6 540 | 22 | 31 333 | 28 783 | 1,11 | **175/175** | **175/175** |
 
-- A dedup foi conferida no harness por **interseção de intervalos** contra os spans entregues, não lida de `omitted.reasons`: 700/700 sem sobreposição.
-- `used_bytes` exato em 700/700, e a expansão devolve volume **comparável** à chamada anterior com material novo — expandir não é reenviar o que já foi enviado.
+- A dedup foi conferida no harness por **interseção de intervalos** contra os spans entregues, não lida de `omitted.reasons`: 1 400/1 400 sem sobreposição. `used_bytes` exato em 1 400/1 400, 0 exit ≠ 0.
 - São 35 consultas, não 36: `e01` (zero correspondência) não entrega referência nenhuma e não há o que ampliar. A linha é omitida, não contada como falha.
-- **Achado de comportamento:** em **39 de 70** pares (consulta, orçamento), `evidence_wanted=references` devolveu exatamente o mesmo número de unidades e os mesmos bytes que `context`. As janelas ao redor de `known_refs` são geradas primeiro e consomem o teto antes de a busca lexical contribuir — nos pares em que os dois diferem, sobrou orçamento. Não é defeito declarado no contrato, mas é o que limita o valor prático de pedir `references` com muitas referências já em mãos.
+- **A razão não mede novidade.** Ela é `bytes da expansão / bytes do context de setup`; como os dois pedidos têm o **mesmo teto**, a razão mede quanto do teto a expansão usa. Novidade é a coluna `sem sobreposição`, checada por interseção de intervalos contra tudo o que o setup entregou.
+- **Erro de leitura corrigido nesta etapa:** a versão anterior deste relatório dizia que a expansão devolvia "volume comparável com material novo". Metade estava errada (§8.1.1).
+
+#### 8.1.1 O defeito que a medição de Q7 revelou
+
+Q7 dizia "`references` é inerte quando `known_refs` consomem o teto". Ao instrumentar a válvula de reserva, apareceu um defeito maior, e anterior a ela.
+
+Num ciclo real `known_refs` **vem do `context`** — ou seja, são justamente os arquivos que a busca alcança. Medido por sondagem: o alcance lexical da consulta é subconjunto dos arquivos já entregues em **70/70** pares (7 consultas × 2 orçamentos conferidos um a um; q01, q03, q05, q08, q13, q16, q22, com `novos_fora_do_known = 0` em todos). Logo o único material novo que `references` podia trazer não era um arquivo novo, e sim ocorrência **fora da janela** de um arquivo já citado.
+
+E era exatamente isso que não acontecia: um arquivo de `known_refs` produzia só a janela pedida. O pedido dizia "referências" e a resposta devolvia a janela de novo. Sem reserva, **63 de 70 pares** (consulta, orçamento) saíam **sem nenhuma unidade vinda da busca** — e a resposta era válida, com `used_bytes` exato, superfície idêntica à de `context`. Nenhum dos dois sinais que o harness checava (sobreposição, bytes) pegaria isso.
+
+Correção (contrato §10.6): cada arquivo de `known_refs` passa a produzir **dois grupos** de spans — a janela pedida e as ocorrências do termo no mesmo arquivo —, com a dedup valendo também **dentro** da resposta.
+
+| reserva | pares únicos | sem nenhuma unidade lexical (antes) | (depois) | unidades lexicais p50 (antes → depois) |
+|---|---|---|---|---|
+| sem reserva | 70 | 63 | **21** | 0 → 2 |
+| 30% | 70 | 38 | **15** | 0 → 3 |
+| 50% | 70 | 38 | **13** | 0 → 4 |
+
+`antes` = `runs_expand_pre_samefile.jsonl`, `depois` = `runs_expand.jsonl`, ambas na pasta da rodada, **mesmo harness e mesmo índice** — o que muda é o binário. Os 21 pares que continuam sem unidade lexical são casos em que o termo ocorre uma única vez no arquivo: a janela já cobre a ocorrência e não há nada novo a entregar. Isso é correto, não lacuna.
+
+#### 8.1.2 A reserva: efeito real, e menor do que o defeito
+
+| política | execuções par | idênticas a `context` | com unidade lexical | lexical sem nenhuma janela | barrado declarado (`evidence_reserved`) |
+|---|---|---|---|---|---|
+| sem reserva | 350 | 80 | 245 | 5 | 0 |
+| reserva 30% | 350 | 75 | 275 | 5 | 210 |
+| reserva 50% | 350 | 65 | 285 | 5 | 235 |
+
+- A reserva **funciona e é declarada**: 210 e 235 execuções trazem `evidence_reserved` em `omitted.reasons` — o barrado é nomeado, não silencioso.
+- Ela **satura em 30%**: o conjunto de pares resolvidos é o mesmo com 30% e 50%, e o custo em latência e RSS não se distingue (p50 RSS 6 552 contra 6 540 kB). Não há razão medida para pedir mais que 30%.
+- **`lexical sem nenhuma janela` = 5** em todas as políticas: por granularidade, uma unidade de janela pode ser maior que a fatia reservada, e então a reserva barra a janela inteira em vez de encolhê-la. São 5 pares em que a resposta fica só com evidência de busca. É o custo de reservar em bytes com unidades de até 60 linhas; está declarado, não é acidente.
+- **Ordem de grandeza honesta:** a reserva resolve 25 a 40 pares; a mudança de §8.1.1 resolve 42 a 63. O defeito principal era o segundo, não o primeiro — e a leitura anterior deste relatório atribuía tudo à ordem de prioridade.
 
 ### 8.2 `verify` — 875 execuções
 
@@ -256,6 +294,8 @@ Cada linha tem teste que a executa ([`tests/r2.rs`](../../rust/archatlas/tests/r
 - `verify` confirma citação válida, confere hash quando fornecido, recusa linha fora do arquivo, recusa referência fora da raiz e recusa `--ref` malformado — cada reprovação sai com código 5, nunca com texto não verificado.
 - `verify` denuncia índice desatualizado para o arquivo citado em vez de responder com base em estado velho.
 - `expand` amplia sem repetir trecho já entregue, alcança outros arquivos por `references`, filtra por caminho quando `evidence_wanted: tests`, respeita o orçamento (700/1 500/12 000 bytes testados) e recusa `context` sem `known_refs` com código 2.
+- `expand` traz a ocorrência **fora da janela** de um arquivo já citado, sem sobrepor o que já foi entregue nem a própria resposta — teste com o grupo de spans desabilitado **falha**, então a cobertura tem dentes.
+- `evidence_reserve_pct` muda o resultado com o mesmo pedido e o mesmo índice (teste mede o antes e o depois com o teto vinculando), é byte-idêntico a ausente quando vale 0, recusa `context` e recusa > 100 com código 2.
 - `--include` restaura o corpus exato da referência Python e reporta `excluded_by_filter` — nunca descarta em silêncio.
 - `name_on_line` permanece `null`: não há extrator de símbolos, e nenhuma resposta pode ser lida como definição.
 
@@ -267,6 +307,8 @@ Cada linha tem teste que a executa ([`tests/r2.rs`](../../rust/archatlas/tests/r
 - **Resolução do instrumento.** `%e` do GNU time entrega 10 ms; qualquer valor do Rust abaixo disso é "abaixo de 10 ms". Isso também explica a coincidência de p50 = 0,000 nas três políticas — não é código sem custo, é teto de medição.
 - **`expand` e `verify` não têm comparação.** Foram medidos (§8), mas só do lado Rust: a referência não tem `expand` nem um `verify` de referência. Latência e RSS existem; 'mais rápido que' não.
 - **`expand` foi medido em dois orçamentos e duas evidências**, não numa grade. Outras políticas e `evidence_wanted=tests` não têm tabela.
+- **A reserva é em bytes com unidades de até 60 linhas**, então pode barrar uma janela inteira em vez de encolhê-la: em 5 dos 350 pares reservados a resposta fica só com evidência de busca. Reserva em linhas ou em tokens exigiria o tokenizer do modelo (P3).
+- **O antes/depois de §8.1.1 compara dois binários**, não duas configurações: `runs_expand_pre_samefile.jsonl` e `runs_expand.jsonl` saíram do mesmo harness e do mesmo índice, mas de binários diferentes. É a única forma de medir a correção de um defeito que o harness não sabia detectar na primeira rodada — e é por isso que a linha de base foi preservada em vez de sobrescrita.
 - **Uma única rodada, uma única máquina.** As repetições estão dentro da rodada; não há replicação em outro hardware. O `manifest_round.json` traz o `sha256` do binário, o ambiente e a linha de comando exata para permitir replicação.
 - **A escala (§9) usa corpus sintético por cópia** e nos dois maiores tamanhos há **uma** execução por lado (`n=1` no ×30 e ×100). Ali a curva de tendência é o resultado; o valor de um ponto isolado não é. `doc_freq` e ranking do corpus copiado não são os de um projeto real, então nada da §9 fala de qualidade de recuperação.
 - **Consultas de borda entram nas linhas das tabelas de razão** (com `stratum` = tipo de borda) e portanto no `máx` das linhas de resumo: o pior caso de `CTX-RS` orçamento 1000 é a consulta Unicode, não uma consulta estratificada. As linhas individuais estão separadas; as de resumo, não.
@@ -279,7 +321,7 @@ Cada linha tem teste que a executa ([`tests/r2.rs`](../../rust/archatlas/tests/r
 |---|---|---|---|---|---|---|
 | R2 | x | **x** | **x** | **parcial** (microbenchmarks em 6 tamanhos; runner ensaiado com stub, sem modelo) | — | não avaliada |
 
-Executado **parcialmente**, e a distinção é o ponto: os microbenchmarks foram executados — **3 545 execuções com artefato bruto auditável** (1 800 de consulta, 875 de `verify`, 700 de `expand`, 94 de escala, 36 de atualização, 20 de índice, 20 de `doctor`) —, mas a segunda metade do aceite de R2 — "integrar por shell a um único executor/modelo real" e "runner captura todas as chamadas, custos e patches sem acesso ao ouro" — **não foi executada**, porque depende de P1/P2 (modelo efetivo e teto financeiro, decisões do usuário).
+Executado **parcialmente**, e a distinção é o ponto: os microbenchmarks foram executados — **4 245 execuções com artefato bruto auditável** (1 800 de consulta, 1 400 de `expand`, 875 de `verify`, 94 de escala, 36 de atualização, 20 de índice, 20 de `doctor`) mais **1 400 preservadas** como linha de base do antes/depois (§8.1.1) —, mas a segunda metade do aceite de R2 — "integrar por shell a um único executor/modelo real" e "runner captura todas as chamadas, custos e patches sem acesso ao ouro" — **não foi executada**, porque depende de P1/P2 (modelo efetivo e teto financeiro, decisões do usuário).
 
 Pendências ao fim de R2:
 
@@ -292,6 +334,7 @@ Pendências ao fim de R2:
 | Q8 | Corpus de escala sintético e `n=1` nos dois maiores tamanhos | A | aberta — replicar em ×30/×100 com mais repetições e, se houver projeto real grande, medir um corpus não copiado |
 | Q5 | Microbenchmark de `expand` e `verify` | A | **fechada** (§8: 700 + 875 execuções, 875/875 códigos previstos) |
 | Q6 | Integração com o runner real | A (infra) + usuário (P1/P2) | **infraestrutura pronta e ensaiada** ([`RUNNER_PILOTO.md`](RUNNER_PILOTO.md)); falta executor/modelo, rubrica e teto financeiro |
-| Q7 | `evidence_wanted=references` inerte quando `known_refs` consomem o teto | A | aberta (§8.1: 39/70 pares idênticos a `context`; decidir se é comportamento desejado ou ordem a mudar) |
+| Q7 | `evidence_wanted=references` inerte quando `known_refs` consomem o teto | A | **fechada** (§8.1.1 e §8.1.2: dois grupos de spans por arquivo citado + `evidence_reserve_pct`, com antes/depois medido) |
+| Q9 | Alcance lexical ser subconjunto dos arquivos já entregues | A | registrada (§8.1.1: 70/70 sondagens). Enquanto `known_refs` vier do `context`, "arquivo novo" é impossível por construção — quem quiser alcance novo deve consultar em vez de expandir |
 
-Próxima ação: **R3** (smoke com modelo, 3 condições × 4 tarefas = 12 execuções por trilha) assim que o modelo efetivo e o teto financeiro existirem. R3 não pode começar por documentação. De R2 seguem abertos apenas Q6 (runner real, bloqueado por P1/P2) e Q8 (mais repetições no ensaio de escala); Q7 é decisão de política, não lacuna de medição.
+Próxima ação: **R3** (smoke com modelo, 3 condições × 4 tarefas = 12 execuções por trilha) assim que o modelo efetivo e o teto financeiro existirem. R3 não pode começar por documentação. De R2 seguem abertos Q2 (CI), Q4 (cache frio), Q6 (runner real, bloqueado por P1/P2), Q8 (mais repetições no ensaio de escala) e Q9 (alcance lexical é subconjunto do que o `context` já entregou). Q1, Q3, Q5 e Q7 fechadas.

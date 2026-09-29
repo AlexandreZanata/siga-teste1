@@ -63,7 +63,9 @@ Regras que valem para todos:
   "tokenizer_id": "identificador+versão+hash",
   "max_bytes": 20000,
   "policy": "CTX-RS|LEX-RS",
-  "delivered_refs": []
+  "delivered_refs": [],
+  "evidence_wanted": "context|references|tests",
+  "evidence_reserve_pct": 30
 }
 ```
 
@@ -205,6 +207,8 @@ Regras de recusa, todas código 2, porque devolver vazio pareceria "nada encontr
 
 Deduplicação em duas frentes: contra `delivered_refs` (o que o agente já recebeu) e contra os spans da própria chamada. `context` não é expansão ilimitada de trechos incluídos; cada unidade entregue tem `reason`.
 
+Um arquivo citado em `known_refs` pode contribuir com **dois** grupos de spans — a janela pedida e as ocorrências do termo no mesmo arquivo. Ver §10.6.
+
 ### 10.3 `--include`
 
 Lista por vírgula, validada contra o vocabulário de linguagens reconhecidas; item vazio ou desconhecido é erro de uso. Item descartado pelo filtro **nunca é descartado em silêncio**: `counts.excluded_by_filter` reporta quantos arquivos reconhecidos ficaram fora. É esse campo que permitiu congelar o corpus comum com a referência Python (504 arquivos) em vez do repositório inteiro (6 916).
@@ -218,8 +222,25 @@ Lista por vírgula, validada contra o vocabulário de linguagens reconhecidas; i
 
 Fica registrado que a interface Python **não recebe** `max_bytes`: a divergência é de contrato entre produtos, não descumprimento de um teto aceito. A comparação de R2 é, por isso, entre produtos distintos — conforme a cláusula de não equivalência do plano §6.
 
-### 10.5 Ordem de `expand` e consequência prática
+### 10.5 Ordem de `expand`: `evidence_reserve_pct`
 
-`known_refs` são processadas **antes** da busca lexical (§10.2). Com muitas referências e orçamento apertado, as janelas ao redor delas consomem o teto e `evidence_wanted=references|tests` não acrescenta nada. Medido em [`R2_REPORT.md`](R2_REPORT.md) §8.1: em 39 de 70 pares (consulta, orçamento), `references` devolveu exatamente o mesmo conjunto e tamanho que `context`.
+`known_refs` são processadas **antes** da busca lexical (§10.2). Com muitas referências e orçamento apertado, as janelas ao redor delas consomem o teto e `evidence_wanted=references|tests` não acrescenta nada — medido no ensaio de R2 em que 39 de 70 pares (consulta, orçamento) devolveram exatamente o mesmo conjunto e tamanho que `context`.
 
-Consequência para quem chama: para alcançar arquivos por termo, use `context` com a consulta; o valor de `expand` é o material **novo** ao redor de uma referência que o agente já escolheu. Mudar a ordem de prioridade é mudança de política, com nova medição — não é ajuste de formatação.
+`evidence_reserve_pct` (inteiro **0–100**, opcional, ausente = 0 = comportamento histórico) é a válvula explícita: as unidades cujo `reason` **não** começa com `lexical` (ou seja, as janelas de `known_refs`) param de ser emitidas assim que somam `max_bytes × (100 − pct) / 100`, e o restante do teto fica para a evidência de busca. O que foi barrado aparece em `omitted.reasons` como `evidence_reserved` — barrado em silêncio seria indistinguível de "não havia nada".
+
+Regras de recusa, código 2, porque ignorar em silêncio faria o chamador acreditar que reservou:
+
+- valor > 100 é erro de uso;
+- `pct > 0` com `evidence_wanted` ausente ou `context` é erro de uso — `context` não faz busca, logo não há o que reservar.
+
+A reserva é uma **fatia de `max_bytes`**, nunca uma licença para passar dele: o limite efetivo continua sendo o primeiro teto atingido (§4), e a decisão final de caber é do `finalize`.
+
+Medido em [`R2_REPORT.md`](R2_REPORT.md) §8.1: com reserva de 30% ou 50%, o número de pares em que `references` não trazia nenhuma unidade de busca cai de 38/70 para 15/70 e 13/70. A partir de 30% o efeito satura (mesmo conjunto de pares resolvidos), e 30% e 50% custam o mesmo em latência e RSS.
+
+### 10.6 `expand`: um arquivo já citado também contribui com as ocorrências do termo
+
+Num ciclo real, `known_refs` vem do `context` — e medido no ensaio, o alcance lexical da consulta é **subconjunto** dos arquivos que o `context` já entregou em **70/70** pares. Ou seja: o material novo que `references` pode trazer não é um arquivo novo, é ocorrência **fora da janela** de um arquivo já citado.
+
+Por isso cada arquivo de `known_refs` produz **dois grupos** de spans quando `evidence_wanted` é `references` ou `tests`: a janela pedida ao redor da linha apontada (`reason` começando em `known_ref`), e as ocorrências do termo no mesmo arquivo (`reason` começando em `lexical:references`/`lexical:tests`). A deduplicação é única para os dois grupos e vale também **dentro** da resposta: nenhuma unidade entregue sobrepõe outra, nem o que já veio em `delivered_refs`.
+
+Antes disso, `references` devolvia a própria janela de novo (razão `expand/context` ≈ 1,0). Medido: pares (consulta, orçamento) sem nenhuma unidade lexical caíram de 63/70 para 21/70 sem reserva, e de 38/70 para 13/70 com reserva de 50%. Em pares em que o termo ocorre uma única vez no arquivo, a janela já cobre a ocorrência e não há nada novo — aí a resposta é só a janela, corretamente.

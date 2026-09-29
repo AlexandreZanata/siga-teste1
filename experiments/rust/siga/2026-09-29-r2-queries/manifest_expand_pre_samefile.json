@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-run/1",
+  "mode": "expand",
+  "repetitions": 5,
+  "policy": "CTX-RS",
+  "budgets": [
+    2000,
+    8000
+  ],
+  "evidence_kinds": [
+    "context",
+    "references"
+  ],
+  "reserve_pcts": [
+    30,
+    50
+  ],
+  "inputs": {
+    "rust_bin": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/rust/archatlas/target/release/archatlas",
+    "rust_index": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/experiments/rust/siga/2026-09-29-r2-queries/index_rust.sqlite",
+    "python_bin": null,
+    "note": "sem braco Python: a CLI de referencia nao tem `expand`"
+  },
+  "measurement": {
+    "external_process": true,
+    "order": "context setup nao medido; expand medido do spawn ate consumir stdout",
+    "checks": "no_overlap_with_delivered e bytes_exact sao checados no harness, nao lidos de omitted.reasons"
+  },
+  "environment": {
+    "os": "Linux-7.1.5-76070105-generic-x86_64-with-glibc2.39",
+    "kernel": "7.1.5-76070105-generic",
+    "machine": "x86_64",
+    "cpu_model": "13th Gen Intel(R) Core(TM) i7-13620H",
+    "nproc": 16,
+    "meminfo": {
+      "MemTotal": "32556580 kB",
+      "MemAvailable": "10771556 kB"
+    },
+    "rustc": "rustc 1.96.0 (ac68faa20 2026-05-25)",
+    "cargo": "cargo 1.96.0 (30a34c682 2026-05-25)",
+    "python": "3.12.3",
+    "gnu_time": "time (GNU Time) UNKNOWN\nCopyright (C) 2018 Free Software Foundation, Inc.\nLicense GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>.\nThis is free software: you are free to change and redistribute it.\nThere is NO WARRANTY, to the extent permitted by law.\n\nWritten by David Keppel, David MacKenzie, and Assaf Gordon.",
+    "git_head": "97a5d385a74cb4084f0957a2720140d87e6085fe",
+    "git_head_short": "97a5d38",
+    "git_dirty": true
+  },
+  "rows_pre": 1400,
+  "provenance": "rodada de `expand` feita com o binario ANTERIOR a mudanca de grupos lexicais (um arquivo em `known_refs` nao contribuia com ocorrencias fora da janela). Mantida como linha de base auditavel do antes/depois; o harness e o mesmo."
+}

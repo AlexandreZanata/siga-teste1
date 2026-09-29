@@ -1,7 +1,30 @@
 {
  "schema": "atlas-run/1",
  "mode": "expand",
- "rows": 700,
+ "rows": 1400,
+ "invocation": [
+  "python",
+  "benchmarks/rust/measure.py",
+  "--mode",
+  "expand",
+  "--out",
+  "experiments/rust/siga/2026-09-29-r2-queries",
+  "--reps",
+  "5",
+  "--policy",
+  "CTX-RS",
+  "--budgets",
+  "2000,8000",
+  "--reserve-pcts",
+  "30,50",
+  "--queries",
+  "experiments/rust/siga/2026-09-29-r2-queries/queries.json",
+  "--dataset",
+  "../siga",
+  "--rust-index",
+  "experiments/rust/siga/2026-09-29-r2-queries/index_rust.sqlite",
+  "--include-edge"
+ ],
  "repetitions": 5,
  "policy": "CTX-RS",
  "budgets": [
@@ -11,6 +34,10 @@
  "evidence_kinds": [
   "context",
   "references"
+ ],
+ "reserve_pcts": [
+  30,
+  50
  ],
  "inputs": {
   "rust_bin": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/rust/archatlas/target/release/archatlas",
@@ -31,14 +58,14 @@
   "nproc": 16,
   "meminfo": {
    "MemTotal": "32556580 kB",
-   "MemAvailable": "2809192 kB"
+   "MemAvailable": "10585832 kB"
   },
   "rustc": "rustc 1.96.0 (ac68faa20 2026-05-25)",
   "cargo": "cargo 1.96.0 (30a34c682 2026-05-25)",
   "python": "3.12.3",
   "gnu_time": "time (GNU Time) UNKNOWN\nCopyright (C) 2018 Free Software Foundation, Inc.\nLicense GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>.\nThis is free software: you are free to change and redistribute it.\nThere is NO WARRANTY, to the extent permitted by law.\n\nWritten by David Keppel, David MacKenzie, and Assaf Gordon.",
-  "git_head": "09e18ae7c9e1c7ec6dffa725187aef1d203a9e42",
-  "git_head_short": "09e18ae",
+  "git_head": "97a5d385a74cb4084f0957a2720140d87e6085fe",
+  "git_head_short": "97a5d38",
   "git_dirty": true
  }
 }

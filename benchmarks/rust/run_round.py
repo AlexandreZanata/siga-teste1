@@ -108,6 +108,9 @@ def main() -> int:
     ap.add_argument("--update-reps", type=int, default=3)
     ap.add_argument("--expand-reps", type=int, default=5,
                     help="repetições de expand/verify (inclui uma chamada de context de setup)")
+    ap.add_argument("--expand-reserve-pcts", default="50",
+                    help="percentuais de `evidence_reserve_pct` medidos em `expand`; cada valor "
+                         "acrescenta uma variante de `references` ao mesmo ensaio")
     ap.add_argument("--doctor-reps", type=int, default=10)
     ap.add_argument("--no-edge", action="store_true",
                     help="mede só as 30 estratificadas, sem as 6 de borda")
@@ -189,9 +192,12 @@ def main() -> int:
         # deixando `evidence_wanted=references|tests` sem contribuição. Dois orçamentos mostram
         # se esse é o caso ou se a busca lexical só não tinha espaço.
         for mode, budgets in (("expand", "2000,8000"), ("verify", "2000")):
+            reserve = (["--reserve-pcts", str(args.expand_reserve_pcts)]
+                       if (mode == "expand" and args.expand_reserve_pcts) else [])
             run(f"{mode}", [*py, str(HERE / "measure.py"), "--mode", mode, "--out", str(out),
                             "--reps", str(args.expand_reps), "--policy", "CTX-RS",
                             "--budgets", budgets,
+                            *reserve,
                             "--queries", str(out / "queries.json"),
                             "--dataset", str(args.dataset), "--rust-bin", str(rust_bin),
                             "--python-bin", python_bin, "--rust-index", str(rust_index),
@@ -227,6 +233,7 @@ def main() -> int:
         "index_reps": args.index_reps,
         "update_reps": args.update_reps,
         "expand_reps": args.expand_reps,
+        "expand_reserve_pcts": args.expand_reserve_pcts,
         "doctor_reps": args.doctor_reps,
         "scale": {"enabled": args.with_scale, "sizes": args.scale_sizes},
         "inputs": {

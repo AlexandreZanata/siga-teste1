@@ -83,6 +83,12 @@ pub struct Request {
     /// Só usado por `expand`: qual evidência ampliar a partir de `known_refs`.
     #[serde(default)]
     pub evidence_wanted: Option<String>,
+    /// Só usado por `expand` com `evidence_wanted` de busca: percentual de `max_bytes`
+    /// reservado para a evidência lexical, para que as janelas de `known_refs` não consumam o
+    /// teto inteiro antes de a busca contribuir (achado Q7 de R2). Ausente = 0, que é
+    /// exatamente o comportamento anterior — por isso a extensão é aditiva.
+    #[serde(default)]
+    pub evidence_reserve_pct: Option<u8>,
 }
 
 /// Pedido já validado, com a política convertida.
@@ -144,6 +150,21 @@ pub fn parse(raw: &str) -> Result<ValidRequest, String> {
         req.evidence_wanted.as_deref(),
         Some("references") | Some("tests")
     );
+    if let Some(pct) = req.evidence_reserve_pct {
+        if pct > 100 {
+            return Err(format!("evidence_reserve_pct fora de 0..100: {pct}"));
+        }
+        // Recusar em vez de ignorar em silêncio: reservar orçamento para uma busca que não vai
+        // acontecer seria um pedido incoerente aceito sem aviso, e o chamador acharia que
+        // reservou.
+        if pct > 0 && !expand_needs_query {
+            return Err(
+                "evidence_reserve_pct exige evidence_wanted=references ou tests; \
+                 com context nao ha busca para reservar"
+                    .into(),
+            );
+        }
+    }
     if (crate::retrieve::tokenize(&req.query).is_empty() && req.known_refs.is_empty())
         || (expand_needs_query && crate::retrieve::tokenize(&req.query).is_empty())
     {

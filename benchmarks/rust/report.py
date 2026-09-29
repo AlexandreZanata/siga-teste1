@@ -325,22 +325,25 @@ def main() -> int:
                      "braço Rust, e a coluna `no_overlap` é checada no harness por interseção de "
                      "intervalos — não lida de `omitted.reasons`.")
         parts.append("")
-        parts.append("| orçamento | `evidence_wanted` | n | wall p50 | wall p95 | RSS p50 (kB) | "
-                     "unidades p50 | bytes p50 | bytes do `context` de setup p50 | "
-                     "razão expand/context | sem sobreposição | `used_bytes` exato |")
-        parts.append("|---|---|---|---|---|---|---|---|---|---|---|---|")
-        combos = sorted({(r["budget_tokens"], r["evidence_wanted"]) for r in xrows})
-        for budget, kind in combos:
+        parts.append("| orçamento | `evidence_wanted` | reserva | n | wall p50 | wall p95 | "
+                     "RSS p50 (kB) | unidades p50 | bytes p50 | bytes do `context` de setup p50 "
+                     "| razão expand/context | sem sobreposição | `used_bytes` exato |")
+        parts.append("|---|---|---|---|---|---|---|---|---|---|---|---|---|")
+        combos = sorted({(r["budget_tokens"], r["evidence_wanted"], r.get("reserve_pct") or 0)
+                         for r in xrows})
+        for budget, kind, pct in combos:
             sub = [r for r in xrows
-                   if r["budget_tokens"] == budget and r["evidence_wanted"] == kind]
+                   if r["budget_tokens"] == budget and r["evidence_wanted"] == kind
+                   and (r.get("reserve_pct") or 0) == pct]
             ok_over = sum(1 for r in sub if r["checks"]["no_overlap_with_delivered"])
             ok_bytes = sum(1 for r in sub if r["checks"]["bytes_exact"])
             setup = [r["setup_context_bytes"] for r in sub if r["setup_context_bytes"]]
             expanded = [r["declared"]["declared_bytes"] for r in sub
                         if r["declared"]["declared_bytes"]]
             ratio = [e / s for e, s in zip(expanded, setup) if s]
+            rotulo_reserva = "—" if not pct else f"{pct}%"
             parts.append(
-                f"| {budget} | `{kind}` | {len(sub)} | "
+                f"| {budget} | `{kind}` | {rotulo_reserva} | {len(sub)} | "
                 f"{fmt(quantiles([r['wall_s'] for r in sub], 0.5))} | "
                 f"{fmt(quantiles([r['wall_s'] for r in sub], 0.95))} | "
                 f"{fmt(quantiles([r['max_rss_kb'] for r in sub], 0.5), 0)} | "
@@ -352,26 +355,115 @@ def main() -> int:
         states = Counter(r["declared"].get("state") for r in xrows)
         parts.append("Estados declarados: " + ", ".join(
             f"`{k}`={v}" for k, v in sorted(states.items(), key=lambda kv: str(kv[0])))
-            + ". A razão `expand/context` mostra quanto material **novo** a expansão adiciona "
-              "sobre a chamada anterior.")
+            + ". A razão `expand/context` é a razão entre o volume devolvido pela expansão e o "
+              "volume do `context` de setup: como os dois pedidos têm o **mesmo teto**, ela mede "
+              "quanto do teto a expansão usa — **não** mede novidade. Novidade é garantida pela "
+              "coluna `sem sobreposição`, checada por interseção de intervalos contra tudo o que o "
+              "setup entregou.")
         parts.append("")
         # `references` deveria trazer material que `context` não traz. Se as duas saídas forem
         # idênticas, o motivo é ordem/consumo de orçamento, e isso é resultado — não anedota.
-        by_key = {(r["query_id"], r["budget_tokens"], r["evidence_wanted"]): r for r in xrows}
-        pairs = [k for k in by_key if k[2] == "references" and (k[0], k[1], "context") in by_key]
-        identical = [k for k in pairs
-                     if by_key[k]["declared"]["declared_bytes"]
-                     == by_key[(k[0], k[1], "context")]["declared"]["declared_bytes"]
-                     and by_key[k]["declared"]["units"]
-                     == by_key[(k[0], k[1], "context")]["declared"]["units"]]
-        if pairs:
+        # A comparação é feita por nível de reserva, para que o antes e o depois fiquem no mesmo
+        # quadro: `reserve_pct` ausente é o comportamento histórico e conta como 0.
+        by_key = {(r["query_id"], r["budget_tokens"], r["evidence_wanted"],
+                   r.get("reserve_pct") or 0, r["repetition"]): r for r in xrows}
+
+        def _idi(
+            a: dict, b: dict
+        ) -> bool:  # mesma resposta declarada, contadas unidades e bytes
+            return (a["declared"]["declared_bytes"] == b["declared"]["declared_bytes"]
+                    and a["declared"]["units"] == b["declared"]["units"])
+
+        reservas = sorted({r.get("reserve_pct") or 0 for r in xrows
+                           if r["evidence_wanted"] == "references"})
+        linhas_q7: list[str] = []
+        for pct in reservas:
+            refs = [r for r in xrows if r["evidence_wanted"] == "references"
+                    and (r.get("reserve_pct") or 0) == pct]
+            pares = [r for r in refs
+                     if (r["query_id"], r["budget_tokens"], "context", 0, r["repetition"])
+                     in by_key]
+            if not pares:
+                continue
+            ident = [r for r in pares if _idi(
+                r, by_key[(r["query_id"], r["budget_tokens"], "context", 0, r["repetition"])])]
+            com_lex = [r for r in pares if (r["checks"].get("lexical_units") or 0) >= 1]
+            sem_jan = [r for r in pares
+                       if (r["checks"].get("lexical_units") or 0) >= 1
+                       and (r["checks"].get("window_units") or 0) == 0]
+            declarado = [r for r in pares if r["checks"].get("reserved_declared")]
+            rotulo = "sem reserva" if not pct else f"reserva {pct}%"
+            linhas_q7.append(
+                f"| {rotulo} | {len(pares)} | {len(ident)} | {len(com_lex)} | {len(sem_jan)} | "
+                f"{len(declarado)} |")
+        if linhas_q7:
+            parts.append("### Q7: a reserva muda o que `references` devolve?")
+            parts.append("")
+            parts.append("| política | execuções par | idênticas a `context` | com unidade lexical | "
+                         "lexical sem nenhuma janela | barrado declarado (`evidence_reserved`) |")
+            parts.append("|---|---|---|---|---|---|")
+            parts.extend(linhas_q7)
+            parts.append("")
             parts.append(
-                f"Em **{len(identical)} de {len(pairs)}** pares (consulta, orçamento), "
-                "`evidence_wanted=references` devolveu o **mesmo** número de unidades e os "
-                "**mesmos** bytes que `evidence_wanted=context`. As janelas ao redor de "
-                "`known_refs` são geradas primeiro e consomem o teto antes de a busca lexical "
-                "contribuir; nos pares em que os dois diferem, sobrou orçamento para a busca."
-            )
+                "`idênticas a context` conta as execuções em que `references` devolveu o mesmo "
+                "conjunto e o mesmo tamanho que `context` — duas causas, medidas na ordem em que "
+                "apareceram: (a) um arquivo de `known_refs` só produzia a **janela pedida**, nunca "
+                "as ocorrências do termo fora dela, e num ciclo real `known_refs` já é o alcance "
+                "lexical da consulta; (b) as janelas consumiam o teto antes de a busca entrar. A "
+                "coluna cruza as duas políticas de reserva, então (b) pode ser lida isolada. "
+                "`lexical sem nenhuma janela` é o outro extremo, e existe por granularidade: uma "
+                "unidade de janela pode ser maior que a fatia reservada às janelas, e então a "
+                "reserva barra a janela inteira em vez de encolhê-la.")
+            parts.append("")
+
+        # Antes/depois da mudança que fez um arquivo de `known_refs` também contribuir com as
+        # ocorrências do termo fora da janela. Os dois `.jsonl` são produzidos pelo **mesmo**
+        # harness; o que muda é o binário. Sem as duas séries no mesmo quadro, o ganho ficaria
+        # atribuído à reserva quando não é dela.
+        pre = load(run, "runs_expand_pre_samefile.jsonl")
+        if pre:
+            parts.append("#### Antes/depois: ocorrências fora da janela num arquivo já citado")
+            parts.append("")
+            parts.append("| reserva | pares únicos | sem nenhuma unidade lexical (antes) | "
+                         "(depois) | unidades lexicais p50 (antes → depois) | "
+                         "razão expand/context p50 (antes → depois) |")
+            parts.append("|---|---|---|---|---|---|")
+
+            def _por_reserva(rows: list[dict], pct: int) -> list[dict]:
+                return [r for r in rows if r["evidence_wanted"] == "references"
+                        and (r.get("reserve_pct") or 0) == pct]
+
+            for pct in sorted({r.get("reserve_pct") or 0 for r in xrows
+                               if r["evidence_wanted"] == "references"}):
+                antes = _por_reserva(pre, pct)
+                depois = _por_reserva(xrows, pct)
+                if not antes or not depois:
+                    continue
+                pares = {(r["query_id"], r["budget_tokens"]) for r in depois}
+                sem_antes = {(r["query_id"], r["budget_tokens"]) for r in antes
+                             if (r["checks"].get("lexical_units") or 0) == 0}
+                sem_depois = {(r["query_id"], r["budget_tokens"]) for r in depois
+                              if (r["checks"].get("lexical_units") or 0) == 0}
+
+                def _raz(rws: list[dict]) -> float:
+                    vals = [r["declared"]["declared_bytes"] / r["setup_context_bytes"]
+                            for r in rws if r["setup_context_bytes"]
+                            and r["declared"]["declared_bytes"]]
+                    return quantiles(vals, 0.5)
+
+                rotulo = "sem reserva" if not pct else f"{pct}%"
+                parts.append(
+                    f"| {rotulo} | {len(pares)} | {len(sem_antes)} | {len(sem_depois)} | "
+                    f"{fmt(quantiles([r['checks']['lexical_units'] for r in antes], 0.5), 0)} → "
+                    f"{fmt(quantiles([r['checks']['lexical_units'] for r in depois], 0.5), 0)} | "
+                    f"{fmt(_raz(antes), 2)} → {fmt(_raz(depois), 2)} |")
+            parts.append("")
+            parts.append(
+                "A série `antes` é `runs_expand_pre_samefile.jsonl` e `depois` é `runs_expand.jsonl`, "
+                "ambas na pasta da rodada, com o mesmo harness e o mesmo índice; o que muda é o "
+                "binário. `sem nenhuma unidade lexical` conta pares (consulta, orçamento) em que "
+                "**todas** as execuções saíram sem uma única unidade vinda da busca — nos pares "
+                "restantes a busca contribui em pelo menos uma das cinco repetições.")
             parts.append("")
 
     if vrows:

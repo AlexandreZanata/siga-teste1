@@ -1,7 +1,7 @@
 # R2 — tabelas geradas
 
 Rodada: `2026-09-29-r2-queries`. Gerado por `benchmarks/rust/report.py`; nenhum número deste arquivo foi escrito à mão.
-Artefatos agregados: `runs_doctor.jsonl`, `runs_expand.jsonl`, `runs_index.jsonl`, `runs_query_CTX-RS_b1000-4000_r5.jsonl`, `runs_query_CTX-RS_b2000_r10.jsonl`, `runs_query_LEX-RS_b2000_r5.jsonl`, `runs_scale.jsonl`, `runs_update.jsonl`, `runs_verify.jsonl`.
+Artefatos agregados: `runs_doctor.jsonl`, `runs_expand.jsonl`, `runs_expand_pre_samefile.jsonl`, `runs_index.jsonl`, `runs_query_CTX-RS_b1000-4000_r5.jsonl`, `runs_query_CTX-RS_b2000_r10.jsonl`, `runs_query_LEX-RS_b2000_r5.jsonl`, `runs_scale.jsonl`, `runs_update.jsonl`, `runs_verify.jsonl`.
 
 ## Integridade da medição
 
@@ -341,16 +341,38 @@ A primeira indexação de cada cópia é *setup*, não medida: o número é o da
 
 Sem braço Python: a CLI de referência não tem `expand`. As tabelas são do braço Rust, e a coluna `no_overlap` é checada no harness por interseção de intervalos — não lida de `omitted.reasons`.
 
-| orçamento | `evidence_wanted` | n | wall p50 | wall p95 | RSS p50 (kB) | unidades p50 | bytes p50 | bytes do `context` de setup p50 | razão expand/context | sem sobreposição | `used_bytes` exato |
-|---|---|---|---|---|---|---|---|---|---|---|---|
-| 2000 | `context` | 175 | 0.000 | 0.000 | 5404 | 8 | 7719 | 7712 | 1.01 | 175/175 | 175/175 |
-| 2000 | `references` | 175 | 0.000 | 0.030 | 6292 | 8 | 7876 | 7712 | 1.02 | 175/175 | 175/175 |
-| 8000 | `context` | 175 | 0.000 | 0.020 | 5576 | 29 | 25871 | 28783 | 1.00 | 175/175 | 175/175 |
-| 8000 | `references` | 175 | 0.010 | 0.050 | 6152 | 30 | 30054 | 28783 | 1.00 | 175/175 | 175/175 |
+| orçamento | `evidence_wanted` | reserva | n | wall p50 | wall p95 | RSS p50 (kB) | unidades p50 | bytes p50 | bytes do `context` de setup p50 | razão expand/context | sem sobreposição | `used_bytes` exato |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| 2000 | `context` | — | 175 | 0.000 | 0.000 | 5540 | 8 | 7719 | 7712 | 1.01 | 175/175 | 175/175 |
+| 2000 | `references` | — | 175 | 0.000 | 0.030 | 6448 | 7 | 7707 | 7712 | 1.01 | 175/175 | 175/175 |
+| 2000 | `references` | 30% | 175 | 0.000 | 0.030 | 6696 | 7 | 7727 | 7712 | 1.01 | 175/175 | 175/175 |
+| 2000 | `references` | 50% | 175 | 0.000 | 0.030 | 6676 | 7 | 7683 | 7712 | 1.01 | 175/175 | 175/175 |
+| 8000 | `context` | — | 175 | 0.000 | 0.000 | 5696 | 29 | 25871 | 28783 | 1.00 | 175/175 | 175/175 |
+| 8000 | `references` | — | 175 | 0.000 | 0.030 | 6488 | 22 | 31377 | 28783 | 1.10 | 175/175 | 175/175 |
+| 8000 | `references` | 30% | 175 | 0.000 | 0.030 | 6732 | 22 | 31377 | 28783 | 1.10 | 175/175 | 175/175 |
+| 8000 | `references` | 50% | 175 | 0.000 | 0.030 | 6664 | 22 | 31333 | 28783 | 1.11 | 175/175 | 175/175 |
 
-Estados declarados: `ok`=285, `partial`=415. A razão `expand/context` mostra quanto material **novo** a expansão adiciona sobre a chamada anterior.
+Estados declarados: `ok`=490, `partial`=910. A razão `expand/context` é a razão entre o volume devolvido pela expansão e o volume do `context` de setup: como os dois pedidos têm o **mesmo teto**, ela mede quanto do teto a expansão usa — **não** mede novidade. Novidade é garantida pela coluna `sem sobreposição`, checada por interseção de intervalos contra tudo o que o setup entregou.
 
-Em **39 de 70** pares (consulta, orçamento), `evidence_wanted=references` devolveu o **mesmo** número de unidades e os **mesmos** bytes que `evidence_wanted=context`. As janelas ao redor de `known_refs` são geradas primeiro e consomem o teto antes de a busca lexical contribuir; nos pares em que os dois diferem, sobrou orçamento para a busca.
+### Q7: a reserva muda o que `references` devolve?
+
+| política | execuções par | idênticas a `context` | com unidade lexical | lexical sem nenhuma janela | barrado declarado (`evidence_reserved`) |
+|---|---|---|---|---|---|
+| sem reserva | 350 | 80 | 245 | 5 | 0 |
+| reserva 30% | 350 | 75 | 275 | 5 | 210 |
+| reserva 50% | 350 | 65 | 285 | 5 | 235 |
+
+`idênticas a context` conta as execuções em que `references` devolveu o mesmo conjunto e o mesmo tamanho que `context` — duas causas, medidas na ordem em que apareceram: (a) um arquivo de `known_refs` só produzia a **janela pedida**, nunca as ocorrências do termo fora dela, e num ciclo real `known_refs` já é o alcance lexical da consulta; (b) as janelas consumiam o teto antes de a busca entrar. A coluna cruza as duas políticas de reserva, então (b) pode ser lida isolada. `lexical sem nenhuma janela` é o outro extremo, e existe por granularidade: uma unidade de janela pode ser maior que a fatia reservada às janelas, e então a reserva barra a janela inteira em vez de encolhê-la.
+
+#### Antes/depois: ocorrências fora da janela num arquivo já citado
+
+| reserva | pares únicos | sem nenhuma unidade lexical (antes) | (depois) | unidades lexicais p50 (antes → depois) | razão expand/context p50 (antes → depois) |
+|---|---|---|---|---|---|
+| sem reserva | 70 | 63 | 21 | 0 → 2 | 1.01 → 1.03 |
+| 30% | 70 | 38 | 15 | 0 → 3 | 1.00 → 1.02 |
+| 50% | 70 | 38 | 13 | 0 → 4 | 1.00 → 1.03 |
+
+A série `antes` é `runs_expand_pre_samefile.jsonl` e `depois` é `runs_expand.jsonl`, ambas na pasta da rodada, com o mesmo harness e o mesmo índice; o que muda é o binário. `sem nenhuma unidade lexical` conta pares (consulta, orçamento) em que **todas** as execuções saíram sem uma única unidade vinda da busca — nos pares restantes a busca contribui em pelo menos uma das cinco repetições.
 
 ## `verify`: portão de integridade
 

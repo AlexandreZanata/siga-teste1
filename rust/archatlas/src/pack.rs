@@ -648,6 +648,19 @@ fn expand_candidates(
     let delivered = delivered_spans(&req.raw.delivered_refs);
     let kind = req.raw.evidence_wanted.as_deref().unwrap_or("context");
 
+    // Reserva de evidência (Q7 de R2): sem ela, as janelas de `known_refs` são geradas primeiro
+    // e podem consumir todo o teto, deixando a busca lexical sem espaço — medido em 39 de 70
+    // pares, `references` devolvia exatamente o mesmo que `context`. O teto das janelas é
+    // estimado em bytes serializados reais (não em linhas), e a decisão final continua sendo do
+    // `finalize`: aqui só se impede que as janelas sozinhas ocupem o envelope.
+    let window_allowance: Option<usize> = match req.raw.evidence_reserve_pct {
+        Some(pct) if pct > 0 && kind != "context" => {
+            Some((req.raw.max_bytes as usize).saturating_mul(100 - pct as usize) / 100)
+        }
+        _ => None,
+    };
+    let mut window_bytes = 0usize;
+
     // Referências apontadas primeiro; depois, quando o tipo de evidência pede busca,
     // os arquivos que a consulta alcança.
     let mut order: Vec<(String, String, Option<(u32, u32)>)> = Vec::new();
@@ -717,11 +730,18 @@ fn expand_candidates(
             origin: origin.clone(),
         };
 
-        // Janelas: pedida pela ref, ou em torno das ocorrências do termo.
-        let mut spans: Vec<Span> = Vec::new();
+        // Grupos de spans: a janela pedida pela ref (quando há) e, em `references`/`tests`, as
+        // ocorrências do termo **no mesmo arquivo**. Os dois convivem de propósito: num ciclo
+        // real o `known_refs` veio do `context`, que já entrega justamente os arquivos que a
+        // busca alcança — medido, o alcance lexical da consulta é subconjunto dos arquivos já
+        // entregues em 70/70 pares. Ou seja: o único material novo que `references` pode trazer
+        // é ocorrência **fora da janela** de um arquivo já citado. Sem o segundo grupo, o pedido
+        // de referências devolvia a própria janela de novo (razão expand/context ≈ 1,0).
+        let mut groups: Vec<(String, Vec<Span>)> = Vec::new();
         if let Some((s, e)) = asked {
             let start = (*s as usize).saturating_sub(EXPAND_CONTEXT_LINES).max(1);
             let end = (*e as usize + EXPAND_CONTEXT_LINES).min(total_lines);
+            let mut spans: Vec<Span> = Vec::new();
             let mut cursor = start;
             while cursor <= end {
                 let stop = (cursor + MAX_UNIT_LINES - 1).min(end);
@@ -731,10 +751,20 @@ fn expand_candidates(
                 });
                 cursor = stop + 1;
             }
+            groups.push((v.origin.clone(), spans));
+            if kind != "context" && !v.match_lines.is_empty() {
+                groups.push((
+                    format!("lexical:{kind}"),
+                    spans_from_lines(&v.match_lines, EXPAND_CONTEXT_LINES, total_lines),
+                ));
+            }
         } else if !v.match_lines.is_empty() {
-            spans = spans_from_lines(&v.match_lines, EXPAND_CONTEXT_LINES, total_lines);
+            groups.push((
+                v.origin.clone(),
+                spans_from_lines(&v.match_lines, EXPAND_CONTEXT_LINES, total_lines),
+            ));
         }
-        if spans.is_empty() {
+        if groups.iter().all(|(_, spans)| spans.is_empty()) {
             // Sem ocorrência literal e sem linha apontada: nada verificável a ampliar.
             dropped += 1;
             push_reason(&mut reasons, "no_literal_match");
@@ -742,36 +772,56 @@ fn expand_candidates(
             continue;
         }
 
-        // Dedup contra o que já foi entregue e contra o que esta própria chamada emite.
+        // Dedup contra o que já foi entregue e contra o que esta própria chamada emite. `covered`
+        // **cresce** a cada unidade emitida, para que os dois grupos deste arquivo não se
+        // sobreponham entre si: nada de entregar duas vezes o mesmo trecho na mesma resposta.
         let mut covered = delivered.get(rel).cloned().unwrap_or_default();
         covered.extend(emitted.get(rel).cloned().unwrap_or_default());
-        for span in spans {
-            let mut kept_any = false;
-            for piece in subtract_covered(span, &covered) {
-                if piece.end < piece.start {
-                    continue;
+        let mut kept_any = false;
+        for (origin, spans) in groups {
+            for span in spans {
+                for piece in subtract_covered(span, &covered) {
+                    if piece.end < piece.start {
+                        continue;
+                    }
+                    let n_matches = v
+                        .match_lines
+                        .iter()
+                        .filter(|l| **l >= piece.start && **l <= piece.end)
+                        .count();
+                    let reason = if n_matches > 0 {
+                        format!("{origin}; {n_matches} ocorrencia(s)")
+                    } else {
+                        format!("{origin}; janela ampliada")
+                    };
+                    let unit = make_unit(&v, piece, tokens, reason);
+                    // As unidades lexicais são a evidência reservada; o teto vale só para as
+                    // janelas vindas de `known_refs`.
+                    if let Some(allow) = window_allowance {
+                        if !origin.starts_with("lexical") {
+                            let bytes = serde_json::to_vec(&unit).map(|v| v.len()).unwrap_or(0);
+                            if window_bytes + bytes > allow {
+                                dropped += 1;
+                                push_reason(&mut reasons, "evidence_reserved");
+                                kept_any = true;
+                                continue;
+                            }
+                            window_bytes += bytes;
+                        }
+                    }
+                    units.push(unit);
+                    covered.push((piece.start as u32, piece.end as u32));
+                    emitted
+                        .entry(rel.clone())
+                        .or_default()
+                        .push((piece.start as u32, piece.end as u32));
+                    kept_any = true;
                 }
-                let n_matches = v
-                    .match_lines
-                    .iter()
-                    .filter(|l| **l >= piece.start && **l <= piece.end)
-                    .count();
-                let reason = if n_matches > 0 {
-                    format!("{}; {n_matches} ocorrencia(s)", v.origin)
-                } else {
-                    format!("{}; janela ampliada", v.origin)
-                };
-                units.push(make_unit(&v, piece, tokens, reason));
-                emitted
-                    .entry(rel.clone())
-                    .or_default()
-                    .push((piece.start as u32, piece.end as u32));
-                kept_any = true;
             }
-            if !kept_any {
-                dropped += 1;
-                push_reason(&mut reasons, "duplicate");
-            }
+        }
+        if !kept_any {
+            dropped += 1;
+            push_reason(&mut reasons, "duplicate");
         }
     }
 

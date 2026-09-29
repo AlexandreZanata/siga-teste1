@@ -251,6 +251,7 @@ def measure_queries(args) -> int:
         },
         "environment": environment_manifest(),
     }
+    manifest["invocation"] = invocation()
     write_json(out / f"manifest_query_{tag}.json", manifest)
     print(f"\n{len(rows)} linhas ({successes} com exit 0) -> {out / f'runs_query_{tag}.jsonl'}")
     missing = [r for r in rows if not r["declared"].get("parse_ok")]
@@ -313,6 +314,7 @@ def measure_index(args) -> int:
     write_json(out / "manifest_index.json", {
         "schema": "atlas-run/1",
         "mode": "index",
+        "invocation": invocation(),
         "repetitions": args.reps,
         "rows": len(rows),
         "inputs": {"rust_bin": args.rust_bin, "python_bin": args.python_bin,
@@ -487,6 +489,7 @@ def measure_update(args) -> int:
     write_json(out / "manifest_update.json", {
         "schema": "atlas-run/1",
         "mode": "update",
+        "invocation": invocation(),
         "repetitions": args.reps,
         "rows": len(rows),
         "scenarios": [s for s, _ in UPDATE_SCENARIOS],
@@ -558,6 +561,16 @@ def overlap(a: tuple[str, int, int], b: tuple[str, int, int]) -> bool:
     return a[0] == b[0] and a[1] <= b[2] and b[1] <= a[2]
 
 
+def invocation() -> list[str]:
+    """Linha de comando exata desta invocação.
+
+    A rodada inteira roda por `run_round.py`, mas cada modo pode ser reexecutado sozinho — e
+    então o `manifest_*.json` daquele modo tem de dizer **com quais flags**, senão a linha da
+    tabela perde origem rastreável. Fica no artefato, não no relatório.
+    """
+    return ["python", "benchmarks/rust/measure.py", *sys.argv[1:]]
+
+
 def context_probe(args, query: str, budget: int, req_dir: Path) -> tuple[dict | None, dict]:
     """Uma chamada de `context` como *setup*: produz as referências que `expand`/`verify`
     consomem. Não é medida — o custo de `context` já tem tabela própria."""
@@ -597,6 +610,11 @@ def measure_expand(args) -> int:
     selected = queries_for(args)
     budgets = [int(b) for b in args.budgets.split(",")]
     req_dir = Path(tempfile.mkdtemp(prefix="atlas-exp-"))
+    # `evidence_reserve_pct` (Q7 de R2): 0 é o comportamento histórico — não medir o antes e o
+    # depois no mesmo ensaio seria comparar duas invocações em vez de duas políticas.
+    reserve_pcts = [int(p) for p in str(getattr(args, "reserve_pcts", "") or "").split(",") if p]
+    variantes: list[tuple[str, int]] = [("context", 0), ("references", 0)]
+    variantes += [("references", p) for p in reserve_pcts]
     rows: list[dict] = []
 
     for budget in budgets:
@@ -610,14 +628,17 @@ def measure_expand(args) -> int:
                 spans = spans_of(ctx)
                 if not delivered:
                     continue  # nada entregue, nada a expandir — não é falha do produto
-                for kind in ("context", "references"):
-                    req = req_dir / f"{qid}-{budget}-{rep}-{kind}.json"
-                    req.write_text(json.dumps({
+                for kind, reserve_pct in variantes:
+                    req = req_dir / f"{qid}-{budget}-{rep}-{kind}-{reserve_pct}.json"
+                    body = {
                         "schema_version": 1, "intent": "localizar", "query": text,
                         "known_refs": delivered, "delivered_refs": delivered,
                         "evidence_wanted": kind, "budget_tokens": budget,
                         "max_bytes": 4 * budget, "policy": args.policy,
-                    }))
+                    }
+                    if reserve_pct:
+                        body["evidence_reserve_pct"] = reserve_pct
+                    req.write_text(json.dumps(body))
                     res = run_measured(rust_argv(args.rust_bin, subtree, rust_index, req,
                                                  cmd="expand"),
                                        cwd=str(REPO_ROOT))
@@ -627,10 +648,13 @@ def measure_expand(args) -> int:
                     except Exception:
                         resp = {}
                     got = spans_of(resp)
+                    motivos = list((resp.get("omitted") or {}).get("reasons") or [])
+                    razoes = [str(u.get("reason") or "") for u in (resp.get("units") or [])]
                     rows.append({
                         "mode": "expand", "impl": "rust", "query_id": qid,
                         "query_text": text, "stratum": q.get("stratum") or q.get("kind"),
                         "budget_tokens": budget, "evidence_wanted": kind,
+                        "reserve_pct": reserve_pct,
                         "repetition": rep, "wall_s": m["wall_s"], "user_s": m["user_s"],
                         "sys_s": m["sys_s"],
                         "cpu_s": (m["user_s"] or 0) + (m["sys_s"] or 0),
@@ -652,16 +676,25 @@ def measure_expand(args) -> int:
                                             == m["stdout_bytes"] - 1),
                             "delivered_refs": len(delivered),
                             "delivered_spans": len(spans),
+                            # Efeito da reserva, medido no harness: quantas unidades vieram da
+                            # busca lexical, quantas são janela, e se o barrado foi declarado.
+                            "lexical_units": sum(1 for r in razoes if r.startswith("lexical")),
+                            "window_units": sum(1 for r in razoes if r.startswith("known_ref")),
+                            "reserved_declared": "evidence_reserved" in motivos,
+                            "reserve_accepted": (m["exit_status"] == 0),
                         },
                         "setup_context_bytes": (ctx.get("budget") or {}).get("used_bytes"),
                     })
-            print(f"  budget={budget:5} {qid:4} {text[:24]:24} expand medido", flush=True)
+            print(f"  budget={budget:5} {qid:4} {text[:24]:24} "
+                  f"expand medido ({len(variantes)} variantes)", flush=True)
 
     write_jsonl(out / "runs_expand.jsonl", rows)
     write_json(out / "manifest_expand.json", {
         "schema": "atlas-run/1", "mode": "expand", "rows": len(rows),
+        "invocation": invocation(),
         "repetitions": args.reps, "policy": args.policy, "budgets": budgets,
         "evidence_kinds": ["context", "references"],
+        "reserve_pcts": reserve_pcts,
         "inputs": {"rust_bin": args.rust_bin, "rust_index": str(rust_index),
                    "python_bin": None,
                    "note": "sem braco Python: a CLI de referencia nao tem `expand`"},
@@ -766,6 +799,7 @@ def measure_verify(args) -> int:
     write_jsonl(out / "runs_verify.jsonl", rows)
     write_json(out / "manifest_verify.json", {
         "schema": "atlas-run/1", "mode": "verify", "rows": len(rows),
+        "invocation": invocation(),
         "repetitions": args.reps, "scenarios": VERIFY_SCENARIOS,
         "inputs": {"rust_bin": args.rust_bin, "rust_index": str(rust_index),
                    "note": "sem braco Python: verify da referencia e autoteste fixo, sem --ref"},
@@ -892,7 +926,7 @@ def measure_scale(args) -> int:
     write_jsonl(out / "runs_scale.jsonl", rows)
     write_json(out / "manifest_scale.json", {
         "schema": "atlas-run/1", "mode": "scale", "rows": len(rows),
-        "invocation": ["python", "benchmarks/rust/measure.py", *sys.argv[1:]],
+        "invocation": invocation(),
         "sizes": [{"multiplier": m, "files": m * len(paths), "corpus_bytes": m * base_bytes}
                   for m in mults],
         "base_corpus": {"files": len(paths), "bytes": base_bytes, "subtree": SUBTREE,
@@ -967,6 +1001,7 @@ def measure_doctor(args) -> int:
     write_jsonl(out / "runs_doctor.jsonl", rows)
     write_json(out / "manifest_doctor.json", {
         "schema": "atlas-run/1", "mode": "doctor", "rows": len(rows),
+        "invocation": invocation(),
         "environment": environment_manifest(),
     })
     print(f"{len(rows)} linhas -> {out / 'runs_doctor.jsonl'}")
@@ -976,7 +1011,7 @@ def measure_doctor(args) -> int:
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--mode", choices=["query", "index", "update", "expand", "verify",
-                                       "scale", "doctor"], default="query")
+                                       "doctor", "scale"], default="query")
     ap.add_argument("--out", required=True)
     ap.add_argument("--dataset", default=os.environ.get("ARCHATLAS_DATASET") or str(REPO_ROOT.parent / "siga"))
     ap.add_argument("--queries", default=None)
@@ -994,6 +1029,9 @@ def main() -> int:
     ap.add_argument("--policy", default="CTX-RS")
     ap.add_argument("--reps", type=int, default=10)
     ap.add_argument("--limit", type=int, default=0)
+    ap.add_argument("--reserve-pcts", default="",
+                    help="percentuais de evidence_reserve_pct a medir em --mode expand "
+                         "(ex. 30,50); vazio mede so o comportamento historico")
     ap.add_argument("--include-edge", action="store_true")
     ap.add_argument("--warmup", action="store_true", default=True)
     args = ap.parse_args()
