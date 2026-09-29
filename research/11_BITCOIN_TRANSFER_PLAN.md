@@ -1,5 +1,7 @@
 # 11 — Plano de Transferência Bitcoin (sem redesign antecipado)
 
+> **Roteiro histórico substituído em 2026-09-24.** A instrução abaixo de terminar/congelar SIGA antes de começar Bitcoin não se aplica à execução atual. Seguir a [entrada Bitcoin](../plans/BITCOIN_PARALLEL_PLAN.md), o [espelho P0–P7/E26-00–06](../plans/bitcoin/EXPERIMENTOS_2026.md) e o [protocolo dos dois agentes](../plans/PARALLEL_EXECUTION.md). Cada trilha congela suas próprias versões antes da avaliação confirmatória. Bitcoin agora participa do desenvolvimento; seus resultados não contam como transferência para um repositório inédito. O texto abaixo fica apenas como registro do desenho anterior, sem autoridade operacional.
+
 **Status:** DRAFT 2026-09-24.
 
 ## 1. Regra de congelamento

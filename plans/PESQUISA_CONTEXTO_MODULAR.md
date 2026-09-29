@@ -2,6 +2,10 @@
 
 Data: 2026-09-24. Estado: planejamento; nenhuma etapa abaixo foi executada nesta revisão.
 
+**Emenda operacional de 2026-09-29:** a próxima entrega é a [CLI em Rust com piloto real e confirmação cega](RUST_CLI_PILOTO_REAL.md), conforme pedido do usuário. Seguir R0–R6 para transformar os diagnósticos existentes em produto medido, com o [protocolo específico](../research/rust/PROTOCOLO_VALIDACAO.md). Rust substitui a implementação do caminho de execução do produto de forma incremental; Python permanece referência e pode hospedar o harness. P0–P7 abaixo conservam o método e histórico, sem exigir reinício. O piloto tem pré-registro próprio e precede o dimensionamento/selo confirmatório.
+
+**Organização vigente: duas trilhas em paralelo.** [Agente A — SIGA/core](SIGA_EXECUTION.md) e [agente B — Bitcoin](BITCOIN_PARALLEL_PLAN.md), sob o [protocolo de isolamento e integração](PARALLEL_EXECUTION.md). Bitcoin executa BTC-P0–P7 e BTC-E26-00–06 sem esperar SIGA terminar. Este plano descreve o método; o avanço real vem dos artefatos de cada trilha, não do estado inicial desta revisão.
+
 Atualização bibliográfica de 2026: [base experimental com nove papers](../research/16_BASE_EXPERIMENTAL_2026.md) e [sete experimentos ligados à primeira entrega para devs](EXPERIMENTOS_2026.md). Inclui trabalhos publicados até 22/09/2026, consultados em 24/09/2026. Fontes e propostas foram documentadas; experimentos permanecem não executados.
 
 ## 1. Objetivo e autoridade deste plano
@@ -9,6 +13,8 @@ Atualização bibliográfica de 2026: [base experimental com nove papers](../res
 Investigar se uma camada local de seleção de contexto permite que agentes resolvam tarefas reais de desenvolvimento com menor custo total e qualidade preservada. O produto pretendido é instalável em diferentes repositórios, com capacidades declaradas por linguagem e ferramenta. “Qualquer projeto” é uma direção de produto, não uma propriedade já demonstrada.
 
 Este documento orienta as próximas etapas após F20 e detalha F21. Em conflitos sobre sequência, métricas, modelos, cegamento ou generalização, prevalece sobre os rascunhos anteriores de pesquisa e implementação. F0–F20 e os relatórios existentes permanecem como histórico; suas conclusões não são automaticamente confirmação científica. O PIN vigente continua sendo a referência do dataset SIGA.
+
+Emenda de escopo: o protocolo paralelo prevalece em propriedade de arquivos, sincronização e dependências entre agentes. As regras científicas são comuns; pré-registros, datasets, tarefas, estados e resultados são separados. A restrição anterior de Bitcoin somente após SIGA foi revogada por solicitação do usuário. Referências “só SIGA” em documentos de execução existentes passam a delimitar aquele estudo, sem bloquear o estudo Bitcoin independente.
 
 Escopo desta revisão: documentação de pesquisa e execução futura. Não implementar módulos, executar benchmarks, chamar modelos pagos, alterar datasets, publicar ou fazer commit/push como consequência automática deste planejamento.
 
@@ -100,7 +106,7 @@ Duas avaliações complementares: (a) recursos operacionais iguais, comparando s
 
 ### Tarefas e separação de dados
 
-Primeiro SIGA, sem reabrir a implementação Bitcoin nesta fase. Piloto proposto: 12–20 tarefas executáveis, cobrindo backend, frontend e alterações entre arquivos. É calibração do protocolo, não amostra suficiente por definição para comprovar ganhos.
+Cada trilha prepara seu piloto independente de 12–20 tarefas executáveis. SIGA cobre backend, frontend e alterações entre arquivos; Bitcoin adapta as mesmas classes de esforço a C++/Python, RPC e testes conforme seu PIN. Bitcoin pode começar imediatamente em BTC-P0, em worktree isolada. Cada piloto calibra seu protocolo; não constitui amostra suficiente por definição para comprovar ganhos.
 
 Cada tarefa terá problema independente da solução, snapshot base, ambiente reproduzível, comportamento esperado, testes públicos, critérios ocultos, timeout e classe de dificuldade definida antes de observar o desempenho. Incluir tarefas simples em que o índice pode custar mais do que ajuda. Perguntas de localização continuam como diagnóstico secundário.
 
@@ -162,6 +168,8 @@ Não transportar ao teste toda uma busca combinatória. Registrar quantas varian
 
 ## 8. Etapas pequenas para os agentes de execução
 
+As etapas abaixo descrevem a trilha SIGA/core e o método comum. O [plano Bitcoin](BITCOIN_PARALLEL_PLAN.md) espelha cada etapa com IDs BTC-P0–P7, artefatos próprios e dependências locais. A mantém core e SIGA; B mantém adaptadores/experimentos Bitcoin. Ver [pontos de sincronização](PARALLEL_EXECUTION.md) antes de alterar arquivos compartilhados. Evidências SIGA já produzidas devem ser retomadas, não refeitas automaticamente.
+
 Executores previstos pelo usuário: **Muse Spark 1.3**, **DeepSeek Flash v4.1** ou **Luna 6 do ChatGPT**. Os nomes são rótulos fornecidos, não confirmação de disponibilidade ou IDs de API. Antes de cada rodada, resolver provedor, ID/versão efetivos, interface, parâmetros, contexto máximo e telemetria. Se não disponíveis, registrar impedimento; não trocar silenciosamente de modelo.
 
 Separar modelo usado para desenvolver o ArchAtlas do modelo avaliado como consumidor. Não tratar os três como um único agente equivalente nem agregar resultados sem estratificação. Cada microetapa deve caber em uma sessão com objetivo único e artefato verificável, sem depender de lembrança da conversa.
@@ -192,9 +200,9 @@ Depende de P4. Antes de executar: completar pré-registro com dimensão amostral
 
 ### P6 — transferência e portabilidade
 
-Depende de P5 para a trilha de produto; achado negativo pode abrir novo ciclo de pesquisa explicitamente separado. Selecionar antes do teste pelo menos dois repositórios externos ao SIGA, com builds reproduzíveis e tarefas independentes: um em linguagem já suportada, outro em stack diferente com demanda real da equipe. Não considerar apenas o próprio ArchAtlas como validação externa.
+Depende de P5 para a trilha de produto; achado negativo pode abrir novo ciclo de pesquisa explicitamente separado. Selecionar antes do teste pelo menos dois repositórios que não participaram do ajuste SIGA/Bitcoin, com builds reproduzíveis e tarefas independentes: um em linguagem já suportada, outro em stack diferente com demanda real da equipe. Nem Bitcoin nem o próprio ArchAtlas contam como repositórios externos inéditos após participarem do desenvolvimento.
 
-Congelar core/políticas. Ajustar adaptadores em fixtures/dev próprios, sem olhar tarefas finais. Distinguir suporte lexical básico de suporte estrutural completo. Bitcoin é candidato opcional posterior, não próximo passo obrigatório. Saídas: matriz de capacidades, desempenho por projeto e catálogo de falhas. Aceite de generalização: instalação/configuração documentada, sem regras especiais escondidas para cada tarefa; regressões e adaptações publicadas.
+Congelar core/políticas. Ajustar adaptadores em fixtures/dev próprios, sem olhar tarefas finais. Distinguir suporte lexical básico de suporte estrutural completo. BTC-P6 permanece exclusivamente Bitcoin e avalia evolução temporal/ambiente, sem alegar transferência entre projetos. Saídas: matriz de capacidades, desempenho por projeto e catálogo de falhas. Aceite de generalização: instalação/configuração documentada, sem regras especiais escondidas para cada tarefa; regressões e adaptações publicadas.
 
 ### P7 — piloto de uso por desenvolvedores e decisão de produto
 
@@ -216,8 +224,8 @@ Reprodução significa conseguir reconstruir ambiente, entradas, cápsulas deter
 
 ## 10. Próxima ação e pendências
 
-Próxima ação quando a execução for iniciada: **P0 — auditoria**, seguida de P1. Não começar instalador universal, MCP, treino, banco vetorial obrigatório ou migração massiva de diretórios.
+Próximas ações: A confere a auditoria, pré-registro e contratos já existentes e retoma a primeira pendência real; B confirma sua worktree/checkpoint e começa **BTC-P0 — auditoria e PIN**. O preparo para B não reinicia a trilha A. Não começar instalador universal, MCP, treino, banco vetorial obrigatório ou migração massiva de diretórios.
 
-Pendências que bloqueiam apenas as etapas dependentes: IDs efetivos dos modelos; teto de custo/tempo; ambiente de build/teste SIGA; custodiante do holdout; seleção de projetos de transferência; responsáveis pela avaliação semântica. Resolver durante preparação, antes de qualquer rodada correspondente. Até lá, pesquisa documental e especificações podem avançar.
+Pendências por trilha que bloqueiam apenas as etapas dependentes: IDs efetivos dos modelos; teto de custo/tempo; ambiente de build/teste; custodiante do holdout; responsáveis pela avaliação semântica. Bitcoin também resolve PIN e adaptador C++/Python. Preparação conjunta: checkpoint documental/core, worktrees, recursos e canais de entrega. Projetos inéditos de transferência são escolhidos para P6 do produto geral. Até lá, pesquisa documental, fixtures e especificações podem avançar sem esperar a outra trilha.
 
 Definição de êxito: evidência reproduzível de que desenvolvedores ou agentes resolvem tarefas com menos recursos e qualidade preservada no escopo testado — ou uma conclusão clara de por que a proposta ainda não entrega esse ganho.

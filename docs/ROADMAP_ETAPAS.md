@@ -1,10 +1,12 @@
 # Roadmap por etapas (cada etapa = commit local + push; metodologia de ponta)
 
-> Atualização de planejamento — 2026-09-24: a sequência futura e os critérios científicos estão no [plano de pesquisa para contexto modular](../plans/PESQUISA_CONTEXTO_MODULAR.md). F0–F20 abaixo preservam registros históricos, sem revalidação nesta revisão. A próxima etapa é P0 (auditoria), seguida de P1–P2 (literatura e medição), antes do piloto F21/P3. Esta revisão documental não executa etapas nem implica commit/push.
+> Próxima sequência — 2026-09-29: [CLI Rust R0–R6, piloto real e confirmação cega](../plans/RUST_CLI_PILOTO_REAL.md), com [métricas e protocolo](../research/rust/PROTOCOLO_VALIDACAO.md). **R0 executado:** [contrato congelado](../research/rust/CLI_CONTRACT.md), [baseline medido](../research/rust/BASELINE.md) e [pré-registro do piloto](../research/rust/PREREGISTRATION_R0.md). Próxima etapa: R1. A e B retomam os respectivos estados reais; Bitcoin já avançou e não reinicia BTC-P0. Os marcos históricos abaixo não comprovam patches corretos ou economia faturada. Para o produto Rust, os testes e dependências seguem o novo plano; as regras Python abaixo descrevem a implementação histórica.
+
+> Atualização de planejamento — 2026-09-24: [SIGA/core](../plans/SIGA_EXECUTION.md) e [Bitcoin](../plans/BITCOIN_PARALLEL_PLAN.md) seguem P0–P7 em paralelo, com [worktrees, donos e integração separados](../plans/PARALLEL_EXECUTION.md). F0–F20 abaixo preservam o histórico SIGA. A retoma a primeira pendência comprovada nos artefatos existentes; B inicia BTC-P0. Esta revisão documental não executa etapas nem implica commit/push.
 
 Metodologia fixa: trunk-based, fases ≤1 entrega, DCO (`-s`), `pytest -q` verde offline, stdlib-first, determinismo por hash, evidência `arquivo:linha@SHA`, dataset `/siga/` read-only em `e3be22828`.
 
-Detalhamento atual: [papers de 2026](../research/16_BASE_EXPERIMENTAL_2026.md) → [E26-00–E26-06](../plans/EXPERIMENTOS_2026.md). Seleção bibliográfica concluída nesta revisão; auditoria, instrumentação, experimentos e produto continuam planejados. Ordem: E26-00/01 em P2–P3; E26-02 primeiro em P4; E26-03/04/05 conforme evidência do piloto; E26-06 em integração e transferência.
+Detalhamento atual: [papers de 2026](../research/16_BASE_EXPERIMENTAL_2026.md) → [E26-00–E26-06 SIGA/core](../plans/EXPERIMENTOS_2026.md) e [BTC-E26-00–06](../plans/bitcoin/EXPERIMENTOS_2026.md). Avanço apurado por trilha, sem copiar aceites. Ordem local: E26-00/01 em P2–P3; E26-02 primeiro em P4; E26-03/04/05 conforme evidência do piloto; E26-06 em integração e portabilidade.
 
 - [x] **F0** bootstrap (LICENSE/README/CONTRIBUTING/CI/skeleton) — `fca3ccf`
 - [x] **F1** PIN+CENSO verificados — `eb56e0a`
@@ -28,6 +30,7 @@ Detalhamento atual: [papers de 2026](../research/16_BASE_EXPERIMENTAL_2026.md) �
 - [x] **F19** privacidade (config env, GT relativo, README sem paths) + latência (cache disco único + co-ocorrência: p95 372→119ms, recall 1.00)
 - [x] **F20** sweep budgets (500:.915, 1k:.948, 2k+:1.00, satura em ~1934tk) + comparativo
 - [ ] **F21 / P3** (planejada; depende de P0–P2) tarefas de edição reais frontend/backend + avaliação cega de patches, com custo ponta a ponta, qualidade e protocolo pré-registrado; ver plano vigente.
-- [ ] **FUTURO (pós-SIGA)** Bitcoin transfer (sem redesign) + `LIMITATIONS_BITCOIN.md`; ablações (9) + paper + SBOM + `v1` (só via RFC) — Bitcoin removido das etapas executáveis por decisão 2026-09-24: foco 100% SIGA-Doc até fidelidade comprovada
+- [ ] **TRILHA PARALELA BITCOIN** BTC-P0–P7 + BTC-E26-00–06, conforme plano próprio. A decisão anterior de adiar Bitcoin foi substituída pelo pedido de execução paralela em 2026-09-24. Sem dependência da conclusão SIGA; resultados independentes.
+- [ ] **TRANSFERÊNCIA EXTERNA** após congelamento, avaliar projetos inéditos que não participaram do ajuste SIGA/Bitcoin; consolidar paper, limitações e critérios de release.
 
 Agente responsável por etapa: executa `docs/VERIFICATION_PROTOCOL.md` (4 portões) e anexa evidências no corpo do commit. Sem evidência, sem push.

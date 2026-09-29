@@ -2,7 +2,11 @@
 
 Data: 2026-09-24. Estado de todos os experimentos: **planejado, não executado**.
 
-Base: [nove papers de 2026 verificados em fontes primárias](../research/16_BASE_EXPERIMENTAL_2026.md). Este documento detalha P1–P7 do [plano principal](PESQUISA_CONTEXTO_MODULAR.md); não substitui seu cegamento, pré-registro, política de falhas ou critérios estatísticos. A seleção de papers é parte de P1; P0, P2 e as reproduções continuam pendentes.
+**Próxima execução, 2026-09-29:** diagnósticos posteriores já constam dos relatórios; o estado acima é histórico. Priorizar a [CLI Rust com piloto de patches reais](RUST_CLI_PILOTO_REAL.md), aplicando o [protocolo de validação](../research/rust/PROTOCOLO_VALIDACAO.md). E26 permanece catálogo de hipóteses/ablações; concluir suas variantes offline não substitui piloto com modelo nem exige adiar esse piloto.
+
+**Método canônico compartilhado; execução em duas trilhas.** Os exemplos e paths deste documento são da trilha SIGA/core. O [espelho Bitcoin](bitcoin/EXPERIMENTOS_2026.md) aplica exatamente as mesmas técnicas e critérios ao seu dataset, com IDs BTC-E26-00–06. Cada agente escreve somente nas áreas do [protocolo paralelo](PARALLEL_EXECUTION.md). O estado acima descreve a criação do plano; progresso posterior é apurado nos artefatos de cada dono.
+
+Base: [nove papers de 2026 verificados em fontes primárias](../research/16_BASE_EXPERIMENTAL_2026.md). Este documento detalha P1–P7 do [plano principal](PESQUISA_CONTEXTO_MODULAR.md); não substitui seu cegamento, pré-registro, política de falhas ou critérios estatísticos. A seleção de papers é parte de P1; conferir o avanço de P0/P2 e reproduções nos registros da trilha, sem transferir conclusões SIGA para Bitcoin.
 
 ## 1. O produto que vale a pena testar
 
@@ -151,11 +155,13 @@ O protótipo deve produzir uma demonstração reproduzível: dev fornece uma tar
 
 ## 5. Ordem, volume e portões de decisão
 
+Esta ordem é interna a cada trilha. BTC-Pn não depende de SIGA-Pn concluída. A troca de versões do core ocorre entre rodadas; medições de desempenho compartilham reserva de recursos conforme o protocolo paralelo. O piloto de 72–120 execuções é por trilha, com teto próprio, não orçamento global já autorizado.
+
 1. **P0–P2:** concluir auditoria, consolidar fichas e executar E26-00. Preparar E26-01 sem inferência paga, exceto revisão assistida explicitamente contabilizada.
 2. **P3:** executar o piloto A/B/C de 72–120 execuções já previsto no plano principal, instrumentado. Não repetir o lote integral para cada paper.
 3. **P4:** E26-02 primeiro. Rodar E26-03 e E26-04 somente se as falhas observadas justificarem; E26-05 apenas se houver sessões com pressão de contexto. Uma nova comparação usa inicialmente um subconjunto dev previamente declarado. Testes de viabilidade não recebem linguagem confirmatória.
 4. **P5:** escolher e congelar uma configuração e comparadores antes de abrir o teste cego. Aplicar dimensionamento e critérios de qualidade/custo do plano principal. Incluir todas as tentativas e componentes no custo.
-5. **P6–P7:** E26-06, replicação nos demais modelos disponíveis e em pelo menos dois projetos externos selecionados antes do teste. Usar capacidades, não nomes comerciais, para definir compatibilidade.
+5. **P6–P7:** E26-06 e replicação nos demais modelos disponíveis. O produto geral exige pelo menos dois projetos inéditos externos ao desenvolvimento SIGA/Bitcoin; a trilha exclusiva Bitcoin faz portabilidade temporal/de ambiente e registra que isso não demonstra generalização entre repositórios. Usar capacidades, não nomes comerciais, para definir compatibilidade.
 
 Dois alvos iniciais de reprodução/adaptação de baixa barreira: métricas/casos do Agent Retrieval Bench e política de compactação do CliffCompaction. O primeiro pode começar em diagnóstico local; o segundo depende de controle do histórico. Se essa dependência faltar, substituir o alvo operacional por E26-02, mantendo o registro de que foi adaptação, não reprodução do paper.
 

@@ -1,6 +1,6 @@
 # 03 — Questões de Pesquisa (RQ1–RQ10)
 
-> Rascunho histórico. Para a próxima pesquisa, usar as hipóteses e métricas do [plano vigente](../plans/PESQUISA_CONTEXTO_MODULAR.md), distinguindo hit de arquivos, recall de conjuntos e sucesso em edição. O PIN atual descreve SIGA Java 21/`desenvolvimento`; Java 8/`develop` abaixo é referência desatualizada. Transferência ocorre após validação no SIGA, sem Bitcoin obrigatório.
+> Rascunho histórico. Para a próxima pesquisa, usar as hipóteses e métricas do [plano vigente](../plans/PESQUISA_CONTEXTO_MODULAR.md), distinguindo hit de arquivos, recall de conjuntos e sucesso em edição. O PIN atual descreve SIGA Java 21/`desenvolvimento`; Java 8/`develop` abaixo é referência desatualizada. SIGA e Bitcoin seguem [trilhas paralelas independentes](../plans/PARALLEL_EXECUTION.md); transferência para projetos inéditos é uma avaliação posterior e não inclui esses dois datasets de desenvolvimento.
 
 **Status:** DRAFT 2026-09-24. Todas falsificáveis. Controles: mesmo LLM/commit/temperatura/seeds/repetições; SHA obrigatório.
 
