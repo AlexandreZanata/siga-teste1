@@ -35,7 +35,7 @@ Para trabalhar com dois agentes: [agente A — continuar SIGA/core](plans/SIGA_E
 
 Ver também `docs/ROADMAP_ETAPAS.md` (histórico F0–F20 e ligação com F21) e `docs/VERIFICATION_PROTOCOL.md` (verificação de evidências). Resultados históricos de recuperação não comprovam, isoladamente, economia ou correção em tarefas de desenvolvimento.
 
-## CLI Rust (R1 implementado; R2 parcialmente)
+## CLI Rust (R1 e R2 implementados; camada de avaliação de R3/R5 pronta)
 
 Executável local que o agente invoca por shell: recuperação determinística, sem rede, sem daemon, sem GPU e sem Python no caminho de execução. Fonte em `rust/archatlas/`; contrato congelado em `research/rust/CLI_CONTRACT.md`; estado em `plans/rust/STATUS.md`; medições em `research/rust/R2_REPORT.md` (compare produtos, não linguagens).
 
@@ -66,6 +66,17 @@ Runner de uma tentativa do piloto real — tetos primeiro, `opened` só de leitu
 python benchmarks/rust/runner.py --tasks tarefas.json --task s01 --condition CTX-RS \
   --workspace /caminho/worktree --out /caminho/saida --atlas-index /tmp/idx.sqlite \
   --executor-cmd 'meu-agente --enunciado {statement_file} --dir {workspace}' --gold /caminho/ouro
+```
+
+Avaliação cega dessas tentativas — rubrica com itens mecânicos antes dos semânticos, bundle sem condição/modelo/custo/ordem, chave em custódia e adjudicação que não conta dúvida como sucesso. Contrato em [AVALIACAO_CEGA.md](research/rust/AVALIACAO_CEGA.md); as tarefas seguem o schema `atlas-tasks/2` ([template](benchmarks/rust/tasks.template.json)):
+
+```bash
+python benchmarks/rust/eval.py validate --tasks tarefas.json
+python benchmarks/rust/eval.py check  --attempts <rodada>/attempts --tasks tarefas.json
+python benchmarks/rust/eval.py bundle --attempts <rodada>/attempts --tasks tarefas.json \
+  --out <rodada>/blind --key /custodia/blind_key.json --custodian <nome>
+python benchmarks/rust/eval.py unblind --bundle <rodada>/blind --key /custodia/blind_key.json \
+  --scores notas.json --out <rodada>/avaliacao.json
 ```
 
 ## Uso rápido

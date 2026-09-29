@@ -53,7 +53,12 @@ REPO_ROOT = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from _bench import environment_manifest, write_json  # noqa: E402
 
+# `atlas-tasks/1` é o schema mínimo que bastou para ensaiar o runner; `/2` acrescenta o que a
+# avaliação cega exige para checar escopo mecanicamente (`allowed_paths`, `immutable_paths`) e o
+# que o protocolo §3 exige por tarefa (`origin`, `contamination_risk`). O runner aceita os dois —
+# recusar `/1` quebraria tentativas já ensaiadas sem ganho —, mas `eval.py` só cega `/2`.
 TASK_SCHEMA = "atlas-tasks/1"
+TASK_SCHEMAS = ("atlas-tasks/1", "atlas-tasks/2")
 RUN_SCHEMA = "atlas-run/1"
 CONDITIONS = ("BASE", "LEX-RS", "CTX-RS")
 # Tetos propostos no protocolo §4, iguais nos três braços. Não são dimensionamento; são tetos.
@@ -164,8 +169,9 @@ def tree_hash(root: Path) -> str:
 
 def load_tasks(path: Path) -> dict:
     doc = json.loads(path.read_text())
-    if doc.get("schema") != TASK_SCHEMA:
-        raise SystemExit(f"schema de tarefas desconhecido: {doc.get('schema')!r}")
+    if doc.get("schema") not in TASK_SCHEMAS:
+        raise SystemExit(f"schema de tarefas desconhecido: {doc.get('schema')!r} "
+                         f"(esperado um de {', '.join(TASK_SCHEMAS)})")
     return doc
 
 
@@ -528,7 +534,13 @@ def main() -> int:
         "platform": doc.get("platform"),
         "phase": args.phase,
         "task": {"id": task["id"], "split": task.get("split"), "category": task.get("category"),
-                 "base_sha": task.get("base_sha"), "test_command": task.get("test_command")},
+                 "base_sha": task.get("base_sha"), "test_command": task.get("test_command"),
+                 # Cópia do escopo declarado, para que o manifesto registre com que escopo a
+                 # tentativa correu. `eval.py` recusa se isto divergir do conjunto de tarefas.
+                 "allowed_paths": task.get("allowed_paths"),
+                 "immutable_paths": task.get("immutable_paths"),
+                 "origin": task.get("origin"),
+                 "contamination_risk": task.get("contamination_risk")},
         "condition": args.condition,
         "snapshot": {"base_sha": base_sha, "tree_sha256": tree_hash(workspace),
                      "workspace": str(workspace),

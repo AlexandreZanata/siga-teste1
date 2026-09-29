@@ -1,0 +1,64 @@
+{
+  "_note": "TEMPLATE, nao e um conjunto cientifico. Os quatro itens existem para mostrar o schema atlas-tasks/2 completo e balanceado 4/4/4/4 (pre-registro §1.2); enunciado, base_sha, comando de aceitacao e origem precisam ser substituidos por tarefa real. `sealed` continua false ate o conjunto real ser congelado, e o pre-registro §4 exige registrar a origem e o risco de contaminacao de cada tarefa.",
+  "schema": "atlas-tasks/2",
+  "platform": "siga",
+  "sealed": false,
+  "tasks": [
+    {
+      "id": "TPL-01",
+      "split": "smoke",
+      "category": "bug_local",
+      "statement": "COLOQUE AQUI O ENUNCIADO REAL: sintoma observado, comportamento esperado e como reproduzir. Nao cite a solucao.",
+      "base_sha": "SUBSTITUA-PELO-SHA-DO-SNAPSHOT-ANTERIOR-A-SOLUCAO",
+      "test_command": ["SUBSTITUA", "pelo-comando-de-aceitacao-imutavel-do-avaliador"],
+      "timeout_s": 600,
+      "allowed_paths": ["src/**"],
+      "immutable_paths": ["src/test/**"],
+      "origin": "SUBSTITUA: de onde a tarefa veio, quem revisou e por que o problema e genuino",
+      "contamination_risk": "alto",
+      "contamination_note": "SUBSTITUA: se ja esteve em issue/PR publica, quando e com que chance de estar no treino do modelo"
+    },
+    {
+      "id": "TPL-02",
+      "split": "smoke",
+      "category": "entre_arquivos",
+      "statement": "COLOQUE AQUI O ENUNCIADO REAL de uma mudanca que atravessa mais de um arquivo.",
+      "base_sha": "SUBSTITUA-PELO-SHA-DO-SNAPSHOT-ANTERIOR-A-SOLUCAO",
+      "test_command": ["SUBSTITUA", "pelo-comando-de-aceitacao-imutavel-do-avaliador"],
+      "timeout_s": 600,
+      "allowed_paths": ["src/**"],
+      "immutable_paths": ["src/test/**"],
+      "origin": "SUBSTITUA",
+      "contamination_risk": "medio",
+      "contamination_note": "SUBSTITUA"
+    },
+    {
+      "id": "TPL-03",
+      "split": "smoke",
+      "category": "testes_comportamento_de_api",
+      "statement": "COLOQUE AQUI O ENUNCIADO REAL de um comportamento de API a ser fixado com teste.",
+      "base_sha": "SUBSTITUA-PELO-SHA-DO-SNAPSHOT-ANTERIOR-A-SOLUCAO",
+      "test_command": ["SUBSTITUA", "pelo-comando-de-aceitacao-imutavel-do-avaliador"],
+      "timeout_s": 600,
+      "allowed_paths": ["src/**", "docs/**"],
+      "immutable_paths": ["src/test/**"],
+      "origin": "SUBSTITUA",
+      "contamination_risk": "baixo",
+      "contamination_note": "SUBSTITUA"
+    },
+    {
+      "id": "TPL-04",
+      "split": "smoke",
+      "category": "configuracao_interface",
+      "statement": "COLOQUE AQUI O ENUNCIADO REAL de configuracao ou interface.",
+      "base_sha": "SUBSTITUA-PELO-SHA-DO-SNAPSHOT-ANTERIOR-A-SOLUCAO",
+      "test_command": ["SUBSTITUA", "pelo-comando-de-aceitacao-imutavel-do-avaliador"],
+      "timeout_s": 600,
+      "allowed_paths": ["src/**", "config/**"],
+      "immutable_paths": ["src/test/**", "acceptance/**"],
+      "origin": "SUBSTITUA",
+      "contamination_risk": "baixo",
+      "contamination_note": "SUBSTITUA"
+    }
+  ]
+}
