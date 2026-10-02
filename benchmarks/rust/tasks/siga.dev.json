@@ -43,7 +43,7 @@
         "source_inspected": true,
         "baseline_defect_reproduced": true,
         "acceptance_prepared": true,
-        "reference_validated": false,
+        "reference_validated": true,
         "runnable_in_pilot": false
       }
     },
@@ -87,8 +87,8 @@
       "readiness": {
         "source_inspected": true,
         "baseline_defect_reproduced": false,
-        "acceptance_prepared": false,
-        "reference_validated": false,
+        "acceptance_prepared": true,
+        "reference_validated": true,
         "runnable_in_pilot": false
       }
     },
@@ -127,8 +127,8 @@
       "readiness": {
         "source_inspected": true,
         "baseline_defect_reproduced": false,
-        "acceptance_prepared": false,
-        "reference_validated": false,
+        "acceptance_prepared": true,
+        "reference_validated": true,
         "runnable_in_pilot": false
       }
     },
@@ -167,8 +167,8 @@
       "readiness": {
         "source_inspected": true,
         "baseline_defect_reproduced": false,
-        "acceptance_prepared": false,
-        "reference_validated": false,
+        "acceptance_prepared": true,
+        "reference_validated": true,
         "runnable_in_pilot": false
       }
     },

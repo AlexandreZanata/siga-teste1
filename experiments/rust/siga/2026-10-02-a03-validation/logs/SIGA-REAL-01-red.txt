@@ -1,0 +1,7 @@
+FAIL close-before-open threw=java.lang.StringIndexOutOfBoundsException: Range [7, 0) out of bounds for length 15
+PASS close-only
+PASS no-delimiters
+PASS open-without-later-close
+PASS adjacent-delimiters
+PASS simple-case
+AtlasAccept01: 5/6 passed

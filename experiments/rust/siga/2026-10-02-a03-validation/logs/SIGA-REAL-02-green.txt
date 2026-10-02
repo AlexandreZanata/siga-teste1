@@ -1,0 +1,7 @@
+PASS spaces-mixed-uf
+PASS no-uf-trimmed
+PASS null-localidade
+PASS simple-uf
+PASS legacy-upper-uf
+PASS legacy-no-uf
+AtlasAccept02: 6/6 passed

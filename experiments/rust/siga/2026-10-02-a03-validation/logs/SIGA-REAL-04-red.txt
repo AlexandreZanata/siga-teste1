@@ -1,0 +1,7 @@
+FAIL spaced expected=<[a, b]> actual=<[,  a,  ,  b,  ]>
+PASS dup
+FAIL empty expected=<[]> actual=<[]>
+PASS missing
+FAIL each-trimmed expected=<[a, b]> actual=<[ a , b ]>
+PASS single
+AtlasAccept04: 3/6 passed

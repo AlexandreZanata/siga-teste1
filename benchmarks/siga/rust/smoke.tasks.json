@@ -1,0 +1,65 @@
+{
+  "_note": "Conjunto smoke SIGA validado (TASK-A03, 2026-10-02). 4 tarefas, balanco 1/1/1/1 por categoria. O comando de aceite e o runner imutavel do avaliador em acceptance/run.sh: o workspace do avaliador recebe acceptance/ como atlas-accept/ ANTES do patch (ver acceptance/README.md). Sem campos de curadoria, sem gabarito, sem teste privado.",
+  "schema": "atlas-tasks/2",
+  "platform": "siga",
+  "sealed": false,
+  "base_sha": "e3be22828f787cbe71b339aecb7a7bf569099803",
+  "tasks": [
+    {
+      "id": "SIGA-REAL-01",
+      "split": "smoke",
+      "category": "bug_local",
+      "statement": "A API Texto.extrai deve localizar o primeiro fechamento depois do delimitador de abertura escolhido. Um fechamento anterior nao deve causar excecao nem determinar o resultado. Preservar o retorno null quando faltar abertura ou fechamento posterior. Entradas null e delimitadores vazios ficam fora desta tarefa.",
+      "base_sha": "e3be22828f787cbe71b339aecb7a7bf569099803",
+      "test_command": ["bash", "atlas-accept/run.sh", "SIGA-REAL-01"],
+      "timeout_s": 600,
+      "allowed_paths": ["siga-base/src/main/java/br/gov/jfrj/siga/base/util/Texto.java"],
+      "immutable_paths": ["atlas-accept/**", "siga-base/src/test/**"],
+      "origin": "Curadoria dev A01 (aceite) + A03 (referencia validada) em 2026-10-02: defeito reproduzido na base (StringIndexOutOfBoundsException), 6 casos independentes, regressao preservada.",
+      "contamination_risk": "medio",
+      "contamination_note": "Codigo upstream publico; requisito dev publicado nesta curadoria. Nao usar este item nem variantes da familia siga-texto como holdout. Nao pesquisar solucao upstream durante as tentativas."
+    },
+    {
+      "id": "SIGA-REAL-02",
+      "split": "smoke",
+      "category": "entre_arquivos",
+      "statement": "Na data por extenso de DocumentoUtil, aceitar espacos externos na localidade e grafia mista. Preservar hifens internos no nome do municipio e manter a UF reconhecida em maiusculas. O formatador de texto compartilhado e seus consumidores devem continuar compativeis.",
+      "base_sha": "e3be22828f787cbe71b339aecb7a7bf569099803",
+      "test_command": ["bash", "atlas-accept/run.sh", "SIGA-REAL-02"],
+      "timeout_s": 600,
+      "allowed_paths": ["siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/DocumentoUtil.java", "siga-base/src/main/java/br/gov/jfrj/siga/base/util/Texto.java"],
+      "immutable_paths": ["atlas-accept/**", "siga-base/src/test/**", "siga-ex/src/test/**"],
+      "origin": "Curadoria dev A03 em 2026-10-02: requisito revisto por curador; baseline vermelho (2/6) e referencia verde (6/6) demonstrados; regressoes do DocumentoUtilTest legado preservadas.",
+      "contamination_risk": "medio",
+      "contamination_note": "Codigo upstream publico; requisito dev publicado nesta curadoria. Nao usar este item nem variantes da familia siga-data-localidade como holdout. Nao pesquisar solucao upstream durante as tentativas."
+    },
+    {
+      "id": "SIGA-REAL-03",
+      "split": "smoke",
+      "category": "testes_comportamento_de_api",
+      "statement": "Na validacao simples de CPF, aceitar somente 11 digitos ASCII ou a mascara ddd.ddd.ddd-dd. Rejeitar pontuacao deslocada, letras, branco e null pelo erro de aplicacao da API. Esta tarefa e sobre formato; nao acrescentar validacao de digitos verificadores.",
+      "base_sha": "e3be22828f787cbe71b339aecb7a7bf569099803",
+      "test_command": ["bash", "atlas-accept/run.sh", "SIGA-REAL-03"],
+      "timeout_s": 600,
+      "allowed_paths": ["siga-base/src/main/java/br/gov/jfrj/siga/base/util/CPFUtils.java"],
+      "immutable_paths": ["atlas-accept/**", "siga-base/src/test/**"],
+      "origin": "Curadoria dev A03 em 2026-10-02: requisito revisto por curador; baseline vermelho (8/10) e referencia verde (10/10) demonstrados; 7 testes legados de CPFUtilsTest preservados.",
+      "contamination_risk": "medio",
+      "contamination_note": "Codigo upstream publico; requisito dev publicado nesta curadoria. Nao usar este item nem variantes da familia siga-cpf como holdout. Nao pesquisar solucao upstream durante as tentativas."
+    },
+    {
+      "id": "SIGA-REAL-04",
+      "split": "smoke",
+      "category": "configuracao_interface",
+      "statement": "Prop.getList deve remover espacos externos de cada entrada e descartar entradas vazias, mantendo ordem e duplicatas. Propriedade ausente continua retornando null. Nao alterar a semantica dos getters numericos.",
+      "base_sha": "e3be22828f787cbe71b339aecb7a7bf569099803",
+      "test_command": ["bash", "atlas-accept/run.sh", "SIGA-REAL-04"],
+      "timeout_s": 600,
+      "allowed_paths": ["siga-base/src/main/java/br/gov/jfrj/siga/base/Prop.java"],
+      "immutable_paths": ["atlas-accept/**", "siga-base/src/test/**"],
+      "origin": "Curadoria dev A03 em 2026-10-02: requisito revisto por curador; baseline vermelho (3/6) e referencia verde (6/6) demonstrados; getters numericos inalterados.",
+      "contamination_risk": "medio",
+      "contamination_note": "Codigo upstream publico; requisito dev publicado nesta curadoria. Nao usar este item nem variantes da familia siga-prop como holdout. Nao pesquisar solucao upstream durante as tentativas."
+    }
+  ]
+}

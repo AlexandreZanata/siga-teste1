@@ -1,0 +1,15 @@
+PASS plain-ok
+PASS mask-ok
+FAIL misplaced-punct expected=AplicacaoException actual=aceito
+FAIL nonascii-digits expected=AplicacaoException actual=aceito
+[SIGA-DOC-VERSION] null
+PASS letter
+[SIGA-DOC-VERSION] null
+PASS blank
+[SIGA-DOC-VERSION] null
+PASS null
+[SIGA-DOC-VERSION] null
+PASS wrong-length
+PASS long-leading-zero
+PASS long-masked
+AtlasAccept03: 8/10 passed

@@ -1,0 +1,7 @@
+PASS spaced
+PASS dup
+PASS empty
+PASS missing
+PASS each-trimmed
+PASS single
+AtlasAccept04: 6/6 passed

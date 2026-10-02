@@ -1,0 +1,17 @@
+PASS plain-ok
+PASS mask-ok
+[SIGA-DOC-VERSION] null
+PASS misplaced-punct
+[SIGA-DOC-VERSION] null
+PASS nonascii-digits
+[SIGA-DOC-VERSION] null
+PASS letter
+[SIGA-DOC-VERSION] null
+PASS blank
+[SIGA-DOC-VERSION] null
+PASS null
+[SIGA-DOC-VERSION] null
+PASS wrong-length
+PASS long-leading-zero
+PASS long-masked
+AtlasAccept03: 10/10 passed

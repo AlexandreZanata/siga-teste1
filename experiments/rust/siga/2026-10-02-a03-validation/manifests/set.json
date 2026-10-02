@@ -1,0 +1,23 @@
+{
+  "schema": "atlas-acceptance-set/1",
+  "set": "benchmarks/siga/rust/smoke.tasks.json",
+  "set_sha256": "ffb9dd8bcf9899d94cd1cc267cc1426908d4ec48efe7437b775a6ad931f5e820",
+  "acceptance": {
+    "run_sh_sha256": "118d7c5128c3af1d3a885dae91e32627aaae6cd0ba32b1df0e160f36c94e7319",
+    "harnesses": {
+      "SIGA-REAL-01": "ee07373c625dd7bd003cbfc32a6bb8e3d39dbda47b3c8c053c9590258fc8258b",
+      "SIGA-REAL-02": "3028e8f6140d05eab6f8c7be5d89174a5b4e10dd9816d31e90337a33bafab501",
+      "SIGA-REAL-03": "d6bdee7552fcb8446f0ae65d770949703166ad2728172cdf2fdc4ed352a6960f",
+      "SIGA-REAL-04": "6a0aac863a4983c63e7f0fd52b2c976595c25f8ec4845ee8e014ce15c119a18e"
+    }
+  },
+  "validate": {
+    "command": "python3 benchmarks/rust/eval.py validate --tasks benchmarks/siga/rust/smoke.tasks.json",
+    "result": "balanced=true, problems=[]"
+  },
+  "gold_isolation": {
+    "custody": "diretorio fora do repo e fora do workspace; nunca em git (ver CURADORIA_SMOKE.md)",
+    "public_package_contains_gold": false,
+    "private_cases_published": false
+  }
+}

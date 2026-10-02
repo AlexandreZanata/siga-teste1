@@ -1,0 +1,7 @@
+PASS close-before-open
+PASS close-only
+PASS no-delimiters
+PASS open-without-later-close
+PASS adjacent-delimiters
+PASS simple-case
+AtlasAccept01: 6/6 passed

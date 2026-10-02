@@ -1,0 +1,7 @@
+FAIL spaces-mixed-uf expected=<Ji-Paraná-RO, 30 de abril de 2025.> actual=<  Ji-Paraná-Ro  , 30 de abril de 2025.>
+FAIL no-uf-trimmed expected=<Sao Paulo, 30 de abril de 2025.> actual=<  Sao Paulo  , 30 de abril de 2025.>
+PASS null-localidade
+PASS simple-uf
+PASS legacy-upper-uf
+PASS legacy-no-uf
+AtlasAccept02: 4/6 passed
