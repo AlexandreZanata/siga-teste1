@@ -1,0 +1,40 @@
+{
+  "schema": "atlas-acceptance-preflight/1",
+  "kind": "task-acceptance",
+  "task": "SIGA-REAL-01",
+  "base_sha": "e3be22828f787cbe71b339aecb7a7bf569099803",
+  "sources": [
+    {
+      "path": "siga-base/src/main/java/br/gov/jfrj/siga/base/util/Texto.java",
+      "sha256": "ea5716eb714117b5671dadeeecc4fc10ed7d2f8a5eb172ca95554f5894f8b82e"
+    }
+  ],
+  "harness": {
+    "file": "harness/AtlasAccept01.java",
+    "sha256": "ee07373c625dd7bd003cbfc32a6bb8e3d39dbda47b3c8c053c9590258fc8258b",
+    "cases": 6,
+    "build": "javac -d build/base-classes <fontes-da-base> harness/AtlasAccept01.java",
+    "run": "java -cp build/base-classes AtlasAccept01",
+    "exit_nonzero_on_failure": true
+  },
+  "baseline": {
+    "result": "red",
+    "passed": 5,
+    "failed": 1,
+    "exit": 1,
+    "failures": [
+      {
+        "case": "close-before-open",
+        "threw": "java.lang.StringIndexOutOfBoundsException",
+        "note": "comportamento exigido pelo criterio 1; excecao confirma o defeito reproduzido"
+      }
+    ],
+    "log": "logs/accept01-base.txt"
+  },
+  "green_check": {
+    "method": "variante corrigida descartavel em /tmp (apagada; nada armazenado, sem solucao de referencia)",
+    "passed": "6/6",
+    "exit": 0,
+    "note": "valida o harness, nao cria referencia; A03 cura a solucao de referencia em custodia"
+  }
+}

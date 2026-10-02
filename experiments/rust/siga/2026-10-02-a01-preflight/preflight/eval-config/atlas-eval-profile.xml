@@ -1,0 +1,37 @@
+<!--
+  Perfil imutável de avaliação `atlas-eval` (TASK-A01, revisto após prova em 2026-10-02).
+  Propriedade: avaliador. Inserido verbatim no pom do módulo sob avaliação, no workspace
+  do avaliador, pelo procedimento documentado em ACCEPTANCE_ENV.md §4. O executor nunca o
+  edita: o workspace é recriado por tentativa e o hash do pom aplicado consta no manifesto.
+
+  Por que um perfil, e não `-DskipTests=false`:
+  o pom base fixa `<skipTests>true</skipTests>` como configuração literal do
+  maven-surefire-plugin; propriedade de linha de comando não sobrescreve configuração
+  literal (comprovado em logs/mvn-flag-skip-false.log: "Tests are skipped" com exit 0).
+  Só uma configuração efetiva no POM muda o comportamento — e o POM efetivo é auditável.
+
+  Por que NÃO adicionar `src/test/br` como fonte de teste (tentado e revertido):
+  1. `src/test/br` duplica classes de `src/test/java/br` (CPFUtilsTest e CorreioTest são
+     byte a byte idênticos nas duas árvores); adicionar a raiz quebra a compilação com
+     "duplicate class".
+  2. Arquivos só existentes em `src/test/br` (Propriedades*, auditoria hibernate,
+     ThreadFilterTest, MatriculaUtilsTest) referenciam símbolos fora do módulo
+     (ex.: `br.gov.jfrj.siga.model.prop.ModeloPropriedade`, inexistente em siga-base) e
+     não compilam no build do módulo — 58 erros, log mvn-eval-smoke-v1-falha.log.
+  Testes do avaliador vivem em `src/test/java` (descoberta padrão do Surefire); testes
+  legados já presentes em `src/test/java/br` executam normalmente com o perfil.
+-->
+<profile>
+  <id>atlas-eval</id>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <skipTests>false</skipTests>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</profile>

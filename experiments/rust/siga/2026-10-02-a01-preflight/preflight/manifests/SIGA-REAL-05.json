@@ -1,0 +1,48 @@
+{
+  "schema": "atlas-acceptance-preflight/1",
+  "kind": "task-acceptance",
+  "task": "SIGA-REAL-05",
+  "base_sha": "e3be22828f787cbe71b339aecb7a7bf569099803",
+  "sources": [
+    {
+      "path": "siga-base/src/main/java/br/gov/jfrj/siga/base/util/SetUtils.java",
+      "sha256": "5732f0ff4dbb6300611b21839271db3e36b67ad19a24be5a9017e775dedc878d"
+    }
+  ],
+  "harness": {
+    "file": "harness/AtlasAccept05.java",
+    "sha256": "1302cddc3fdd67ae78073081709d53311a0e0012b49274ffb88f21250acbc44f",
+    "cases": 8,
+    "build": "javac -d build/base-classes <fontes-da-base> harness/AtlasAccept05.java",
+    "run": "java -cp build/base-classes AtlasAccept05",
+    "exit_nonzero_on_failure": true
+  },
+  "baseline": {
+    "result": "red",
+    "passed": 1,
+    "failed": 7,
+    "exit": 1,
+    "failures": [
+      {
+        "cases": [
+          "union-singleton",
+          "union-value-equality",
+          "intersection-value-equality",
+          "difference-value-equality",
+          "symdiff-value-equality",
+          "immutable-inputs",
+          "inputs-unmodified"
+        ],
+        "threw": "java.lang.ClassCastException",
+        "note": "TreeSet exige Comparable; confirma o defeito reproduzido"
+      }
+    ],
+    "log": "logs/accept05-base.txt"
+  },
+  "green_check": {
+    "method": "variante corrigida descartavel em /tmp (apagada; nada armazenado, sem solucao de referencia)",
+    "passed": "8/8",
+    "exit": 0,
+    "note": "valida o harness, nao cria referencia; A03 cura a solucao de referencia em custodia"
+  }
+}

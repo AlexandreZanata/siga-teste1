@@ -1,0 +1,20 @@
+{
+  "schema": "atlas-acceptance-preflight/1",
+  "kind": "environment",
+  "date": "2026-10-02",
+  "dataset": {
+    "repo": "../siga (checkout inspecionado, nao modificado)",
+    "worktree": "/tmp/siga-a01-2026-10-02 (git worktree --detach, SHA fixado)",
+    "base_sha": "e3be22828f787cbe71b339aecb7a7bf569099803"
+  },
+  "java": {
+    "java_version": "21.0.12.1 Ubuntu (/usr/lib/jvm/java-21-openjdk-amd64, padrao no PATH)",
+    "javac_path": "Temurin 21 via /data/dev/java/candidates/java/current/bin (primeiro javac no PATH)",
+    "maven": "Apache Maven 3.8.7",
+    "JAVA_HOME_usado_no_maven": "/data/dev/java/candidates/java/current (JDK completo, Temurin 21+35)",
+    "java_padrao_sem_ctsym": true,
+    "nota_jre": "o java padrao do ambiente e um JRE sem lib/ct.sym: o compilador in-process nao aceita nenhum --release (nem 17); Maven com o java padrao falha em compile com 'release version 21 not supported'. O avaliador fixa JAVA_HOME para um JDK completo."
+  },
+  "maven_local_repo": "~/.m2/repository (990M aquecido; surefire 2.16 e deps baixados do Central/JBoss nesta revisao)",
+  "network": "repo.maven.apache.org acessivel (HTTP 200); downloads registrados nos logs"
+}

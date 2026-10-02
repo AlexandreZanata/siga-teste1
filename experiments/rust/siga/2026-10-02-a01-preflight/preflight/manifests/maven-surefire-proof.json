@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-acceptance-preflight/1",
+  "kind": "maven-surefire-proof",
+  "module": "siga-base",
+  "steps": [
+    {
+      "command": "mvn -B -e -pl siga-base compile (com o java padrao, antes de fixar JAVA_HOME)",
+      "result": "BUILD FAILURE: Fatal error compiling: release version 21 not supported (in-process, fork=false)",
+      "log": "logs/mvn-compile-debug.txt",
+      "note": "causa raiz da armadilha C: JRE Ubuntu sem lib/ct.sym; o compilador in-process rejeita qualquer --release. Evidencia para fixar JAVA_HOME em JDK completo"
+    },
+    {
+      "command": "mvn -B -pl siga-base test",
+      "result": "Tests are skipped / BUILD SUCCESS / exit 0",
+      "log": "logs/mvn-default-skip.txt",
+      "note": "skipTests=true literal do pom base: sucesso silencioso com zero testes"
+    },
+    {
+      "command": "mvn -B -pl siga-base -DskipTests=false test",
+      "result": "Tests are skipped / BUILD SUCCESS / exit 0",
+      "log": "logs/mvn-flag-skip-false.txt",
+      "note": "propriedade de linha de comando NAO sobrescreve configuracao literal; armadilha confirmada"
+    },
+    {
+      "command": "perfil atlas-eval aplicado ao pom da copia + AtlasEvalSmokeTest em src/test/java",
+      "fragment": "eval-config/atlas-eval-profile.xml",
+      "result": "Tests run: 1, Failures: 0, Errors: 0, Skipped: 0 / BUILD SUCCESS / exit 0",
+      "log": "logs/mvn-eval-smoke.txt",
+      "reports": [
+        "reports/br.gov.jfrj.siga.base.util.AtlasEvalSmokeTest.txt",
+        "reports/TEST-br.gov.jfrj.siga.base.util.AtlasEvalSmokeTest.xml"
+      ]
+    },
+    {
+      "command": "mvn -B -pl siga-base -Patlas-eval help:effective-pom",
+      "result": "skipTests=false no POM efetivo (nivel de plugin e de execucao default-test)",
+      "evidence": "reports/effective-pom-surefire.txt",
+      "log": "logs/mvn-effective-pom.txt"
+    },
+    {
+      "command": "mvn -B -pl siga-base -Patlas-eval -Dtest=CPFUtilsTest test",
+      "result": "Tests run: 7, Failures: 0, Errors: 0, Skipped: 0 / BUILD SUCCESS / exit 0",
+      "log": "logs/mvn-eval-legacy-cpf.txt",
+      "reports": [
+        "reports/br.gov.jfrj.siga.base.util.CPFUtilsTest.txt",
+        "reports/TEST-br.gov.jfrj.siga.base.util.CPFUtilsTest.xml"
+      ],
+      "note": "teste legado em src/test/java executa e passa na base: regressao preservada"
+    },
+    {
+      "command": "tentativa v1 com src/test/br como fonte (revertida)",
+      "result": "BUILD FAILURE: duplicate class + 58 erros (simbolos de outro modulo)",
+      "log": "logs/mvn-eval-smoke-v1-falha.txt",
+      "note": "src/test/br NAO pode ser adicionado em bloco: duplica CPFUtilsTest/CorreioTest e contem testes que nao compilam no modulo (ModeloPropriedade)"
+    }
+  ]
+}

@@ -20,6 +20,13 @@ Nova fila: [TASK-A01–A03, B01–B02 e EXP01–EXP04](../PROXIMAS_TASKS_SIGA_BI
 - **Testes:** 17 novos em [`tests/test_rust_executor_contract.py`](../../tests/test_rust_executor_contract.py), de agregação e cobrança duplicada a integração pelo runner real com executor `cmd`. `pytest -q`: **119 passed, 5 skipped** (antes: 103 passed, 4 skipped).
 - **O que continua aberto:** P1 (modelo efetivo), P2 (teto financeiro) e a captura real sanitizada. TASK-A01 (aceite SIGA que comprova execução de testes Maven) e A03/EXP02 seguem como as próximas entregas de A. Nenhuma tentativa com modelo rodou: a conclusão científica continua `não avaliada`.
 
+## TASK-A01 executada (2026-10-02) — aceitação SIGA que realmente executa testes
+
+- **O que existe agora:** aceites Java isolados de `SIGA-REAL-01` (6 casos) e `SIGA-REAL-05` (8 casos) em `experiments/rust/siga/2026-10-02-a01-preflight/preflight/harness/`, compilados com `javac` contra as fontes da base, sem Maven/JUnit/rede, com exit ≠ 0 em qualquer falha. Baseline na base: 01 → **5/6 vermelho** (`StringIndexOutOfBoundsException` no caso exigido); 05 → **1/8 vermelho** (7× `ClassCastException`). Harnesses validados contra variante corrigida descartável em /tmp (apagada, nada armazenado): 6/6 e 8/8.
+- **Configuração imutável de avaliação comprovada:** perfil `atlas-eval` (só Surefire `skipTests=false`, sem `src/test/br`) + POM efetivo com `skipTests=false` + `AtlasEvalSmokeTest` com `Tests run: 1` + `CPFUtilsTest` legado com `Tests run: 7`, tudo verde na base. Três armadilhas comprovadas em log: skip literal com sucesso silencioso, `-DskipTests=false` que não sobrescreve, JRE padrão sem `ct.sym` (exige `JAVA_HOME` em JDK completo), e `src/test/br` que não pode ser adicionado em bloco (duplicatas + símbolos de outro módulo). Entrega: [`research/siga/rust/ACCEPTANCE_ENV.md`](../../research/siga/rust/ACCEPTANCE_ENV.md).
+- **Testes:** 5 novos em `tests/test_siga_acceptance_preflight.py` (baseline vermelho registrado, hashes amarrados ao catálogo, Surefire com testes > 0, config sem `src/test/br`). `pytest -q`: **124 passed, 5 skipped** (antes: 119 passed, 5 skipped).
+- **O que continua aberto:** referência validada e curadoria (TASK-A03), aceites de 02/03/04/06/07/08 nos módulos sem banco/servidor, e P1/P2 para qualquer rodada com modelo. O checkout inspecionado `../siga` não foi modificado; o trabalho correu em worktree isolada no SHA fixado.
+
 ## Evidência atual
 
 - **R0 executado** (2026-09-29): contrato congelado em [`CLI_CONTRACT.md`](../../research/rust/CLI_CONTRACT.md), levantamento em [`BASELINE.md`](../../research/rust/BASELINE.md) e pré-registro em [`PREREGISTRATION_R0.md`](../../research/rust/PREREGISTRATION_R0.md).

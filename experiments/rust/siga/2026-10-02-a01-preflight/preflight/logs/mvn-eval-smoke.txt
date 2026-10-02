@@ -1,0 +1,61 @@
+[INFO] Scanning for projects...
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for siga:siga-dump:jar:11.5-SNAPSHOT
+[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-jar-plugin is missing. @ line 37, column 12
+[WARNING] 'build.plugins.plugin.version' for com.jolira:onejar-maven-plugin is missing. @ line 48, column 12
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for siga:siga-ldap-cli:jar:11.5-SNAPSHOT
+[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-jar-plugin is missing. @ line 35, column 12
+[WARNING] 'build.plugins.plugin.version' for com.jolira:onejar-maven-plugin is missing. @ line 46, column 12
+[WARNING] 
+[WARNING] It is highly recommended to fix these problems because they threaten the stability of your build.
+[WARNING] 
+[WARNING] For this reason, future Maven versions might no longer support building such malformed projects.
+[WARNING] 
+[INFO] 
+[INFO] ---------------------------< siga:siga-base >---------------------------
+[INFO] Building siga-base 11.5-SNAPSHOT
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- build-helper-maven-plugin:3.2.0:regex-property (regex-property) @ siga-base ---
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ siga-base ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /tmp/siga-a01-2026-10-02/siga-base/src/main/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.11.0:compile (default-compile) @ siga-base ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ siga-base ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /tmp/siga-a01-2026-10-02/siga-base/src/test/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.11.0:testCompile (default-testCompile) @ siga-base ---
+[INFO] Changes detected - recompiling the module! :source
+[INFO] Compiling 4 source files with javac [debug release 21] to target/test-classes
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.16:test (default-test) @ siga-base ---
+[INFO] Surefire report directory: /tmp/siga-a01-2026-10-02/siga-base/target/surefire-reports
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/surefire/surefire-junit4/2.16/surefire-junit4-2.16.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/surefire/surefire-junit4/2.16/surefire-junit4-2.16.pom (2.5 kB at 4.0 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/surefire/surefire-providers/2.16/surefire-providers-2.16.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/surefire/surefire-providers/2.16/surefire-providers-2.16.pom (2.4 kB at 29 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/surefire/surefire-junit4/2.16/surefire-junit4-2.16.jar
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/surefire/surefire-junit4/2.16/surefire-junit4-2.16.jar (64 kB at 545 kB/s)
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running br.gov.jfrj.siga.base.util.AtlasEvalSmokeTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.019 sec - in br.gov.jfrj.siga.base.util.AtlasEvalSmokeTest
+
+Results :
+
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  2.208 s
+[INFO] Finished at: 2026-10-02T10:24:31-04:00
+[INFO] ------------------------------------------------------------------------

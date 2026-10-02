@@ -1,0 +1,9 @@
+FAIL union-singleton threw=java.lang.ClassCastException: class AtlasAccept05$Box cannot be cast to class java.lang.Comparable (AtlasAccept05$Box is in unnamed module of loader 'app'; java.lang.Comparable is in module java.base of loader 'bootstrap')
+FAIL union-value-equality threw=java.lang.ClassCastException: class AtlasAccept05$Box cannot be cast to class java.lang.Comparable (AtlasAccept05$Box is in unnamed module of loader 'app'; java.lang.Comparable is in module java.base of loader 'bootstrap')
+FAIL intersection-value-equality threw=java.lang.ClassCastException: class AtlasAccept05$Box cannot be cast to class java.lang.Comparable (AtlasAccept05$Box is in unnamed module of loader 'app'; java.lang.Comparable is in module java.base of loader 'bootstrap')
+FAIL difference-value-equality threw=java.lang.ClassCastException: class AtlasAccept05$Box cannot be cast to class java.lang.Comparable (AtlasAccept05$Box is in unnamed module of loader 'app'; java.lang.Comparable is in module java.base of loader 'bootstrap')
+FAIL symdiff-value-equality threw=java.lang.ClassCastException: class AtlasAccept05$Box cannot be cast to class java.lang.Comparable (AtlasAccept05$Box is in unnamed module of loader 'app'; java.lang.Comparable is in module java.base of loader 'bootstrap')
+PASS empty-union
+FAIL immutable-inputs threw=java.lang.ClassCastException: class AtlasAccept05$Box cannot be cast to class java.lang.Comparable (AtlasAccept05$Box is in unnamed module of loader 'app'; java.lang.Comparable is in module java.base of loader 'bootstrap')
+FAIL inputs-unmodified threw=java.lang.ClassCastException: class AtlasAccept05$Box cannot be cast to class java.lang.Comparable (AtlasAccept05$Box is in unnamed module of loader 'app'; java.lang.Comparable is in module java.base of loader 'bootstrap')
+AtlasAccept05: 1/8 passed

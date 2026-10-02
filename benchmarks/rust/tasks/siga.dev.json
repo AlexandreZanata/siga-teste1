@@ -42,7 +42,7 @@
       "readiness": {
         "source_inspected": true,
         "baseline_defect_reproduced": true,
-        "acceptance_prepared": false,
+        "acceptance_prepared": true,
         "reference_validated": false,
         "runnable_in_pilot": false
       }
@@ -207,7 +207,7 @@
       "readiness": {
         "source_inspected": true,
         "baseline_defect_reproduced": true,
-        "acceptance_prepared": false,
+        "acceptance_prepared": true,
         "reference_validated": false,
         "runnable_in_pilot": false
       }
