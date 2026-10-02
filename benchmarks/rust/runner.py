@@ -24,6 +24,14 @@ Quatro decisões que valem explicar, porque cada uma foi escolha contra algo mai
    executor. Ele também **declara o que não cobre**: mesmo `.git`, mesmo usuário, sem container.
    O pré-registro §4 já avisa que worktree não é isolamento — o runner não finge que é.
 
+5. **O que não é observável por fora vem por contrato, e não vira zero.** Identidade do modelo,
+   tokens, latência, erro/retry, turnos, chamadas de ferramenta fora do shim e custo faturado
+   são **declarados** pelo executor (`atlas-executor/1`, ver `executor_contract.py`) e ficam ao
+   lado do que o runner viu, em campos próprios, conferidos contra o próprio stream dele. Sem
+   result contract, a tentativa é `unverified`; com violação, `contract_violation` e nunca
+   `real`. Tentativa real sem `provider`+`id`+`version`+`verified_by` do modelo é recusada como
+   evidência, porque nome informal de modelo não substitui identidade verificável.
+
 O executor `dry` existe para testar esta infraestrutura sem modelo. Todo run com ele sai marcado
 `evidence_class: infrastructure_only`, e o runner se recusa a rodá-lo sem `--allow-dry`: um stub
 nunca pode ser confundido com evidência de R3.
@@ -34,6 +42,10 @@ Uso:
         --atlas-bin rust/archatlas/target/release/archatlas --atlas-index /tmp/idx.sqlite \\
         --executor-cmd 'meu-agente --enunciado {statement_file} --dir {workspace}' \\
         --gold /caminho/ouro
+
+O executor recebe `ATLAS_EXECUTOR_TELEMETRY` (stream append-only, eventos com
+`"source": "executor"`) e `ATLAS_EXECUTOR_RESULT` (result contract). Ver
+[`research/rust/RUNNER_PILOTO.md`](../../research/rust/RUNNER_PILOTO.md) §§3–4b.
 """
 
 from __future__ import annotations
@@ -52,6 +64,20 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from _bench import environment_manifest, write_json  # noqa: E402
+from executor_contract import (  # noqa: E402
+    CONTRACT_SCHEMA,
+    EXTERNALLY_OBSERVED,
+    RESULT_ENV,
+    SHIM_SOURCE,
+    STREAM_ENV,
+    StreamAccounting,
+    capability_manifest,
+    coverage_report,
+    load_result,
+    reconcile,
+    reconcile_violations,
+    validate_result,
+)
 
 # `atlas-tasks/1` é o schema mínimo que bastou para ensaiar o runner; `/2` acrescenta o que a
 # avaliação cega exige para checar escopo mecanicamente (`allowed_paths`, `immutable_paths`) e o
@@ -64,6 +90,10 @@ CONDITIONS = ("BASE", "LEX-RS", "CTX-RS")
 # Tetos propostos no protocolo §4, iguais nos três braços. Não são dimensionamento; são tetos.
 DEFAULT_LIMITS = {"wall_s": 1800, "turns": 40, "tool_calls": 100}
 POLL_S = 0.05
+# Conjunto fixo de ferramentas nos tres bracos: o loop tem de ser o mesmo e so a politica de
+# contexto difere. `BASE` nao recebe o `atlas`, mas o loop registrado e identico — e
+# `--expect-loop-sha` recusa iniciar quando a rodada nao esta no loop fixado.
+FIXED_TOOLS = ("atlas", "atlas-read")
 
 READ_SHIM = '''#!/usr/bin/env python3
 """Leitor sancionado: registra a leitura e só então imprime. Sem registro, `opened` não existe."""
@@ -83,13 +113,15 @@ def main() -> int:
     root = pathlib.Path(os.environ["ATLAS_WORKSPACE"]).resolve()
     resolved = (root / target).resolve() if not target.is_absolute() else target.resolve()
     if root not in resolved.parents and resolved != root:
-        log({"kind": "read_denied", "file": str(target), "reason": "outside_workspace"})
+        log({"kind": "read_denied", "source": "shim", "file": str(target),
+             "reason": "outside_workspace"})
         print("atlas-read: caminho fora do workspace", file=sys.stderr)
         return 4
     try:
         lines = resolved.read_text(encoding="utf-8", errors="replace").splitlines()
     except OSError as exc:
-        log({"kind": "read_denied", "file": str(target), "reason": f"io:{exc.__class__.__name__}"})
+        log({"kind": "read_denied", "source": "shim", "file": str(target),
+             "reason": f"io:{exc.__class__.__name__}"})
         print(f"atlas-read: {exc}", file=sys.stderr)
         return 4
     first, last = 1, len(lines)
@@ -106,8 +138,8 @@ def main() -> int:
             i += 1
     first = max(1, min(first, len(lines) or 1)); last = max(first, min(last, len(lines) or 1))
     body = "\\n".join(lines[first - 1:last])
-    log({"kind": "opened", "file": str(resolved.relative_to(root)), "from": first, "to": last,
-         "lines": len(lines), "bytes": len(body), "ts": time.time()})
+    log({"kind": "opened", "source": "shim", "file": str(resolved.relative_to(root)),
+         "from": first, "to": last, "lines": len(lines), "bytes": len(body), "ts": time.time()})
     print(body)
     return 0
 
@@ -136,7 +168,8 @@ def main() -> int:
     p = os.environ.get("ATLAS_TELEMETRY")
     if p:
         with open(p, "a") as fh:
-            fh.write(json.dumps({"kind": "tool_call", "tool": "atlas", "argv": sys.argv[1:],
+            fh.write(json.dumps({"kind": "tool_call", "source": "shim",
+                                 "tool": "atlas", "argv": sys.argv[1:],
                                  "stdout_bytes": len(stdout), "exit_code": proc.returncode,
                                  "declared": declared, "ts": time.time()}) + "\\n")
     sys.stdout.write(stdout.decode("utf-8", errors="replace"))
@@ -155,6 +188,54 @@ def sha256_file(path: Path) -> str | None:
         for chunk in iter(lambda: fh.read(1 << 20), b""):
             h.update(chunk)
     return h.hexdigest()
+
+
+def loop_fingerprint(executor_kind: str, cmd: list[str], limits: dict,
+                     statement_sha: str | None) -> str:
+    """Hash do loop fixado: executor, ferramentas básicas, tetos e enunciado.
+
+    Comparar este campo entre tentativas é o que impede que uma condição mude de executor,
+    ferramenta ou teto sem que o manifesto mude junto.
+    """
+    doc = {"executor": {"kind": executor_kind, "cmd": cmd}, "tools": sorted(FIXED_TOOLS),
+           "limits": limits, "statement_sha256": statement_sha}
+    return "sha256:" + hashlib.sha256(json.dumps(doc, sort_keys=True).encode()).hexdigest()
+
+
+def assess_contract(executor_kind: str, result_path: Path, stream_report: dict) -> dict:
+    """Estado do contrato do executor. Fail-closed: o rótulo `real` exige contrato fechado."""
+    if executor_kind == "dry":
+        return {
+            "state": "not_applicable",
+            "reason": "executor dry: contrato de modelo nao se aplica a ensaio de infraestrutura",
+            "violations": [], "missing": [], "result": None, "result_error": None,
+            "reconciliation": [],
+            "coverage": coverage_report(None, stream_report, []),
+        }
+    result_doc, result_error = load_result(result_path)
+    # Violacao do stream conta como violacao do contrato mesmo sem result: fabricar evento
+    # reservado e pior que nao entregar resumo, nao melhor.
+    stream_violations = list(stream_report.get("stream_violations") or [])
+    violations = (validate_result(result_doc) if result_doc is not None else [])
+    violations.extend(stream_violations)
+    missing: list[str] = []
+    if result_doc is None:
+        state = "violation" if stream_violations else "missing"
+        missing.append(f"result_contract:{result_error}")
+    else:
+        state = "violation" if violations else "ok"
+    rows = reconcile(stream_report, result_doc)
+    mismatches = reconcile_violations(rows)
+    if mismatches:
+        # Stream e resumo discordando e violacao, nao empate: um dos dois lados declara errado.
+        violations.extend(mismatches)
+        state = "violation"
+    coverage = coverage_report(result_doc, stream_report, violations)
+    if state == "ok" and any(not entry["observed"] for entry in coverage.values()):
+        state = "partial"
+    return {"state": state, "reason": None, "violations": violations, "missing": missing,
+            "result": result_doc, "result_error": result_error, "reconciliation": rows,
+            "coverage": coverage}
 
 
 def tree_hash(root: Path) -> str:
@@ -218,22 +299,47 @@ def check_gold_separation(gold: Path | None, workspace: Path) -> dict:
 
 
 class Accounting:
-    """Teto primeiro. Cada evento passa por aqui; o primeiro teto atingido para a tentativa."""
+    """Teto primeiro. Cada evento passa por aqui; o primeiro teto atingido para a tentativa.
+
+    Duas correções que valem explicação:
+
+    - O stream é lido **por offset**, só o que foi apensado desde a última passada. Reabsorver o
+      arquivo inteiro a cada poll multiplicava o teto pelo número de polls: a tentativa morria
+      por "chamadas de ferramenta" que nunca existiram.
+    - O teto de chamadas conta **todas as ferramentas**: as do shim, que o runner observa, e as
+      que o executor declara (shell, editor, outras). Contar só `atlas`/`atlas-read` deixaria a
+      maior parte das chamadas de fora do teto — inclusive no braço `BASE`, onde o `atlas` não
+      existe. Os bytes entregues, porém, continuam vindo só do shim: os declarados ficam ao
+      lado, em campo próprio, para conferência.
+    """
 
     def __init__(self, limits: dict):
         self.limits = limits
         self.started = time.time()
         self.tool_calls = 0
+        self.tool_calls_observed = 0
+        self.tool_calls_rejected = 0
         self.opened = 0
         self.delivered_bytes = 0
         self.turns: int | None = None
         self._saw_turn_event = False
+        self._offset = 0
+        self.stream = StreamAccounting()
 
     def absorb(self, path: Path) -> None:
-        """Lê o stream de telemetria (append-only) e atualiza a contabilidade."""
+        """Lê o que foi apensado ao stream (append-only) desde a última chamada."""
         if not path.exists():
             return
-        for line in path.read_text().splitlines():
+        with path.open("rb") as fh:
+            fh.seek(self._offset)
+            chunk = fh.read()
+        if not chunk:
+            return
+        cut = chunk.rfind(b"\n") + 1
+        if cut <= 0:
+            return  # linha em construcao: so completa e absorvida na proxima passada
+        self._offset += cut
+        for line in chunk[:cut].decode("utf-8", errors="replace").splitlines():
             line = line.strip()
             if not line:
                 continue
@@ -245,18 +351,33 @@ class Accounting:
 
     def _absorb_event(self, ev: dict) -> None:
         kind = ev.get("kind")
+        # `source` decide a origem: shim (observado) ou executor (declarado). Evento reservado
+        # sem `source: shim` nunca e contado como leitura — vira violacao no stream.
+        before = len(self.stream.violations)
+        source = self.stream.absorb(ev)
+        rejected = len(self.stream.violations) > before
+        if source == SHIM_SOURCE:
+            if kind == "tool_call":
+                self.tool_calls += 1
+                self.tool_calls_observed += 1
+                self.delivered_bytes += int(ev.get("stdout_bytes") or 0)
+            elif kind == "opened":
+                # Leitura sancionada **conta como chamada de ferramenta**: o teto do protocolo §4
+                # é de "chamadas de ferramenta por tentativa", e ler um arquivo é uma delas.
+                self.tool_calls += 1
+                self.tool_calls_observed += 1
+                self.opened += 1
+            # `read_denied` e tentativa de leitura fora do workspace: nao e leitura entregue.
+            return
         if kind == "tool_call":
+            # Declarada pelo executor — inclusive a que violou o contrato (nome reservado):
+            # entra no teto de qualquer forma, porque subdeclarar nao pode render chamada extra.
             self.tool_calls += 1
-            self.delivered_bytes += int(ev.get("stdout_bytes") or 0)
-        elif kind == "opened":
-            # Leitura sancionada **conta como chamada de ferramenta**: o teto do protocolo §4 é de
-            # "chamadas de ferramenta por tentativa", e ler um arquivo por uma ferramenta é uma.
-            # Contar só o `atlas` deixaria o braço BASE sem teto nenhum de chamadas.
-            self.tool_calls += 1
-            self.opened += 1
+            if rejected:
+                self.tool_calls_rejected += 1
         elif kind == "turn":
             self._saw_turn_event = True
-            self.turns = (self.turns or 0) + 1
+            self.turns = self.stream.turns
 
     @property
     def wall_s(self) -> float:
@@ -272,18 +393,37 @@ class Accounting:
         return None
 
     def report(self) -> dict:
-        out = {
+        declared = self.stream.report()
+        return {
             "wall_s": round(self.wall_s, 3),
+            # `tool_calls` e o total que fiscaliza o teto; `observed` e `declared` mostram a
+            # cobertura, sem somar declarado dentro de medido.
             "tool_calls": self.tool_calls,
+            "tool_calls_observed": self.tool_calls_observed,
+            "tool_calls_declared": declared["tool_calls_declared"],
+            "tool_calls_rejected": self.tool_calls_rejected,
+            "tool_calls_by_tool": declared["tool_calls_by_tool"],
             "opened": self.opened,
             "delivered_bytes": self.delivered_bytes,
+            "declared_delivered_bytes": declared["declared_delivered_bytes"],
             "turns": self.turns,
             "turns_reason": None if self._saw_turn_event else
                             "executor nao emitiu evento de turno; teto de turnos nao fiscalizavel",
+            "model_calls": declared["model_calls"],
+            "calls_ok": declared["calls_ok"],
+            "calls_error": declared["calls_error"],
+            "tokens": declared["tokens"],
+            "latency_ms": declared["latency_ms"],
+            "errors": declared["errors"],
+            "retries": declared["retries"],
+            "declared_cost": declared["cost"],
+            "declared_stop": declared["stop"],
+            "duplicate_request_ids": declared["duplicate_request_ids"],
+            "unattributed_events": declared["unattributed_events"],
+            "stream_violations": declared["violations"],
             "retrieved_candidates": None,
             "retrieved_reason": "o envelope do `context` nao expoe a contagem interna de candidatos",
         }
-        return out
 
 
 def write_shims(tools: Path) -> None:
@@ -310,12 +450,15 @@ def executor_env(workspace: Path, tools: Path, telemetry: Path, atlas_bin: Path 
 
 
 def run_executor(cmd: list[str], env: dict, workspace: Path, telem: Path, limits: dict,
-                 output_path: Path) -> tuple[int | None, str | None, bool, float, int]:
+                 output_path: Path) -> tuple[int | None, str | None, bool, float, int, Accounting]:
     """Roda o executor medindo-o por fora e mata no primeiro teto.
 
     A saída vai para **arquivo**, não para um pipe: um executor que escreve mais do que o buffer
     do pipe encheria e travaria sozinho, e o `Popen` com `poll()` não estaria consumindo. Com
     arquivo não existe esse ponto morto, e o log fica auditável.
+
+    Devolve a contabilidade **viva** da tentativa: o mesmo objeto que fiscalizou o teto é o que
+    relata o uso, para que contagem e fiscalização não possam divergir por releitura.
     """
     acct = Accounting(limits)
     started = time.time()
@@ -343,7 +486,7 @@ def run_executor(cmd: list[str], env: dict, workspace: Path, telem: Path, limits
         # tentativa que estourou é **falha registrada**, não sucesso que escapou da fiscalização
         # por velocidade — e o manifesto diz se houve kill ou só detecção posterior.
         stopped = acct.ceiling_hit()
-    return proc.returncode, stopped, killed, time.time() - started, peak_rss
+    return proc.returncode, stopped, killed, time.time() - started, peak_rss, acct
 
 
 def peak_rss_kb(pid: int) -> int:
@@ -431,6 +574,13 @@ edited = ws / "dry_edit.txt"
 edited.write_text(edited.read_text() + "linha adicionada pelo executor dry\\n"
                   if edited.exists() else "linha adicionada pelo executor dry\\n")
 report["declared_relevant"] = [str(edited.relative_to(ws))]
+# Evento de parada pelo contrato do executor: o dry nao tem modelo, mas exercita o caminho
+# do stream declarado — e por isso continua marcado `infrastructure_only`.
+stream = os.environ.get("ATLAS_EXECUTOR_TELEMETRY")
+if stream:
+    with open(stream, "a") as fh:
+        fh.write(json.dumps({"kind": "stop", "source": "executor",
+                             "reason": "dry_infrastructure"}) + "\\n")
 print(json.dumps(report))
 '''
 
@@ -468,6 +618,10 @@ def main() -> int:
     ap.add_argument("--tool-call-limit", type=int, default=DEFAULT_LIMITS["tool_calls"])
     ap.add_argument("--dry-extra-calls", default="[]",
                     help="JSON com comandos extras para o dry (teste de teto)")
+    ap.add_argument("--executor-result", default=None,
+                    help="result contract do executor (padrao: <out>/executor_result.json)")
+    ap.add_argument("--expect-loop-sha", default=None,
+                    help="recusa iniciar se o loop fixado (executor+ferramentas+tetos+enunciado) divergir")
     args = ap.parse_args()
 
     if args.executor == "dry" and not args.allow_dry:
@@ -505,6 +659,11 @@ def main() -> int:
                        atlas_index, args.condition)
     env["ATLAS_CONDITION"] = args.condition
     env["ATLAS_DRY_EXTRA_CALLS"] = args.dry_extra_calls
+    result_path = Path(args.executor_result).resolve() if args.executor_result \
+        else out / "executor_result.json"
+    # Stream declarado e result contract: caminhos explicitos, para o executor nao adivinhar.
+    env[STREAM_ENV] = str(telemetry)
+    env[RESULT_ENV] = str(result_path)
 
     if args.executor == "dry":
         script = out / "dry_executor.py"
@@ -520,13 +679,84 @@ def main() -> int:
 
     limits = {"wall_s": args.wall_limit, "turns": args.turn_limit,
               "tool_calls": args.tool_call_limit}
+    loop_sha = loop_fingerprint(args.executor, cmd, limits, sha256_file(statement_file))
+    if args.expect_loop_sha and args.expect_loop_sha != loop_sha:
+        raise SystemExit(
+            f"BLOQUEADO: loop diferente do fixado para a rodada ({loop_sha} != "
+            f"{args.expect_loop_sha}). Os tres bracos rodam o mesmo loop; mudar executor, "
+            "ferramenta ou teto exige configuracao nova registrada, nao edicao silenciosa."
+        )
     started_iso = time.strftime("%Y-%m-%dT%H:%M:%S%z")
-    exit_code, stopped_by, killed, seconds, peak_rss = run_executor(
+    exit_code, stopped_by, killed, seconds, peak_rss, acct = run_executor(
         cmd, env, workspace, telemetry, limits, out / "executor_output.txt")
     patch_info = capture_patch(workspace, out)
     acceptance = run_acceptance(args, task, out / patch_info["file"])
-    usage = Accounting(limits)
-    usage.absorb(telemetry)
+    # A contabilidade viva (a mesma que fiscalizou o teto) e o uso relatado: contagem e
+    # fiscalizacao nao podem divergir por releitura do stream.
+    usage = acct.report()
+    contract = assess_contract(args.executor, result_path, usage)
+    coverage = contract["coverage"]
+    result_doc = contract["result"]
+
+    declared_model = (result_doc or {}).get("model") or {}
+    identity_verified = coverage["model_identity"]["observed"]
+    model_block = {
+        "provider": declared_model.get("provider"),
+        "id": declared_model.get("id"),
+        "version": declared_model.get("version"),
+        "verified_by": declared_model.get("verified_by"),
+        "identity_verified": identity_verified,
+        # Nome informal de modelo nao substitui identidade verificavel: sem o trio completo e
+        # sem `verified_by`, o campo fica nulo **com motivo** e a tentativa nao e `real`.
+        "reason": None if identity_verified else (contract["reason"]
+                                                  or coverage["model_identity"]["reason"]),
+    }
+    declared_tokenizer = (result_doc or {}).get("tokenizer") or {}
+    tokenizer_block = {
+        "id": declared_tokenizer.get("id"),
+        "is_exact": declared_tokenizer.get("is_exact"),
+        "reason": None if declared_tokenizer.get("id") else (
+            "P3 pendente: nenhum executor declarou tokenizer" if result_doc is None
+            else "result contract sem tokenizer; sem ele a contagem fica em modo bytes"),
+    }
+    declared_cost = (result_doc or {}).get("cost") or {}
+    cost_block = {
+        "provider_billed": declared_cost.get("provider_billed"),
+        "currency": declared_cost.get("currency"),
+        "source": declared_cost.get("source"),
+        "coverage": coverage["cost"],
+        "stream_declared": usage.get("declared_cost"),
+        "reason": None if declared_cost.get("provider_billed") is not None else
+                  "P2 pendente: sem teto financeiro e sem custo faturado declarado",
+        "local_cpu_s": None,
+        "local_cpu_reason": "medido no nivel do processo externo pelo harness de microbenchmark, nao aqui",
+        "local_peak_rss_kb": peak_rss or None,
+    }
+    if args.executor == "dry":
+        evidence_class = "infrastructure_only"
+        evidence_class_reason = ("executor dry: valida a infraestrutura, nao responde a pergunta "
+                                 "de utilidade")
+    elif contract["state"] == "ok":
+        evidence_class = "real"
+        evidence_class_reason = ("executor externo com contrato fechado: identidade de modelo, "
+                                 "tokens, chamadas, turnos e custo declarados e reconciliados "
+                                 "com o stream")
+    elif contract["state"] == "partial":
+        evidence_class = "real"
+        evidence_class_reason = ("executor externo com cobertura parcial declarada; afirmacao "
+                                 "sem cobertura fica bloqueada no manifesto de capacidade")
+    elif contract["state"] == "missing":
+        evidence_class = "unverified"
+        evidence_class_reason = ("executor externo sem result contract: identidade de modelo, "
+                                 "tokens, custo e motivo de parada nao verificaveis")
+    else:
+        evidence_class = "contract_violation"
+        evidence_class_reason = ("contrato do executor violado; a tentativa nao vale como "
+                                 "evidencia real (ver contract.violations)")
+    capability = capability_manifest(out.name, args.condition, evidence_class,
+                                     contract["state"], coverage, usage, cost_block,
+                                     patch_info, gold_check)
+    write_json(out / "capability_manifest.json", capability)
 
     manifest = {
         "schema": RUN_SCHEMA,
@@ -555,20 +785,43 @@ def main() -> int:
             "index_generation_reason": "o runner nao abre o indice; o campo vem do envelope quando houver",
             "absent_in_base": args.condition == "BASE",
         },
-        "model": {"provider": None, "id": None, "version": None,
-                  "reason": "P1 pendente: modelo efetivo e decisao do usuario"},
-        "tokenizer": {"id": None, "reason": "P3 pendente: tokenizer do modelo nao definido"},
+        "executor": {"kind": args.executor, "cmd": cmd,
+                     "cmd_sha256": "sha256:" + hashlib.sha256(
+                         json.dumps(cmd, sort_keys=True).encode()).hexdigest(),
+                     "loop_sha256": loop_sha, "expected_loop_sha256": args.expect_loop_sha,
+                     "tools_registered": list(FIXED_TOOLS),
+                     "result_path": str(result_path),
+                     "result_received": result_doc is not None},
+        "model": model_block,
+        "tokenizer": tokenizer_block,
         "prompt": {"statement_sha256": sha256_file(statement_file),
                    "tool_specs_sha256": None,
                    "tool_specs_reason": "as descricoes das ferramentas sao do executor, nao deste runner"},
         "limits": limits,
-        "usage": usage.report(),
-        "cost": {
-            "provider_billed": None, "currency": None,
-            "reason": "P2 pendente: sem teto financeiro e sem telemetria de provedor",
-            "local_cpu_s": None,
-            "local_cpu_reason": "medido no nivel do processo externo pelo harness de microbenchmark, nao aqui",
-            "local_peak_rss_kb": peak_rss or None,
+        "usage": usage,
+        "cost": cost_block,
+        "contract": {
+            "schema": CONTRACT_SCHEMA,
+            "state": contract["state"],
+            "reason": contract["reason"],
+            "violations": contract["violations"],
+            "missing": contract["missing"],
+            "reconciliation": contract["reconciliation"],
+            "coverage": coverage,
+            "result_schema": (result_doc or {}).get("schema"),
+            "result_error": contract["result_error"],
+            # Declarado nunca se mistura com observado: os totais vem do executor e sao
+            # conferidos contra o proprio stream dele — consistencia interna nao e prova.
+            "provenance": {
+                "totals": "declarados pelo executor e conferidos contra o proprio stream",
+                "externally_observed": list(EXTERNALLY_OBSERVED),
+            },
+        },
+        "capability": {
+            "manifest": "capability_manifest.json",
+            "supported_claims": [c["claim"] for c in capability["claims"] if c["supported"]],
+            "unsupported_claims": [c["claim"] for c in capability["claims"]
+                                  if not c["supported"]],
         },
         "cache": {"index": "indice da rodada, aquecido",
                   "filesystem": "aquecido (nao foi possivel derrubar sem maquina dedicada)"},
@@ -584,10 +837,8 @@ def main() -> int:
                          "teto detectado depois do fim do executor" if stopped_by else None),
         "outcome": ("stopped" if stopped_by else
                     "completed" if exit_code == 0 else "failed"),
-        "evidence_class": ("infrastructure_only" if args.executor == "dry" else "real"),
-        "evidence_class_reason": ("executor dry: valida a infraestrutura, nao responde a pergunta "
-                                  "de utilidade" if args.executor == "dry"
-                                  else "executor externo; utilidade ainda depende de modelo e rubrica"),
+        "evidence_class": evidence_class,
+        "evidence_class_reason": evidence_class_reason,
         "gold_isolation": gold_check,
         "executor_seconds": round(seconds, 3),
         "environment": environment_manifest(),
@@ -596,8 +847,13 @@ def main() -> int:
 
     print(f"tentativa {task['id']} [{args.condition}] -> {manifest['outcome']} "
           f"({manifest['evidence_class']})")
-    print(f"  parede {seconds:.1f}s | tool_calls {usage.tool_calls} | opened {usage.opened} | "
-          f"delivered {usage.delivered_bytes}B | patch {patch_info['bytes']}B")
+    print(f"  parede {seconds:.1f}s | tool_calls {usage['tool_calls']} "
+          f"(observadas {usage['tool_calls_observed']}, declaradas {usage['tool_calls_declared']}) | "
+          f"opened {usage['opened']} | delivered {usage['delivered_bytes']}B | "
+          f"patch {patch_info['bytes']}B")
+    print(f"  contrato {contract['state']} | modelo {model_block['id'] or 'nao verificado'} | "
+          f"chamadas {usage['model_calls']} | turnos {usage['turns']} | "
+          f"custo {cost_block['provider_billed']}")
     if stopped_by:
         print(f"  PARADO por teto: {stopped_by}")
     return 0 if manifest["outcome"] == "completed" else 1

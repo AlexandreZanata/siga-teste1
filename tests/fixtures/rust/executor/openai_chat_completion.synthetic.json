@@ -1,0 +1,21 @@
+{
+  "id": "chatcmpl-ficticio-0001",
+  "object": "chat.completion",
+  "created": 1790000000,
+  "model": "modelo-ficticio-a",
+  "system_fingerprint": "fp_ficticio_0001",
+  "choices": [
+    {
+      "index": 0,
+      "message": {"role": "assistant", "content": "ok"},
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 1234,
+    "completion_tokens": 56,
+    "total_tokens": 1290,
+    "prompt_tokens_details": {"cached_tokens": 512},
+    "completion_tokens_details": {"reasoning_tokens": 10}
+  }
+}

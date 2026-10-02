@@ -1,8 +1,8 @@
 # Runner do piloto real — uma tentativa, um teto, sem acesso ao ouro
 
-Data: 2026-09-29. ID: `RUNNER/1`. Estado: **implementado e ensaiado com executor declarado como infraestrutura**; execução com modelo real **não** feita, bloqueada por P1/P2.
+Data: 2026-09-29 (contrato do executor: 2026-10-02). ID: `RUNNER/1`. Estado: **implementado e ensaiado com executor declarado como infraestrutura e com executor `cmd` de contrato**; execução com modelo real **não** feita, bloqueada por P1/P2.
 Depende de: [`PREREGISTRATION_R0.md`](PREREGISTRATION_R0.md) §1.1–1.4, [`PROTOCOLO_VALIDACAO.md`](PROTOCOLO_VALIDACAO.md) §§2–6, [`CLI_CONTRACT.md`](CLI_CONTRACT.md) §9.
-Código: [`benchmarks/rust/runner.py`](../../benchmarks/rust/runner.py). Testes: [`tests/test_rust_runner.py`](../../tests/test_rust_runner.py).
+Código: [`benchmarks/rust/runner.py`](../../benchmarks/rust/runner.py) e [`benchmarks/rust/executor_contract.py`](../../benchmarks/rust/executor_contract.py). Testes: [`tests/test_rust_runner.py`](../../tests/test_rust_runner.py) e [`tests/test_rust_executor_contract.py`](../../tests/test_rust_executor_contract.py).
 
 Este documento existe porque o aceite de R2 inclui *"o runner captura todas as chamadas, custos e patches sem acesso ao ouro"* — a única parte do aceite que não depende de modelo nem de orçamento. Ele define o que o runner faz, o que ele mede por fora em vez de acreditar, e o que ele **não** garante.
 
@@ -41,6 +41,34 @@ A regra que motivou tudo: um estudo que calcula `opened` a partir de `delivered`
 
 Leituras fora do leitor sancionado (`cat`, editor, `git show`) **não** produzem evento e portanto não contam. Isso é uma limitação declarada do instrumento, não uma afirmação de que não ocorreram.
 
+## 3b. Eventos do executor: o que só existe dentro do processo passa a ter forma
+
+O shim cobre só o que passa por ele. Chamada de shell, edição, chamada de modelo e turno não
+passam por `atlas-read` — sem contrato, elas não existem para o instrumento, e o teto de
+"chamadas de ferramenta" mediria apenas uma parte das ferramentas. O contrato `atlas-executor/1`
+([`executor_contract.py`](../../benchmarks/rust/executor_contract.py)) fecha isso. Mesmo stream do
+shim, arquivo `ATLAS_EXECUTOR_TELEMETRY`, eventos com `"source": "executor"`:
+
+| Evento | O que carrega | Por que existe |
+|---|---|---|
+| `model_call` | `request_id`, provider/id/version, tokens (entrada/saída/cache/reasoning), latência, status, erro, stop reason, custo da chamada | captura por chamada, sem total agregado solto |
+| `tool_call` | ferramenta, argv, exit code, bytes de stdout | chamada que **não** passa pelo shim: shell, editor, outras. Entra no teto e no total |
+| `turn` | índice do turno | turnos do modelo; destrava o teto de 40 turnos, que antes era `null` por falta de evento |
+| `retry` / `error` | `of_request_id`, classe do erro | falha que não é chamada de modelo; retry contado uma vez |
+| `stop` | motivo de parada | parada declarada, separada do motivo de parada do **runner** (`stopped_by`) |
+
+**`opened` e os nomes `atlas`/`atlas-read` são reservados ao shim.** Evento com eles vindo do
+executor é violação de contrato: não conta como leitura, não conta como observado, e a tentativa
+deixa de poder ser `real`. Sem essa regra, o único número de leitura do piloto seria auto-relato.
+Evento **sem** `source` também não passa por observado: entra no teto (conservador), é sinalizado
+em `usage.unattributed_events` e derruba a afirmação de cobertura de chamadas — o aceite não
+autoriza alegar contagem completa quando há evento de origem desconhecida.
+
+O teto de chamadas conta `observadas + declaradas + rejeitadas`. Subdeclarar não rende chamada
+extra: uma chamada que violou o contrato continua contando no teto. Bytes entregues, porém,
+continuam vindo **só** do shim (`delivered_bytes`); o que o executor declara tem stdout, se
+houver, fica ao lado (`declared_delivered_bytes`), para conferência, nunca somado.
+
 ## 4. Tetos: primeiro o teto, depois a tentativa
 
 Valores do pré-registro §1.4, iguais nos três braços: **1800 s** de parede, **40** turnos do modelo, **100** chamadas de ferramenta por tentativa.
@@ -48,7 +76,7 @@ Valores do pré-registro §1.4, iguais nos três braços: **1800 s** de parede, 
 - O runner acompanha o stream de telemetria enquanto o executor roda e **mata o grupo de processos** (`killpg`) no primeiro teto atingido: a tentativa vira `outcome: stopped` e o processo retorna código não-zero. Continuar "só para terminar a etapa" é o que o protocolo §4 proíbe.
 - Um executor rápido demais para ser interrompido no meio **não escapa**: se o teto só for detectável depois do fim, a tentativa continua sendo falha registrada, e `stopped_killed` diz se houve interrupção ou apenas detecção posterior. Um teto que pode ser ultrapassado por velocidade não é um teto.
 - Chamadas de ferramenta incluem **leituras sancionadas**: o teto do protocolo é de "chamadas de ferramenta por tentativa", e ler um arquivo por uma ferramenta é uma. Contar apenas o `atlas` deixaria o braço `BASE` sem teto algum.
-- **Turnos do modelo não são fiscalizáveis por fora.** Se o executor não emitir eventos de turno, o campo é `null` com motivo (`turns_reason`) — não é zero, e o teto de turnos não é alegado como aplicado. Fechar isso exige que o executor reporte turnos, o que é parte do contrato do executor em R3.
+- **Turnos do modelo passaram a ser fiscalizáveis — quando declarados.** Com evento `turn`, o teto de 40 turnos vale como os outros: o runner mata o grupo de processos no primeiro estouro. Sem evento de turno, o campo é `null` com motivo (`turns_reason`) — não é zero, e o teto de turnos **não** é alegado como aplicado. Não existe mais caminho de código faltando para isso; o que falta é o executor emitir os eventos, o que o contrato §4b exige.
 
 ## 5. Separação do ouro
 
@@ -66,22 +94,57 @@ O runner faz o que consegue por caminho e declara o que não consegue:
 
 Para R5 (confirmação cega) o requisito continua sendo **ambiente inacessível**, com o custodiante do holdout — não esta checagem.
 
+## 4b. Result contract: identidade verificável, ou não é evidência
+
+No fim da tentativa o executor escreve `ATLAS_EXECUTOR_RESULT` — `atlas-executor-result/1` — com
+identidade do modelo, tokenizer, totais de uso, erros, retries, parada, custo e **cobertura por
+métrica**. O runner então:
+
+1. **valida a identidade**: `provider` + `id` + `version` + `verified_by` são obrigatórios. Nome
+   informal de modelo não substitui nem completa o trio — sem ele, estado `violation` e a
+   tentativa nunca é `real`;
+2. **reconcilia** cada total do resumo com o **próprio stream** do executor (chamadas, tokens,
+   ferramentas, turnos, erros, retries, custo). Divergência é violação, não empate: um dos dois
+   lados está errado e o instrumento não escolhe qual;
+3. **audita a cobertura declarada**: `observed: false` sem motivo escrito é violação — é o que
+   impede confundir "não observado" com "observado e omitido";
+4. **recusa cobrança dupla**: a mesma `request_id` reemitida não soma tokens nem custo de novo;
+5. **mantém declarado e observado em campos separados**: `tool_calls_observed` vs
+   `tool_calls_declared`, `delivered_bytes` vs `declared_delivered_bytes`, `opened` só do shim.
+
+Estados, fail-closed: `ok` (contrato fechado → `evidence_class: real`), `partial` (cobertura
+incompleta declarada — continua `real`, com as afirmações sem cobertura bloqueadas no manifesto
+de capacidade §11), `missing` (sem result → `unverified`), `violation` (→ `contract_violation`,
+nunca `real`) e `not_applicable` (executor `dry`).
+
+O que a reconciliação prova é **consistência interna**: os totais são declarados pelo executor e
+conferidos contra o stream dele. Nenhum total de provedor é medido por fora, e o manifesto diz
+isso em `contract.provenance` em toda tentativa. Isso não é uma limitação a corrigir com mais
+código aqui; é o limite do que um instrumento sem acesso à API de cobrança pode afirmar.
+
+O loop também é fixado e conferível: `executor.loop_sha256` reúne executor, ferramentas básicas,
+tetos e enunciado. `--expect-loop-sha` recusa iniciar quando a rodada não está no loop fixado —
+é assim que "o mesmo loop e as mesmas ferramentas nos três braços" deixa de ser promessa e vira
+checagem por tentativa.
+
 ## 6. Manifesto mínimo, com nulos e motivo
 
 O protocolo §6 pede um manifesto por run. O que ainda não existe sai `null` **com motivo**, nunca zero:
 
 | Campo | Estado hoje |
 |---|---|
-| `model.provider/id/version` | `null` — P1 pendente (decisão do usuário) |
-| `tokenizer.id` | `null` — P3 pendente |
-| `cost.provider_billed` / `currency` | `null` — P2 pendente; o protocolo proíbe inventar tarifa |
-| `usage.turns` | `null` com motivo quando o executor não emite turnos |
+| `model.provider/id/version/verified_by` | declarados no result contract; sem o trio completo **e** o `verified_by`, o estado é `violation` e a tentativa nunca é `real`. P1 continua pendente para *escolher* o modelo, não para representá-lo |
+| `tokenizer.id` | declarado no result; `null` com motivo quando o executor não informa (P3) |
+| `cost.provider_billed` / `currency` | declarados no result **com `source`**; `null` com motivo quando não há cobrança observada — o protocolo proíbe inventar tarifa (P2) |
+| `usage.turns` | deixa de ser `null` quando o executor emite evento `turn`; com evento, o teto é fiscalizável. Sem evento, `null` com motivo |
+| `usage.tokens/latency_ms/errors/retries/model_calls` | do stream declarado; `null` por campo não informado — nunca 0 |
+| `contract.*` | estado, violações, reconciliação e cobertura por métrica (§4b) |
 | `usage.retrieved_candidates` | `null` com motivo: o envelope não expõe candidatos internos |
 | `tool.index_generation` | `null` com motivo: o runner não abre o índice |
 | `acceptance.*` | `null` com motivo quando não há base limpa |
 | `prompt.tool_specs_sha256` | `null` com motivo: as descrições são do executor |
 
-Preenchidos de verdade: `snapshot.base_sha` e `tree_sha256` do workspace, `tool.binary_sha256`, `limits`, `usage.wall_s/tool_calls/opened/delivered_bytes`, `cost.local_peak_rss_kb`, `cache`, `order`, `timestamps`, `processes`, `patch`, `stopped_by`, `outcome`, `evidence_class`.
+Preenchidos de verdade: `snapshot.base_sha` e `tree_sha256` do workspace, `tool.binary_sha256`, `limits`, `usage.wall_s`, `usage.tool_calls` (observadas + declaradas + rejeitadas), `usage.tool_calls_observed/declared/rejected`, `usage.opened`, `usage.delivered_bytes`, `executor.loop_sha256`, `cost.local_peak_rss_kb`, `cache`, `order`, `timestamps`, `processes`, `patch`, `stopped_by`, `outcome`, `evidence_class`.
 
 Nenhum campo ausente vira zero; nenhum campo desconhecido é omitido.
 
@@ -91,12 +154,24 @@ O executor `dry` usa as ferramentas de verdade (chama `atlas` e o leitor, edita 
 
 - Ele **não** roda sem `--allow-dry`: um stub não pode ser confundido com execução real.
 - Todo run com ele sai `evidence_class: infrastructure_only`, com o motivo escrito no manifesto.
-- O que ele valida: contagem de chamadas, evento `opened`, `delivered` medido, captura e aplicação de patch, tetos, separação do ouro.
-- O que ele **não** valida: qualquer coisa sobre utilidade, custo de provedor ou qualidade de patch. Nenhum resultado de R3 pode vir dele.
+- O que ele valida: contagem de chamadas, evento `opened`, `delivered` medido, captura e aplicação de patch, tetos, separação do ouro e — desde a TASK-A02 — o caminho do stream declarado, com um evento `stop` de infraestrutura que exercita a leitura do contrato.
+- O que ele **não** valida: qualquer coisa sobre utilidade, custo de provedor ou qualidade de patch. Nenhum resultado de R3 pode vir dele. Como o `dry` não escreve result contract, ele sai `contract.state: not_applicable` e `infrastructure_only` — nunca `real`, nunca `unverified`: o ensaio de infraestrutura não é uma tentativa de contrato malfeito.
 
 ## 8. O que os testes guardam
 
-13 testes, sem rede, sem modelo e sem depender do binário Rust (exceto o de integração, que é pulado se o binário não estiver construído):
+13 testes do runner e 17 do contrato do executor
+([`tests/test_rust_executor_contract.py`](../../tests/test_rust_executor_contract.py)), sem rede,
+sem modelo e sem depender do binário Rust (exceto o de integração, pulado se o binário não estiver
+construído). Os do contrato cobrem: agregação de tokens/custo/latência/erro/retry, `request_id`
+repetida não cobrando duas vezes, evento reservado como violação, evento sem `source`, validação do
+result (identidade incompleta, cobertura sem motivo, schema, stop), reconciliação separando
+`mismatch` de `missing`, manifesto de capacidade bloqueando afirmação sem cobertura, os dois
+adaptadores de provedor contra as fixtures sintéticas, e — pelo runner de verdade com executor
+`cmd` — contrato fechado (`real`), sem result (`unverified`), teto de shell declarada, teto de
+turnos, divergência stream×result, leitura fabricada, `--expect-loop-sha` recusando e o loop
+idêntico nos três braços.
+
+Testes do runner:
 
 | Teste | O que impede |
 |---|---|
@@ -112,10 +187,20 @@ O executor `dry` usa as ferramentas de verdade (chama `atlas` e o leitor, edita 
 | manifesto mínimo + `infrastructure_only` | run de stub passando por evidência real |
 | `BASE` sem ferramenta de contexto | braço de controle recebendo a intervenção |
 | integração com o binário real | `delivered` medido divergindo do declarado pelo produto |
+| executor `cmd` com contrato fechado | total declarado virando evidência sem reconciliação |
+| executor sem result contract | ausência de identidade/custo virando `real` ou zero |
+| stream divergente do result | dois lados discordando sem que nada acuse |
+| leitura fabricada pelo executor | `opened` virando auto-relato |
+| teto de shell declarada e teto de turnos | chamadas fora do shim escapando do teto |
+| `--expect-loop-sha` divergente | braço mudando de loop sem que a rodada pare |
 
 ## 9. O que falta para R3
 
-1. **Executor e modelo** (P1): o ID/provedor/versão e o loop que emite turnos.
+1. **Executor e modelo** (P1): o contrato (§3b–§4b) está implementado e ensaiado, inclusive com
+   adaptadores para as duas famílias de API mais prováveis e fixtures de formato. Falta o insumo
+   que é decisão do usuário: qual provedor/modelo, e a captura **real sanitizada** que substitui a
+   fixture sintética. O loop do executor precisa emitir os eventos do contrato; nenhum código de
+   contabilidade falta para recebê-los.
 2. **Testes de aceitação por tarefa** e rubrica congelada, no ambiente do avaliador.
 3. **Base limpa por tarefa** para o passo de aceite (`--acceptance-repo`), e o snapshot de base por tentativa.
 4. **Teto financeiro** (P2) para o custo de provedor deixar de ser `null`.
@@ -129,7 +214,35 @@ Nenhum desses itens é código de infraestrutura pendente: são insumos de decis
 |---|---|---|---|---|
 | Runner de tentativa | x | **x** | **x** (13 testes + integração com o binário real) | — (P1/P2) |
 | Captura de eventos (§3) | x | **x** | **x** | — |
-| Tetos (§4) | x | **x** | **x** | — (turnos dependem do executor) |
+| Tetos (§4) | x | **x** | **x** (inclui teto de shell declarada e de turnos) | — |
+| Contrato do executor (§3b–§4b) | x | **x** | **x** (17 testes, executor `cmd` de verdade) | — (nenhum executor com modelo) |
 | Separação do ouro (§5) | x | **x** | **x** (por caminho) | — (R5 exige ambiente inacessível) |
 
-"Ensaiado" aqui significa: infraestrutura exercitada com executor declarado como stub e com o binário real. **Não** significa que exista qualquer resultado de utilidade — nenhuma tentativa com modelo ocorreu, e a conclusão científica segue `não avaliada`.
+"Ensaiado" aqui significa: infraestrutura exercitada com executor declarado como stub, com um
+executor `cmd` de contrato e com o binário real. **Não** significa que exista qualquer resultado
+de utilidade — nenhuma tentativa com modelo ocorreu, e a conclusão científica segue `não avaliada`.
+
+## 11. Manifesto de capacidade: o que uma tentativa pode afirmar
+
+Além do manifesto, cada tentativa escreve `capability_manifest.json`
+(`atlas-executor-capacity/1`), com três listas: o que é **observado por fora** (parede, RSS,
+eventos do shim, patch, exit code do aceite), o que é **declarado pelo executor** (identidade,
+tokens, latência, erro/retry, ferramentas fora do shim, turnos, custo) e o que **não é coberto**
+(leitura fora do leitor sancionado, chamadas internas não emitidas, custo sem tarifa oficial,
+qualidade do patch). Cada afirmação tem um veredito `supported` com o motivo:
+
+| Afirmativa | Sustentada quando |
+|---|---|
+| `custo_faturado_do_provedor` | existe `cost.provider_billed` com `currency` e `source`, e a reconciliação bate |
+| `tokens_do_modelo` | existem tokens no stream ou no result, reconciliados |
+| `contagem_de_chamadas_de_ferramenta_em_todas_as_ferramentas` | todo evento tem `source` (nenhum sem origem) |
+| `turnos_do_modelo` / `teto_de_chamadas_aplicado` | há evento de turno / cobertura completa de chamadas |
+| `teto_de_parede_aplicado` | sempre: a parede é medida por fora, com kill do grupo de processos |
+| `patch_do_executor_capturado` | sempre: o diff do workspace é capturado antes de qualquer julgamento |
+| `reducao_de_leituras_totais_do_agente` | **nunca** neste instrumento: só o leitor sancionado emite evento, e `cat`/editor/`git show` não deixam rastro |
+| `isolamento_do_ouro` | **nunca** com checagem por caminho: R5 exige ambiente inacessível |
+| `custo_por_sucesso` | **nunca** aqui: depende do aceite cego e de custo faturado |
+
+O manifesto de capacidade existe para que a ausência de cobertura não vire silêncio: em vez de
+um número que parece medido, fica escrito o que não foi observado e por quê. Uma tentativa com
+contrato `partial` continua `real` — mas nenhuma afirmativa sem cobertura entra no relatório.
