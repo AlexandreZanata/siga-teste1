@@ -1,0 +1,48 @@
+{
+  "schema": "atlas-public-probes/1",
+  "date": "2026-09-30",
+  "purpose": "Reproducoes publicas dev; nao sao testes de aceite, tentativas com LLM ou medicao de ganho.",
+  "probes": [
+    {
+      "task": "SIGA-REAL-01",
+      "method": "javac -d <tmp> Texto.java SetUtils.java TaskProbe.java; java -cp <tmp> TaskProbe",
+      "input": "Texto.extrai(\"]ruido[interno]\", \"[\", \"]\")",
+      "observed": "StringIndexOutOfBoundsException",
+      "expected_by_new_requirement": "interno",
+      "source_sha256": "ea5716eb714117b5671dadeeecc4fc10ed7d2f8a5eb172ca95554f5894f8b82e",
+      "base_sha": "e3be22828f787cbe71b339aecb7a7bf569099803",
+      "compile_exit": 0,
+      "probe_exit": 0
+    },
+    {
+      "task": "SIGA-REAL-05",
+      "method": "mesmo probe Java, captura a excecao sem modificar fonte",
+      "input": "SetUtils.union(Set.of(new Object()), Set.of())",
+      "observed": "ClassCastException",
+      "expected_by_new_requirement": "conjunto com um elemento sem excecao",
+      "source_sha256": "5732f0ff4dbb6300611b21839271db3e36b67ad19a24be5a9017e775dedc878d",
+      "base_sha": "e3be22828f787cbe71b339aecb7a7bf569099803"
+    },
+    {
+      "task": "BTC-REAL-01",
+      "method": "importlib.util.spec_from_file_location da fonte original; chamar descsum_check e capturar classe da excecao",
+      "input_output": [
+        {
+          "input": "#",
+          "observed": "IndexError"
+        },
+        {
+          "input": "☃#aaaaaaaa",
+          "observed": "TypeError"
+        },
+        {
+          "input": "raw(deadbeef)#aaaaaaaa",
+          "observed": false
+        }
+      ],
+      "expected_by_new_requirement": false,
+      "source_sha256": "8c2a4490c1b2a09c6c6e209eda090b160214d8156e20d6db671459cb4090a16a",
+      "base_sha": "9be056a8a72b624dae9623b2f7bded92c2a21c91"
+    }
+  ]
+}

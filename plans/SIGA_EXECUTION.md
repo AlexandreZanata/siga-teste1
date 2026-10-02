@@ -2,6 +2,8 @@
 
 Leia primeiro [execução paralela](PARALLEL_EXECUTION.md). Seu trabalho é continuar a trilha SIGA existente, preservando artefatos e alterações em andamento, enquanto o agente B executa Bitcoin na própria worktree.
 
+**Fila concreta de 2026-09-30:** [próximas tarefas SIGA/Bitcoin](PROXIMAS_TASKS_SIGA_BITCOIN.md). Começar por TASK-A01 (aceites SIGA efetivamente executados) e TASK-A02 (executor e contabilidade); oito candidatos SIGA já estão catalogados. Preparação técnica pode avançar antes de modelo/orçamento, necessários para a rodada paga.
+
 **Próxima sequência, 2026-09-29:** [CLI Rust R0–R6](RUST_CLI_PILOTO_REAL.md) e [protocolo do piloto](../research/rust/PROTOCOLO_VALIDACAO.md). A implementa uma fatia pequena do core Rust e o runner de medição, mantém Python como referência e prepara tarefas SIGA reais. Não reiniciar pesquisas antigas nem esperar grafo/port completo para chegar ao piloto. Ler status atual de B antes de preparar uma worktree que já existe.
 
 ## Sequência de retomada

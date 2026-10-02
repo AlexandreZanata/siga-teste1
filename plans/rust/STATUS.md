@@ -4,6 +4,12 @@ Criado em 2026-09-29. Dono: agente A (core), com validação Bitcoin pelo agente
 
 Plano: [construção e etapas](../RUST_CLI_PILOTO_REAL.md). Método: [protocolo](../../research/rust/PROTOCOLO_VALIDACAO.md).
 
+## Retomada de 2026-09-30 — tarefas reais
+
+Nova fila: [TASK-A01–A03, B01–B02 e EXP01–EXP04](../PROXIMAS_TASKS_SIGA_BITCOIN.md). Foram preparados oito candidatos SIGA e oito Bitcoin, com fontes/hashes, requisitos e readiness explícitos. Ainda não são conjuntos executáveis: faltam aceites independentes e validação de referência. Três defeitos foram reproduzidos em probes públicos; não houve piloto ou gasto com modelo nesta revisão.
+
+**Correção da conclusão histórica de prontidão abaixo:** pendências técnicas continuam abertas. `runner.py` ainda escreve identidade de modelo/custo como `null` e a cobertura de leitura depende do shim; TASK-A02 prepara a instrumentação real. A suíte Python do ArchAtlas não comprova que os testes Maven SIGA rodaram; o POM do dataset ignora testes por padrão e TASK-A01 exige comprovação. Modelo e orçamento são dependências da rodada paga, não bloqueiam preparação de tarefas, aceites e telemetria. Preservar os resultados R1/R2 e não reiniciar microbenchmarks para substituir esse trabalho.
+
 ## Evidência atual
 
 - **R0 executado** (2026-09-29): contrato congelado em [`CLI_CONTRACT.md`](../../research/rust/CLI_CONTRACT.md), levantamento em [`BASELINE.md`](../../research/rust/BASELINE.md) e pré-registro em [`PREREGISTRATION_R0.md`](../../research/rust/PREREGISTRATION_R0.md).

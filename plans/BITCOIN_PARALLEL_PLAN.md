@@ -2,6 +2,8 @@
 
 Data: 2026-09-24. Estado: trilha planejada; PIN, implementação e resultados Bitcoin ainda não produzidos por esta revisão.
 
+**Fila concreta de 2026-09-30:** [próximas tarefas SIGA/Bitcoin](PROXIMAS_TASKS_SIGA_BITCOIN.md). Depois de adotar o checkpoint comum, começar por TASK-B01 (coorte Python e aceites) e TASK-B02 (integração P2P/C++). O catálogo comum tem oito candidatos Bitcoin; B promove os conjuntos prontos em seus namespaces. O bloqueio de build C++ não impede preparar as tarefas Python.
+
 **Retomada de 2026-09-29:** o estado acima é o da criação do documento. A worktree Bitcoin avançou até `3623afb`, incluindo PIN, corpus e diagnósticos; consultar seu `plans/bitcoin/STATUS.md`, sem reiniciar BTC-P0. A próxima sequência é a [CLI Rust e piloto real](RUST_CLI_PILOTO_REAL.md), com [protocolo comum de validação](../research/rust/PROTOCOLO_VALIDACAO.md). B prepara build/testes, tarefas e avaliação Bitcoin, consome o binário Rust de A e registra em `experiments/bitcoin/rust/`. B deve distinguir preparação/ensaio de execução e corrigir a medição da entrega sob orçamento antes de novas conclusões. O core Rust pertence exclusivamente a A.
 
 Este plano substitui o antigo roteiro BTC-0–BTC-6. Bitcoin passa a espelhar **P0–P7 e E26-00–E26-06**, sem esperar a conclusão do SIGA. Ler [protocolo de execução paralela](PARALLEL_EXECUTION.md), este arquivo e [experimentos Bitcoin](bitcoin/EXPERIMENTOS_2026.md). Bibliografia comum: [papers de 2026](../research/16_BASE_EXPERIMENTAL_2026.md).

@@ -1,0 +1,341 @@
+{
+  "schema": "atlas-task-candidates/1",
+  "track": "siga",
+  "created": "2026-09-30",
+  "sealed": false,
+  "runnable": false,
+  "purpose": "Curadoria dev: 4 candidatos smoke e 4 candidatos para integrar o piloto de 16; nao enviar diretamente ao runner.",
+  "base_sha": "e3be22828f787cbe71b339aecb7a7bf569099803",
+  "tasks": [
+    {
+      "id": "SIGA-REAL-01",
+      "title": "Extrair trecho com delimitador anterior ao inicio",
+      "proposed_split": "smoke",
+      "category": "bug_local",
+      "family": "siga-texto",
+      "base_sha": "e3be22828f787cbe71b339aecb7a7bf569099803",
+      "statement": "A API Texto.extrai deve localizar o primeiro fechamento depois do delimitador de abertura escolhido. Um fechamento anterior nao deve causar excecao nem determinar o resultado. Preservar o retorno null quando faltar abertura ou fechamento posterior. Entradas null e delimitadores vazios ficam fora desta tarefa.",
+      "public_acceptance_criteria": [
+        "Texto.extrai(\"]ruido[interno]\", \"[\", \"]\") retorna \"interno\".",
+        "Apenas fechamento anterior, abertura ausente e fechamento posterior ausente retornam null.",
+        "Texto entre delimitadores adjacentes retorna string vazia; caso simples preservado."
+      ],
+      "origin": {
+        "kind": "defeito_reproduzido",
+        "date": "2026-09-30",
+        "description": "Curadoria de requisitos no snapshot inspecionado; nao representa issue upstream ou bug confirmado salvo reproducao registrada."
+      },
+      "contamination_risk": "medio",
+      "contamination_note": "Codigo upstream publico; requisito dev publicado nesta curadoria. Nao usar estes itens nem variantes da mesma familia como holdout. Nao pesquisar solucao upstream durante as tentativas.",
+      "curator_only": {
+        "source_evidence": [
+          {
+            "path": "siga-base/src/main/java/br/gov/jfrj/siga/base/util/Texto.java",
+            "sha256": "ea5716eb714117b5671dadeeecc4fc10ed7d2f8a5eb172ca95554f5894f8b82e",
+            "source_url": null
+          }
+        ],
+        "baseline_observation": "Probe publico compilado com as classes originais: StringIndexOutOfBoundsException para ]ruido[interno].",
+        "environment_required": "JDK 21; aceite Java isolado ou Maven comprovadamente habilitado",
+        "acceptance_to_prepare": "Criar testes independentes e runner de aceite na custodia; demonstrar falha na base e sucesso em solucao de referencia antes de converter para atlas-tasks/2."
+      },
+      "readiness": {
+        "source_inspected": true,
+        "baseline_defect_reproduced": true,
+        "acceptance_prepared": false,
+        "reference_validated": false,
+        "runnable_in_pilot": false
+      }
+    },
+    {
+      "id": "SIGA-REAL-02",
+      "title": "Localidade com hifen e UF no documento",
+      "proposed_split": "smoke",
+      "category": "entre_arquivos",
+      "family": "siga-data-localidade",
+      "base_sha": "e3be22828f787cbe71b339aecb7a7bf569099803",
+      "statement": "Na data por extenso de DocumentoUtil, aceitar espacos externos na localidade e grafia mista. Preservar hifens internos no nome do municipio e manter a UF reconhecida em maiusculas. O formatador de texto compartilhado e seus consumidores devem continuar compativeis.",
+      "public_acceptance_criteria": [
+        "\"  jI-pArAnÁ-ro  \" gera prefixo \"Ji-Paraná-RO, \".",
+        "A data continua em portugues mesmo com locale de processo diferente; timezone fixado pelo avaliador.",
+        "Localidade sem UF continua formatada; a politica atual de retorno null para argumentos invalidos e preservada."
+      ],
+      "origin": {
+        "kind": "requisito_proposto",
+        "date": "2026-09-30",
+        "description": "Curadoria de requisitos no snapshot inspecionado; nao representa issue upstream ou bug confirmado salvo reproducao registrada."
+      },
+      "contamination_risk": "medio",
+      "contamination_note": "Codigo upstream publico; requisito dev publicado nesta curadoria. Nao usar estes itens nem variantes da mesma familia como holdout. Nao pesquisar solucao upstream durante as tentativas.",
+      "curator_only": {
+        "source_evidence": [
+          {
+            "path": "siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/DocumentoUtil.java",
+            "sha256": "fcebd4bdfd7fb215add0ff637e0b56e5f559e8bb5331a91649e3369379e0eb2a",
+            "source_url": null
+          },
+          {
+            "path": "siga-base/src/main/java/br/gov/jfrj/siga/base/util/Texto.java",
+            "sha256": "ea5716eb714117b5671dadeeecc4fc10ed7d2f8a5eb172ca95554f5894f8b82e",
+            "source_url": null
+          }
+        ],
+        "baseline_observation": null,
+        "environment_required": "Maven/JDK 21; reactor siga-base + siga-ex; sem banco",
+        "acceptance_to_prepare": "Criar testes independentes e runner de aceite na custodia; demonstrar falha na base e sucesso em solucao de referencia antes de converter para atlas-tasks/2."
+      },
+      "readiness": {
+        "source_inspected": true,
+        "baseline_defect_reproduced": false,
+        "acceptance_prepared": false,
+        "reference_validated": false,
+        "runnable_in_pilot": false
+      }
+    },
+    {
+      "id": "SIGA-REAL-03",
+      "title": "Contrato do CPF com mascara exata",
+      "proposed_split": "smoke",
+      "category": "testes_comportamento_de_api",
+      "family": "siga-cpf",
+      "base_sha": "e3be22828f787cbe71b339aecb7a7bf569099803",
+      "statement": "Na validacao simples de CPF, aceitar somente 11 digitos ASCII ou a mascara ddd.ddd.ddd-dd. Rejeitar pontuacao deslocada, letras, branco e null pelo erro de aplicacao da API. Esta tarefa e sobre formato; nao acrescentar validacao de digitos verificadores.",
+      "public_acceptance_criteria": [
+        "CPF sem mascara e a mesma sequencia com mascara correta sao aceitos.",
+        "Formato com 14 caracteres e pontuacao nas posicoes erradas e rejeitado.",
+        "getLongValueValidaSimples usa o mesmo contrato e preserva o valor numerico com zeros iniciais."
+      ],
+      "origin": {
+        "kind": "requisito_proposto",
+        "date": "2026-09-30",
+        "description": "Curadoria de requisitos no snapshot inspecionado; nao representa issue upstream ou bug confirmado salvo reproducao registrada."
+      },
+      "contamination_risk": "medio",
+      "contamination_note": "Codigo upstream publico; requisito dev publicado nesta curadoria. Nao usar estes itens nem variantes da mesma familia como holdout. Nao pesquisar solucao upstream durante as tentativas.",
+      "curator_only": {
+        "source_evidence": [
+          {
+            "path": "siga-base/src/main/java/br/gov/jfrj/siga/base/util/CPFUtils.java",
+            "sha256": "44da5afd622633c5fdeb028b0605c4ba47d4656f0f8a0381e7cf9f39055e1252",
+            "source_url": null
+          }
+        ],
+        "baseline_observation": null,
+        "environment_required": "Maven/JDK 21; siga-base; capturar XML Surefire com testes > 0",
+        "acceptance_to_prepare": "Criar testes independentes e runner de aceite na custodia; demonstrar falha na base e sucesso em solucao de referencia antes de converter para atlas-tasks/2."
+      },
+      "readiness": {
+        "source_inspected": true,
+        "baseline_defect_reproduced": false,
+        "acceptance_prepared": false,
+        "reference_validated": false,
+        "runnable_in_pilot": false
+      }
+    },
+    {
+      "id": "SIGA-REAL-04",
+      "title": "Normalizacao de listas de configuracao",
+      "proposed_split": "smoke",
+      "category": "configuracao_interface",
+      "family": "siga-prop",
+      "base_sha": "e3be22828f787cbe71b339aecb7a7bf569099803",
+      "statement": "Prop.getList deve remover espacos externos de cada entrada e descartar entradas vazias, mantendo ordem e duplicatas. Propriedade ausente continua retornando null. Nao alterar a semantica dos getters numericos.",
+      "public_acceptance_criteria": [
+        "\", a, , b, \" retorna [\"a\", \"b\"].",
+        "\"a,a\" preserva duas entradas e ordem.",
+        "String vazia retorna lista vazia; propriedade ausente retorna null."
+      ],
+      "origin": {
+        "kind": "requisito_proposto",
+        "date": "2026-09-30",
+        "description": "Curadoria de requisitos no snapshot inspecionado; nao representa issue upstream ou bug confirmado salvo reproducao registrada."
+      },
+      "contamination_risk": "medio",
+      "contamination_note": "Codigo upstream publico; requisito dev publicado nesta curadoria. Nao usar estes itens nem variantes da mesma familia como holdout. Nao pesquisar solucao upstream durante as tentativas.",
+      "curator_only": {
+        "source_evidence": [
+          {
+            "path": "siga-base/src/main/java/br/gov/jfrj/siga/base/Prop.java",
+            "sha256": "a240b1942aabb4bde369e0358cf3ae9914a9c8a83d7ca62c8e2c9ebd6b771f8c",
+            "source_url": null
+          }
+        ],
+        "baseline_observation": null,
+        "environment_required": "Maven/JDK 21; provider de propriedades isolado restaurado apos cada teste",
+        "acceptance_to_prepare": "Criar testes independentes e runner de aceite na custodia; demonstrar falha na base e sucesso em solucao de referencia antes de converter para atlas-tasks/2."
+      },
+      "readiness": {
+        "source_inspected": true,
+        "baseline_defect_reproduced": false,
+        "acceptance_prepared": false,
+        "reference_validated": false,
+        "runnable_in_pilot": false
+      }
+    },
+    {
+      "id": "SIGA-REAL-05",
+      "title": "Operacoes de conjuntos sem Comparable",
+      "proposed_split": "piloto",
+      "category": "bug_local",
+      "family": "siga-conjuntos",
+      "base_sha": "e3be22828f787cbe71b339aecb7a7bf569099803",
+      "statement": "As operacoes genericas union, intersection, difference e symDifference de SetUtils devem aceitar elementos que implementam equals/hashCode sem implementar Comparable. Nao modificar conjuntos de entrada. A API nao promete ordem de iteracao.",
+      "public_acceptance_criteria": [
+        "Uniao de objetos nao Comparable funciona sem ClassCastException.",
+        "Intersecao, diferenca e diferenca simetrica respeitam igualdade por valor.",
+        "Conjuntos vazios e entradas imutaveis funcionam; entradas permanecem inalteradas."
+      ],
+      "origin": {
+        "kind": "defeito_reproduzido",
+        "date": "2026-09-30",
+        "description": "Curadoria de requisitos no snapshot inspecionado; nao representa issue upstream ou bug confirmado salvo reproducao registrada."
+      },
+      "contamination_risk": "medio",
+      "contamination_note": "Codigo upstream publico; requisito dev publicado nesta curadoria. Nao usar estes itens nem variantes da mesma familia como holdout. Nao pesquisar solucao upstream durante as tentativas.",
+      "curator_only": {
+        "source_evidence": [
+          {
+            "path": "siga-base/src/main/java/br/gov/jfrj/siga/base/util/SetUtils.java",
+            "sha256": "5732f0ff4dbb6300611b21839271db3e36b67ad19a24be5a9017e775dedc878d",
+            "source_url": null
+          }
+        ],
+        "baseline_observation": "Probe publico com union(Set.of(new Object()), Set.of()) na classe original: ClassCastException.",
+        "environment_required": "JDK 21; aceite Java isolado ou Maven habilitado",
+        "acceptance_to_prepare": "Criar testes independentes e runner de aceite na custodia; demonstrar falha na base e sucesso em solucao de referencia antes de converter para atlas-tasks/2."
+      },
+      "readiness": {
+        "source_inspected": true,
+        "baseline_defect_reproduced": true,
+        "acceptance_prepared": false,
+        "reference_validated": false,
+        "runnable_in_pilot": false
+      }
+    },
+    {
+      "id": "SIGA-REAL-06",
+      "title": "Preservar literais no ciclo FreeMarker e HTML",
+      "proposed_split": "piloto",
+      "category": "entre_arquivos",
+      "family": "siga-freemarker",
+      "base_sha": "e3be22828f787cbe71b339aecb7a7bf569099803",
+      "statement": "O ciclo de conversao FreeMarker -> HTML -> FreeMarker deve preservar diretivas e literais com cifroes, barras invertidas e aspas escapadas. O marcador compartilhado e o indentador precisam manter suas entradas ja suportadas. Limitar a mudanca ao round-trip de conversao, sem reformatacao geral.",
+      "public_acceptance_criteria": [
+        "Diretiva com caminho Windows e cifrao retorna com os mesmos caracteres e escapes.",
+        "Aspas escapadas e diretivas consecutivas sobrevivem ao round-trip.",
+        "Casos existentes do IndentTest permanecem verdes; comparar conteudo, nao somente ausencia de excecao."
+      ],
+      "origin": {
+        "kind": "requisito_proposto",
+        "date": "2026-09-30",
+        "description": "Curadoria de requisitos no snapshot inspecionado; nao representa issue upstream ou bug confirmado salvo reproducao registrada."
+      },
+      "contamination_risk": "medio",
+      "contamination_note": "Codigo upstream publico; requisito dev publicado nesta curadoria. Nao usar estes itens nem variantes da mesma familia como holdout. Nao pesquisar solucao upstream durante as tentativas.",
+      "curator_only": {
+        "source_evidence": [
+          {
+            "path": "siga/src/main/java/br/gov/jfrj/siga/util/FreemarkerMarker.java",
+            "sha256": "c3c64543de1d7b7943b24681ce7488281fbbdebdceef7a6c2060458fac7173f9",
+            "source_url": null
+          },
+          {
+            "path": "siga/src/main/java/br/gov/jfrj/siga/util/FreemarkerIndent.java",
+            "sha256": "cd292a0b5a90cf85860004bdc46b3bd36e5ad2509ed20b6f8bebbadb0ba25b7a",
+            "source_url": null
+          }
+        ],
+        "baseline_observation": null,
+        "environment_required": "Maven/JDK 21; modulo siga e dependencias; sem servidor",
+        "acceptance_to_prepare": "Criar testes independentes e runner de aceite na custodia; demonstrar falha na base e sucesso em solucao de referencia antes de converter para atlas-tasks/2."
+      },
+      "readiness": {
+        "source_inspected": true,
+        "baseline_defect_reproduced": false,
+        "acceptance_prepared": false,
+        "reference_validated": false,
+        "runnable_in_pilot": false
+      }
+    },
+    {
+      "id": "SIGA-REAL-07",
+      "title": "Codigos de via alem de Z",
+      "proposed_split": "piloto",
+      "category": "testes_comportamento_de_api",
+      "family": "siga-data-localidade",
+      "base_sha": "e3be22828f787cbe71b339aecb7a7bf569099803",
+      "statement": "Estender DocumentoUtil.obterLetraViaPorCodigo para letras sequenciais no formato A..Z, AA..AZ, BA... Os overloads int e String devem concordar. Valores menores que 1 sao invalidos; parsing invalido de String conserva NumberFormatException.",
+      "public_acceptance_criteria": [
+        "1=A, 26=Z, 27=AA, 28=AB, 52=AZ, 53=BA.",
+        "Ambos os overloads produzem o mesmo resultado para entradas validas.",
+        "Zero e negativos geram IllegalArgumentException; nao mudar a geracao de data por extenso."
+      ],
+      "origin": {
+        "kind": "requisito_proposto",
+        "date": "2026-09-30",
+        "description": "Curadoria de requisitos no snapshot inspecionado; nao representa issue upstream ou bug confirmado salvo reproducao registrada."
+      },
+      "contamination_risk": "medio",
+      "contamination_note": "Codigo upstream publico; requisito dev publicado nesta curadoria. Nao usar estes itens nem variantes da mesma familia como holdout. Nao pesquisar solucao upstream durante as tentativas.",
+      "curator_only": {
+        "source_evidence": [
+          {
+            "path": "siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/DocumentoUtil.java",
+            "sha256": "fcebd4bdfd7fb215add0ff637e0b56e5f559e8bb5331a91649e3369379e0eb2a",
+            "source_url": null
+          }
+        ],
+        "baseline_observation": null,
+        "environment_required": "Maven/JDK 21; siga-ex e siga-base; sem banco",
+        "acceptance_to_prepare": "Criar testes independentes e runner de aceite na custodia; demonstrar falha na base e sucesso em solucao de referencia antes de converter para atlas-tasks/2."
+      },
+      "readiness": {
+        "source_inspected": true,
+        "baseline_defect_reproduced": false,
+        "acceptance_prepared": false,
+        "reference_validated": false,
+        "runnable_in_pilot": false
+      }
+    },
+    {
+      "id": "SIGA-REAL-08",
+      "title": "Datas de configuracao com parsing estrito",
+      "proposed_split": "piloto",
+      "category": "configuracao_interface",
+      "family": "siga-prop",
+      "base_sha": "e3be22828f787cbe71b339aecb7a7bf569099803",
+      "statement": "Prop.getData deve aceitar exclusivamente datas reais em dd/MM/yyyy, consumindo a entrada inteira. A ausencia da propriedade conserva a data padrao 31/12/2099. Entrada invalida conserva o tipo RuntimeException e a mensagem publica ja usada pela API; nao aceitar normalizacao silenciosa.",
+      "public_acceptance_criteria": [
+        "31/02/2025, 29/02/2025 e sufixo de texto sao rejeitados.",
+        "29/02/2024 e 31/12/2099 sao aceitos.",
+        "Ano com dois digitos e branco sao rejeitados; provider, locale e timezone isolados nos testes."
+      ],
+      "origin": {
+        "kind": "requisito_proposto",
+        "date": "2026-09-30",
+        "description": "Curadoria de requisitos no snapshot inspecionado; nao representa issue upstream ou bug confirmado salvo reproducao registrada."
+      },
+      "contamination_risk": "medio",
+      "contamination_note": "Codigo upstream publico; requisito dev publicado nesta curadoria. Nao usar estes itens nem variantes da mesma familia como holdout. Nao pesquisar solucao upstream durante as tentativas.",
+      "curator_only": {
+        "source_evidence": [
+          {
+            "path": "siga-base/src/main/java/br/gov/jfrj/siga/base/Prop.java",
+            "sha256": "a240b1942aabb4bde369e0358cf3ae9914a9c8a83d7ca62c8e2c9ebd6b771f8c",
+            "source_url": null
+          }
+        ],
+        "baseline_observation": null,
+        "environment_required": "Maven/JDK 21; provider isolado e timezone fixado",
+        "acceptance_to_prepare": "Criar testes independentes e runner de aceite na custodia; demonstrar falha na base e sucesso em solucao de referencia antes de converter para atlas-tasks/2."
+      },
+      "readiness": {
+        "source_inspected": true,
+        "baseline_defect_reproduced": false,
+        "acceptance_prepared": false,
+        "reference_validated": false,
+        "runnable_in_pilot": false
+      }
+    }
+  ]
+}

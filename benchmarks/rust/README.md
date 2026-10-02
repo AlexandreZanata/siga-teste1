@@ -1,5 +1,7 @@
 # Harness de medição — braço Rust
 
+Tarefas reais em preparação: [catálogos SIGA/Bitcoin](tasks/README.md) e [fila de execução](../../plans/PROXIMAS_TASKS_SIGA_BITCOIN.md). São candidatos dev com requisito e fonte verificada; só passam ao runner depois de preparar e comprovar aceites independentes.
+
 Ferramentas de medição de [`plans/RUST_CLI_PILOTO_REAL.md`](../../plans/RUST_CLI_PILOTO_REAL.md) etapas R1/R2. Nenhum número de relatório é digitado à mão: tudo sai de `.jsonl` brutos agregados por [`report.py`](report.py).
 
 O que este diretório **não** faz, e nenhum relatório pode sugerir que faz: não derruba o cache de filesystem (isso exige `drop_caches` com root em máquina dedicada), não isola cgroup, não chama modelo nenhum e não decide se um patch é bom. Mede processo externo, do spawn até consumir stdout, com cache aquecido.

@@ -1,0 +1,351 @@
+{
+  "schema": "atlas-task-candidates/1",
+  "track": "bitcoin",
+  "created": "2026-09-30",
+  "sealed": false,
+  "runnable": false,
+  "purpose": "Curadoria dev: 4 candidatos smoke e 4 candidatos para integrar o piloto de 16; nao enviar diretamente ao runner.",
+  "base_sha": "9be056a8a72b624dae9623b2f7bded92c2a21c91",
+  "tasks": [
+    {
+      "id": "BTC-REAL-01",
+      "title": "Checksum malformado retorna falso",
+      "proposed_split": "smoke",
+      "category": "bug_local",
+      "family": "btc-descriptors",
+      "base_sha": "9be056a8a72b624dae9623b2f7bded92c2a21c91",
+      "statement": "descsum_check deve retornar False para descritor com checksum malformado, inclusive strings curtas e caracteres fora do alfabeto. Preservar require=False para descritores sem separador e todos os checksums validos. Nao modificar o algoritmo de checksum.",
+      "public_acceptance_criteria": [
+        "\"#\" retorna False, sem IndexError.",
+        "Corpo com Unicode fora do alfabeto seguido de checksum retorna False, sem TypeError.",
+        "Checksum valido permanece aceito; checksum alterado rejeitado."
+      ],
+      "origin": {
+        "kind": "defeito_reproduzido",
+        "date": "2026-09-30",
+        "description": "Curadoria de requisitos no snapshot inspecionado; nao representa issue upstream ou bug confirmado salvo reproducao registrada."
+      },
+      "contamination_risk": "medio",
+      "contamination_note": "Codigo upstream publico; requisito dev publicado nesta curadoria. Nao usar estes itens nem variantes da mesma familia como holdout. Nao pesquisar solucao upstream durante as tentativas.",
+      "curator_only": {
+        "source_evidence": [
+          {
+            "path": "test/functional/test_framework/descriptors.py",
+            "sha256": "8c2a4490c1b2a09c6c6e209eda090b160214d8156e20d6db671459cb4090a16a",
+            "source_url": "https://github.com/bitcoin/bitcoin/blob/9be056a8a72b624dae9623b2f7bded92c2a21c91/test/functional/test_framework/descriptors.py"
+          }
+        ],
+        "baseline_observation": "Import da fonte original: descsum_check(\"#\") gera IndexError; descsum_check(\"☃#aaaaaaaa\") gera TypeError.",
+        "environment_required": "Python 3; sem bitcoind ou build C++",
+        "acceptance_to_prepare": "Criar testes independentes e runner de aceite na custodia; demonstrar falha na base e sucesso em solucao de referencia antes de converter para atlas-tasks/2."
+      },
+      "readiness": {
+        "source_inspected": true,
+        "baseline_defect_reproduced": true,
+        "acceptance_prepared": false,
+        "reference_validated": false,
+        "runnable_in_pilot": false
+      }
+    },
+    {
+      "id": "BTC-REAL-02",
+      "title": "Converter enderecos mainnet para script de teste",
+      "proposed_split": "smoke",
+      "category": "entre_arquivos",
+      "family": "btc-addresses",
+      "base_sha": "9be056a8a72b624dae9623b2f7bded92c2a21c91",
+      "statement": "Estender address_to_scriptpubkey do framework para aceitar tambem enderecos Base58 P2PKH e P2SH de mainnet, preservando os formatos testnet/regtest e witness ja suportados. A conversao deve produzir os mesmos bytes de script do construtor correspondente ao payload. Esta e uma extensao do framework local de testes.",
+      "public_acceptance_criteria": [
+        "P2PKH versao 0 e P2SH versao 5 sao convertidos corretamente.",
+        "Versoes 111 e 196 permanecem compativeis; checksum invalido e rejeitado.",
+        "Comparar bytes com construtores de script independentes; cobrir zeros iniciais e witness existente."
+      ],
+      "origin": {
+        "kind": "requisito_proposto",
+        "date": "2026-09-30",
+        "description": "Curadoria de requisitos no snapshot inspecionado; nao representa issue upstream ou bug confirmado salvo reproducao registrada."
+      },
+      "contamination_risk": "medio",
+      "contamination_note": "Codigo upstream publico; requisito dev publicado nesta curadoria. Nao usar estes itens nem variantes da mesma familia como holdout. Nao pesquisar solucao upstream durante as tentativas.",
+      "curator_only": {
+        "source_evidence": [
+          {
+            "path": "test/functional/test_framework/address.py",
+            "sha256": "63e83cdd2054afbccff8932729dc65cf8feafc8ce3bd9b0071d492058d12bf4f",
+            "source_url": "https://github.com/bitcoin/bitcoin/blob/9be056a8a72b624dae9623b2f7bded92c2a21c91/test/functional/test_framework/address.py"
+          },
+          {
+            "path": "test/functional/test_framework/script.py",
+            "sha256": "24bdbfc18cfa1084c1c985218c0067c2e4c06cbd83488e5c08f2167a12bf3abf",
+            "source_url": "https://github.com/bitcoin/bitcoin/blob/9be056a8a72b624dae9623b2f7bded92c2a21c91/test/functional/test_framework/script.py"
+          }
+        ],
+        "baseline_observation": null,
+        "environment_required": "Python 3; checkout completo do framework; sem daemon",
+        "acceptance_to_prepare": "Criar testes independentes e runner de aceite na custodia; demonstrar falha na base e sucesso em solucao de referencia antes de converter para atlas-tasks/2."
+      },
+      "readiness": {
+        "source_inspected": true,
+        "baseline_defect_reproduced": false,
+        "acceptance_prepared": false,
+        "reference_validated": false,
+        "runnable_in_pilot": false
+      }
+    },
+    {
+      "id": "BTC-REAL-03",
+      "title": "RPC com tipo MIME JSON e charset",
+      "proposed_split": "smoke",
+      "category": "testes_comportamento_de_api",
+      "family": "btc-authproxy",
+      "base_sha": "9be056a8a72b624dae9623b2f7bded92c2a21c91",
+      "statement": "AuthServiceProxy deve aceitar Content-Type application/json com parametro charset=utf-8, variacoes de maiusculas e espacos permitidos no cabecalho. Outros tipos MIME continuam rejeitados. Preservar erros JSON-RPC, respostas 204 e parsing de numeros com Decimal.",
+      "public_acceptance_criteria": [
+        "Resposta JSON com application/json; charset=utf-8 e processada.",
+        "Tipo MIME text/html continua gerando JSONRPCException.",
+        "Erro JSON-RPC, 204 vazio e valor fracionario Decimal preservam os contratos atuais."
+      ],
+      "origin": {
+        "kind": "requisito_proposto",
+        "date": "2026-09-30",
+        "description": "Curadoria de requisitos no snapshot inspecionado; nao representa issue upstream ou bug confirmado salvo reproducao registrada."
+      },
+      "contamination_risk": "medio",
+      "contamination_note": "Codigo upstream publico; requisito dev publicado nesta curadoria. Nao usar estes itens nem variantes da mesma familia como holdout. Nao pesquisar solucao upstream durante as tentativas.",
+      "curator_only": {
+        "source_evidence": [
+          {
+            "path": "test/functional/test_framework/authproxy.py",
+            "sha256": "736246f2495578e0b1f38775ae44c59514e5bd45bf83b427d90b2370916d1a1a",
+            "source_url": "https://github.com/bitcoin/bitcoin/blob/9be056a8a72b624dae9623b2f7bded92c2a21c91/test/functional/test_framework/authproxy.py"
+          }
+        ],
+        "baseline_observation": null,
+        "environment_required": "Python 3; conexao HTTP fake/local, sem daemon",
+        "acceptance_to_prepare": "Criar testes independentes e runner de aceite na custodia; demonstrar falha na base e sucesso em solucao de referencia antes de converter para atlas-tasks/2."
+      },
+      "readiness": {
+        "source_inspected": true,
+        "baseline_defect_reproduced": false,
+        "acceptance_prepared": false,
+        "reference_validated": false,
+        "runnable_in_pilot": false
+      }
+    },
+    {
+      "id": "BTC-REAL-04",
+      "title": "Rejeitar paralelismo invalido antes do build",
+      "proposed_split": "smoke",
+      "category": "configuracao_interface",
+      "family": "btc-runner",
+      "base_sha": "9be056a8a72b624dae9623b2f7bded92c2a21c91",
+      "statement": "O test_runner funcional deve rejeitar --jobs=0 e valores negativos com erro de argumentos claro, antes de acessar configuracao de build ou iniciar processos. Valores positivos e o valor padrao conservam o comportamento existente.",
+      "public_acceptance_criteria": [
+        "--jobs=0 e --jobs=-1 terminam com codigo de erro de uso e citam --jobs.",
+        "Rejeicao ocorre mesmo sem config.ini de build.",
+        "--help continua disponivel; jobs positivo nao e rejeitado pela validacao de argumentos."
+      ],
+      "origin": {
+        "kind": "requisito_proposto",
+        "date": "2026-09-30",
+        "description": "Curadoria de requisitos no snapshot inspecionado; nao representa issue upstream ou bug confirmado salvo reproducao registrada."
+      },
+      "contamination_risk": "medio",
+      "contamination_note": "Codigo upstream publico; requisito dev publicado nesta curadoria. Nao usar estes itens nem variantes da mesma familia como holdout. Nao pesquisar solucao upstream durante as tentativas.",
+      "curator_only": {
+        "source_evidence": [
+          {
+            "path": "test/functional/test_runner.py",
+            "sha256": "faee6591d749e7fae8340430039f0b6f7450c6eb5a2960d61f0be2118ca529c3",
+            "source_url": "https://github.com/bitcoin/bitcoin/blob/9be056a8a72b624dae9623b2f7bded92c2a21c91/test/functional/test_runner.py"
+          }
+        ],
+        "baseline_observation": null,
+        "environment_required": "Python 3; subprocessos isolados; nenhuma execucao de teste funcional no probe",
+        "acceptance_to_prepare": "Criar testes independentes e runner de aceite na custodia; demonstrar falha na base e sucesso em solucao de referencia antes de converter para atlas-tasks/2."
+      },
+      "readiness": {
+        "source_inspected": true,
+        "baseline_defect_reproduced": false,
+        "acceptance_prepared": false,
+        "reference_validated": false,
+        "runnable_in_pilot": false
+      }
+    },
+    {
+      "id": "BTC-REAL-05",
+      "title": "Propagar opcoes do proxy para subclientes",
+      "proposed_split": "piloto",
+      "category": "bug_local",
+      "family": "btc-authproxy",
+      "base_sha": "9be056a8a72b624dae9623b2f7bded92c2a21c91",
+      "statement": "Proxies RPC derivados por atributo/metodo ou operador / devem preservar ensure_ascii e reuse_http_connections configurados no proxy pai. Compartilhamento de conexao e timeout devem conservar a semantica existente. Alteracoes posteriores no pai nao precisam mudar filhos ja criados.",
+      "public_acceptance_criteria": [
+        "Pai com ensure_ascii=False gera filho com a mesma opcao, inclusive proxy de URI relativa.",
+        "reuse_http_connections=False e preservado na derivacao.",
+        "O timeout e a conexao fornecida continuam respeitados; nao incluir credenciais nos logs dos testes."
+      ],
+      "origin": {
+        "kind": "requisito_proposto",
+        "date": "2026-09-30",
+        "description": "Curadoria de requisitos no snapshot inspecionado; nao representa issue upstream ou bug confirmado salvo reproducao registrada."
+      },
+      "contamination_risk": "medio",
+      "contamination_note": "Codigo upstream publico; requisito dev publicado nesta curadoria. Nao usar estes itens nem variantes da mesma familia como holdout. Nao pesquisar solucao upstream durante as tentativas.",
+      "curator_only": {
+        "source_evidence": [
+          {
+            "path": "test/functional/test_framework/authproxy.py",
+            "sha256": "736246f2495578e0b1f38775ae44c59514e5bd45bf83b427d90b2370916d1a1a",
+            "source_url": "https://github.com/bitcoin/bitcoin/blob/9be056a8a72b624dae9623b2f7bded92c2a21c91/test/functional/test_framework/authproxy.py"
+          }
+        ],
+        "baseline_observation": null,
+        "environment_required": "Python 3; fake connection; sem daemon",
+        "acceptance_to_prepare": "Criar testes independentes e runner de aceite na custodia; demonstrar falha na base e sucesso em solucao de referencia antes de converter para atlas-tasks/2."
+      },
+      "readiness": {
+        "source_inspected": true,
+        "baseline_defect_reproduced": false,
+        "acceptance_prepared": false,
+        "reference_validated": false,
+        "runnable_in_pilot": false
+      }
+    },
+    {
+      "id": "BTC-REAL-06",
+      "title": "Rejeitar payload P2P com string truncada",
+      "proposed_split": "piloto",
+      "category": "entre_arquivos",
+      "family": "btc-p2p-deserialization",
+      "base_sha": "9be056a8a72b624dae9623b2f7bded92c2a21c91",
+      "statement": "A desserializacao de strings no framework deve rejeitar EOF antes do comprimento declarado com EOFError. Na cadeia que recebe mensagens P2P, uma mensagem com esse payload nao pode chegar ao callback como se estivesse completa. Preservar strings vazias, validas e a leitura subsequente no stream.",
+      "public_acceptance_criteria": [
+        "BytesIO com tamanho declarado maior que o payload gera EOFError.",
+        "Payload valido seguido de outra estrutura deixa o cursor no ponto correto.",
+        "Na recepcao P2P sintetica, mensagem truncada nao chama on_message; mensagem valida chama uma vez."
+      ],
+      "origin": {
+        "kind": "requisito_proposto",
+        "date": "2026-09-30",
+        "description": "Curadoria de requisitos no snapshot inspecionado; nao representa issue upstream ou bug confirmado salvo reproducao registrada."
+      },
+      "contamination_risk": "medio",
+      "contamination_note": "Codigo upstream publico; requisito dev publicado nesta curadoria. Nao usar estes itens nem variantes da mesma familia como holdout. Nao pesquisar solucao upstream durante as tentativas.",
+      "curator_only": {
+        "source_evidence": [
+          {
+            "path": "test/functional/test_framework/messages.py",
+            "sha256": "c786651a517a49dd084b1d76072f755d40c5483f5be53b7322ca4f3403548b26",
+            "source_url": "https://github.com/bitcoin/bitcoin/blob/9be056a8a72b624dae9623b2f7bded92c2a21c91/test/functional/test_framework/messages.py"
+          },
+          {
+            "path": "test/functional/test_framework/p2p.py",
+            "sha256": "7292865dedff7a0ea78675d6ea85e9135e81fb59ea9b7247b1d6bf42b48aa9f3",
+            "source_url": "https://github.com/bitcoin/bitcoin/blob/9be056a8a72b624dae9623b2f7bded92c2a21c91/test/functional/test_framework/p2p.py"
+          }
+        ],
+        "baseline_observation": null,
+        "environment_required": "Python 3; checkout completo; socket/frame sintetico local; sem bitcoind",
+        "acceptance_to_prepare": "Criar testes independentes e runner de aceite na custodia; demonstrar falha na base e sucesso em solucao de referencia antes de converter para atlas-tasks/2."
+      },
+      "readiness": {
+        "source_inspected": true,
+        "baseline_defect_reproduced": false,
+        "acceptance_prepared": false,
+        "reference_validated": false,
+        "runnable_in_pilot": false
+      }
+    },
+    {
+      "id": "BTC-REAL-07",
+      "title": "Unidade explicita de bytes no parser C++",
+      "proposed_split": "piloto",
+      "category": "testes_comportamento_de_api",
+      "family": "btc-byteunits",
+      "base_sha": "9be056a8a72b624dae9623b2f7bded92c2a21c91",
+      "statement": "Estender ParseByteUnits para aceitar sufixo B como bytes independentemente de default_multiplier. Preservar todas as unidades ja aceitas e o comportamento de entradas invalidas e overflow. Este e um requisito experimental de utilitario, nao uma falha confirmada do consenso.",
+      "public_acceptance_criteria": [
+        "10B retorna 10 mesmo com multiplicador padrao K.",
+        "0B e aceito; B sem numero, decimal, negativo e overflow sao rejeitados.",
+        "k/K/m/M/g/G/t/T e ausencia de sufixo conservam os resultados anteriores."
+      ],
+      "origin": {
+        "kind": "requisito_proposto",
+        "date": "2026-09-30",
+        "description": "Curadoria de requisitos no snapshot inspecionado; nao representa issue upstream ou bug confirmado salvo reproducao registrada."
+      },
+      "contamination_risk": "medio",
+      "contamination_note": "Codigo upstream publico; requisito dev publicado nesta curadoria. Nao usar estes itens nem variantes da mesma familia como holdout. Nao pesquisar solucao upstream durante as tentativas.",
+      "curator_only": {
+        "source_evidence": [
+          {
+            "path": "src/util/strencodings.cpp",
+            "sha256": "e7b53609dbb5d0d025a77ae7db749c084e0c75d798cba6f4456aea0be026804f",
+            "source_url": "https://github.com/bitcoin/bitcoin/blob/9be056a8a72b624dae9623b2f7bded92c2a21c91/src/util/strencodings.cpp"
+          },
+          {
+            "path": "src/util/strencodings.h",
+            "sha256": "05a92016f6407e7e51586ee7643a72ab98593abb88ed70b45ef702f698980a65",
+            "source_url": "https://github.com/bitcoin/bitcoin/blob/9be056a8a72b624dae9623b2f7bded92c2a21c91/src/util/strencodings.h"
+          },
+          {
+            "path": "src/test/util_tests.cpp",
+            "sha256": "7dcc31af27791801c915a8ab4ac9ac052bace098cbeaf6954ec405cfcd0ba01d",
+            "source_url": "https://github.com/bitcoin/bitcoin/blob/9be056a8a72b624dae9623b2f7bded92c2a21c91/src/test/util_tests.cpp"
+          }
+        ],
+        "baseline_observation": null,
+        "environment_required": "Build C++ do snapshot; test_bitcoin util_tests, com casos novos do avaliador; caminho do binario confirmado no preparo",
+        "acceptance_to_prepare": "Criar testes independentes e runner de aceite na custodia; demonstrar falha na base e sucesso em solucao de referencia antes de converter para atlas-tasks/2."
+      },
+      "readiness": {
+        "source_inspected": true,
+        "baseline_defect_reproduced": false,
+        "acceptance_prepared": false,
+        "reference_validated": false,
+        "runnable_in_pilot": false
+      }
+    },
+    {
+      "id": "BTC-REAL-08",
+      "title": "Modo estrito para selecao vazia de testes",
+      "proposed_split": "piloto",
+      "category": "configuracao_interface",
+      "family": "btc-runner",
+      "base_sha": "9be056a8a72b624dae9623b2f7bded92c2a21c91",
+      "statement": "Adicionar --fail-if-empty ao test_runner funcional. Com essa opcao, uma selecao vazia apos filtros/exclusoes termina com erro e mensagem clara sem criar cache de testes ou iniciar daemon. Sem a opcao, preservar o comportamento atual. Atualizar ajuda do runner.",
+      "public_acceptance_criteria": [
+        "Flag aparece em --help.",
+        "Filtro que remove todos os testes retorna erro com a flag e preserva o comportamento anterior sem ela.",
+        "Selecao nao vazia segue o fluxo normal; fixtures de config isoladas, sem depender de um build de producao."
+      ],
+      "origin": {
+        "kind": "requisito_proposto",
+        "date": "2026-09-30",
+        "description": "Curadoria de requisitos no snapshot inspecionado; nao representa issue upstream ou bug confirmado salvo reproducao registrada."
+      },
+      "contamination_risk": "medio",
+      "contamination_note": "Codigo upstream publico; requisito dev publicado nesta curadoria. Nao usar estes itens nem variantes da mesma familia como holdout. Nao pesquisar solucao upstream durante as tentativas.",
+      "curator_only": {
+        "source_evidence": [
+          {
+            "path": "test/functional/test_runner.py",
+            "sha256": "faee6591d749e7fae8340430039f0b6f7450c6eb5a2960d61f0be2118ca529c3",
+            "source_url": "https://github.com/bitcoin/bitcoin/blob/9be056a8a72b624dae9623b2f7bded92c2a21c91/test/functional/test_runner.py"
+          }
+        ],
+        "baseline_observation": null,
+        "environment_required": "Python 3; config fixture e launcher fake; sem daemon no aceite da selecao",
+        "acceptance_to_prepare": "Criar testes independentes e runner de aceite na custodia; demonstrar falha na base e sucesso em solucao de referencia antes de converter para atlas-tasks/2."
+      },
+      "readiness": {
+        "source_inspected": true,
+        "baseline_defect_reproduced": false,
+        "acceptance_prepared": false,
+        "reference_validated": false,
+        "runnable_in_pilot": false
+      }
+    }
+  ]
+}
