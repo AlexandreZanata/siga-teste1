@@ -1,0 +1,22 @@
+{
+  "schema": "atlas-checkpoint/1",
+  "from": "TASK-EXP02-seal-16",
+  "date": "2026-10-02",
+  "base_sha": "e3be22828f787cbe71b339aecb7a7bf569099803",
+  "set": {
+    "file": "benchmarks/siga/rust/pilot16.tasks.json",
+    "sha256": "6b9ea88252a3717603929cf233d1ce055c6626a7e2579c34ed7efa057d1443c0"
+  },
+  "acceptance": {
+    "run_sh_sha256": "118d7c5128c3af1d3a885dae91e32627aaae6cd0ba32b1df0e160f36c94e7319",
+    "run_pilot_sh_sha256": "ba4c1b757bd6165a8b8d4aa2a43b720962a66319ab776f1c26cb8f6f6b817202",
+    "run_pilot2_sh_sha256": "0b4ad587efc4edc372fed7bac17c963fd07b370f3e59ebf1d25f44c6f6ecf40f",
+    "harness_count": 16,
+    "note": "Tres runners congelados, um por lote; test_command de cada tarefa aponta o seu."
+  },
+  "validation": "experiments/rust/siga/2026-10-02-exp02-seal/",
+  "curation": "research/siga/rust/CURADORIA_PILOTO2.md",
+  "seal_review": "research/siga/rust/REVISAO_SEAL16.md",
+  "contains_gold": false,
+  "note": "Checkpoint do piloto selado de 16 para B (protocolo paralelo). Sem gabaritos, sem casos privados. Holdout e selamento de rodada com o curador P4 seguem pendentes."
+}

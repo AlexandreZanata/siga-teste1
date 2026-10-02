@@ -1,0 +1,51 @@
+{
+  "schema": "atlas-pilot-seal/1",
+  "date": "2026-10-02",
+  "base_sha": "e3be22828f787cbe71b339aecb7a7bf569099803",
+  "set": {
+    "file": "benchmarks/siga/rust/pilot16.tasks.json",
+    "sha256": "6b9ea88252a3717603929cf233d1ce055c6626a7e2579c34ed7efa057d1443c0",
+    "sealed": true,
+    "tasks": 16,
+    "categories": {"bug_local": 4, "entre_arquivos": 4, "testes_comportamento_de_api": 4, "configuracao_interface": 4},
+    "balanced": true
+  },
+  "members": {
+    "benchmarks/siga/rust/smoke.tasks.json": {
+      "sha256": "ffb9dd8bcf9899d94cd1cc267cc1426908d4ec48efe7437b775a6ad931f5e820",
+      "tasks": ["SIGA-REAL-01", "SIGA-REAL-02", "SIGA-REAL-03", "SIGA-REAL-04"]
+    },
+    "benchmarks/siga/rust/pilot.tasks.json": {
+      "sha256": "fae1032d644071c1cd9ff863ddb3f93ea2b33cc00aa7575fa6a50142f58ab850",
+      "tasks": ["SIGA-REAL-05", "SIGA-REAL-06", "SIGA-REAL-07", "SIGA-REAL-08"]
+    },
+    "benchmarks/siga/rust/pilot2.tasks.json": {
+      "sha256": "20bc851f15642e1855de300cd30150f50fdb53f2a6148e6778131287cab9dce5",
+      "tasks": ["SIGA-REAL-09", "SIGA-REAL-10", "SIGA-REAL-11", "SIGA-REAL-12", "SIGA-REAL-13", "SIGA-REAL-14", "SIGA-REAL-15", "SIGA-REAL-16"]
+    }
+  },
+  "acceptance": {
+    "run_sh_sha256": "118d7c5128c3af1d3a885dae91e32627aaae6cd0ba32b1df0e160f36c94e7319",
+    "run_pilot_sh_sha256": "ba4c1b757bd6165a8b8d4aa2a43b720962a66319ab776f1c26cb8f6f6b817202",
+    "run_pilot2_sh_sha256": "0b4ad587efc4edc372fed7bac17c963fd07b370f3e59ebf1d25f44c6f6ecf40f",
+    "harness_count": 16
+  },
+  "families": {
+    "distinct": 14,
+    "repeated": {"siga-data-localidade": ["SIGA-REAL-02", "SIGA-REAL-07"], "siga-prop": ["SIGA-REAL-04", "SIGA-REAL-08"]},
+    "note": "Repeticoes com requisitos disjuntos, ja sinalizadas nas curadorias: se usadas para ajustar politica, excluir do piloto de inferencia e buscar substitutos."
+  },
+  "shared_sources": {
+    "siga-base/src/main/java/br/gov/jfrj/siga/base/util/Texto.java": ["SIGA-REAL-01", "SIGA-REAL-02", "SIGA-REAL-16"],
+    "siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/DocumentoUtil.java": ["SIGA-REAL-02", "SIGA-REAL-07"],
+    "siga-base/src/main/java/br/gov/jfrj/siga/base/Prop.java": ["SIGA-REAL-04", "SIGA-REAL-08"],
+    "siga-base/src/main/java/br/gov/jfrj/siga/base/util/Utils.java": ["SIGA-REAL-09", "SIGA-REAL-10", "SIGA-REAL-12"],
+    "siga-base/src/main/java/br/gov/jfrj/siga/base/DateUtils.java": ["SIGA-REAL-11", "SIGA-REAL-13"],
+    "note": "Defeitos e trechos disjuntos por tarefa; cada tentativa roda em workspace novo com uma so tarefa, sem interferencia entre tarefas."
+  },
+  "operational_basis": {
+    "acceptance_wall_s": {"SIGA-REAL-14": 6.3, "SIGA-REAL-09": 3.3, "SIGA-REAL-11": 4.7},
+    "note": "javac + execucao por tarefa, medido 2026-10-02 (morno). Custo financeiro por tentativa: nao computavel sem modelo faturado (P2 pendente); nenhuma tentativa com modelo rodou."
+  },
+  "contains_gold": false
+}

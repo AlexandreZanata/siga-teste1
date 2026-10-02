@@ -4,6 +4,13 @@ Criado em 2026-09-29. Dono: agente A (core), com validação Bitcoin pelo agente
 
 Plano: [construção e etapas](../RUST_CLI_PILOTO_REAL.md). Método: [protocolo](../../research/rust/PROTOCOLO_VALIDACAO.md).
 
+## TASK-EXP02 selada (2026-10-02) — piloto SIGA de 16 congelado
+
+- **O que existe agora:** [`pilot16.tasks.json`](../../benchmarks/siga/rust/pilot16.tasks.json) (`atlas-tasks/2`, 16 tarefas, `sealed:true`, `sha256:6b9ea882…57d1443c`, `eval.py validate` limpo 4/4/4/4) gerado por união fiel dos três lotes + [`pilot16-checkpoint.json`](../../benchmarks/siga/rust/pilot16-checkpoint.json) para B + selo travado em `experiments/rust/siga/2026-10-02-exp02-seal/seal.json` + revisão em [`REVISAO_SEAL16.md`](../../research/siga/rust/REVISAO_SEAL16.md).
+- **Revisão do selo:** 14 famílias distintas (repetem só `siga-data-localidade` e `siga-prop`, com requisitos disjuntos e regra de exclusão registrada); 13 arquivos em escopo, 5 compartilhados com defeitos disjuntos; aceite medido 3,3–6,3 s por tarefa; custo financeiro não computável sem P2 (nenhuma tentativa com modelo rodou).
+- **Testes:** 4 novos em [`tests/test_siga_pilot16_seal.py`](../../tests/test_siga_pilot16_seal.py) (selo válido/fechado, união fiel sem reescrita, hashes dos lotes e runners travados, comandos por lote). `pytest -q`: **145 passed, 5 skipped** (antes: 141 passed, 5 skipped).
+- **O que continua aberto:** holdout e selamento de rodada com o curador (P4), B01/B02, e EXP01 (bloqueada por P1/P2).
+
 ## TASK-EXP02 completa no quantitativo (2026-10-02) — piloto SIGA 09–16 validado
 
 - **O que existe agora:** [`pilot2.tasks.json`](../../benchmarks/siga/rust/pilot2.tasks.json) (`atlas-tasks/2`, 8 piloto, balanço 2/2/2/2, `sha256:20bc851f…cab9dce5`, `eval.py validate` limpo) + 8 harnesses `javac` e `run-pilot2.sh` em [`acceptance/`](../../benchmarks/siga/rust/acceptance/) + [`pilot2-checkpoint.json`](../../benchmarks/siga/rust/pilot2-checkpoint.json) para B. `run.sh` e `run-pilot.sh` seguem congelados (shas verificados por teste). Curadoria em [`CURADORIA_PILOTO2.md`](../../research/siga/rust/CURADORIA_PILOTO2.md), evidências em `experiments/rust/siga/2026-10-02-exp02-pilot2-validation/`.
