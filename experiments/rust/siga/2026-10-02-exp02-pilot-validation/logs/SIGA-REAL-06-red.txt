@@ -1,0 +1,11 @@
+FAIL rt-escaped-dquote expected=<[#if x=="a\"b"]ok[/#if]> actual=<[#if x=="a"b"]ok[/#if]>
+FAIL rt-escaped-dquote-close threw=java.lang.StringIndexOutOfBoundsException: Range [0, 23) out of bounds for length 22
+FAIL rt-escaped-squote expected=<[#if x=='it\'s']ok[/#if]> actual=<[#if x=='it's']ok[/#if]>
+FAIL rt-winpath-double expected=<[#assign p="C:\\temp\\file" /]> actual=<[#assign p="C:\temp\file" /]>
+FAIL rt-winpath-single expected=<[#assign p="C:\temp\new" /]> actual=<[#assign p="C:tempnew" /]>
+PASS rt-dollar
+PASS rt-consecutive
+PASS marker-simple
+PASS convert-open
+PASS convert-roundtrip
+AtlasAccept06: 5/10 passed

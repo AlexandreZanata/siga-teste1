@@ -1,0 +1,1 @@
+private-acceptance: 9/9 passed (green, referencia em custodia)

@@ -1,0 +1,11 @@
+PASS union-values
+PASS intersection-values
+PASS difference-values
+PASS symdiff-values
+PASS union-empty
+PASS difference-empty
+PASS union-unmodifiable
+PASS inputs-unchanged
+PASS subset-true
+PASS superset-false
+AtlasAccept05: 10/10 passed

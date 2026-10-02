@@ -1,0 +1,42 @@
+{
+  "schema": "atlas-acceptance-validation/1",
+  "task": "SIGA-REAL-06",
+  "base_sha": "e3be22828f787cbe71b339aecb7a7bf569099803",
+  "sources": [
+    {
+      "path": "siga/src/main/java/br/gov/jfrj/siga/util/FreemarkerMarker.java"
+    },
+    {
+      "path": "siga/src/main/java/br/gov/jfrj/siga/util/FreemarkerIndent.java"
+    }
+  ],
+  "harness": {
+    "file": "acceptance/AtlasAccept06.java",
+    "sha256": "b422a8803b3385ea096a43e2fd562441a9d641f26afd9b78cc4ef4c2eaf584d5",
+    "cases": 10
+  },
+  "runner": {
+    "file": "acceptance/run-pilot.sh",
+    "sha256": "ba4c1b757bd6165a8b8d4aa2a43b720962a66319ab776f1c26cb8f6f6b817202"
+  },
+  "baseline": {
+    "result": "red",
+    "passed": "5/10",
+    "exit": 1,
+    "log": "logs/SIGA-REAL-06-red.txt"
+  },
+  "reference": {
+    "result": "green",
+    "passed": "10/10",
+    "exit": 0,
+    "log": "logs/SIGA-REAL-06-green.txt",
+    "solution_sha256": "6bbdf255c78a89a588450530483a5798b141f2abd78719b33498cbebd38288b3",
+    "solution_sha256_2": "bf0054bce1be071ee39c6581880b845fc0f0ce1d66f351a76837533dff34c161",
+    "solution_note": "hashes dos dois arquivos de referencia em custodia (fora do git); conteudo nao publicado"
+  },
+  "private_acceptance": {
+    "red": "2/9",
+    "green": "9/9",
+    "note": "9 casos extras do avaliador em custodia; contagens publicadas, casos nao"
+  }
+}

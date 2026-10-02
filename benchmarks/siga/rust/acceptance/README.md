@@ -20,6 +20,31 @@ Resultados medidos nesta revisão (logs sanitizados em
 
 Casos privados do avaliador (custódia, fora deste repo): vermelho 3/7, verde 7/7.
 
+## Piloto 05–08 (EXP02)
+
+`run-pilot.sh` + `AtlasAccept0{5,6,7,8}.java`: o aceite do conjunto
+[`pilot.tasks.json`](pilot.tasks.json) (`atlas-tasks/2`, 4 tarefas piloto,
+`eval.py validate` limpo e balanceado 1/1/1/1). Mesmas regras do smoke; `06`
+exige ainda o jsoup 1.15.3 do repo Maven local (versão pinada em
+`siga-base/pom.xml`; ausente => exit 3 `ATLAS-ENV-BLOCK`). Resultados medidos
+nesta revisão (logs sanitizados em
+`experiments/rust/siga/2026-10-02-exp02-pilot-validation/logs/`):
+
+| Tarefa | Base (vermelho) | Referência (verde) |
+|---|---|---|
+| SIGA-REAL-05 | 3/10, exit 1 | 10/10, exit 0 |
+| SIGA-REAL-06 | 5/10, exit 1 | 10/10, exit 0 |
+| SIGA-REAL-07 | 4/12, exit 1 | 12/12, exit 0 |
+| SIGA-REAL-08 | 5/9, exit 1 | 9/9, exit 0 |
+
+Casos privados do avaliador para o piloto (custódia, fora deste repo):
+vermelho 2/9, verde 9/9.
+
+O `run.sh` do smoke segue **congelado** como evidência da TASK-A03 e não atende
+05–08; o piloto usa `run-pilot.sh` (`test_command` de cada tarefa piloto).
+Curadoria em `research/siga/rust/CURADORIA_PILOTO.md`, checkpoint em
+`pilot-checkpoint.json`.
+
 ## Instalação no workspace do avaliador
 
 1. Base limpa no `base_sha` da tarefa (workspace novo por tentativa).

@@ -1,0 +1,23 @@
+{
+  "schema": "atlas-acceptance-set/1",
+  "set": "benchmarks/siga/rust/pilot.tasks.json",
+  "set_sha256": "fae1032d644071c1cd9ff863ddb3f93ea2b33cc00aa7575fa6a50142f58ab850",
+  "acceptance": {
+    "run_pilot_sh_sha256": "ba4c1b757bd6165a8b8d4aa2a43b720962a66319ab776f1c26cb8f6f6b817202",
+    "harnesses": {
+      "SIGA-REAL-05": "773ee5a790924aaaa4a688e8407bf3ae31eff31012a004316a88028914c42989",
+      "SIGA-REAL-06": "b422a8803b3385ea096a43e2fd562441a9d641f26afd9b78cc4ef4c2eaf584d5",
+      "SIGA-REAL-07": "d3ed290be9f35d56acadf61fcc055a330b8d69d4828f9b7f0eab6e63198ce08c",
+      "SIGA-REAL-08": "288e646918634f46df230c05d32b1d9403e7669972b867df7f87cacf9901c0ef"
+    }
+  },
+  "validate": {
+    "command": "python3 benchmarks/rust/eval.py validate --tasks benchmarks/siga/rust/pilot.tasks.json",
+    "result": "balanced=true, problems=[]"
+  },
+  "gold_isolation": {
+    "custody": "diretorio fora do repo e fora do workspace; nunca em git (ver CURADORIA_PILOTO.md)",
+    "public_package_contains_gold": false,
+    "private_cases_published": false
+  }
+}

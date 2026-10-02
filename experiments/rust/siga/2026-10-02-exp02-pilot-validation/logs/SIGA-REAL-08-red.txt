@@ -1,0 +1,10 @@
+PASS leap
+PASS max
+PASS missing
+FAIL inexistente-31 expected-throw=<RuntimeException: Erro ao converter> actual=<03/03/2025>
+FAIL inexistente-29 expected-throw=<RuntimeException: Erro ao converter> actual=<01/03/2025>
+FAIL sufixo expected-throw=<RuntimeException: Erro ao converter> actual=<29/02/2024>
+FAIL ano-curto expected-throw=<RuntimeException: Erro ao converter> actual=<01/01/2025>
+PASS branco
+PASS formato
+AtlasAccept08: 5/9 passed

@@ -4,6 +4,14 @@ Criado em 2026-09-29. Dono: agente A (core), com validação Bitcoin pelo agente
 
 Plano: [construção e etapas](../RUST_CLI_PILOTO_REAL.md). Método: [protocolo](../../research/rust/PROTOCOLO_VALIDACAO.md).
 
+## TASK-EXP02 parcial executada (2026-10-02) — piloto SIGA 05–08 validado
+
+- **O que existe agora:** [`pilot.tasks.json`](../../benchmarks/siga/rust/pilot.tasks.json) (`atlas-tasks/2`, 4 piloto, balanço 1/1/1/1, `sha256:fae1032d…42f58ab850`, `eval.py validate` limpo) + 4 harnesses `javac` e `run-pilot.sh` em [`acceptance/`](../../benchmarks/siga/rust/acceptance/) + [`pilot-checkpoint.json`](../../benchmarks/siga/rust/pilot-checkpoint.json) para B. O `run.sh` do smoke segue congelado (sha da A03 intacto, verificado por teste). Curadoria em [`CURADORIA_PILOTO.md`](../../research/siga/rust/CURADORIA_PILOTO.md), evidências sanitizadas em `experiments/rust/siga/2026-10-02-exp02-pilot-validation/`.
+- **Vermelho→verde demonstrado no SHA fixado** (`e3be22828`): 05 → 3/10→10/10; 06 → 5/10→10/10 (com `StringIndexOutOfBoundsException` em aspa escapada); 07 → 4/12→12/12; 08 → 5/9→9/9; casos privados do avaliador 2/9→9/9. Referências em custódia fora do git (diffs mínimos: conjunto por hash; volta do HTML como texto literal + barra escapa próximo char em strings; numeração sequencial A..Z,AA..; `dd/MM/yyyy` estrito com consumo total). Regressões preservadas (casos do `IndentTest` já suportados no harness; `NumberFormatException` e data por extenso intactos; demais getters de `Prop` intocados).
+- **Isolamento além de diretório:** mesma prova da A03 (custódia fora do repo, pacote sem ouro, `test_command` relativo, `atlas-accept/**` em `immutable_paths`). Nota de família: 07/08 repetem famílias do smoke (02/04) com requisitos disjuntos — se usadas para política, excluir do piloto de inferência (ver curadoria).
+- **Testes:** 6 novos em [`tests/test_siga_pilot_exp02.py`](../../tests/test_siga_pilot_exp02.py) (validate limpo+balanceado, projeção sem ouro, `run-pilot.sh` com hashes, vermelho/verde com logs, smoke congelado + checkpoint do piloto). `pytest -q`: **135 passed, 5 skipped** (antes: 129 passed, 5 skipped). Nenhuma tentativa com modelo rodou; P1/P2 continuam pendentes e bloqueiam só a rodada paga.
+- **O que continua aberto:** EXP02 completa exige 16 por trilha — faltam 8 tarefas SIGA além das 8 validadas (smoke 01–04 + piloto 05–08); B01/B02 seguem na fila. Próxima ação executora: **EXP01** (bloqueada por P1/P2) ou completar as 8 restantes.
+
 ## Retomada de 2026-09-30 — tarefas reais
 
 Nova fila: [TASK-A01–A03, B01–B02 e EXP01–EXP04](../PROXIMAS_TASKS_SIGA_BITCOIN.md). Foram preparados oito candidatos SIGA e oito Bitcoin, com fontes/hashes, requisitos e readiness explícitos. Ainda não são conjuntos executáveis: faltam aceites independentes e validação de referência. Três defeitos foram reproduzidos em probes públicos; não houve piloto ou gasto com modelo nesta revisão.

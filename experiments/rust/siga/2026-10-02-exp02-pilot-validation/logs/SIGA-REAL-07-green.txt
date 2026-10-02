@@ -1,0 +1,13 @@
+PASS c01
+PASS c26
+PASS c27
+PASS c28
+PASS c52
+PASS c53
+PASS c703
+PASS str27
+PASS agree-53
+PASS zero-iae
+PASS neg-iae
+PASS invalid-nfe
+AtlasAccept07: 12/12 passed

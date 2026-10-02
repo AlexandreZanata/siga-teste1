@@ -1,0 +1,13 @@
+PASS c01
+PASS c26
+FAIL c27 expected=<AA> actual=<[>
+FAIL c28 expected=<AB> actual=<\>
+FAIL c52 expected=<AZ> actual=<t>
+FAIL c53 expected=<BA> actual=<u>
+FAIL c703 expected=<AAA> actual=<˿>
+FAIL str27 expected=<AA> actual=<[>
+PASS agree-53
+FAIL zero-iae expected-throw=<java.lang.IllegalArgumentException> actual=<@>
+FAIL neg-iae expected-throw=<java.lang.IllegalArgumentException> actual=<=>
+PASS invalid-nfe
+AtlasAccept07: 4/12 passed

@@ -1,0 +1,10 @@
+PASS leap
+PASS max
+PASS missing
+PASS inexistente-31
+PASS inexistente-29
+PASS sufixo
+PASS ano-curto
+PASS branco
+PASS formato
+AtlasAccept08: 9/9 passed
