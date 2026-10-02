@@ -1,0 +1,9 @@
+PASS pos
+PASS zero
+PASS wide
+PASS single
+FAIL neg expected=<-005> actual=<0-5>
+FAIL neg-one expected=<-01> actual=<-1>
+FAIL neg-wide expected=<-00100> actual=<0-100>
+PASS neg-exact
+AtlasAccept10: 5/8 passed

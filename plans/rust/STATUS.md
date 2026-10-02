@@ -4,6 +4,14 @@ Criado em 2026-09-29. Dono: agente A (core), com validação Bitcoin pelo agente
 
 Plano: [construção e etapas](../RUST_CLI_PILOTO_REAL.md). Método: [protocolo](../../research/rust/PROTOCOLO_VALIDACAO.md).
 
+## TASK-EXP02 completa no quantitativo (2026-10-02) — piloto SIGA 09–16 validado
+
+- **O que existe agora:** [`pilot2.tasks.json`](../../benchmarks/siga/rust/pilot2.tasks.json) (`atlas-tasks/2`, 8 piloto, balanço 2/2/2/2, `sha256:20bc851f…cab9dce5`, `eval.py validate` limpo) + 8 harnesses `javac` e `run-pilot2.sh` em [`acceptance/`](../../benchmarks/siga/rust/acceptance/) + [`pilot2-checkpoint.json`](../../benchmarks/siga/rust/pilot2-checkpoint.json) para B. `run.sh` e `run-pilot.sh` seguem congelados (shas verificados por teste). Curadoria em [`CURADORIA_PILOTO2.md`](../../research/siga/rust/CURADORIA_PILOTO2.md), evidências em `experiments/rust/siga/2026-10-02-exp02-pilot2-validation/`.
+- **Vermelho→verde demonstrado no SHA fixado** (`e3be22828`): 09 → 6/9→9/9; 10 → 5/8→8/8; 11 → 3/8→8/8; 12 → 4/8→8/8; 13 → 3/6→6/6; 14 → 5/9→9/9; 15 → 2/8→8/8; 16 → 6/9→9/9; casos privados do avaliador 1/10→10/10. Referências em custódia fora do git (diffs mínimos: corte no primeiro `=`; sinal antes dos zeros; duração com `abs` + ordem; IAE em vez de NPE; `yyyy`; milhares sem `um`; ponto decimal neutro; minúsculas neutras).
+- **Somado aos lotes anteriores, o SIGA tem 16 tarefas validadas** (smoke 01–04 + piloto 05–08 + piloto 09–16 = 4/4/4/4 por categoria), completando o quantitativo da EXP02 para a trilha. Falta só selamento/holdout (curador P4). Duas tarefas deste lote caíram em arquivos já usados (09/10/12 em `Utils.java`, 11/13 em `DateUtils.java`), com defeitos e trechos disjuntos; o chamador invertido de `intervalo` (siga-wf) produz os mesmos valores antes e depois.
+- **Testes:** 6 novos em [`tests/test_siga_pilot2_exp02.py`](../../tests/test_siga_pilot2_exp02.py) (inclui congelamento dos dois runners anteriores). `pytest -q`: **141 passed, 5 skipped** (antes: 135 passed, 5 skipped). Nenhuma tentativa com modelo rodou; P1/P2 continuam pendentes e bloqueiam só a rodada paga.
+- **O que continua aberto:** selamento do piloto + holdout (P4), B01/B02, e EXP01 (bloqueada por P1/P2).
+
 ## TASK-EXP02 parcial executada (2026-10-02) — piloto SIGA 05–08 validado
 
 - **O que existe agora:** [`pilot.tasks.json`](../../benchmarks/siga/rust/pilot.tasks.json) (`atlas-tasks/2`, 4 piloto, balanço 1/1/1/1, `sha256:fae1032d…42f58ab850`, `eval.py validate` limpo) + 4 harnesses `javac` e `run-pilot.sh` em [`acceptance/`](../../benchmarks/siga/rust/acceptance/) + [`pilot-checkpoint.json`](../../benchmarks/siga/rust/pilot-checkpoint.json) para B. O `run.sh` do smoke segue congelado (sha da A03 intacto, verificado por teste). Curadoria em [`CURADORIA_PILOTO.md`](../../research/siga/rust/CURADORIA_PILOTO.md), evidências sanitizadas em `experiments/rust/siga/2026-10-02-exp02-pilot-validation/`.

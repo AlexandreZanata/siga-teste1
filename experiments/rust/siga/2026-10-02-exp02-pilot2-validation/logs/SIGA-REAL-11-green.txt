@@ -1,0 +1,9 @@
+PASS same-day-hours
+PASS same-day-min
+PASS same-day-sec
+PASS reversed-hours
+PASS reversed-days
+PASS one-day
+PASS one-day-rev
+PASS week
+AtlasAccept11: 8/8 passed

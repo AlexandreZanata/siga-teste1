@@ -1,0 +1,10 @@
+FAIL mil expected=<mil reais> actual=<um mil reais>
+FAIL mil-cem expected=<mil e cem reais> actual=<um mil e cem reais>
+FAIL mil-um expected=<mil e um reais> actual=<um mil e um reais>
+FAIL mil-extenso expected=<mil e duzentos e trinta e quatro reais e cinquenta e seis centavos> actual=<um mil e duzentos e trinta e quatro reais e cinquenta e seis centavos>
+PASS dois-mil
+PASS um-real
+PASS cem
+PASS milhao
+PASS centavos
+AtlasAccept14: 5/9 passed

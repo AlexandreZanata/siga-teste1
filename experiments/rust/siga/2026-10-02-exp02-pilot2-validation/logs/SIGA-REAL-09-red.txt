@@ -1,0 +1,10 @@
+PASS simple
+FAIL equals-in-value expected=<{a=b=c}> actual=<{}>
+FAIL leading-equals expected=<{x==y}> actual=<{}>
+FAIL empty-value expected=<{vazio=}> actual=<{}>
+PASS bare-ignored
+PASS last-wins
+PASS plus-space
+PASS escapes
+PASS null-form
+AtlasAccept09: 6/9 passed

@@ -1,0 +1,9 @@
+PASS enc-null
+PASS enc-empty
+PASS dec-null
+PASS dec-empty
+PASS roundtrip
+PASS roundtrip-utf8
+PASS roundtrip-big
+PASS garbage
+AtlasAccept12: 8/8 passed

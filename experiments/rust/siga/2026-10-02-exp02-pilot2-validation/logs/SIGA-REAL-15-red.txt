@@ -1,0 +1,9 @@
+FAIL bytes expected=<1.0 bytes> actual=<1,0 bytes>
+FAIL bytes-max expected=<1023.0 bytes> actual=<1023,0 bytes>
+FAIL kb expected=<1.0 kB> actual=<1,0 kB>
+FAIL kb-frac expected=<1.5 kB> actual=<1,5 kB>
+FAIL mb expected=<1.0 MB> actual=<1,0 MB>
+FAIL gb expected=<1.0 GB> actual=<1,0 GB>
+PASS zero
+PASS neg
+AtlasAccept15: 2/8 passed

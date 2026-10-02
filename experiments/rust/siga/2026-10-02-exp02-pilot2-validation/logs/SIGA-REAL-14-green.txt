@@ -1,0 +1,10 @@
+PASS mil
+PASS mil-cem
+PASS mil-um
+PASS mil-extenso
+PASS dois-mil
+PASS um-real
+PASS cem
+PASS milhao
+PASS centavos
+AtlasAccept14: 9/9 passed

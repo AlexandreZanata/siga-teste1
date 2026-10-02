@@ -1,0 +1,10 @@
+FAIL tr-icon expected=<itbi-icon> actual=<ıtbı-ıcon>
+FAIL tr-hot expected=<sicak> actual=<sıcak>
+FAIL tr-ad expected=<ilan> actual=<ılan>
+PASS accent
+PASS punct
+PASS underscore
+PASS no-lower
+PASS null
+PASS blank
+AtlasAccept16: 6/9 passed

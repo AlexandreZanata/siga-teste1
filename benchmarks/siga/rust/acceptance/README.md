@@ -45,6 +45,34 @@ O `run.sh` do smoke segue **congelado** como evidência da TASK-A03 e não atend
 Curadoria em `research/siga/rust/CURADORIA_PILOTO.md`, checkpoint em
 `pilot-checkpoint.json`.
 
+## Piloto 09–16 (EXP02, segundo lote)
+
+`run-pilot2.sh` + `AtlasAccept0{9,10,11,12,13,14,15,16}.java`: o aceite do
+conjunto [`pilot2.tasks.json`](pilot2.tasks.json) (`atlas-tasks/2`, 8 tarefas
+piloto, `eval.py validate` limpo e balanceado 2/2/2/2). Mesmas regras; 09/10/12
+exigem ainda servlet, commons-text, lang3 e persistence do repo Maven local, e
+11/13 exigem prettytime (versões pinadas no script; ausente => exit 3
+`ATLAS-ENV-BLOCK`). Resultados medidos nesta revisão (logs sanitizados em
+`experiments/rust/siga/2026-10-02-exp02-pilot2-validation/logs/`):
+
+| Tarefa | Base (vermelho) | Referência (verde) |
+|---|---|---|
+| SIGA-REAL-09 | 6/9, exit 1 | 9/9, exit 0 |
+| SIGA-REAL-10 | 5/8, exit 1 | 8/8, exit 0 |
+| SIGA-REAL-11 | 3/8, exit 1 | 8/8, exit 0 |
+| SIGA-REAL-12 | 4/8, exit 1 | 8/8, exit 0 |
+| SIGA-REAL-13 | 3/6, exit 1 | 6/6, exit 0 |
+| SIGA-REAL-14 | 5/9, exit 1 | 9/9, exit 0 |
+| SIGA-REAL-15 | 2/8, exit 1 | 8/8, exit 0 |
+| SIGA-REAL-16 | 6/9, exit 1 | 9/9, exit 0 |
+
+Casos privados do avaliador para o segundo lote (custódia, fora deste repo):
+vermelho 1/10, verde 10/10.
+
+`run.sh` e `run-pilot.sh` seguem **congelados**; o segundo lote usa
+`run-pilot2.sh`. Curadoria em `research/siga/rust/CURADORIA_PILOTO2.md`,
+checkpoint em `pilot2-checkpoint.json`.
+
 ## Instalação no workspace do avaliador
 
 1. Base limpa no `base_sha` da tarefa (workspace novo por tentativa).

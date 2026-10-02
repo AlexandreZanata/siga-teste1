@@ -1,0 +1,7 @@
+FAIL full-year expected=<30/04/2025 10:00:00> actual=<30/04/25 10:00:00>
+FAIL leap-second expected=<29/02/2024 23:59:59> actual=<29/02/24 23:59:59>
+FAIL y2k expected=<01/01/2000 00:00:00> actual=<01/01/00 00:00:00>
+PASS null
+PASS ddmmyyyy
+PASS ddmmyy
+AtlasAccept13: 3/6 passed

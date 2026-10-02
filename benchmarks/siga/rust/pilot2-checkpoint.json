@@ -1,0 +1,28 @@
+{
+  "schema": "atlas-checkpoint/1",
+  "from": "TASK-EXP02-piloto-09-16",
+  "date": "2026-10-02",
+  "base_sha": "e3be22828f787cbe71b339aecb7a7bf569099803",
+  "set": {
+    "file": "benchmarks/siga/rust/pilot2.tasks.json",
+    "sha256": "20bc851f15642e1855de300cd30150f50fdb53f2a6148e6778131287cab9dce5"
+  },
+  "acceptance": {
+    "run_pilot2_sh_sha256": "0b4ad587efc4edc372fed7bac17c963fd07b370f3e59ebf1d25f44c6f6ecf40f",
+    "harnesses_sha256": {
+      "SIGA-REAL-09": "a84d8310928029c0c08e51875da23a8911f561eb67d6def4b2217fa32dc985ba",
+      "SIGA-REAL-10": "3056790e60928d167a75c6f4b57835fae0f301deb97d10c7f7d20807f3d44601",
+      "SIGA-REAL-11": "ff7438fa83b60ed383fa5aab737974785408b84870193f8fcff459e637a42526",
+      "SIGA-REAL-12": "4c2b61c36c4773f97845775606d3b9962dcfe1d8179eefffa90fbc8a741142e9",
+      "SIGA-REAL-13": "88fa1cf8676933a4742749d76ba6dc6f991db6397bde45080dc6a12129fe745a",
+      "SIGA-REAL-14": "36c87ad273e6fb8fa5ca8d7a06f1f0abc3b7d9e2df7bf528ba3ff1a9d0eb6827",
+      "SIGA-REAL-15": "1230d5392ad506dbf5deea33c66773b5bcbd4c9ff55d4d5e67f1eb75ae8a9c33",
+      "SIGA-REAL-16": "41ecb254e174d2a418669fef72b83249e274a50f31dd6f8b930ecdea9f51d341"
+    },
+    "note": "run.sh do smoke A03 e run-pilot.sh do primeiro lote seguem congelados (shas em checkpoint.json e pilot-checkpoint.json); este checkpoint ancora run-pilot2.sh do segundo lote."
+  },
+  "validation": "experiments/rust/siga/2026-10-02-exp02-pilot2-validation/",
+  "curation": "research/siga/rust/CURADORIA_PILOTO2.md",
+  "contains_gold": false,
+  "note": "Checkpoint de documentos/core para B (protocolo paralelo). Sem gabaritos, sem casos privados."
+}

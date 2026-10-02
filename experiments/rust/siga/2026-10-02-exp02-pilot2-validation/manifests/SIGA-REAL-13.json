@@ -1,0 +1,38 @@
+{
+  "schema": "atlas-acceptance-validation/1",
+  "task": "SIGA-REAL-13",
+  "base_sha": "e3be22828f787cbe71b339aecb7a7bf569099803",
+  "sources": [
+    {
+      "path": "siga-base/src/main/java/br/gov/jfrj/siga/base/DateUtils.java"
+    }
+  ],
+  "harness": {
+    "file": "acceptance/AtlasAccept13.java",
+    "sha256": "88fa1cf8676933a4742749d76ba6dc6f991db6397bde45080dc6a12129fe745a",
+    "cases": 6
+  },
+  "runner": {
+    "file": "acceptance/run-pilot2.sh",
+    "sha256": "0b4ad587efc4edc372fed7bac17c963fd07b370f3e59ebf1d25f44c6f6ecf40f"
+  },
+  "baseline": {
+    "result": "red",
+    "passed": "3/6",
+    "exit": 1,
+    "log": "logs/SIGA-REAL-13-red.txt"
+  },
+  "reference": {
+    "result": "green",
+    "passed": "6/6",
+    "exit": 0,
+    "log": "logs/SIGA-REAL-13-green.txt",
+    "solution_sha256": "35b06a03a2d628d3421532a2e50cb8d062e481818fc1f746a2f3ff7e83170577",
+    "solution_note": "hash do arquivo de referencia em custodia (fora do git); conteudo nao publicado"
+  },
+  "private_acceptance": {
+    "red": "1/10",
+    "green": "10/10",
+    "note": "10 casos extras do avaliador em custodia; contagens publicadas, casos nao"
+  }
+}

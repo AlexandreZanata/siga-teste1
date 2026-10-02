@@ -1,0 +1,9 @@
+PASS pos
+PASS zero
+PASS wide
+PASS single
+PASS neg
+PASS neg-one
+PASS neg-wide
+PASS neg-exact
+AtlasAccept10: 8/8 passed

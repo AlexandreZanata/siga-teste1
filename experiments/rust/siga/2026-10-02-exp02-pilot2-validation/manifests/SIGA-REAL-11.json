@@ -1,0 +1,41 @@
+{
+  "schema": "atlas-acceptance-validation/1",
+  "task": "SIGA-REAL-11",
+  "base_sha": "e3be22828f787cbe71b339aecb7a7bf569099803",
+  "sources": [
+    {
+      "path": "siga-base/src/main/java/br/gov/jfrj/siga/base/DateUtils.java"
+    },
+    {
+      "path": "siga-base/src/main/java/br/gov/jfrj/siga/base/SigaCalendar.java"
+    }
+  ],
+  "harness": {
+    "file": "acceptance/AtlasAccept11.java",
+    "sha256": "ff7438fa83b60ed383fa5aab737974785408b84870193f8fcff459e637a42526",
+    "cases": 8
+  },
+  "runner": {
+    "file": "acceptance/run-pilot2.sh",
+    "sha256": "0b4ad587efc4edc372fed7bac17c963fd07b370f3e59ebf1d25f44c6f6ecf40f"
+  },
+  "baseline": {
+    "result": "red",
+    "passed": "3/8",
+    "exit": 1,
+    "log": "logs/SIGA-REAL-11-red.txt"
+  },
+  "reference": {
+    "result": "green",
+    "passed": "8/8",
+    "exit": 0,
+    "log": "logs/SIGA-REAL-11-green.txt",
+    "solution_sha256": "685a9369fae7d0e62cee3712ad7dd1bac14440d893be0e9d7c18c7764259b4ea",
+    "solution_note": "hash do arquivo de referencia em custodia (fora do git); conteudo nao publicado"
+  },
+  "private_acceptance": {
+    "red": "1/10",
+    "green": "10/10",
+    "note": "10 casos extras do avaliador em custodia; contagens publicadas, casos nao"
+  }
+}

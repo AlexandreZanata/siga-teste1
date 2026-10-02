@@ -1,0 +1,7 @@
+PASS full-year
+PASS leap-second
+PASS y2k
+PASS null
+PASS ddmmyyyy
+PASS ddmmyy
+AtlasAccept13: 6/6 passed

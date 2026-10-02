@@ -1,0 +1,10 @@
+PASS simple
+PASS equals-in-value
+PASS leading-equals
+PASS empty-value
+PASS bare-ignored
+PASS last-wins
+PASS plus-space
+PASS escapes
+PASS null-form
+AtlasAccept09: 9/9 passed

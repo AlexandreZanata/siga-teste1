@@ -1,0 +1,9 @@
+FAIL enc-null expected-throw=<java.lang.IllegalArgumentException:Conteudo para codificacao nulo ou vazio> threw=java.lang.NullPointerException: Cannot invoke "String.getBytes(java.nio.charset.Charset)" because "<parameter1>" is null
+FAIL enc-empty expected-throw=<java.lang.IllegalArgumentException:Conteudo para codificacao nulo ou vazio> threw=java.lang.NullPointerException: Cannot read the array length because "src" is null
+FAIL dec-null expected-throw=<java.lang.IllegalArgumentException:Conteudo para decodificacao nulo ou vazio> threw=java.lang.NullPointerException: Cannot invoke "String.getBytes(java.nio.charset.Charset)" because "src" is null
+FAIL dec-empty expected-throw=<java.lang.IllegalArgumentException:Conteudo para decodificacao nulo ou vazio> threw=java.lang.NullPointerException: Cannot read the array length because "bytes" is null
+PASS roundtrip
+PASS roundtrip-utf8
+PASS roundtrip-big
+PASS garbage
+AtlasAccept12: 4/8 passed

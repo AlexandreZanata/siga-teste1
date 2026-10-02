@@ -1,0 +1,38 @@
+{
+  "schema": "atlas-acceptance-validation/1",
+  "task": "SIGA-REAL-15",
+  "base_sha": "e3be22828f787cbe71b339aecb7a7bf569099803",
+  "sources": [
+    {
+      "path": "siga-base/src/main/java/br/gov/jfrj/siga/base/FormataTamanhoDeArquivo.java"
+    }
+  ],
+  "harness": {
+    "file": "acceptance/AtlasAccept15.java",
+    "sha256": "1230d5392ad506dbf5deea33c66773b5bcbd4c9ff55d4d5e67f1eb75ae8a9c33",
+    "cases": 8
+  },
+  "runner": {
+    "file": "acceptance/run-pilot2.sh",
+    "sha256": "0b4ad587efc4edc372fed7bac17c963fd07b370f3e59ebf1d25f44c6f6ecf40f"
+  },
+  "baseline": {
+    "result": "red",
+    "passed": "2/8",
+    "exit": 1,
+    "log": "logs/SIGA-REAL-15-red.txt"
+  },
+  "reference": {
+    "result": "green",
+    "passed": "8/8",
+    "exit": 0,
+    "log": "logs/SIGA-REAL-15-green.txt",
+    "solution_sha256": "f47814fded3ed47a1fe94746e7512239d083b89e8965121877cf4f51a8a00753",
+    "solution_note": "hash do arquivo de referencia em custodia (fora do git); conteudo nao publicado"
+  },
+  "private_acceptance": {
+    "red": "1/10",
+    "green": "10/10",
+    "note": "10 casos extras do avaliador em custodia; contagens publicadas, casos nao"
+  }
+}

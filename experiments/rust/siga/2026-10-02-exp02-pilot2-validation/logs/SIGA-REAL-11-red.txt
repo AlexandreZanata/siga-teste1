@@ -1,0 +1,9 @@
+FAIL same-day-hours expected=<2h> actual=<00:00:00>
+FAIL same-day-min expected=<45min> actual=<00:00:00>
+FAIL same-day-sec expected=<45s> actual=<00:00:00>
+PASS reversed-hours
+PASS reversed-days
+FAIL one-day expected=<1 dia> actual=<-1 dias>
+PASS one-day-rev
+FAIL week expected=<7 dias> actual=<-7 dias>
+AtlasAccept11: 3/8 passed

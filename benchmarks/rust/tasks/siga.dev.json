@@ -336,6 +336,336 @@
         "reference_validated": true,
         "runnable_in_pilot": false
       }
+    },
+    {
+      "id": "SIGA-REAL-09",
+      "title": "Parametros de formulario sem perda de dados",
+      "proposed_split": "piloto",
+      "category": "bug_local",
+      "family": "siga-form",
+      "base_sha": "e3be22828f787cbe71b339aecb7a7bf569099803",
+      "statement": "Utils.mapFromUrlEncodedForm deve preservar sinal de igual dentro do valor e valor vazio apos o igual. Par sem '=' continua ignorado; chave repetida mantem o ultimo valor; decodificacao percentual e unescape HTML inalterados.",
+      "public_acceptance_criteria": [
+        "\"a=b=c\" gera {a: \"b=c\"}.",
+        "Valor vazio apos '=' preservado; par sem '=' ignorado.",
+        "Decodificacao e escapes preservados; nulo nao toca o mapa."
+      ],
+      "origin": {
+        "kind": "defeito_reproduzido",
+        "date": "2026-10-02",
+        "description": "Curadoria de requisitos no snapshot inspecionado; nao representa issue upstream ou bug confirmado salvo reproducao registrada."
+      },
+      "contamination_risk": "medio",
+      "contamination_note": "Codigo upstream publico; requisito dev publicado nesta curadoria. Nao usar este item nem variantes da familia siga-form como holdout. Nao pesquisar solucao upstream durante as tentativas.",
+      "curator_only": {
+        "source_evidence": [
+          {
+            "path": "siga-base/src/main/java/br/gov/jfrj/siga/base/util/Utils.java",
+            "sha256": "7f90e3fd44adb1a3fd4b990d109cd4c4479c7d32f40164f4b0762255ddd87559",
+            "source_url": null
+          }
+        ],
+        "baseline_observation": "Probe com a=b=c e vazio= na classe original: pares descartados.",
+        "environment_required": "JDK 21; aceite Java isolado (javac) com jars do repo Maven local",
+        "acceptance_to_prepare": "Criar testes independentes e runner de aceite na custodia; demonstrar falha na base e sucesso em solucao de referencia antes de converter para atlas-tasks/2."
+      },
+      "readiness": {
+        "source_inspected": true,
+        "baseline_defect_reproduced": true,
+        "acceptance_prepared": true,
+        "reference_validated": true,
+        "runnable_in_pilot": false
+      }
+    },
+    {
+      "id": "SIGA-REAL-10",
+      "title": "Zeros a esquerda com sinal preservado",
+      "proposed_split": "piloto",
+      "category": "bug_local",
+      "family": "siga-zeros",
+      "base_sha": "e3be22828f787cbe71b339aecb7a7bf569099803",
+      "statement": "Utils.completarComZeros deve preservar o sinal de valores negativos antes dos zeros de preenchimento. Positivos, zero e valores ja largos mantem o comportamento atual.",
+      "public_acceptance_criteria": [
+        "(-5, 3) gera \"-005\".",
+        "Positivos e zero inalterados; valor largo sem preenchimento.",
+        "Minimo do int sem estouro."
+      ],
+      "origin": {
+        "kind": "defeito_reproduzido",
+        "date": "2026-10-02",
+        "description": "Curadoria de requisitos no snapshot inspecionado; nao representa issue upstream ou bug confirmado salvo reproducao registrada."
+      },
+      "contamination_risk": "medio",
+      "contamination_note": "Codigo upstream publico; requisito dev publicado nesta curadoria. Nao usar este item nem variantes da familia siga-zeros como holdout. Nao pesquisar solucao upstream durante as tentativas.",
+      "curator_only": {
+        "source_evidence": [
+          {
+            "path": "siga-base/src/main/java/br/gov/jfrj/siga/base/util/Utils.java",
+            "sha256": "7f90e3fd44adb1a3fd4b990d109cd4c4479c7d32f40164f4b0762255ddd87559",
+            "source_url": null
+          }
+        ],
+        "baseline_observation": "Probe com (-5,3) na classe original: \"0-5\".",
+        "environment_required": "JDK 21; aceite Java isolado (javac) com jars do repo Maven local",
+        "acceptance_to_prepare": "Criar testes independentes e runner de aceite na custodia; demonstrar falha na base e sucesso em solucao de referencia antes de converter para atlas-tasks/2."
+      },
+      "readiness": {
+        "source_inspected": true,
+        "baseline_defect_reproduced": true,
+        "acceptance_prepared": true,
+        "reference_validated": true,
+        "runnable_in_pilot": false
+      }
+    },
+    {
+      "id": "SIGA-REAL-11",
+      "title": "Duracao entre datas sem sinal trocado",
+      "proposed_split": "piloto",
+      "category": "entre_arquivos",
+      "family": "siga-tempo",
+      "base_sha": "e3be22828f787cbe71b339aecb7a7bf569099803",
+      "statement": "DateUtils.intervalo deve medir a duracao entre duas datas em qualquer ordem, nunca negativa: mesmo dia delega horas/minutos/segundos via SigaCalendar, dias com singular correto.",
+      "public_acceptance_criteria": [
+        "Mesmo dia em ordem natural delega '2h'/'45min'/'45s'.",
+        "Ordem invertida mede a mesma duracao, nunca negativa.",
+        "Singular '1 dia'; chamador invertido conhecido preservado."
+      ],
+      "origin": {
+        "kind": "defeito_reproduzido",
+        "date": "2026-10-02",
+        "description": "Curadoria de requisitos no snapshot inspecionado; nao representa issue upstream ou bug confirmado salvo reproducao registrada."
+      },
+      "contamination_risk": "medio",
+      "contamination_note": "Codigo upstream publico; requisito dev publicado nesta curadoria. Nao usar este item nem variantes da familia siga-tempo como holdout. Nao pesquisar solucao upstream durante as tentativas.",
+      "curator_only": {
+        "source_evidence": [
+          {
+            "path": "siga-base/src/main/java/br/gov/jfrj/siga/base/DateUtils.java",
+            "sha256": "a5d0513042c052b933c60f48a8e0db0812df04cfaa7e62bb575199692632b5d8",
+            "source_url": null
+          },
+          {
+            "path": "siga-base/src/main/java/br/gov/jfrj/siga/base/SigaCalendar.java",
+            "sha256": "89b774159d1d74963aec9a70fad70315f69d127a082682939711c2d0be3fd868",
+            "source_url": null
+          }
+        ],
+        "baseline_observation": "Probe com (ini,fim) natural na base: 00:00:00 e dias negativos.",
+        "environment_required": "JDK 21; aceite Java isolado (javac) com jars do repo Maven local",
+        "acceptance_to_prepare": "Criar testes independentes e runner de aceite na custodia; demonstrar falha na base e sucesso em solucao de referencia antes de converter para atlas-tasks/2."
+      },
+      "readiness": {
+        "source_inspected": true,
+        "baseline_defect_reproduced": true,
+        "acceptance_prepared": true,
+        "reference_validated": true,
+        "runnable_in_pilot": false
+      }
+    },
+    {
+      "id": "SIGA-REAL-12",
+      "title": "Zip de configuracao com contrato de vazio",
+      "proposed_split": "piloto",
+      "category": "entre_arquivos",
+      "family": "siga-zip",
+      "base_sha": "e3be22828f787cbe71b339aecb7a7bf569099803",
+      "statement": "Utils.encodeAndZip e unzipAndDecode devem rejeitar entrada nula ou vazia com IllegalArgumentException e mensagem clara, nunca NullPointerException. Round-trip preserva qualquer conteudo nao-vazio; gzip corrompido conserva o erro de aplicacao da API.",
+      "public_acceptance_criteria": [
+        "Nulo e vazio geram IllegalArgumentException.",
+        "Round-trip byte-identico incl. multibyte e longo.",
+        "Gzip corrompido conserva RuntimeException da API."
+      ],
+      "origin": {
+        "kind": "defeito_reproduzido",
+        "date": "2026-10-02",
+        "description": "Curadoria de requisitos no snapshot inspecionado; nao representa issue upstream ou bug confirmado salvo reproducao registrada."
+      },
+      "contamination_risk": "medio",
+      "contamination_note": "Codigo upstream publico; requisito dev publicado nesta curadoria. Nao usar este item nem variantes da familia siga-zip como holdout. Nao pesquisar solucao upstream durante as tentativas.",
+      "curator_only": {
+        "source_evidence": [
+          {
+            "path": "siga-base/src/main/java/br/gov/jfrj/siga/base/util/Utils.java",
+            "sha256": "7f90e3fd44adb1a3fd4b990d109cd4c4479c7d32f40164f4b0762255ddd87559",
+            "source_url": null
+          },
+          {
+            "path": "siga-base/src/main/java/br/gov/jfrj/siga/base/GZip.java",
+            "sha256": "3d4a5600f35233add068643740fecd6184f2bad01e6ecdfc0dd9cab982998b28",
+            "source_url": null
+          }
+        ],
+        "baseline_observation": "Probe com vazio/nulo na base: NullPointerException.",
+        "environment_required": "JDK 21; aceite Java isolado (javac) com jars do repo Maven local",
+        "acceptance_to_prepare": "Criar testes independentes e runner de aceite na custodia; demonstrar falha na base e sucesso em solucao de referencia antes de converter para atlas-tasks/2."
+      },
+      "readiness": {
+        "source_inspected": true,
+        "baseline_defect_reproduced": true,
+        "acceptance_prepared": true,
+        "reference_validated": true,
+        "runnable_in_pilot": false
+      }
+    },
+    {
+      "id": "SIGA-REAL-13",
+      "title": "Data-hora com ano de 4 digitos",
+      "proposed_split": "piloto",
+      "category": "testes_comportamento_de_api",
+      "family": "siga-data-formato",
+      "base_sha": "e3be22828f787cbe71b339aecb7a7bf569099803",
+      "statement": "DateUtils.formatarDDMMYYYYHHMMSS deve formatar o ano com 4 digitos, como promete o nome. Nulo continua nulo; os irmaos com ano curto no nome ficam inalterados.",
+      "public_acceptance_criteria": [
+        "\"30/04/2025 10:00:00\" com ano cheio.",
+        "Nulo continua nulo.",
+        "formatarDDMMYYYY e formatarDDMMYY inalterados."
+      ],
+      "origin": {
+        "kind": "defeito_reproduzido",
+        "date": "2026-10-02",
+        "description": "Curadoria de requisitos no snapshot inspecionado; nao representa issue upstream ou bug confirmado salvo reproducao registrada."
+      },
+      "contamination_risk": "medio",
+      "contamination_note": "Codigo upstream publico; requisito dev publicado nesta curadoria. Nao usar este item nem variantes da familia siga-data-formato como holdout. Nao pesquisar solucao upstream durante as tentativas.",
+      "curator_only": {
+        "source_evidence": [
+          {
+            "path": "siga-base/src/main/java/br/gov/jfrj/siga/base/DateUtils.java",
+            "sha256": "a5d0513042c052b933c60f48a8e0db0812df04cfaa7e62bb575199692632b5d8",
+            "source_url": null
+          }
+        ],
+        "baseline_observation": "Probe na base: nome promete YYYY mas sai yy.",
+        "environment_required": "JDK 21; aceite Java isolado (javac) com jars do repo Maven local",
+        "acceptance_to_prepare": "Criar testes independentes e runner de aceite na custodia; demonstrar falha na base e sucesso em solucao de referencia antes de converter para atlas-tasks/2."
+      },
+      "readiness": {
+        "source_inspected": true,
+        "baseline_defect_reproduced": true,
+        "acceptance_prepared": true,
+        "reference_validated": true,
+        "runnable_in_pilot": false
+      }
+    },
+    {
+      "id": "SIGA-REAL-14",
+      "title": "Milhares sem 'um' por extenso",
+      "proposed_split": "piloto",
+      "category": "testes_comportamento_de_api",
+      "family": "siga-moeda-extenso",
+      "base_sha": "e3be22828f787cbe71b339aecb7a7bf569099803",
+      "statement": "ReaisPorExtenso deve escrever milhares exatos sem 'um' ('mil reais', 'mil e cem reais'). Demais qualificadores (unidades, milhoes com 'de', centavos) preservados; juncao entre grupos inalterada.",
+      "public_acceptance_criteria": [
+        "1000 gera \"mil reais\"; 1100 gera \"mil e cem reais\".",
+        "\"um milhao de reais\" e \"dois mil reais\" preservados.",
+        "Centavos e juncao entre grupos inalterados."
+      ],
+      "origin": {
+        "kind": "requisito_proposto",
+        "date": "2026-10-02",
+        "description": "Curadoria de requisitos no snapshot inspecionado; nao representa issue upstream ou bug confirmado salvo reproducao registrada."
+      },
+      "contamination_risk": "medio",
+      "contamination_note": "Codigo upstream publico; requisito dev publicado nesta curadoria. Nao usar este item nem variantes da familia siga-moeda-extenso como holdout. Nao pesquisar solucao upstream durante as tentativas.",
+      "curator_only": {
+        "source_evidence": [
+          {
+            "path": "siga-base/src/main/java/br/gov/jfrj/siga/base/ReaisPorExtenso.java",
+            "sha256": "c8bde388da3d148a630ca4a84785583654846c5ad15ba3a0410eb37dbbd5733f",
+            "source_url": null
+          }
+        ],
+        "baseline_observation": null,
+        "environment_required": "JDK 21; aceite Java isolado (javac) com jars do repo Maven local",
+        "acceptance_to_prepare": "Criar testes independentes e runner de aceite na custodia; demonstrar falha na base e sucesso em solucao de referencia antes de converter para atlas-tasks/2."
+      },
+      "readiness": {
+        "source_inspected": true,
+        "baseline_defect_reproduced": false,
+        "acceptance_prepared": true,
+        "reference_validated": true,
+        "runnable_in_pilot": false
+      }
+    },
+    {
+      "id": "SIGA-REAL-15",
+      "title": "Tamanho de arquivo independente de locale",
+      "proposed_split": "piloto",
+      "category": "configuracao_interface",
+      "family": "siga-formato-arquivo",
+      "base_sha": "e3be22828f787cbe71b339aecb7a7bf569099803",
+      "statement": "FormataTamanhoDeArquivo.converterEmTexto deve usar ponto como separador decimal em qualquer locale do processo. Unidades, faixas e IllegalArgumentException para zero/negativos preservados.",
+      "public_acceptance_criteria": [
+        "\"1.5 kB\" sob pt-BR.",
+        "Faixas bytes/kB/MB/GB preservadas.",
+        "Zero e negativos continuam invalidos."
+      ],
+      "origin": {
+        "kind": "defeito_reproduzido",
+        "date": "2026-10-02",
+        "description": "Curadoria de requisitos no snapshot inspecionado; nao representa issue upstream ou bug confirmado salvo reproducao registrada."
+      },
+      "contamination_risk": "medio",
+      "contamination_note": "Codigo upstream publico; requisito dev publicado nesta curadoria. Nao usar este item nem variantes da familia siga-formato-arquivo como holdout. Nao pesquisar solucao upstream durante as tentativas.",
+      "curator_only": {
+        "source_evidence": [
+          {
+            "path": "siga-base/src/main/java/br/gov/jfrj/siga/base/FormataTamanhoDeArquivo.java",
+            "sha256": "d43788bed6d2673f2972885b0b0190d6d37f37ad1aea918629d98fe19d8a079d",
+            "source_url": null
+          }
+        ],
+        "baseline_observation": "Probe sob pt-BR na base: virgula no decimal.",
+        "environment_required": "JDK 21; aceite Java isolado (javac) com jars do repo Maven local",
+        "acceptance_to_prepare": "Criar testes independentes e runner de aceite na custodia; demonstrar falha na base e sucesso em solucao de referencia antes de converter para atlas-tasks/2."
+      },
+      "readiness": {
+        "source_inspected": true,
+        "baseline_defect_reproduced": true,
+        "acceptance_prepared": true,
+        "reference_validated": true,
+        "runnable_in_pilot": false
+      }
+    },
+    {
+      "id": "SIGA-REAL-16",
+      "title": "Slug independente de locale",
+      "proposed_split": "piloto",
+      "category": "configuracao_interface",
+      "family": "siga-slug",
+      "base_sha": "e3be22828f787cbe71b339aecb7a7bf569099803",
+      "statement": "Texto.slugify com lowercase deve minusculizar em locale neutro, sem o 'i sem pingo' do turco. Acentuacao, pontuacao, variante com underscore e nulo/branco preservados.",
+      "public_acceptance_criteria": [
+        "\"ITBI Icon\" gera \"itbi-icon\" sob tr.",
+        "Acentos e pontuacao normalizados como antes.",
+        "Nulo e branco retornam nulo."
+      ],
+      "origin": {
+        "kind": "defeito_reproduzido",
+        "date": "2026-10-02",
+        "description": "Curadoria de requisitos no snapshot inspecionado; nao representa issue upstream ou bug confirmado salvo reproducao registrada."
+      },
+      "contamination_risk": "medio",
+      "contamination_note": "Codigo upstream publico; requisito dev publicado nesta curadoria. Nao usar este item nem variantes da familia siga-slug como holdout. Nao pesquisar solucao upstream durante as tentativas.",
+      "curator_only": {
+        "source_evidence": [
+          {
+            "path": "siga-base/src/main/java/br/gov/jfrj/siga/base/util/Texto.java",
+            "sha256": "ea5716eb714117b5671dadeeecc4fc10ed7d2f8a5eb172ca95554f5894f8b82e",
+            "source_url": null
+          }
+        ],
+        "baseline_observation": "Probe sob tr na base: I vira i sem pingo.",
+        "environment_required": "JDK 21; aceite Java isolado (javac) com jars do repo Maven local",
+        "acceptance_to_prepare": "Criar testes independentes e runner de aceite na custodia; demonstrar falha na base e sucesso em solucao de referencia antes de converter para atlas-tasks/2."
+      },
+      "readiness": {
+        "source_inspected": true,
+        "baseline_defect_reproduced": true,
+        "acceptance_prepared": true,
+        "reference_validated": true,
+        "runnable_in_pilot": false
+      }
     }
   ]
 }

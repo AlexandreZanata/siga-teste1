@@ -1,0 +1,9 @@
+PASS bytes
+PASS bytes-max
+PASS kb
+PASS kb-frac
+PASS mb
+PASS gb
+PASS zero
+PASS neg
+AtlasAccept15: 8/8 passed
