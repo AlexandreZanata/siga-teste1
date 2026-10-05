@@ -4,6 +4,15 @@ Dono durante execução: agente B. Track: `bitcoin`. Branch de escrita: `codex/b
 `BASE_SHA`: `e6fde134f7da0d3616d90c40232d9ebe2ed9f033`. Método: mesmo P0–P7/E26-00–06 da trilha SIGA,
 com dataset, tarefas, pré-registro e resultados próprios. Nenhum aceite copiado do SIGA.
 
+## TASK-B01 executada (2026-10-05) — smoke Bitcoin validado (coorte Python)
+
+- **O que existe agora:** [`smoke.tasks.json`](../../benchmarks/bitcoin/rust/smoke.tasks.json) (`atlas-tasks/2`, 4 smoke, balanço 1/1/1/1, base `9be056a8…`, `eval.py validate` limpo via core principal somente-leitura) + [`acceptance/`](../../benchmarks/bitcoin/rust/acceptance/) (`run.sh` e 4 harnesses Python, exit ≠ 0 em falha, exit 3 em bloqueio de ambiente, sem bitcoind/build C++/rede de produção). Curadoria em [`CURADORIA_SMOKE.md`](../../research/bitcoin/rust/CURADORIA_SMOKE.md), ambiente em [`ACCEPTANCE_ENV.md`](../../research/bitcoin/rust/ACCEPTANCE_ENV.md), evidências em `experiments/bitcoin/rust/2026-10-05-b01-validation/preflight/`.
+- **Hashes confirmados no SHA fixado** (clone isolado `--filter=blob:none` + `fetch <sha>`): 5/5 conferem com o catálogo dev (`descriptors.py 8c2a4490…`, `address.py 63e83cdd…`, `script.py 24bdbfc1…`, `authproxy.py 736246f2…`, `test_runner.py faee6591…`). Catálogo comum não alterado.
+- **Vermelho→verde:** 01 → 6/9→9/9 (`IndexError`/`TypeError` em checksum malformado); 02 → 10/16→16/16 (`ValueError` em mainnet v0/v5); 03 → 4/10→10/10 (`-342` com charset); 04 → 2/5→5/5 (`FileNotFoundError` sem citar `--jobs`). Referências em custódia fora do git (diffs mínimos: guarda de tamanho + `None`; ramos v0/v5; media-type com parâmetros; validação de `--jobs` + `--help` antes de `config.ini`). Aceite medido 0,04–0,76 s por tarefa (`timeout_s: 300`).
+- **Isolamento além de diretório:** custódia fora do repo; pacote sem ouro (harnesses comparam em execução, citam só `--jobs` genérico; sem campo de curadoria, só hashes); `test_command` relativo; `atlas-accept/**` em `immutable_paths`. Nota de família: `btc-authproxy` (03×05) e `btc-runner` (04×08) repetem famílias com requisitos disjuntos — se usadas para política, excluir do piloto de inferência.
+- **Testes:** 5 novos em [`tests/bitcoin/test_btc_smoke_b01.py`](../../tests/bitcoin/test_btc_smoke_b01.py) (schema+balanço, sem campos de curadoria/ouro, aceite existente com dispatches, `allowed_paths` com shas, logs vermelho/verde). Nenhuma tentativa com modelo rodou; P1/P2 continuam pendentes e bloqueiam só a rodada paga.
+- **O que continua aberto:** B02 (coorte P2P/C++; 07 exige build, bloqueado), EXP01 (bloqueada por P1/P2), holdout P4.
+
 ## Checkpoint
 
 - Etapa atual: **build verificado como BLOQUEADO (veredito registrado)** — libevent/Boost/ZMQ

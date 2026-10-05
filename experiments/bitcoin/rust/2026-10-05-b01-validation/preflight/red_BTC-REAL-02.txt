@@ -1,0 +1,16 @@
+FAIL mainnet-p2pkh-payload0: raised ValueError: Unsupported address type: 13srp6ZH88RUY9KsB3tTYSdCeqmnsWi5Qd
+FAIL mainnet-p2pkh-payload1: raised ValueError: Unsupported address type: 1111111111111111111114oLvT2
+FAIL mainnet-p2pkh-payload2: raised ValueError: Unsupported address type: 11MXTrefsj1ZS3Q5e9D6DxGzZKHWALyo9
+FAIL mainnet-p2sh-payload0: raised ValueError: Unsupported address type: 34Zsje3ig2jrdK2JJ9Z3y4z8oN4WPrqm93
+FAIL mainnet-p2sh-payload1: raised ValueError: Unsupported address type: 31h1vYVSYuKP6AhS86fbRdMw9XHieotbST
+FAIL mainnet-p2sh-payload2: raised ValueError: Unsupported address type: 31hNT1M6Dn3PebjqCjooWrKD95c187fi2j
+PASS testnet-p2pkh-payload0
+PASS testnet-p2pkh-payload1
+PASS testnet-p2pkh-payload2
+PASS testnet-p2sh-payload0
+PASS testnet-p2sh-payload1
+PASS testnet-p2sh-payload2
+PASS witness-preserved
+PASS bad-checksum-rejected
+PASS unsupported-version-rejected
+6 case(s) FAILED

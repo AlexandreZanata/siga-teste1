@@ -1,0 +1,6 @@
+PASS jobs-zero-rejected
+PASS jobs-negative-rejected
+PASS help-available
+PASS positive-jobs-pass-validation
+PASS nonnumeric-jobs-rejected
+all cases passed

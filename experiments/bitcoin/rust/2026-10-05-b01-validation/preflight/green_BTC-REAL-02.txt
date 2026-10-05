@@ -1,0 +1,16 @@
+PASS mainnet-p2pkh-payload0
+PASS mainnet-p2pkh-payload1
+PASS mainnet-p2pkh-payload2
+PASS mainnet-p2sh-payload0
+PASS mainnet-p2sh-payload1
+PASS mainnet-p2sh-payload2
+PASS testnet-p2pkh-payload0
+PASS testnet-p2pkh-payload1
+PASS testnet-p2pkh-payload2
+PASS testnet-p2sh-payload0
+PASS testnet-p2sh-payload1
+PASS testnet-p2sh-payload2
+PASS witness-preserved
+PASS bad-checksum-rejected
+PASS unsupported-version-rejected
+all cases passed

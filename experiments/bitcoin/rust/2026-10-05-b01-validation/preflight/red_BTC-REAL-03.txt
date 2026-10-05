@@ -1,0 +1,10 @@
+PASS exact-json
+FAIL json-charset: raised JSONRPCException: {'code': -342, 'message': 'non-JSON HTTP response with \'200 OK\' from server: {"result": 1, "error": null, "id": 1}'} [http_status=200]
+FAIL json-charset-case: raised JSONRPCException: {'code': -342, 'message': 'non-JSON HTTP response with \'200 OK\' from server: {"result": 1, "error": null, "id": 1}'} [http_status=200]
+FAIL json-charset-spaces: raised JSONRPCException: {'code': -342, 'message': 'non-JSON HTTP response with \'200 OK\' from server: {"result": 1, "error": null, "id": 1}'} [http_status=200]
+FAIL json-padded: raised JSONRPCException: {'code': -342, 'message': 'non-JSON HTTP response with \'200 OK\' from server: {"result": 1, "error": null, "id": 1}'} [http_status=200]
+PASS html-rejected
+FAIL rpc-error-preserved: wrong code {'code': -342, 'message': 'non-JSON HTTP response with \'200 OK\' from server: {"result": null, "error": {"code": -1, "message": "oops"}, "id": 1}'}
+FAIL decimal-fraction: raised JSONRPCException: {'code': -342, 'message': 'non-JSON HTTP response with \'200 OK\' from server: {"result": 1.5, "error": null, "id": 1}'} [http_status=200]
+PASS no-content-204
+6 case(s) FAILED

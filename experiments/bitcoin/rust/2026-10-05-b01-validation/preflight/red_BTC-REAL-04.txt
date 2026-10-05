@@ -1,0 +1,6 @@
+FAIL jobs-zero-rejected: exit=1, expected 2; output does not cite --jobs; fell through to config access
+FAIL jobs-negative-rejected: exit=1, expected 2; output does not cite --jobs; fell through to config access
+FAIL help-available: exit=1 cites-jobs=False
+PASS positive-jobs-pass-validation
+PASS nonnumeric-jobs-rejected
+3 case(s) FAILED

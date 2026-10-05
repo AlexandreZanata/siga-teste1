@@ -1,0 +1,10 @@
+FAIL short-hash-returns-false: raised IndexError: string index out of range
+FAIL unicode-body-returns-false: raised TypeError: unsupported operand type(s) for +: 'NoneType' and 'list'
+FAIL short-checksum-returns-false: raised IndexError: string index out of range
+PASS empty-checksum-returns-false
+PASS valid-checksum-accepted
+PASS valid-wpkh-accepted
+PASS mutated-checksum-rejected
+PASS no-separator-require-true
+PASS no-separator-require-false
+3 case(s) FAILED

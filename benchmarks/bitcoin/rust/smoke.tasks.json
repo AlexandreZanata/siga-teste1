@@ -1,0 +1,65 @@
+{
+ "_note": "Conjunto smoke Bitcoin validado (TASK-B01, 2026-10-05). 4 tarefas, balanco 1/1/1/1 por categoria. O comando de aceite e o runner imutavel do avaliador em acceptance/run.sh: o workspace do avaliador recebe acceptance/ como atlas-accept/ ANTES do patch (ver acceptance/README.md). Base bitcoin/bitcoin no base_sha abaixo. Sem campos de curadoria, sem gabarito, sem teste privado. Coorte Python: sem bitcoind, sem build C++, sem rede de producao.",
+ "schema": "atlas-tasks/2",
+ "platform": "bitcoin",
+ "sealed": false,
+ "base_sha": "9be056a8a72b624dae9623b2f7bded92c2a21c91",
+ "tasks": [
+  {
+   "id": "BTC-REAL-01",
+   "split": "smoke",
+   "category": "bug_local",
+   "statement": "descsum_check deve retornar False para descritor com checksum malformado, inclusive strings curtas e caracteres fora do alfabeto. Preservar require=False para descritores sem separador e todos os checksums validos. Nao modificar o algoritmo de checksum.",
+   "base_sha": "9be056a8a72b624dae9623b2f7bded92c2a21c91",
+   "test_command": ["bash", "atlas-accept/run.sh", "BTC-REAL-01"],
+   "timeout_s": 300,
+   "allowed_paths": ["test/functional/test_framework/descriptors.py"],
+   "immutable_paths": ["atlas-accept/**"],
+   "origin": "Curadoria dev B01 (aceite + referencia validada) em 2026-10-05: defeito reproduzido na base (IndexError em '#' e 'a#short'; TypeError em corpo Unicode), 9 casos independentes, algoritmo de checksum e require=False preservados.",
+   "contamination_risk": "medio",
+   "contamination_note": "Codigo upstream publico; requisito dev publicado nesta curadoria. Nao usar este item nem variantes da familia btc-descriptors como holdout. Nao pesquisar solucao upstream durante as tentativas."
+  },
+  {
+   "id": "BTC-REAL-02",
+   "split": "smoke",
+   "category": "entre_arquivos",
+   "statement": "Estender address_to_scriptpubkey do framework para aceitar tambem enderecos Base58 P2PKH e P2SH de mainnet, preservando os formatos testnet/regtest e witness ja suportados. A conversao deve produzir os mesmos bytes de script do construtor correspondente ao payload. Esta e uma extensao do framework local de testes.",
+   "base_sha": "9be056a8a72b624dae9623b2f7bded92c2a21c91",
+   "test_command": ["bash", "atlas-accept/run.sh", "BTC-REAL-02"],
+   "timeout_s": 300,
+   "allowed_paths": ["test/functional/test_framework/address.py"],
+   "immutable_paths": ["atlas-accept/**"],
+   "origin": "Curadoria dev B01 (aceite + referencia validada) em 2026-10-05: falha reproduzida na base (ValueError em versoes 0/5), 12 conversoes contra construtores independentes + witness + checksum invalido + versao nao suportada.",
+   "contamination_risk": "medio",
+   "contamination_note": "Codigo upstream publico; requisito dev publicado nesta curadoria. Nao usar este item nem variantes da familia btc-addresses como holdout. Nao pesquisar solucao upstream durante as tentativas."
+  },
+  {
+   "id": "BTC-REAL-03",
+   "split": "smoke",
+   "category": "testes_comportamento_de_api",
+   "statement": "AuthServiceProxy deve aceitar Content-Type application/json com parametro charset=utf-8, variacoes de maiusculas e espacos permitidos no cabecalho. Outros tipos MIME continuam rejeitados. Preservar erros JSON-RPC, respostas 204 e parsing de numeros com Decimal.",
+   "base_sha": "9be056a8a72b624dae9623b2f7bded92c2a21c91",
+   "test_command": ["bash", "atlas-accept/run.sh", "BTC-REAL-03"],
+   "timeout_s": 300,
+   "allowed_paths": ["test/functional/test_framework/authproxy.py"],
+   "immutable_paths": ["atlas-accept/**"],
+   "origin": "Curadoria dev B01 (aceite + referencia validada) em 2026-10-05: falha reproduzida na base (JSONRPCException -342 com charset), 10 casos com conexao fake em-processo, text/html segue rejeitado.",
+   "contamination_risk": "medio",
+   "contamination_note": "Codigo upstream publico; requisito dev publicado nesta curadoria. Nao usar este item nem variantes da familia btc-authproxy como holdout (familia repetida no candidato piloto BTC-REAL-05: se usada para politica, excluir do piloto de inferencia). Nao pesquisar solucao upstream durante as tentativas."
+  },
+  {
+   "id": "BTC-REAL-04",
+   "split": "smoke",
+   "category": "configuracao_interface",
+   "statement": "O test_runner funcional deve rejeitar --jobs=0 e valores negativos com erro de argumentos claro, antes de acessar configuracao de build ou iniciar processos. Valores positivos e o valor padrao conservam o comportamento existente.",
+   "base_sha": "9be056a8a72b624dae9623b2f7bded92c2a21c91",
+   "test_command": ["bash", "atlas-accept/run.sh", "BTC-REAL-04"],
+   "timeout_s": 300,
+   "allowed_paths": ["test/functional/test_runner.py"],
+   "immutable_paths": ["atlas-accept/**"],
+   "origin": "Curadoria dev B01 (aceite + referencia validada) em 2026-10-05: falha reproduzida na base (FileNotFoundError de config.ini sem citar --jobs), 5 casos em subprocessos com fixtures proprias; --help disponivel sem config; jobs positivo segue para o fluxo existente.",
+   "contamination_risk": "medio",
+   "contamination_note": "Codigo upstream publico; requisito dev publicado nesta curadoria. Nao usar este item nem variantes da familia btc-runner como holdout (familia repetida no candidato piloto BTC-REAL-08: se usada para politica, excluir do piloto de inferencia). Nao pesquisar solucao upstream durante as tentativas."
+  }
+ ]
+}
