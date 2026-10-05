@@ -1,0 +1,65 @@
+{
+ "_note": "Conjunto piloto Bitcoin, segundo lote (EXP02-parcial, 2026-10-05). 4 tarefas validadas (09/10/11/12), balanco 1/1/1/1. BTC-REAL-07 segue bloqueada e fora. Validador: eval.py do core principal, somente leitura.",
+ "schema": "atlas-tasks/2",
+ "platform": "bitcoin",
+ "sealed": false,
+ "base_sha": "9be056a8a72b624dae9623b2f7bded92c2a21c91",
+ "tasks": [
+  {
+   "id": "BTC-REAL-09",
+   "split": "piloto",
+   "category": "bug_local",
+   "statement": "descsum_create deve rejeitar descritor com caracteres fora do alfabeto com ValueError claro, sem excecao interna de concatenacao. Preservar a criacao de checksums validos e o comportamento para descritor vazio. Nao modificar o algoritmo de checksum.",
+   "base_sha": "9be056a8a72b624dae9623b2f7bded92c2a21c91",
+   "test_command": ["bash", "atlas-accept/run.sh", "BTC-REAL-09"],
+   "timeout_s": 300,
+   "allowed_paths": ["test/functional/test_framework/descriptors.py"],
+   "immutable_paths": ["atlas-accept/**"],
+   "origin": "Curadoria dev EXP02-parcial (aceite + referencia validada) em 2026-10-05: falha reproduzida na base (TypeError em corpo Unicode), 4 casos, algoritmo e vazio preservados.",
+   "contamination_risk": "medio",
+   "contamination_note": "Codigo upstream publico; requisito dev publicado nesta curadoria. Nao usar este item nem variantes da familia btc-descriptors como holdout (familia repetida no smoke BTC-REAL-01: se usada para politica, excluir do piloto de inferencia). Nao pesquisar solucao upstream durante as tentativas."
+  },
+  {
+   "id": "BTC-REAL-10",
+   "split": "piloto",
+   "category": "entre_arquivos",
+   "statement": "As leituras de inteiros do framework (deser_compact_size, deser_varint, deser_uint256) devem exigir os bytes exatos e gerar EOFError em stream truncado, em vez de 0 silencioso ou IndexError. Na cadeia, um inv com hash truncado nao pode virar hash zerado. Preservar todos os roundtrips validos.",
+   "base_sha": "9be056a8a72b624dae9623b2f7bded92c2a21c91",
+   "test_command": ["bash", "atlas-accept/run.sh", "BTC-REAL-10"],
+   "timeout_s": 300,
+   "allowed_paths": ["test/functional/test_framework/messages.py"],
+   "immutable_paths": ["atlas-accept/**"],
+   "origin": "Curadoria dev EXP02-parcial (aceite + referencia validada) em 2026-10-05: falha reproduzida na base (0 silencioso em compact/vazio e uint256 curto; IndexError em varint; inv zerado), 9 casos com cadeia getdata.",
+   "contamination_risk": "medio",
+   "contamination_note": "Codigo upstream publico; requisito dev publicado nesta curadoria. Nao usar este item nem variantes da familia btc-p2p-deserialization como holdout (familia repetida no piloto BTC-REAL-06: se usada para politica, excluir do piloto de inferencia). Nao pesquisar solucao upstream durante as tentativas."
+  },
+  {
+   "id": "BTC-REAL-11",
+   "split": "piloto",
+   "category": "testes_comportamento_de_api",
+   "statement": "Chamada unica do AuthServiceProxy cujo corpo e JSON valido mas nao-objeto (lista, numero, string ou null) deve gerar JSONRPCException, sem TypeError interno. Preservar resultado e erro em dicts e o batch com lista. Conexao fake, sem daemon.",
+   "base_sha": "9be056a8a72b624dae9623b2f7bded92c2a21c91",
+   "test_command": ["bash", "atlas-accept/run.sh", "BTC-REAL-11"],
+   "timeout_s": 300,
+   "allowed_paths": ["test/functional/test_framework/authproxy.py"],
+   "immutable_paths": ["atlas-accept/**"],
+   "origin": "Curadoria dev EXP02-parcial (aceite + referencia validada) em 2026-10-05: falha reproduzida na base (TypeError em 4 corpos nao-objeto), 7 casos com conexao fake, batch preservado.",
+   "contamination_risk": "medio",
+   "contamination_note": "Codigo upstream publico; requisito dev publicado nesta curadoria. Nao usar este item nem variantes da familia btc-authproxy como holdout (familia repetida no smoke BTC-REAL-03 e no piloto BTC-REAL-05: se usada para politica, excluir do piloto de inferencia). Nao pesquisar solucao upstream durante as tentativas."
+  },
+  {
+   "id": "BTC-REAL-12",
+   "split": "piloto",
+   "category": "configuracao_interface",
+   "statement": "O test_runner funcional deve validar a regex de --filter apos os argumentos e rejeitar padrao invalido com erro de uso claro, antes de filtrar a selecao. Regex valida conserva o fluxo existente. Atualizar ajuda do runner se necessario.",
+   "base_sha": "9be056a8a72b624dae9623b2f7bded92c2a21c91",
+   "test_command": ["bash", "atlas-accept/run.sh", "BTC-REAL-12"],
+   "timeout_s": 300,
+   "allowed_paths": ["test/functional/test_runner.py"],
+   "immutable_paths": ["atlas-accept/**"],
+   "origin": "Curadoria dev EXP02-parcial (aceite + referencia validada) em 2026-10-05: falha reproduzida na base (traceback re.error com exit 1), 5 casos em subprocessos com config.ini de fixture, sem daemon.",
+   "contamination_risk": "medio",
+   "contamination_note": "Codigo upstream publico; requisito dev publicado nesta curadoria. Nao usar este item nem variantes da familia btc-runner como holdout (familia repetida no smoke BTC-REAL-04 e no piloto BTC-REAL-08: se usada para politica, excluir do piloto de inferencia). Nao pesquisar solucao upstream durante as tentativas."
+  }
+ ]
+}

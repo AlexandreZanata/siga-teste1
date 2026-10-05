@@ -1,0 +1,5 @@
+FAIL unicode-body-rejected: wrong exception TypeError: unsupported operand type(s) for +: 'NoneType' and 'list'
+FAIL unicode-suffix-rejected: wrong exception TypeError: unsupported operand type(s) for +: 'NoneType' and 'list'
+PASS valid-create-checks
+PASS empty-preserved
+2 case(s) FAILED

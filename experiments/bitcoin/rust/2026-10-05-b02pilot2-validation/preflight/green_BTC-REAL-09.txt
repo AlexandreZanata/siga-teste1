@@ -1,0 +1,5 @@
+PASS unicode-body-rejected
+PASS unicode-suffix-rejected
+PASS valid-create-checks
+PASS empty-preserved
+all cases passed

@@ -1,0 +1,8 @@
+FAIL list-rejected: wrong exception TypeError
+FAIL number-rejected: wrong exception TypeError
+FAIL string-rejected: wrong exception TypeError
+FAIL null-rejected: wrong exception TypeError
+PASS dict-result-preserved
+PASS dict-error-preserved
+PASS batch-list-preserved
+4 case(s) FAILED

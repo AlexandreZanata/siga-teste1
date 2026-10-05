@@ -1,0 +1,26 @@
+{
+ "run_id": "2026-10-05-b02pilot2-validation",
+ "task": "EXP02-parcial lote 2",
+ "base_sha": "9be056a8a72b624dae9623b2f7bded92c2a21c91",
+ "prospeccao": "9 sondas em framework ja extraido; descartes: ser_compact_size(-1) (OverflowError explicito), b58 vazio, segwit invalido ((None,None) por desenho), batch erro/500 (contratos existentes)",
+ "baseline": {
+  "BTC-REAL-09": "2/4 exit 1",
+  "BTC-REAL-10": "4/9 exit 1",
+  "BTC-REAL-11": "3/7 exit 1",
+  "BTC-REAL-12": "3/5 exit 1"
+ },
+ "reference": {
+  "BTC-REAL-09": "4/4 exit 0",
+  "BTC-REAL-10": "9/9 exit 0",
+  "BTC-REAL-11": "7/7 exit 0",
+  "BTC-REAL-12": "5/5 exit 0"
+ },
+ "accept_times_s": {
+  "BTC-REAL-09": 0.01,
+  "BTC-REAL-10": 0.06,
+  "BTC-REAL-11": 0.04,
+  "BTC-REAL-12": 0.26
+ },
+ "validate": "eval.py do core principal (somente leitura): 4 tarefas, 1/1/1/1, problems []",
+ "trilha": "11 validadas (smoke 01-04 + piloto 05/06/08 + lote2 09-12); faltam 07 (bloqueada) e expansao para 16"
+}

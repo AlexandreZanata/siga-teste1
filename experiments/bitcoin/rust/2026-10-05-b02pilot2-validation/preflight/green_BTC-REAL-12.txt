@@ -1,0 +1,6 @@
+PASS invalid-filter-usage-error
+PASS invalid-filter-star
+PASS valid-filter-passes-validation
+PASS matching-filter-passes-validation
+PASS fixture-config-removed
+all cases passed

@@ -1,0 +1,10 @@
+FAIL compact-empty: returned 0 instead of raising
+FAIL compact-truncated-mid: returned 1 instead of raising
+FAIL varint-empty: wrong exception IndexError
+FAIL uint256-short: returned 0 instead of raising
+FAIL getdata-truncated-hash: returned True instead of raising
+PASS compact-roundtrip
+PASS compact-boundaries
+PASS uint256-roundtrip
+PASS getdata-valid-preserved
+5 case(s) FAILED

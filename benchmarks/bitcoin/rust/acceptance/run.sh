@@ -8,14 +8,14 @@
 # `atlas-accept/` (ver `immutable_paths` em smoke.tasks.json / pilot.tasks.json).
 #
 # Uso (cwd = raiz do acceptance-repo, checkout do Bitcoin no base_sha):
-#   bash atlas-accept/run.sh BTC-REAL-01   # ...05, 06, 08 (07 exige build C++; ver CURADORIA_PILOTO.md)
+#   bash atlas-accept/run.sh BTC-REAL-01   # ...05, 06, 08, 09..12 (07 exige build C++; ver CURADORIA_PILOTO.md)
 #
 # O que faz: executa o harness Python correspondente contra as fontes do
 # workspace (`test/functional/test_framework/`, `test/functional/test_runner.py`).
 # Qualquer caso FAIL ou excecao => exit != 0. Sem bitcoind, sem build C++,
-# sem rede de producao (03/05 usam conexao fake em-processo; 04/08 usam
-# subprocessos com fixtures proprias; 06 usa socket/frame sinteticos locais;
-# 08 cria config.ini de fixture no workspace e a remove ao fim).
+# sem rede de producao (03/05/11 usam conexao fake em-processo; 04/08/12 usam
+# subprocessos com fixtures proprias; 06/10 usam socket/frame sinteticos locais;
+# 08/12 criam config.ini de fixture no workspace e a removem ao fim).
 # Deps: somente Python 3 stdlib. python3 ausente ou fontes do workspace
 # ausentes => exit 3 = BLOQUEIO DE AMBIENTE (nunca falha do agente, nunca
 # sucesso silencioso).
@@ -58,6 +58,18 @@ case "$TASK" in
   BTC-REAL-08)
     [ -f "$WORK/test/functional/test_runner.py" ] || { echo "ATLAS-ENV-BLOCK: fonte ausente no workspace: test/functional/test_runner.py" >&2; exit 3; }
     HARNESS="accept_b08" ;;
+  BTC-REAL-09)
+    [ -f "$WORK/test/functional/test_framework/descriptors.py" ] || { echo "ATLAS-ENV-BLOCK: fonte ausente no workspace: test/functional/test_framework/descriptors.py" >&2; exit 3; }
+    HARNESS="accept_b09" ;;
+  BTC-REAL-10)
+    [ -f "$WORK/test/functional/test_framework/messages.py" ] || { echo "ATLAS-ENV-BLOCK: fonte ausente no workspace: test/functional/test_framework/messages.py" >&2; exit 3; }
+    HARNESS="accept_b10" ;;
+  BTC-REAL-11)
+    [ -f "$WORK/test/functional/test_framework/authproxy.py" ] || { echo "ATLAS-ENV-BLOCK: fonte ausente no workspace: test/functional/test_framework/authproxy.py" >&2; exit 3; }
+    HARNESS="accept_b11" ;;
+  BTC-REAL-12)
+    [ -f "$WORK/test/functional/test_runner.py" ] || { echo "ATLAS-ENV-BLOCK: fonte ausente no workspace: test/functional/test_runner.py" >&2; exit 3; }
+    HARNESS="accept_b12" ;;
   *)
     echo "tarefa desconhecida neste conjunto: $TASK" >&2
     exit 2 ;;

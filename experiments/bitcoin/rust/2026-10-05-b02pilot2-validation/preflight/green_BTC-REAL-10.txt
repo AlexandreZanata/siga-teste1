@@ -1,0 +1,10 @@
+PASS compact-empty
+PASS compact-truncated-mid
+PASS varint-empty
+PASS uint256-short
+PASS getdata-truncated-hash
+PASS compact-roundtrip
+PASS compact-boundaries
+PASS uint256-roundtrip
+PASS getdata-valid-preserved
+all cases passed

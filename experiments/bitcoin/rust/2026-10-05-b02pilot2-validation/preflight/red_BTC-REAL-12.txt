@@ -1,0 +1,6 @@
+FAIL invalid-filter-usage-error exit=1 out='/usr/lib/python3.12/re/_parser.py", line 568, in _parse\n    raise source.error("unterminated character set",\nre.error: unterminated character set at position 1\n'
+FAIL invalid-filter-star exit=1 out='^^^^^^^^^\n  File "/usr/lib/python3.12/re/_parser.py", line 687, in _parse\n    raise source.error("nothing to repeat",\nre.error: nothing to repeat at position 0\n'
+PASS valid-filter-passes-validation
+PASS matching-filter-passes-validation
+PASS fixture-config-removed
+2 case(s) FAILED
