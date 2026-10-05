@@ -1,0 +1,20 @@
+{
+  "schema": "atlas-checkpoint/1",
+  "from": "TASK-EXP02-seal-16",
+  "date": "2026-10-05",
+  "base_sha": "9be056a8a72b624dae9623b2f7bded92c2a21c91",
+  "set": {
+    "file": "benchmarks/bitcoin/rust/pilot16.tasks.json",
+    "sha256": "82443fe9be66bb54746c5ec80357860d25a8ce254090bd0a4e6681cb299e6f13"
+  },
+  "acceptance": {
+    "run_sh_sha256": "42fa1778e903699d4db042367580ffcf3684562ae03d78924dac40cbecd6b603",
+    "harness_count": 16,
+    "note": "Runner unico congelado (run.sh); test_command de cada tarefa aponta o seu harness accept_bXX."
+  },
+  "validation": "experiments/bitcoin/rust/2026-10-05-btc-exp02-seal/",
+  "curation": "research/bitcoin/rust/CURADORIA_PILOTO3.md",
+  "seal_review": "research/bitcoin/rust/REVISAO_SEAL16.md",
+  "contains_gold": false,
+  "note": "Checkpoint do piloto selado de 16 para o protocolo paralelo. Sem gabaritos, sem casos privados. Holdout e selamento de rodada com o curador P4 seguem pendentes."
+}

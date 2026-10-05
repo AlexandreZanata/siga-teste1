@@ -44,14 +44,21 @@ com dataset, tarefas, pré-registro e resultados próprios. Nenhum aceite copiad
 - **Testes:** 5 novos em [`tests/bitcoin/test_btc_pilot3_b02.py`](../../tests/bitcoin/test_btc_pilot3_b02.py) (schema+balanço, sem ouro, dispatches, logs, conjuntos anteriores intactos). Nenhuma tentativa com modelo; P1/P2/P4 seguem pendentes.
 - **O que continua aberto:** EXP01 (P1/P2), holdout P4. Build C++ completo segue pendente.
 
+## TASK-EXP02 selada (2026-10-05) — piloto Bitcoin de 16 congelado (4/4/4/4, sealed:true)
+
+- **O que existe agora:** [`pilot16.tasks.json`](../../benchmarks/bitcoin/rust/pilot16.tasks.json) (união fiel smoke 01–04 + piloto 05–08 + piloto2 09–12 + piloto3 13–16, sem reescrita, `eval.py validate` limpo, balanço 4/4/4/4) + [`pilot16-checkpoint.json`](../../benchmarks/bitcoin/rust/pilot16-checkpoint.json) + selo travado por hashes em `experiments/bitcoin/rust/2026-10-05-btc-exp02-seal/seal.json` (lotes, `run.sh`, 16 harnesses). Revisão em [`REVISAO_SEAL16.md`](../../research/bitcoin/rust/REVISAO_SEAL16.md).
+- **Composição travada:** 8 famílias distintas; repetições só em `btc-descriptors` 01×09, `btc-p2p-deserialization` 06×10×14, `btc-authproxy` 03×05×11, `btc-runner` 04×08×12×16 (requisitos disjuntos, regra de exclusão). 9 arquivos em `allowed_paths`, 4 compartilhados com trechos disjuntos. Base operacional: aceite 0,01–1,21 s por tarefa (`timeout_s` 300, 07: 600); custo financeiro não computável (P1/P2 pendentes, nenhum modelo rodou).
+- **Testes:** 4 novos em [`tests/bitcoin/test_btc_pilot16_seal.py`](../../tests/bitcoin/test_btc_pilot16_seal.py) (selo fechado 16, união fiel, hashes dos lotes/runner, aceites no runner congelado). O selo não cria holdout (P4) nem autoriza rodada paga (EXP01/EXP03 seguem bloqueadas por modelo/teto).
+- **O que continua aberto:** EXP01 (P1/P2), EXP03 (depende de EXP01), EXP04 (P2), holdout P4. Build C++ completo segue pendente.
+
 ## Checkpoint
 
 - Etapa atual: **build verificado como BLOQUEADO (veredito registrado)** — libevent/Boost/ZMQ
   ausentes, sem sudo, RAM ~0 livre; compilar aqui arriscaria o host; requisitos documentados.
 - Último aceite e evidências: `research/bitcoin/BUILD_ENV.md` (sondagem + veredito + requisitos
   de desbloqueio); resto inalterado.
-- SHA publicado: `1d76a02` (sweep K) em `origin/codex/bitcoin-context`; este commit
-  a registrar após push.
+- SHA publicado: `ba4d901` (lote final 13–16) em `origin/codex/bitcoin-context`; este commit
+  (selo EXP02) a registrar após push.
 - `run_id`: nenhum (sondagem). Reserva: nenhuma. Pedido ao core: nenhum.
 - Bloqueio exato: build (veredito) + teto + modelos + custodiante + dev (todos nulos ou externos);
   `main` em `f4523d5` (P6 SIGA) observado, NÃO incorporado. Sem escritor concorrente neste turno.

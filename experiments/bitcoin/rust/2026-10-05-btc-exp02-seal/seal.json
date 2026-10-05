@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-pilot-seal/1",
+  "date": "2026-10-05",
+  "base_sha": "9be056a8a72b624dae9623b2f7bded92c2a21c91",
+  "set": {
+    "file": "benchmarks/bitcoin/rust/pilot16.tasks.json",
+    "sha256": "82443fe9be66bb54746c5ec80357860d25a8ce254090bd0a4e6681cb299e6f13",
+    "sealed": true,
+    "tasks": 16,
+    "categories": {"bug_local": 4, "entre_arquivos": 4, "testes_comportamento_de_api": 4, "configuracao_interface": 4},
+    "balanced": true
+  },
+  "members": {
+    "benchmarks/bitcoin/rust/smoke.tasks.json": {
+      "sha256": "8f99d2d983c9801d2834fde75e0e8301635adad7fff52b1e9447774e5dafdfbc",
+      "tasks": ["BTC-REAL-01", "BTC-REAL-02", "BTC-REAL-03", "BTC-REAL-04"]
+    },
+    "benchmarks/bitcoin/rust/pilot.tasks.json": {
+      "sha256": "acfe4c4cdfc2454e382b4d3f8b6baaf02d9e01b9f36c999331ce06f0916cd670",
+      "tasks": ["BTC-REAL-05", "BTC-REAL-06", "BTC-REAL-07", "BTC-REAL-08"]
+    },
+    "benchmarks/bitcoin/rust/pilot2.tasks.json": {
+      "sha256": "99757cd8975423c3ffe012cfb8848ed6935b4a72dd138bfe5332fa2d8ea64700",
+      "tasks": ["BTC-REAL-09", "BTC-REAL-10", "BTC-REAL-11", "BTC-REAL-12"]
+    },
+    "benchmarks/bitcoin/rust/pilot3.tasks.json": {
+      "sha256": "df22042206788a9b64486ca2beda80d34a68798a5530cf002e9921254d5604f4",
+      "tasks": ["BTC-REAL-13", "BTC-REAL-14", "BTC-REAL-15", "BTC-REAL-16"]
+    }
+  },
+  "acceptance": {
+    "run_sh_sha256": "42fa1778e903699d4db042367580ffcf3684562ae03d78924dac40cbecd6b603",
+    "harness_count": 16
+  },
+  "families": {
+    "distinct": 8,
+    "repeated": {"btc-descriptors": ["BTC-REAL-01", "BTC-REAL-09"], "btc-p2p-deserialization": ["BTC-REAL-06", "BTC-REAL-10", "BTC-REAL-14"], "btc-authproxy": ["BTC-REAL-03", "BTC-REAL-05", "BTC-REAL-11"], "btc-runner": ["BTC-REAL-04", "BTC-REAL-08", "BTC-REAL-12", "BTC-REAL-16"]},
+    "note": "Repeticoes com requisitos disjuntos, ja sinalizadas nas curadorias: se usadas para ajustar politica, excluir do piloto de inferencia e buscar substitutos."
+  },
+  "shared_sources": {
+    "test/functional/test_framework/descriptors.py": ["BTC-REAL-01", "BTC-REAL-09"],
+    "test/functional/test_framework/authproxy.py": ["BTC-REAL-03", "BTC-REAL-05", "BTC-REAL-11"],
+    "test/functional/test_runner.py": ["BTC-REAL-04", "BTC-REAL-08", "BTC-REAL-12", "BTC-REAL-16"],
+    "test/functional/test_framework/messages.py": ["BTC-REAL-06", "BTC-REAL-10"],
+    "note": "Defeitos e trechos disjuntos por tarefa; cada tentativa roda em workspace novo com uma so tarefa, sem interferencia entre tarefas."
+  },
+  "operational_basis": {
+    "acceptance_wall_s": {"BTC-REAL-07": 1.21, "BTC-REAL-04": 0.76, "BTC-REAL-08": 0.33},
+    "note": "Aceite Python por tarefa + build C++ por TU na 07, medido 2026-10-05 (execucao unica, referencia). Custo financeiro por tentativa: nao computavel sem modelo faturado (P1/P2 pendentes); nenhuma tentativa com modelo rodou."
+  },
+  "contains_gold": false
+}
