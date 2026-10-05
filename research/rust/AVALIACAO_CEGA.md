@@ -135,6 +135,12 @@ O último é o único que toca o runner de verdade: ele roda uma tentativa `dry`
 
 Um defeito apareceu na própria primeira execução dos testes, e vale citação porque o instrumento pegou a si mesmo: o texto `declared_leak_channels` do bundle citava os rótulos de condição ao explicar os canais de vazamento — e o scanner de `hard` reprovou o bundle que ele mesmo gerou. A mensagem foi reescrita sem os rótulos. Um scanner que não reprovasse a própria documentação não estaria checando nada.
 
+## 6b. Ensaio NEXT-03: julgamento com gate privado (2026-10-05)
+
+O lado do avaliador virou código: `benchmarks/rust/grade.py` (`atlas-grade/1`) clona base nova por tentativa, aplica o patch, roda o público (com o harness instalado de pacote versionado, hash registrado) e o privado da custódia (`run-private3.sh`, compilado de fora do repo, build em scratch), persistindo `grade.json` inclusive em falha — com contagens `N/M`, nunca conteúdo de caso. Regra: vazio→`rejected`, público vermelho→`rejected`, público verde + privado vermelho→`rejected` com escopo reservado ao revisor, bloqueio→`indeterminado`, dois verdes→`accepted`. Harness ausente vira `indeterminado`, nunca rejeição.
+
+Ensaio com 3 tentativas offline (operadores sintéticos, sem modelo): público 8/8–12/14–vazio, privado 8/11 (escopo 2/2)–4/11 (escopo 0/2)–—, bundle cego sem vazamento, notas cegas com dupla, unblind 1 aceito em 3 com custo nulo motivado. O gate privado do lote roda casos de todas as tarefas, então a tentativa unitária correta fica 8/11 — o revisor pondera o escopo (registrado, não silencioso). Logs privados com casos foram revisados e apagados antes do commit; divergência de 1 caso no baseline privado (6/11 vs 6 vermelhos da curadoria) registrada para reconciliar. Evidências em [`RELATORIO.md`](../../experiments/rust/siga/2026-10-05-next03-rehearsal/RELATORIO.md). Testes: 4 novos em `tests/test_grade.py`; revisor solo e condição única são limites declarados do ensaio, não do instrumento.
+
 ## 7. O que falta, e de quem depende
 
 | Falta | Depende de |

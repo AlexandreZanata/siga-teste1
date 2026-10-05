@@ -1,0 +1,13 @@
+diff --git a/siga-base/src/main/java/br/gov/jfrj/siga/base/util/Texto.java b/siga-base/src/main/java/br/gov/jfrj/siga/base/util/Texto.java
+index 1fb4b1508..f2cfa495d 100644
+--- a/siga-base/src/main/java/br/gov/jfrj/siga/base/util/Texto.java
++++ b/siga-base/src/main/java/br/gov/jfrj/siga/base/util/Texto.java
+@@ -97,7 +97,7 @@ public class Texto {
+ 		temp = temp.replaceAll("&ocirc;", "o");
+ 		temp = temp.replaceAll("&atilde;", "a");
+ 		temp = temp.replaceAll("&otilde;", "o");
+-		return temp;
++		return temp.toLowerCase();
+ 	}
+ 	
+ 	public String iniciais(String s) {

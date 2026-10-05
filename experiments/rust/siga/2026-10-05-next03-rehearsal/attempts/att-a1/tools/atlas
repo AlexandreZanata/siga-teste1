@@ -1,0 +1,31 @@
+#!/usr/bin/env python3
+"""Envelope do binário real: observa os bytes que passaram ao agente e repassa o stdout intacto."""
+import json, os, subprocess, sys, time
+
+def main() -> int:
+    binary = os.environ["ATLAS_BIN"]
+    proc = subprocess.run([binary, *sys.argv[1:]], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    stdout = proc.stdout
+    declared = {}
+    try:
+        env = json.loads(stdout.decode())
+        budget = env.get("budget") or {}
+        declared = {"schema": env.get("schema"), "state": env.get("state"),
+                    "declared_bytes": budget.get("used_bytes"),
+                    "declared_tokens": budget.get("used_tokens"),
+                    "units": len(env.get("units") or []),
+                    "omitted": (env.get("omitted") or {}).get("n")}
+    except Exception:
+        declared = {"parse_ok": False}
+    p = os.environ.get("ATLAS_TELEMETRY")
+    if p:
+        with open(p, "a") as fh:
+            fh.write(json.dumps({"kind": "tool_call", "source": "shim",
+                                 "tool": "atlas", "argv": sys.argv[1:],
+                                 "stdout_bytes": len(stdout), "exit_code": proc.returncode,
+                                 "declared": declared, "ts": time.time()}) + "\n")
+    sys.stdout.write(stdout.decode("utf-8", errors="replace"))
+    sys.stderr.write(proc.stderr.decode("utf-8", errors="replace"))
+    return proc.returncode
+
+raise SystemExit(main())

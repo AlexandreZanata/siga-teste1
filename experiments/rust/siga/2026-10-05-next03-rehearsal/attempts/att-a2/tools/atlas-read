@@ -1,0 +1,49 @@
+#!/usr/bin/env python3
+"""Leitor sancionado: registra a leitura e só então imprime. Sem registro, `opened` não existe."""
+import json, os, pathlib, sys, time
+
+def log(event):
+    p = os.environ.get("ATLAS_TELEMETRY")
+    if p:
+        with open(p, "a") as fh:
+            fh.write(json.dumps(event) + "\n")
+
+def main() -> int:
+    if len(sys.argv) < 2:
+        print("uso: atlas-read <arquivo> [--line N] [--from A --to B]", file=sys.stderr)
+        return 2
+    target = pathlib.Path(sys.argv[1])
+    root = pathlib.Path(os.environ["ATLAS_WORKSPACE"]).resolve()
+    resolved = (root / target).resolve() if not target.is_absolute() else target.resolve()
+    if root not in resolved.parents and resolved != root:
+        log({"kind": "read_denied", "source": "shim", "file": str(target),
+             "reason": "outside_workspace"})
+        print("atlas-read: caminho fora do workspace", file=sys.stderr)
+        return 4
+    try:
+        lines = resolved.read_text(encoding="utf-8", errors="replace").splitlines()
+    except OSError as exc:
+        log({"kind": "read_denied", "source": "shim", "file": str(target),
+             "reason": f"io:{exc.__class__.__name__}"})
+        print(f"atlas-read: {exc}", file=sys.stderr)
+        return 4
+    first, last = 1, len(lines)
+    args = sys.argv[2:]
+    i = 0
+    while i < len(args):
+        if args[i] == "--line" and i + 1 < len(args):
+            first = last = int(args[i + 1]); i += 2
+        elif args[i] == "--from" and i + 1 < len(args):
+            first = int(args[i + 1]); i += 2
+        elif args[i] == "--to" and i + 1 < len(args):
+            last = int(args[i + 1]); i += 2
+        else:
+            i += 1
+    first = max(1, min(first, len(lines) or 1)); last = max(first, min(last, len(lines) or 1))
+    body = "\n".join(lines[first - 1:last])
+    log({"kind": "opened", "source": "shim", "file": str(resolved.relative_to(root)),
+         "from": first, "to": last, "lines": len(lines), "bytes": len(body), "ts": time.time()})
+    print(body)
+    return 0
+
+raise SystemExit(main())

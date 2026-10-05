@@ -1,0 +1,172 @@
+{
+ "schema": "atlas-executor-capacity/1",
+ "run_id": "att-a1",
+ "condition": "BASE",
+ "evidence_class": "unverified",
+ "contract_state": "missing",
+ "externally_observed": [
+  "parede (wall_s) e pico de RSS do processo externo",
+  "eventos do shim: chamadas `atlas`, leituras sancionadas (`opened`) e bytes entregues",
+  "patch do workspace e exit code do comando de aceite",
+  "aplicacao do patch em base limpa e teste imutavel do avaliador"
+ ],
+ "declared_by_executor": [
+  "identidade do modelo (provider/id/version/verified_by)",
+  "chamadas de modelo, tokens, latencia, erro e retry",
+  "chamadas de ferramenta que nao passam pelo shim (shell, editor, outros)",
+  "turnos do modelo, motivo de parada e custo faturado"
+ ],
+ "trust_note": "totais declarados sao conferidos apenas contra o proprio stream do executor: consistencia interna nao e verificacao externa",
+ "metrics": [
+  {
+   "metric": "model_identity",
+   "observed": false,
+   "source": "ausente",
+   "reason": "executor nao entregou result contract"
+  },
+  {
+   "metric": "tokens",
+   "observed": false,
+   "source": "ausente",
+   "reason": "nenhuma chamada de modelo com tokens observada no stream nem no result"
+  },
+  {
+   "metric": "cost",
+   "observed": false,
+   "source": "ausente",
+   "reason": "sem custo faturado: nenhuma tarifa observada (P2 pendente nao autoriza inventar preco)"
+  },
+  {
+   "metric": "tool_calls",
+   "observed": true,
+   "source": "stream:tool_call (shim + executor)",
+   "reason": null
+  },
+  {
+   "metric": "turns",
+   "observed": false,
+   "source": "ausente",
+   "reason": "executor nao emitiu evento de turno; teto de turnos nao fiscalizavel"
+  }
+ ],
+ "usage": {
+  "wall_s": 4.152,
+  "tool_calls": 0,
+  "tool_calls_observed": 0,
+  "tool_calls_declared": null,
+  "tool_calls_rejected": 0,
+  "tool_calls_by_tool": {},
+  "opened": 0,
+  "delivered_bytes": 0,
+  "declared_delivered_bytes": null,
+  "turns": null,
+  "turns_reason": "executor nao emitiu evento de turno; teto de turnos nao fiscalizavel",
+  "model_calls": null,
+  "calls_ok": null,
+  "calls_error": null,
+  "tokens": null,
+  "latency_ms": null,
+  "errors": null,
+  "retries": null,
+  "declared_cost": null,
+  "declared_stop": null,
+  "duplicate_request_ids": 0,
+  "unattributed_events": 0,
+  "stream_violations": [],
+  "retrieved_candidates": null,
+  "retrieved_reason": "o envelope do `context` nao expoe a contagem interna de candidatos"
+ },
+ "claims": [
+  {
+   "claim": "custo_faturado_do_provedor",
+   "supported": false,
+   "reason": "nao sustentado: sem custo faturado: nenhuma tarifa observada (P2 pendente nao autoriza inventar preco)",
+   "requires": [
+    "contract.coverage.cost",
+    "result.cost.source"
+   ]
+  },
+  {
+   "claim": "tokens_do_modelo",
+   "supported": false,
+   "reason": "nao sustentado: nenhuma chamada de modelo com tokens observada no stream nem no result",
+   "requires": [
+    "contract.coverage.tokens"
+   ]
+  },
+  {
+   "claim": "contagem_de_chamadas_de_ferramenta_em_todas_as_ferramentas",
+   "supported": true,
+   "reason": "shim observa `atlas`/`atlas-read`; o executor declara as demais (shell, editor) e ambas entram no teto e no total",
+   "requires": [
+    "contract.coverage.tool_calls",
+    "stream executado com `source` em todo evento"
+   ]
+  },
+  {
+   "claim": "turnos_do_modelo",
+   "supported": false,
+   "reason": "nao sustentado: executor nao emitiu evento de turno; teto de turnos nao fiscalizavel",
+   "requires": [
+    "contract.coverage.turns"
+   ]
+  },
+  {
+   "claim": "teto_de_parede_aplicado",
+   "supported": true,
+   "reason": "parede medida por fora, com kill do grupo de processos no primeiro estouro",
+   "requires": [
+    "processo externo"
+   ]
+  },
+  {
+   "claim": "teto_de_chamadas_aplicado",
+   "supported": true,
+   "reason": "teto conta eventos do shim e chamadas declaradas pelo executor",
+   "requires": [
+    "contract.coverage.tool_calls"
+   ]
+  },
+  {
+   "claim": "patch_do_executor_capturado",
+   "supported": true,
+   "reason": "diff do workspace capturado (1292 bytes, vazio=False)",
+   "requires": [
+    "workspace git"
+   ]
+  },
+  {
+   "claim": "reducao_de_leituras_totais_do_agente",
+   "supported": false,
+   "reason": "nao sustentado pelo instrumento: `opened`/`delivered` contam so o leitor sancionado; leitura por `cat`, editor ou `git show` nao produz evento. Medir total de leitura exigiria sandbox de IO, nao shim em PATH",
+   "requires": [
+    "sandbox de IO",
+    "ou declaracao do executor sobre cada leitura"
+   ]
+  },
+  {
+   "claim": "isolamento_do_ouro",
+   "supported": false,
+   "reason": "nao sustentado: nivel `checagem_por_caminho; insuficiente para R5`; mesmo usuario, mesmo .git e sem container. R5 exige ambiente inacessivel, nao checagem por caminho",
+   "requires": [
+    "container/usuario separado",
+    "custodiante do holdout"
+   ]
+  },
+  {
+   "claim": "custo_por_sucesso",
+   "supported": false,
+   "reason": "decidido no avaliador cego (aceite por tarefa), nunca no runner; sem aceite e custo faturado o valor e indefinido, nao zero",
+   "requires": [
+    "avaliacao cega",
+    "custo faturado"
+   ]
+  }
+ ],
+ "not_covered": [
+  "leituras fora do leitor sancionado (sem evento, nao estimadas)",
+  "turnos/chamadas de ferramenta internos ao processo do modelo que o executor nao emita como evento",
+  "custo faturado sem tarifa oficial do provedor (P2)",
+  "qualidade do patch e aceite humano (avaliacao cega, fora do runner)"
+ ]
+}

@@ -1,0 +1,1 @@
+Texto.removeAcentoHTML deve trocar toda entidade acentuada por ASCII puro, incluindo '&agrave;' em 'a'. Entidades fora da tabela passam intactas; null continua null.

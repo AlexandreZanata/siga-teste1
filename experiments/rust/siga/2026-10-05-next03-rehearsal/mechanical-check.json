@@ -1,0 +1,203 @@
+{
+ "schema": "atlas-mechanical-check/1",
+ "rubric": "ATLAS-RUBRIC/1",
+ "attempts": [
+  {
+   "attempt": "att-a1",
+   "task_id": "SIGA-REAL-17",
+   "condition": "BASE",
+   "paths": [
+    "siga-base/src/main/java/br/gov/jfrj/siga/base/AcaoVO.java"
+   ],
+   "mechanical": {
+    "M1": {
+     "ok": true,
+     "observed": true,
+     "reason": null
+    },
+    "M2": {
+     "ok": true,
+     "observed": 0,
+     "acceptance_state": "passed",
+     "failure_class": null
+    },
+    "M3": {
+     "ok": true,
+     "observed": {
+      "patch_bytes": 1292,
+      "paths": [
+       "siga-base/src/main/java/br/gov/jfrj/siga/base/AcaoVO.java"
+      ]
+     }
+    },
+    "M4": {
+     "ok": true,
+     "observed": {
+      "fora_do_escopo": [],
+      "allowed_paths": [
+       "siga-base/src/main/java/br/gov/jfrj/siga/base/AcaoVO.java"
+      ]
+     }
+    },
+    "M5": {
+     "ok": true,
+     "observed": {
+      "tocados": [],
+      "immutable_paths": [
+       "atlas-accept/**",
+       "siga-base/src/test/**"
+      ]
+     }
+    },
+    "M6": {
+     "ok": true,
+     "observed": {
+      "stopped_by": null
+     }
+    }
+   },
+   "mechanical_verdict": "aceito",
+   "mechanical_rejected_items": [],
+   "acceptance_state": "passed",
+   "failure_class": null,
+   "acceptance_command": [
+    "bash",
+    "atlas-accept/run-pilot3.sh",
+    "SIGA-REAL-17"
+   ],
+   "evidence_class": "unverified"
+  },
+  {
+   "attempt": "att-a2",
+   "task_id": "SIGA-REAL-20",
+   "condition": "BASE",
+   "paths": [
+    "siga-base/src/main/java/br/gov/jfrj/siga/base/util/Texto.java"
+   ],
+   "mechanical": {
+    "M1": {
+     "ok": true,
+     "observed": true,
+     "reason": "aceite reprovou o patch (exit 1)"
+    },
+    "M2": {
+     "ok": false,
+     "observed": 1,
+     "acceptance_state": "patch_regression",
+     "failure_class": "patch_fault"
+    },
+    "M3": {
+     "ok": true,
+     "observed": {
+      "patch_bytes": 569,
+      "paths": [
+       "siga-base/src/main/java/br/gov/jfrj/siga/base/util/Texto.java"
+      ]
+     }
+    },
+    "M4": {
+     "ok": true,
+     "observed": {
+      "fora_do_escopo": [],
+      "allowed_paths": [
+       "siga-base/src/main/java/br/gov/jfrj/siga/base/util/Texto.java"
+      ]
+     }
+    },
+    "M5": {
+     "ok": true,
+     "observed": {
+      "tocados": [],
+      "immutable_paths": [
+       "atlas-accept/**",
+       "siga-base/src/test/**"
+      ]
+     }
+    },
+    "M6": {
+     "ok": true,
+     "observed": {
+      "stopped_by": null
+     }
+    }
+   },
+   "mechanical_verdict": "rejeitado",
+   "mechanical_rejected_items": [
+    "M2"
+   ],
+   "acceptance_state": "patch_regression",
+   "failure_class": "patch_fault",
+   "acceptance_command": [
+    "bash",
+    "atlas-accept/run-pilot3.sh",
+    "SIGA-REAL-20"
+   ],
+   "evidence_class": "unverified"
+  },
+  {
+   "attempt": "att-a3",
+   "task_id": "SIGA-REAL-19",
+   "condition": "BASE",
+   "paths": [],
+   "mechanical": {
+    "M1": {
+     "ok": false,
+     "observed": null,
+     "reason": "patch vazio; nada a aplicar"
+    },
+    "M2": {
+     "ok": false,
+     "observed": null,
+     "acceptance_state": "empty_patch",
+     "failure_class": "patch_fault"
+    },
+    "M3": {
+     "ok": false,
+     "observed": {
+      "patch_bytes": 0,
+      "paths": []
+     }
+    },
+    "M4": {
+     "ok": true,
+     "observed": {
+      "fora_do_escopo": [],
+      "allowed_paths": [
+       "siga-base/src/main/java/br/gov/jfrj/siga/base/util/Texto.java"
+      ]
+     }
+    },
+    "M5": {
+     "ok": true,
+     "observed": {
+      "tocados": [],
+      "immutable_paths": [
+       "atlas-accept/**",
+       "siga-base/src/test/**"
+      ]
+     }
+    },
+    "M6": {
+     "ok": true,
+     "observed": {
+      "stopped_by": null
+     }
+    }
+   },
+   "mechanical_verdict": "rejeitado",
+   "mechanical_rejected_items": [
+    "M1",
+    "M2",
+    "M3"
+   ],
+   "acceptance_state": "empty_patch",
+   "failure_class": "patch_fault",
+   "acceptance_command": [
+    "bash",
+    "atlas-accept/run-pilot3.sh",
+    "SIGA-REAL-19"
+   ],
+   "evidence_class": "unverified"
+  }
+ ]
+}

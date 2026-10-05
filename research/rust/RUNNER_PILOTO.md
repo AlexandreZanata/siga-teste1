@@ -162,6 +162,10 @@ O executor `dry` usa as ferramentas de verdade (chama `atlas` e o leitor, edita 
 
 **Preflight da base de aceitação, depois do executor** (falha vira estado no manifesto, sem culpar o patch): HEAD presente, base limpa e dependências do `test_command` conferidas **antes** de aplicar. Falta comprovada (`deps_missing`) não aplica o patch; base suja ou sem HEAD vira `env_blocked`. Após o teste a base é restaurada (`reset --hard` + limpeza dos caminhos do patch) — nunca reutilizar base modificada; a tentativa seguinte exige base limpa.
 
+## 4d. Isolamento do executor com prova (NEXT-03)
+
+O runner não isola por si (declara `checagem_por_caminho; insuficiente para R5`). Para o ensaio, o executor compõe dentro da sandbox via `--executor-cmd`: `benchmarks/rust/sandbox.py` (`atlas-sandbox/1`) roda a carga num namespace de usuário+montagem (+rede isolada por padrão) com `bwrap`, sistema só-leitura, workspace em `/workspace` e saída em `/out`, e remove do mapa por tmpfs o que é sensível (custódia, pesquisa, outras tentativas, `/tmp`, segredos do ambiente). Antes da carga, a prova tenta ler cada caminho negado e inspeciona o ambiente, com laudo em `sandbox_proof.json`: qualquer visibilidade bloqueia (exit 3) e a carga **não** executa; sem `bwrap`, recusa (exit 2) em vez de fingir. Caminhos do hospedeiro viram `/workspace`/`/out` (tradução registrada em `path_map`, testada) — o executor nunca vê o caminho real da tentativa. Ensaiado em 3 tentativas offline (17 correta, 20 parcial, 19 vazia): provas ok, público 8/8–12/14–vazio; relatório em [`RELATORIO.md`](../../experiments/rust/siga/2026-10-05-next03-rehearsal/RELATORIO.md). Limites: mesmo kernel, sem seccomp próprio; rede real com provedor é gate da NEXT-04 (`--share-net` + allowlist de egresso).
+
 **Estados do aceite**, mesma regra nos três braços: `passed`, `patch_regression`, `apply_failed`, `empty_patch`, `deps_missing`, `env_blocked` (exit 3, reservado ao harness), `acceptance_timeout`, `acceptance_error`, `no_base`. Timeout escreve manifesto + log parcial e restaura a base em vez de travar o runner. O hash do comando (`test_command_sha256`) e os HEADs antes/depois ficam no manifesto, junto do binário Rust (`tool.binary_sha256`). Custos/retries do executor continuam registrados em qualquer estado.
 
 ## 8. O que os testes guardam
@@ -203,6 +207,9 @@ Testes do runner:
 | config estável entre caminhos, instável com teto novo | caminho temporário virando "mudança de loop" falsa, ou teto mudando sem deixar rastro |
 | preflight recusando SHA curto/HEAD ausente/base suja | tentativa medindo a base errada sem ninguém perceber |
 | timeout/env/dep sem culpar o patch | falha de infra virando rejeição de patch (ou sucesso), ou base modificada reutilizada |
+| prova negando custódia/research/tentativas/`/tmp` + limpando segredos | executor lendo gabarito, notas de referência, patch irmão ou credencial sem que a prova acuse |
+| fail-closed sem `bwrap` ou com prova reprovada | ensaio fingindo isolamento onde não há mecanismo |
+| caminhos do hospedeiro virando `/workspace`/`/out` | executor vendo (ou dependendo de) caminho real da tentativa |
 
 ## 9. O que falta para R3
 
@@ -227,6 +234,7 @@ Nenhum desses itens é código de infraestrutura pendente: são insumos de decis
 | Tetos (§4) | x | **x** | **x** (inclui teto de shell declarada e de turnos) | — |
 | Contrato do executor (§3b–§4b) | x | **x** | **x** (17 testes, executor `cmd` de verdade) | — (nenhum executor com modelo) |
 | Separação do ouro (§5) | x | **x** | **x** (por caminho) | — (R5 exige ambiente inacessível) |
+| Isolamento do executor (§4d, sandbox + prova) | x | **x** | **x** (ensaio NEXT-03, 3 tentativas offline com prova) | — (rede real com provedor, NEXT-04) |
 
 "Ensaiado" aqui significa: infraestrutura exercitada com executor declarado como stub, com um
 executor `cmd` de contrato e com o binário real. **Não** significa que exista qualquer resultado

@@ -1,0 +1,412 @@
+{
+ "schema": "atlas-run/1",
+ "run_id": "att-a2",
+ "platform": "siga",
+ "phase": "piloto",
+ "task": {
+  "id": "SIGA-REAL-20",
+  "split": "piloto",
+  "category": "configuracao_interface",
+  "base_sha": "e3be22828f787cbe71b339aecb7a7bf569099803",
+  "test_command": [
+   "bash",
+   "atlas-accept/run-pilot3.sh",
+   "SIGA-REAL-20"
+  ],
+  "allowed_paths": [
+   "siga-base/src/main/java/br/gov/jfrj/siga/base/util/Texto.java"
+  ],
+  "immutable_paths": [
+   "atlas-accept/**",
+   "siga-base/src/test/**"
+  ],
+  "origin": "Curadoria dev NEXT-02 em 2026-10-05: acento restante reproduzido na base ('&agrave;' virava 'à': 12/14), 14 casos independentes, onze irmas e passthrough preservados.",
+  "contamination_risk": "medio"
+ },
+ "condition": "BASE",
+ "snapshot": {
+  "base_sha": "e3be22828f787cbe71b339aecb7a7bf569099803",
+  "tree_sha256": "6236ac3b318168aacf39e73c88a24ae891ab1bd5018e4788bc863367e069ed04",
+  "workspace": "/tmp/n03-ws2",
+  "source": "workspace fornecido pelo chamador (nao criado por este runner)"
+ },
+ "tool": {
+  "contract": "CLI_CONTRACT/1",
+  "binary": null,
+  "binary_sha256": null,
+  "policy": null,
+  "index": null,
+  "index_generation": null,
+  "index_generation_reason": "o runner nao abre o indice; o campo vem do envelope quando houver",
+  "absent_in_base": true
+ },
+ "executor": {
+  "kind": "cmd",
+  "cmd": [
+   "bash",
+   "-lc",
+   "/usr/bin/python3 /home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/benchmarks/rust/sandbox.py --workspace /tmp/n03-ws2 --out-dir /home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/experiments/rust/siga/2026-10-05-next03-rehearsal/attempts/att-a2 --deny /home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-a03-custody --deny /home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/research --deny /home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/experiments/rust/siga/2026-10-05-next03-rehearsal/attempts --deny /tmp --ro-bind /home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/experiments/rust/siga/2026-10-05-next03-rehearsal/operators/exec-a2.py:/ro/exec.py -- /usr/bin/python3 /ro/exec.py"
+  ],
+  "cmd_sha256": "sha256:fb8e3c4f6866bbc209f2788971fbde887299b649dabfe0b1beb8464c904c7756",
+  "cmd_template": "/usr/bin/python3 /home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/benchmarks/rust/sandbox.py --workspace {workspace} --out-dir {out_dir} --deny /home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-a03-custody --deny /home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/research --deny /home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/experiments/rust/siga/2026-10-05-next03-rehearsal/attempts --deny /tmp --ro-bind /home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/experiments/rust/siga/2026-10-05-next03-rehearsal/operators/exec-a2.py:/ro/exec.py -- /usr/bin/python3 /ro/exec.py",
+  "loop_sha256": "sha256:8d62673515eacf67aab133c6df459336a4e9cacc9ad569800248a427c6810386",
+  "expected_loop_sha256": null,
+  "loop_config_sha256": "sha256:a8b08efc4c51b80a06f25f92c3a689578456d3c7b63854745e208035f86065fb",
+  "loop_config": {
+   "schema": "atlas-loop-config/1",
+   "executor": {
+    "kind": "cmd",
+    "code_sha256": "sha256:3a29e7d17a7a6eeb25c34773b6b6053718d1442cabc90512f1f92f259b9c3d24",
+    "code_files": {
+     "runner.py": "sha256:72ce8c3fa50581cf60e23ebf586b5551c47343167162092a495a7b33d29dcb5e",
+     "executor_contract.py": "sha256:85c07e264c89710fccb78f16753ac5c7f36681a4eb59b982526ee33a59c5a13f",
+     "real_executor.py": "sha256:6d1da69017bfc63436d794223b10d34befb5b61a874e587e31b28d7fa7d8f349"
+    },
+    "code_reason": null
+   },
+   "tools": {
+    "protocol": "atlas-tools/1",
+    "runner_tools": [
+     "atlas",
+     "atlas-read"
+    ],
+    "executor_tools": [
+     "read",
+     "shell",
+     "write"
+    ],
+    "spec_sha256": "sha256:53da6ba8926b1e97e86003c954af387684aef2d01e301bde44d075f71f643670",
+    "spec_reason": null
+   },
+   "limits": {
+    "wall_s": 1800,
+    "turns": 40,
+    "tool_calls": 100
+   },
+   "cmd_template_sha256": "sha256:fec0ecdc3ad2ba0edc26b9e4822c03099e2cf4989edcb94bc0a9eeb50e59a4fd",
+   "cmd_template_note": "modelo do comando antes de substituir {statement_file}, {workspace}, {tool_dir}, {out_dir}; os caminhos efetivos ficam em executor.cmd, fora deste hash"
+  },
+  "expected_loop_config_sha256": null,
+  "task_identity": {
+   "id": "SIGA-REAL-20",
+   "statement_sha256": "9c626afa96a64b18310dfb5bab0efaa480246c9c0cd9190cc8c768829c5e35d0",
+   "note": "mesma tarefa entre braços se confere por tarefa+enunciado, nunca pelo hash do loop"
+  },
+  "tools_registered": [
+   "atlas",
+   "atlas-read"
+  ],
+  "result_path": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/experiments/rust/siga/2026-10-05-next03-rehearsal/attempts/att-a2/executor_result.json",
+  "result_received": false
+ },
+ "model": {
+  "provider": null,
+  "id": null,
+  "version": null,
+  "verified_by": null,
+  "identity_verified": false,
+  "reason": "executor nao entregou result contract"
+ },
+ "tokenizer": {
+  "id": null,
+  "is_exact": null,
+  "reason": "P3 pendente: nenhum executor declarou tokenizer"
+ },
+ "preflight": {
+  "workspace": {
+   "base_sha_full": "e3be22828f787cbe71b339aecb7a7bf569099803",
+   "head_present": true,
+   "tracked_clean": true,
+   "tree_sha256": "2a3db449122a87823bab4c38ec26caef0ca08590e3fe35372fa2aef841d07d8b",
+   "expected_sha": "e3be22828f787cbe71b339aecb7a7bf569099803",
+   "expected_reason": null
+  },
+  "overlay": {
+   "immutable_paths": [
+    "atlas-accept/**",
+    "siga-base/src/test/**"
+   ],
+   "note": "overlay imutável identificado por lista declarada da tarefa; a fiscalização é M5 no avaliador"
+  },
+  "note": "preflight fechado (NEXT-01): SHA completo, HEAD presente, árvore rastreada limpa; base de aceitação tem preflight próprio em acceptance.* e é restaurada após o teste (nunca reutilizar base modificada)"
+ },
+ "prompt": {
+  "statement_sha256": "9c626afa96a64b18310dfb5bab0efaa480246c9c0cd9190cc8c768829c5e35d0",
+  "tool_specs_sha256": null,
+  "tool_specs_reason": "as descricoes das ferramentas sao do executor, nao deste runner"
+ },
+ "limits": {
+  "wall_s": 1800,
+  "turns": 40,
+  "tool_calls": 100
+ },
+ "usage": {
+  "wall_s": 1.121,
+  "tool_calls": 0,
+  "tool_calls_observed": 0,
+  "tool_calls_declared": null,
+  "tool_calls_rejected": 0,
+  "tool_calls_by_tool": {},
+  "opened": 0,
+  "delivered_bytes": 0,
+  "declared_delivered_bytes": null,
+  "turns": null,
+  "turns_reason": "executor nao emitiu evento de turno; teto de turnos nao fiscalizavel",
+  "model_calls": null,
+  "calls_ok": null,
+  "calls_error": null,
+  "tokens": null,
+  "latency_ms": null,
+  "errors": null,
+  "retries": null,
+  "declared_cost": null,
+  "declared_stop": null,
+  "duplicate_request_ids": 0,
+  "unattributed_events": 0,
+  "stream_violations": [],
+  "retrieved_candidates": null,
+  "retrieved_reason": "o envelope do `context` nao expoe a contagem interna de candidatos"
+ },
+ "cost": {
+  "provider_billed": null,
+  "currency": null,
+  "source": null,
+  "coverage": {
+   "observed": false,
+   "source": "ausente",
+   "reason": "sem custo faturado: nenhuma tarifa observada (P2 pendente nao autoriza inventar preco)"
+  },
+  "stream_declared": null,
+  "reason": "P2 pendente: sem teto financeiro e sem custo faturado declarado",
+  "local_cpu_s": null,
+  "local_cpu_reason": "medido no nivel do processo externo pelo harness de microbenchmark, nao aqui",
+  "local_peak_rss_kb": 14280
+ },
+ "contract": {
+  "schema": "atlas-executor/1",
+  "state": "missing",
+  "reason": null,
+  "violations": [],
+  "missing": [
+   "result_contract:executor nao escreveu o result contract no caminho informado"
+  ],
+  "reconciliation": [
+   {
+    "metric": "model_calls",
+    "stream": null,
+    "result": null,
+    "state": "missing"
+   },
+   {
+    "metric": "input_tokens",
+    "stream": null,
+    "result": null,
+    "state": "missing"
+   },
+   {
+    "metric": "output_tokens",
+    "stream": null,
+    "result": null,
+    "state": "missing"
+   },
+   {
+    "metric": "cache_read_tokens",
+    "stream": null,
+    "result": null,
+    "state": "missing"
+   },
+   {
+    "metric": "cache_write_tokens",
+    "stream": null,
+    "result": null,
+    "state": "missing"
+   },
+   {
+    "metric": "tool_calls_declared",
+    "stream": null,
+    "result": null,
+    "state": "missing"
+   },
+   {
+    "metric": "turns",
+    "stream": null,
+    "result": null,
+    "state": "missing"
+   },
+   {
+    "metric": "error_count",
+    "stream": null,
+    "result": null,
+    "state": "missing"
+   },
+   {
+    "metric": "retry_count",
+    "stream": null,
+    "result": null,
+    "state": "missing"
+   },
+   {
+    "metric": "provider_billed",
+    "stream": null,
+    "result": null,
+    "state": "missing"
+   }
+  ],
+  "coverage": {
+   "model_identity": {
+    "observed": false,
+    "source": "ausente",
+    "reason": "executor nao entregou result contract"
+   },
+   "tokens": {
+    "observed": false,
+    "source": "ausente",
+    "reason": "nenhuma chamada de modelo com tokens observada no stream nem no result"
+   },
+   "cost": {
+    "observed": false,
+    "source": "ausente",
+    "reason": "sem custo faturado: nenhuma tarifa observada (P2 pendente nao autoriza inventar preco)"
+   },
+   "tool_calls": {
+    "observed": true,
+    "source": "stream:tool_call (shim + executor)",
+    "reason": null
+   },
+   "turns": {
+    "observed": false,
+    "source": "ausente",
+    "reason": "executor nao emitiu evento de turno; teto de turnos nao fiscalizavel"
+   }
+  },
+  "result_schema": null,
+  "result_error": "executor nao escreveu o result contract no caminho informado",
+  "provenance": {
+   "totals": "declarados pelo executor e conferidos contra o proprio stream",
+   "externally_observed": [
+    "parede (wall_s) e pico de RSS do processo externo",
+    "eventos do shim: chamadas `atlas`, leituras sancionadas (`opened`) e bytes entregues",
+    "patch do workspace e exit code do comando de aceite",
+    "aplicacao do patch em base limpa e teste imutavel do avaliador"
+   ]
+  }
+ },
+ "capability": {
+  "manifest": "capability_manifest.json",
+  "supported_claims": [
+   "contagem_de_chamadas_de_ferramenta_em_todas_as_ferramentas",
+   "teto_de_parede_aplicado",
+   "teto_de_chamadas_aplicado",
+   "patch_do_executor_capturado"
+  ],
+  "unsupported_claims": [
+   "custo_faturado_do_provedor",
+   "tokens_do_modelo",
+   "turnos_do_modelo",
+   "reducao_de_leituras_totais_do_agente",
+   "isolamento_do_ouro",
+   "custo_por_sucesso"
+  ]
+ },
+ "cache": {
+  "index": "indice da rodada, aquecido",
+  "filesystem": "aquecido (nao foi possivel derrubar sem maquina dedicada)"
+ },
+ "order": {
+  "repetition": 0,
+  "position": 0
+ },
+ "timestamps": {
+  "started": "2026-10-05T11:49:15-0400",
+  "finished": "2026-10-05T11:49:17-0400"
+ },
+ "processes": [
+  {
+   "argv": [
+    "bash",
+    "-lc",
+    "/usr/bin/python3 /home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/benchmarks/rust/sandbox.py --workspace /tmp/n03-ws2 --out-dir /home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/experiments/rust/siga/2026-10-05-next03-rehearsal/attempts/att-a2 --deny /home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-a03-custody --deny /home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/research --deny /home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/experiments/rust/siga/2026-10-05-next03-rehearsal/attempts --deny /tmp --ro-bind /home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/experiments/rust/siga/2026-10-05-next03-rehearsal/operators/exec-a2.py:/ro/exec.py -- /usr/bin/python3 /ro/exec.py"
+   ],
+   "exit_code": 0
+  }
+ ],
+ "patch": {
+  "file": "attempt.patch",
+  "bytes": 569,
+  "empty": false
+ },
+ "acceptance": {
+  "state": "patch_regression",
+  "applied": true,
+  "command": [
+   "bash",
+   "atlas-accept/run-pilot3.sh",
+   "SIGA-REAL-20"
+  ],
+  "test_command_sha256": "sha256:f9cc03ae9aa5a5f135d28f95bc7bebcc68a00d60f3d7329ce0a185342794e65d",
+  "exit_code": 1,
+  "seconds": 0.914,
+  "base_head_before": "e3be22828f787cbe71b339aecb7a7bf569099803",
+  "base_head_after": "e3be22828f787cbe71b339aecb7a7bf569099803",
+  "deps": {
+   "ok": true,
+   "binary": "bash",
+   "reason": null
+  },
+  "restored": {
+   "reset_hard": true,
+   "patch_paths_removed": [
+    "siga-base/src/main/java/br/gov/jfrj/siga/base/util/Texto.java"
+   ],
+   "tracked_clean_after": true,
+   "reason": null
+  },
+  "log_file": "acceptance_output.txt",
+  "reason": "aceite reprovou o patch (exit 1)"
+ },
+ "stopped_by": null,
+ "stopped_killed": false,
+ "stopped_note": null,
+ "outcome": "completed",
+ "evidence_class": "unverified",
+ "evidence_class_reason": "executor externo sem result contract: identidade de modelo, tokens, custo e motivo de parada nao verificaveis",
+ "gold_isolation": {
+  "declared_dir_ref": null,
+  "path_recorded": false,
+  "path_recorded_reason": "manifesto e artefato de tentativa; o caminho do ouro nao entra nele",
+  "in_executor_env": false,
+  "checks": [
+   "gold fora do workspace",
+   "gold fora do checkout do repo",
+   "caminho do ouro nao entra no ambiente do executor",
+   "caminho do ouro nao entra no manifesto"
+  ],
+  "not_covered": [
+   "mesmo usuario do sistema",
+   "mesmo .git e historico do checkout",
+   "sem container/namespace: o executor pode ler o disco se souber o caminho"
+  ],
+  "level": "checagem_por_caminho; insuficiente para R5",
+  "state": "ausente",
+  "note": "sem --gold nesta tentativa; nenhum ouro foi lido nem referenciado"
+ },
+ "executor_seconds": 0.101,
+ "environment": {
+  "os": "Linux-7.1.5-76070105-generic-x86_64-with-glibc2.39",
+  "kernel": "7.1.5-76070105-generic",
+  "machine": "x86_64",
+  "cpu_model": "13th Gen Intel(R) Core(TM) i7-13620H",
+  "nproc": 16,
+  "meminfo": {
+   "MemTotal": "32556576 kB",
+   "MemAvailable": "7514480 kB"
+  },
+  "rustc": null,
+  "cargo": null,
+  "python": "3.12.3",
+  "gnu_time": "time (GNU Time) UNKNOWN\nCopyright (C) 2018 Free Software Foundation, Inc.\nLicense GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>.\nThis is free software: you are free to change and redistribute it.\nThere is NO WARRANTY, to the extent permitted by law.\n\nWritten by David Keppel, David MacKenzie, and Assaf Gordon.",
+  "git_head": "322864bc4cd4d94d1dce216277f2c1f370ef99b6",
+  "git_head_short": "322864b",
+  "git_dirty": true
+ }
+}

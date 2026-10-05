@@ -1,0 +1,56 @@
+{
+ "schema": "atlas-sandbox/1",
+ "denied": [
+  "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-a03-custody",
+  "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/research",
+  "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/experiments/rust/siga/2026-10-05-next03-rehearsal/attempts",
+  "/tmp"
+ ],
+ "env_removed": [
+  "ATLAS_PROBE_CANARY",
+  "FREEBUFF_CDP_BRIDGE_TOKEN",
+  "FREEBUFF_MCP_CONSENT_TOKEN"
+ ],
+ "network_isolated": true,
+ "path_map": [
+  {
+   "host": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/experiments/rust/siga/2026-10-05-next03-rehearsal/attempts/att-a2",
+   "sandbox": "/out"
+  },
+  {
+   "host": "/tmp/n03-ws2",
+   "sandbox": "/workspace"
+  }
+ ],
+ "proof": {
+  "schema": "atlas-sandbox-proof/1",
+  "denied": [
+   {
+    "path": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-a03-custody",
+    "visible": false,
+    "how": "ausente"
+   },
+   {
+    "path": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/research",
+    "visible": false,
+    "how": "ausente"
+   },
+   {
+    "path": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/experiments/rust/siga/2026-10-05-next03-rehearsal/attempts",
+    "visible": false,
+    "how": "ausente"
+   },
+   {
+    "path": "/tmp",
+    "visible": false,
+    "how": "tmpfs vazio"
+   }
+  ],
+  "env_leaked": [],
+  "ok": true
+ },
+ "payload": [
+  "/usr/bin/python3",
+  "/ro/exec.py"
+ ]
+}

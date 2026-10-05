@@ -1,0 +1,11 @@
+Note: /tmp/atlas-grade-r2nom336/base/siga-base/src/main/java/br/gov/jfrj/siga/base/util/Utils.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+PASS treemap-order
+PASS insertion-order
+PASS single
+PASS empty-value
+PASS no-params
+PASS null-params
+PASS null-namespace
+PASS explicit-url
+AtlasAccept17: 8/8 passed

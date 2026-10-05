@@ -1,0 +1,31 @@
+{
+ "schema": "atlas-grade/1",
+ "attempt": "att-a1",
+ "task_id": "SIGA-REAL-17",
+ "rule": "publico verde E privado verde => accepted; verde publico sozinho nunca aceita; bloqueio ambiental => indeterminado; resto => rejected",
+ "timeout_s": 600.0,
+ "patch_bytes": 1292,
+ "public": {
+  "empty": false,
+  "applied": true,
+  "acceptance_scripts_sha256": "sha256:fb4662405ce4352f5c984c535f9daad93e81d4246d38e7d0774f8f9aba2a76e4",
+  "exit_code": 0,
+  "seconds": 0.967,
+  "timeout": false,
+  "error": null,
+  "cases_passed": 8,
+  "cases_total": 8
+ },
+ "private": {
+  "exit_code": 1,
+  "seconds": 0.935,
+  "timeout": false,
+  "error": null,
+  "cases_passed": 8,
+  "cases_total": 11
+ },
+ "final": "rejected",
+ "failure_class": "patch_fault",
+ "reason": "aceite privado reprovou (exit 1; gate privado; a ponderação de escopo — casos de outras tarefas do lote — cabe ao revisor cego, não a este registro)",
+ "private_source": "custodia (caminho não publicado)"
+}

@@ -1,0 +1,15 @@
+PASS aacute
+PASS eacute
+PASS iacute
+PASS oacute
+PASS uacute
+FAIL agrave expected=<a> actual=<à>
+PASS acirc
+PASS ecirc
+PASS ocirc
+PASS atilde
+PASS otilde
+FAIL mixed expected=<cafe a la> actual=<cafe à la>
+PASS plain
+PASS null
+AtlasAccept20: 12/14 passed

@@ -1,0 +1,88 @@
+{
+ "schema": "ATLAS-RUBRIC/1",
+ "frozen_at": "2026-09-29",
+ "precedencia": "mecanica antes de semantica: item mecanico reprovado reprova a tentativa, sem compensacao por nota humana",
+ "estados_que_nao_contam_como_sucesso": [
+  "indeterminado",
+  "triagem",
+  "em_disputa"
+ ],
+ "items": [
+  {
+   "id": "M1",
+   "name": "patch_aplica_em_base_limpa",
+   "kind": "mechanical",
+   "question": "o patch aplica com `git apply --check` numa base limpa?",
+   "fonte": "`acceptance.applied` da tentativa",
+   "reprovado_significa": "rejeitado — patch que nao aplica nao e solucao"
+  },
+  {
+   "id": "M2",
+   "name": "testes_do_avaliador_passam",
+   "kind": "mechanical",
+   "question": "o comando de aceitacao declarado na tarefa sai com codigo 0?",
+   "fonte": "`acceptance.exit_code`; o comando e imutavel e do avaliador",
+   "reprovado_significa": "rejeitado. Testes novos do agente sao evidencia complementar, nunca o criterio"
+  },
+  {
+   "id": "M3",
+   "name": "patch_nao_vazio",
+   "kind": "mechanical",
+   "question": "a tentativa produziu alguma alteracao?",
+   "fonte": "`patch.empty` e tamanho do arquivo de patch",
+   "reprovado_significa": "rejeitado — tentativa sem alteracao e falha, nao 'nao havia o que mudar'"
+  },
+  {
+   "id": "M4",
+   "name": "escopo_declarado_respeitado",
+   "kind": "mechanical",
+   "question": "todos os arquivos tocados estao em `allowed_paths` da tarefa?",
+   "fonte": "caminhos extraidos do patch contra os globs da tarefa",
+   "reprovado_significa": "rejeitado — fora de escopo e alteracao indevida por definicao, antes de qualquer revisao"
+  },
+  {
+   "id": "M5",
+   "name": "sem_enfraquecer_teste_imutavel",
+   "kind": "mechanical",
+   "question": "o patch toca algum arquivo de `immutable_paths` (testes do avaliador)?",
+   "fonte": "caminhos do patch contra `immutable_paths`",
+   "reprovado_significa": "rejeitado — o protocolo nao confia em teste que o agente possa ter enfraquecido"
+  },
+  {
+   "id": "M6",
+   "name": "nao_parou_no_teto",
+   "kind": "mechanical",
+   "question": "a tentativa terminou por si, sem ser morta por um teto operacional?",
+   "fonte": "`stopped_by` / `stopped_killed` da tentativa",
+   "reprovado_significa": "rejeitado — falha atribuivel ao braco conta contra ele; teto atingido nao e sucesso parcial"
+  },
+  {
+   "id": "H1",
+   "name": "atende_ao_enunciado",
+   "kind": "human",
+   "question": "o patch resolve o que o enunciado pede, e resolve inteiro?",
+   "o_que_nao_e_evidencia": "semelhanca textual com o patch de referencia; solucao alternativa correta e aceita"
+  },
+  {
+   "id": "H2",
+   "name": "sem_regressao_nao_coberta",
+   "kind": "human",
+   "question": "o patch quebra algo que os testes do avaliador nao cobrem?",
+   "o_que_nao_e_evidencia": "o verde do comando de aceitacao: ele cobre o aceite, nao o sistema"
+  },
+  {
+   "id": "H3",
+   "name": "sem_alteracao_indevida",
+   "kind": "human",
+   "question": "ha alteracao nao relacionada, reescrita gratuita, remocao ou churn de configuracao?",
+   "o_que_nao_e_evidencia": "tamanho do diff isolado — patch grande pode ser a solucao correta e patch pequeno pode estar errado"
+  }
+ ],
+ "veredito_da_tentativa": "(mecanica reprovada -> rejeitado) | (mecanica indeterminada -> indeterminado) | (humana reprovada -> rejeitado) | (humana indeterminada/triagem/disputa -> indeterminado) | (tudo aceito -> aceito)",
+ "amostra_de_revisao_dupla": 0.25,
+ "campos_de_nota_sem_veredito": [
+  "differs_from_reference",
+  "notes"
+ ],
+ "nota": "contagens de sucesso incluem falhas no denominador; falta de custo bloqueia custo por sucesso, nunca vira zero"
+}

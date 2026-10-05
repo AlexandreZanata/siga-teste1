@@ -1,0 +1,71 @@
+{
+ "schema": "atlas-review-sheet/1",
+ "note": "operador prepara por item cego: gates + escopo, SEM condicao/custo/ordem",
+ "items": [
+  {
+   "item_id": "it-9afdb3b999",
+   "task_id": "SIGA-REAL-17",
+   "mechanical": "ver bundle.json",
+   "public": {
+    "exit_code": 0,
+    "cases_passed": 8,
+    "cases_total": 8
+   },
+   "private": {
+    "exit_code": 1,
+    "cases_passed": 8,
+    "cases_total": 11,
+    "in_scope_prefix": "r17",
+    "in_scope": {
+     "passed": 2,
+     "total": 2
+    },
+    "out_of_scope": {
+     "passed": 6,
+     "total": 9
+    }
+   },
+   "grade_final": "rejected",
+   "grade_reason": "aceite privado reprovou (exit 1; gate privado; a ponderação de escopo — casos de outras tarefas do lote — cabe ao revisor cego, não a este registro)"
+  },
+  {
+   "item_id": "it-c1f04c0d36",
+   "task_id": "SIGA-REAL-20",
+   "mechanical": "ver bundle.json",
+   "public": {
+    "exit_code": 1,
+    "cases_passed": 12,
+    "cases_total": 14
+   },
+   "private": {
+    "exit_code": 1,
+    "cases_passed": 4,
+    "cases_total": 11,
+    "in_scope_prefix": "r20",
+    "in_scope": {
+     "passed": 0,
+     "total": 2
+    },
+    "out_of_scope": {
+     "passed": 4,
+     "total": 9
+    }
+   },
+   "grade_final": "rejected",
+   "grade_reason": "aceite público reprovou (exit 1; gate público)"
+  },
+  {
+   "item_id": "it-6af3f45ac0",
+   "task_id": "SIGA-REAL-19",
+   "mechanical": "ver bundle.json",
+   "public": {
+    "exit_code": null,
+    "cases_passed": null,
+    "cases_total": null
+   },
+   "private": null,
+   "grade_final": "rejected",
+   "grade_reason": "patch vazio: nada a julgar (M3)"
+  }
+ ]
+}

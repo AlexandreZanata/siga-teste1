@@ -1,0 +1,199 @@
+{
+ "schema": "atlas-blind-key/1",
+ "bundle_sha256": "sha256:ca264e6e13e82f33fe29b4e9e2fd3ed4d1857f0a6f368019556862ee88b0c747",
+ "created": "2026-10-05T12:04:10-0400",
+ "seed": 20261005,
+ "custody": {
+  "holder": "A (operador do ensaio NEXT-03; chave publicada pós-unblind como registro do ensaio)",
+  "holder_reason": null,
+  "may_be_opened": "depois dos julgamentos e da adjudicacao congelados",
+  "not_inside_bundle": true
+ },
+ "review_sample": [
+  "it-9afdb3b999"
+ ],
+ "mapping": {
+  "it-9afdb3b999": {
+   "attempt": "att-a1",
+   "task_id": "SIGA-REAL-17",
+   "condition": "BASE",
+   "repetition": 0,
+   "position": 0,
+   "outcome": "completed",
+   "evidence_class": "unverified",
+   "cost": {
+    "provider_billed": null,
+    "currency": null,
+    "source": null,
+    "coverage": {
+     "observed": false,
+     "source": "ausente",
+     "reason": "sem custo faturado: nenhuma tarifa observada (P2 pendente nao autoriza inventar preco)"
+    },
+    "stream_declared": null,
+    "reason": "P2 pendente: sem teto financeiro e sem custo faturado declarado",
+    "local_cpu_s": null,
+    "local_cpu_reason": "medido no nivel do processo externo pelo harness de microbenchmark, nao aqui",
+    "local_peak_rss_kb": 14240
+   },
+   "usage": {
+    "wall_s": 4.152,
+    "tool_calls": 0,
+    "tool_calls_observed": 0,
+    "tool_calls_declared": null,
+    "tool_calls_rejected": 0,
+    "tool_calls_by_tool": {},
+    "opened": 0,
+    "delivered_bytes": 0,
+    "declared_delivered_bytes": null,
+    "turns": null,
+    "turns_reason": "executor nao emitiu evento de turno; teto de turnos nao fiscalizavel",
+    "model_calls": null,
+    "calls_ok": null,
+    "calls_error": null,
+    "tokens": null,
+    "latency_ms": null,
+    "errors": null,
+    "retries": null,
+    "declared_cost": null,
+    "declared_stop": null,
+    "duplicate_request_ids": 0,
+    "unattributed_events": 0,
+    "stream_violations": [],
+    "retrieved_candidates": null,
+    "retrieved_reason": "o envelope do `context` nao expoe a contagem interna de candidatos"
+   },
+   "executor_seconds": 0.203,
+   "mechanical_verdict": "aceito"
+  },
+  "it-c1f04c0d36": {
+   "attempt": "att-a2",
+   "task_id": "SIGA-REAL-20",
+   "condition": "BASE",
+   "repetition": 0,
+   "position": 0,
+   "outcome": "completed",
+   "evidence_class": "unverified",
+   "cost": {
+    "provider_billed": null,
+    "currency": null,
+    "source": null,
+    "coverage": {
+     "observed": false,
+     "source": "ausente",
+     "reason": "sem custo faturado: nenhuma tarifa observada (P2 pendente nao autoriza inventar preco)"
+    },
+    "stream_declared": null,
+    "reason": "P2 pendente: sem teto financeiro e sem custo faturado declarado",
+    "local_cpu_s": null,
+    "local_cpu_reason": "medido no nivel do processo externo pelo harness de microbenchmark, nao aqui",
+    "local_peak_rss_kb": 14280
+   },
+   "usage": {
+    "wall_s": 1.121,
+    "tool_calls": 0,
+    "tool_calls_observed": 0,
+    "tool_calls_declared": null,
+    "tool_calls_rejected": 0,
+    "tool_calls_by_tool": {},
+    "opened": 0,
+    "delivered_bytes": 0,
+    "declared_delivered_bytes": null,
+    "turns": null,
+    "turns_reason": "executor nao emitiu evento de turno; teto de turnos nao fiscalizavel",
+    "model_calls": null,
+    "calls_ok": null,
+    "calls_error": null,
+    "tokens": null,
+    "latency_ms": null,
+    "errors": null,
+    "retries": null,
+    "declared_cost": null,
+    "declared_stop": null,
+    "duplicate_request_ids": 0,
+    "unattributed_events": 0,
+    "stream_violations": [],
+    "retrieved_candidates": null,
+    "retrieved_reason": "o envelope do `context` nao expoe a contagem interna de candidatos"
+   },
+   "executor_seconds": 0.101,
+   "mechanical_verdict": "rejeitado"
+  },
+  "it-6af3f45ac0": {
+   "attempt": "att-a3",
+   "task_id": "SIGA-REAL-19",
+   "condition": "BASE",
+   "repetition": 0,
+   "position": 0,
+   "outcome": "completed",
+   "evidence_class": "unverified",
+   "cost": {
+    "provider_billed": null,
+    "currency": null,
+    "source": null,
+    "coverage": {
+     "observed": false,
+     "source": "ausente",
+     "reason": "sem custo faturado: nenhuma tarifa observada (P2 pendente nao autoriza inventar preco)"
+    },
+    "stream_declared": null,
+    "reason": "P2 pendente: sem teto financeiro e sem custo faturado declarado",
+    "local_cpu_s": null,
+    "local_cpu_reason": "medido no nivel do processo externo pelo harness de microbenchmark, nao aqui",
+    "local_peak_rss_kb": 14252
+   },
+   "usage": {
+    "wall_s": 0.139,
+    "tool_calls": 0,
+    "tool_calls_observed": 0,
+    "tool_calls_declared": null,
+    "tool_calls_rejected": 0,
+    "tool_calls_by_tool": {},
+    "opened": 0,
+    "delivered_bytes": 0,
+    "declared_delivered_bytes": null,
+    "turns": null,
+    "turns_reason": "executor nao emitiu evento de turno; teto de turnos nao fiscalizavel",
+    "model_calls": null,
+    "calls_ok": null,
+    "calls_error": null,
+    "tokens": null,
+    "latency_ms": null,
+    "errors": null,
+    "retries": null,
+    "declared_cost": null,
+    "declared_stop": null,
+    "duplicate_request_ids": 0,
+    "unattributed_events": 0,
+    "stream_violations": [],
+    "retrieved_candidates": null,
+    "retrieved_reason": "o envelope do `context` nao expoe a contagem interna de candidatos"
+   },
+   "executor_seconds": 0.101,
+   "mechanical_verdict": "rejeitado"
+  }
+ },
+ "leak_scan": {
+  "hard": 0,
+  "soft": 0,
+  "soft_detail": []
+ },
+ "environment": {
+  "os": "Linux-7.1.5-76070105-generic-x86_64-with-glibc2.39",
+  "kernel": "7.1.5-76070105-generic",
+  "machine": "x86_64",
+  "cpu_model": "13th Gen Intel(R) Core(TM) i7-13620H",
+  "nproc": 16,
+  "meminfo": {
+   "MemTotal": "32556576 kB",
+   "MemAvailable": "10125876 kB"
+  },
+  "rustc": "rustc 1.96.0 (ac68faa20 2026-05-25)",
+  "cargo": "cargo 1.96.0 (30a34c682 2026-05-25)",
+  "python": "3.12.3",
+  "gnu_time": "time (GNU Time) UNKNOWN\nCopyright (C) 2018 Free Software Foundation, Inc.\nLicense GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>.\nThis is free software: you are free to change and redistribute it.\nThere is NO WARRANTY, to the extent permitted by law.\n\nWritten by David Keppel, David MacKenzie, and Assaf Gordon.",
+  "git_head": "322864bc4cd4d94d1dce216277f2c1f370ef99b6",
+  "git_head_short": "322864b",
+  "git_dirty": true
+ }
+}

@@ -1,0 +1,1 @@
+Texto.stringsSeparadarComVirgulaEE deve renderizar 'a, b e c' (', ' entre itens, ' e ' antes do ultimo) sem modificar a lista recebida. Lista vazia continua null.

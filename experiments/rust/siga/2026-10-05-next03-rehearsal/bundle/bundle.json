@@ -1,0 +1,119 @@
+{
+ "schema": "atlas-blind-bundle/1",
+ "rubric": "ATLAS-RUBRIC/1",
+ "items_order_is_randomized": true,
+ "blinding_level": "simples: o avaliador nao ve condicao, modelo, custo, ordem nem telemetria; o executor nao esta cego. Nao e duplo-cego — ver `declared_leak_channels`",
+ "declared_leak_channels": [
+  "estilo do patch e auto-referencia a ferramenta podem sugerir o braco; registrar `suspicion_of_condition` por item",
+  "o revisor avalia um patch por vez, mas o mesmo revisor ve patches de todos os bracos",
+  "a presenca da ferramenta de contexto nas ferramentas usadas nao aparece no bundle, mas o estilo de quem a usou pode aparecer no patch"
+ ],
+ "items": [
+  {
+   "item_id": "it-9afdb3b999",
+   "task": {
+    "id": "SIGA-REAL-17",
+    "category": "bug_local",
+    "split": "piloto",
+    "base_sha": "e3be22828f787cbe71b339aecb7a7bf569099803",
+    "allowed_paths": [
+     "siga-base/src/main/java/br/gov/jfrj/siga/base/AcaoVO.java"
+    ],
+    "immutable_paths": [
+     "atlas-accept/**",
+     "siga-base/src/test/**"
+    ]
+   },
+   "statement_file": "statements/it-9afdb3b999.txt",
+   "patch_file": "patches/it-9afdb3b999.patch",
+   "acceptance": {
+    "command": [
+     "bash",
+     "atlas-accept/run-pilot3.sh",
+     "SIGA-REAL-17"
+    ],
+    "applied": true,
+    "exit_code": 0,
+    "output_file": null,
+    "output_reason": "o avaliador reexecuta o comando na base limpa; a saida do runner nao entra no bundle porque pode citar artefatos do braco"
+   },
+   "mechanical": {
+    "verdict": "aceito",
+    "rejected_items": []
+   }
+  },
+  {
+   "item_id": "it-6af3f45ac0",
+   "task": {
+    "id": "SIGA-REAL-19",
+    "category": "testes_comportamento_de_api",
+    "split": "piloto",
+    "base_sha": "e3be22828f787cbe71b339aecb7a7bf569099803",
+    "allowed_paths": [
+     "siga-base/src/main/java/br/gov/jfrj/siga/base/util/Texto.java"
+    ],
+    "immutable_paths": [
+     "atlas-accept/**",
+     "siga-base/src/test/**"
+    ]
+   },
+   "statement_file": "statements/it-6af3f45ac0.txt",
+   "patch_file": "patches/it-6af3f45ac0.patch",
+   "acceptance": {
+    "command": [
+     "bash",
+     "atlas-accept/run-pilot3.sh",
+     "SIGA-REAL-19"
+    ],
+    "applied": null,
+    "exit_code": null,
+    "output_file": null,
+    "output_reason": "o avaliador reexecuta o comando na base limpa; a saida do runner nao entra no bundle porque pode citar artefatos do braco"
+   },
+   "mechanical": {
+    "verdict": "rejeitado",
+    "rejected_items": [
+     "M1",
+     "M2",
+     "M3"
+    ]
+   }
+  },
+  {
+   "item_id": "it-c1f04c0d36",
+   "task": {
+    "id": "SIGA-REAL-20",
+    "category": "configuracao_interface",
+    "split": "piloto",
+    "base_sha": "e3be22828f787cbe71b339aecb7a7bf569099803",
+    "allowed_paths": [
+     "siga-base/src/main/java/br/gov/jfrj/siga/base/util/Texto.java"
+    ],
+    "immutable_paths": [
+     "atlas-accept/**",
+     "siga-base/src/test/**"
+    ]
+   },
+   "statement_file": "statements/it-c1f04c0d36.txt",
+   "patch_file": "patches/it-c1f04c0d36.patch",
+   "acceptance": {
+    "command": [
+     "bash",
+     "atlas-accept/run-pilot3.sh",
+     "SIGA-REAL-20"
+    ],
+    "applied": true,
+    "exit_code": 1,
+    "output_file": null,
+    "output_reason": "o avaliador reexecuta o comando na base limpa; a saida do runner nao entra no bundle porque pode citar artefatos do braco"
+   },
+   "mechanical": {
+    "verdict": "rejeitado",
+    "rejected_items": [
+     "M2"
+    ]
+   }
+  }
+ ],
+ "soft_leaks": []
+}

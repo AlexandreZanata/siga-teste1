@@ -1,0 +1,60 @@
+{
+ "schema": "atlas-eval-report/1",
+ "rubric": "ATLAS-RUBRIC/1",
+ "bundle_sha256": "sha256:ca264e6e13e82f33fe29b4e9e2fd3ed4d1857f0a6f368019556862ee88b0c747",
+ "condicoes": {
+  "BASE": {
+   "tentativas": 3,
+   "aceitos": 1,
+   "success_rate_por_tentativa": 0.3333,
+   "tarefas": 3,
+   "tarefas_com_aceite": 1,
+   "success_rate_por_tarefa": 0.3333,
+   "estados": {
+    "aceito": 1,
+    "rejeitado": 2
+   },
+   "cost_per_success": null,
+   "cost_per_success_reason": "custo faturado ausente em 3 de 3 tentativas (P2 pendente): falta de custo bloqueia a conclusao, nao vira zero"
+  }
+ },
+ "unidade_de_inferencia": "tarefa; tentativas da mesma tarefa nao sao tarefas independentes (pre-registro §1.2)",
+ "blinding": {
+  "guesses": 0,
+  "correct": 0,
+  "items_with_suspicion": 0,
+  "base_rate": 1.0,
+  "note": "acuracia do palpite de condicao mede a qualidade do cegamento; embaralhar IDs nao e resultado (plano §6, R5)"
+ },
+ "identidade_textual": {
+  "aceitos_que_diferem_da_referencia": 0,
+  "respostas": 0,
+  "por_condicao": {
+   "BASE": {
+    "respostas": 0,
+    "aceitos": 0,
+    "aceitos_que_diferem_da_referencia": 0
+   }
+  },
+  "note": "o protocolo §3.5 proibe exigir identidade ao patch de referencia; este quadro existe para mostrar que nao foi exigida"
+ },
+ "nao_contam_como_sucesso": {
+  "it-6af3f45ac0": {
+   "status": "mecanica_reprovada",
+   "state": "rejeitado",
+   "items": [
+    "M1",
+    "M2",
+    "M3"
+   ]
+  },
+  "it-c1f04c0d36": {
+   "status": "mecanica_reprovada",
+   "state": "rejeitado",
+   "items": [
+    "M2"
+   ]
+  }
+ },
+ "aviso": "infraestrutura de avaliacao. Sem modelo real, sem patch de modelo e sem rubrica aplicada por humano, nada aqui e conclusao cientifica."
+}

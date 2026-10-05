@@ -1,0 +1,27 @@
+diff --git a/siga-base/src/main/java/br/gov/jfrj/siga/base/AcaoVO.java b/siga-base/src/main/java/br/gov/jfrj/siga/base/AcaoVO.java
+index 1b238eb7d..263fdfd63 100644
+--- a/siga-base/src/main/java/br/gov/jfrj/siga/base/AcaoVO.java
++++ b/siga-base/src/main/java/br/gov/jfrj/siga/base/AcaoVO.java
+@@ -161,15 +161,14 @@ public class AcaoVO {
+ 		}
+ 		String resultUrl = "";
+ 		if (this.params != null) {
+-			String valueOfParameterToAdd;
+-			Map<String, String> parameters = this.params;
+-			Set<String> parametersNames = this.params.keySet();
+-			for (String nameOfParameterToAdd : parametersNames) {
+-				valueOfParameterToAdd = parameters.get(nameOfParameterToAdd);
+-				resultUrl = (nameOfParameterToAdd + "=" + valueOfParameterToAdd + "&").concat(resultUrl);
++			StringBuilder query = new StringBuilder();
++			for (Map.Entry<String, String> parameter : this.params.entrySet()) {
++				if (query.length() > 0)
++					query.append("&");
++				query.append(parameter.getKey()).append("=").append(parameter.getValue());
+ 			}
+-			if (!parametersNames.isEmpty())
+-				resultUrl = ("?").concat(resultUrl);
++			if (query.length() > 0)
++				resultUrl = "?" + query.toString();
+ 		}
+ 		resultUrl = ((this.nameSpace != null ? this.nameSpace + "/" : "") + this.acao).concat(resultUrl);
+ 		return resultUrl;

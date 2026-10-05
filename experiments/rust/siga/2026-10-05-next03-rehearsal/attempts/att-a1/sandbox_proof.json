@@ -1,0 +1,27 @@
+{
+ "schema": "atlas-sandbox-proof/1",
+ "denied": [
+  {
+   "path": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-a03-custody",
+   "visible": false,
+   "how": "ausente"
+  },
+  {
+   "path": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/research",
+   "visible": false,
+   "how": "ausente"
+  },
+  {
+   "path": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/experiments/rust/siga/2026-10-05-next03-rehearsal/attempts",
+   "visible": false,
+   "how": "ausente"
+  },
+  {
+   "path": "/tmp",
+   "visible": false,
+   "how": "tmpfs vazio"
+  }
+ ],
+ "env_leaked": [],
+ "ok": true
+}

@@ -1,0 +1,20 @@
+{
+ "schema": "atlas-grade/1",
+ "attempt": "att-a3",
+ "task_id": "SIGA-REAL-19",
+ "rule": "publico verde E privado verde => accepted; verde publico sozinho nunca aceita; bloqueio ambiental => indeterminado; resto => rejected",
+ "timeout_s": 600.0,
+ "patch_bytes": 0,
+ "public": {
+  "empty": true,
+  "exit_code": null,
+  "seconds": 0.0,
+  "timeout": false,
+  "error": null
+ },
+ "private": null,
+ "final": "rejected",
+ "failure_class": "patch_fault",
+ "reason": "patch vazio: nada a julgar (M3)",
+ "private_source": "custodia (caminho não publicado)"
+}

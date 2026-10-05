@@ -1,0 +1,1 @@
+AcaoVO.getUrl deve montar a query na ordem de iteracao do mapa de parametros, sem '&' sobrando e com '?' somente quando ha parametros. URL explicita continua devolvida como esta; namespace ausente nao gera prefixo.

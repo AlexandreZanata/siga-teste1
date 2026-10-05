@@ -1,0 +1,2 @@
+sandbox ok: 4 caminhos negados, 3 vars removidas, rede isolada
+exec-a3: nenhuma edicao simulada (patch vazio de proposito)
