@@ -11,7 +11,15 @@ com dataset, tarefas, pré-registro e resultados próprios. Nenhum aceite copiad
 - **Vermelho→verde:** 01 → 6/9→9/9 (`IndexError`/`TypeError` em checksum malformado); 02 → 10/16→16/16 (`ValueError` em mainnet v0/v5); 03 → 4/10→10/10 (`-342` com charset); 04 → 2/5→5/5 (`FileNotFoundError` sem citar `--jobs`). Referências em custódia fora do git (diffs mínimos: guarda de tamanho + `None`; ramos v0/v5; media-type com parâmetros; validação de `--jobs` + `--help` antes de `config.ini`). Aceite medido 0,04–0,76 s por tarefa (`timeout_s: 300`).
 - **Isolamento além de diretório:** custódia fora do repo; pacote sem ouro (harnesses comparam em execução, citam só `--jobs` genérico; sem campo de curadoria, só hashes); `test_command` relativo; `atlas-accept/**` em `immutable_paths`. Nota de família: `btc-authproxy` (03×05) e `btc-runner` (04×08) repetem famílias com requisitos disjuntos — se usadas para política, excluir do piloto de inferência.
 - **Testes:** 5 novos em [`tests/bitcoin/test_btc_smoke_b01.py`](../../tests/bitcoin/test_btc_smoke_b01.py) (schema+balanço, sem campos de curadoria/ouro, aceite existente com dispatches, `allowed_paths` com shas, logs vermelho/verde). Nenhuma tentativa com modelo rodou; P1/P2 continuam pendentes e bloqueiam só a rodada paga.
-- **O que continua aberto:** B02 (coorte P2P/C++; 07 exige build, bloqueado), EXP01 (bloqueada por P1/P2), holdout P4.
+- **O que continua aberto:** B02-parcial acima (07 exige build, bloqueada), EXP01 (bloqueada por P1/P2), holdout P4.
+
+## TASK-B02 parcial executada (2026-10-05) — piloto 05/06/08 validado, 07 bloqueada
+
+- **O que existe agora:** [`pilot.tasks.json`](../../benchmarks/bitcoin/rust/pilot.tasks.json) (`atlas-tasks/2`, 3 validadas 05/06/08; `validate` com `--allow-imbalance` limpo, razão do desbalanceamento em [`CURADORIA_PILOTO.md`](../../research/bitcoin/rust/CURADORIA_PILOTO.md)) + harnesses `accept_b05/b06/b08` e dispatches em [`acceptance/`](../../benchmarks/bitcoin/rust/acceptance/) + evidências em `experiments/bitcoin/rust/2026-10-05-b02-validation/preflight/`.
+- **Vermelho→verde no SHA fixado:** 05 → 6/11→11/11 (filho perdia `ensure_ascii`/`reuse`); 06 → 4/6→6/6 (truncado aceito em silêncio, callback chamado); 08 → 4/7→7/7 (vazia sem erro específico, flag ausente em `--help`). Referências em custódia fora do git (diffs mínimos: propaga 2 opções; `EOFError` em leitura curta; flag + erro estrito). Aceite 0,04–0,33 s (`timeout_s: 300`). `smoke.tasks.json` da B01 intacto (verificado por teste).
+- **07 bloqueada só ela** (lacuna localizada: `ParseByteUnits` sem `case 'B'`, `ByteUnit` sem bytes, teste `util_ParseByteUnits` em `util_tests.cpp:1623`; hashes 3/3 conferem): sem headers de dev (libevent/Boost/zmq), sem sudo, fetch completo do `src/` inviável no enlace; deps parciais extraídas sem root em `/tmp/btcdeps/root` (fora do git), insuficientes sem a árvore. Item NÃO admitido sem prova. Desbloqueio: depends + RAM reservada, configure/build isolado, `test_bitcoin` com caso novo.
+- **Testes:** 5 novos em [`tests/bitcoin/test_btc_pilot_b02.py`](../../tests/bitcoin/test_btc_pilot_b02.py) (schema+parcial explícito, sem ouro, dispatches, logs, smoke intacto). Nenhuma tentativa com modelo; P1/P2/P4 seguem pendentes.
+- **O que continua aberto:** 07/build C++, EXP01 (P1/P2), holdout P4.
 
 ## Checkpoint
 

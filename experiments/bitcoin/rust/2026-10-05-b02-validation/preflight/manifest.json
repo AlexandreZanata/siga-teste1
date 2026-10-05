@@ -1,0 +1,29 @@
+{
+ "run_id": "2026-10-05-b02-validation",
+ "task": "TASK-B02 (parcial)",
+ "base_sha": "9be056a8a72b624dae9623b2f7bded92c2a21c91",
+ "hashes": {
+  "messages.py": "c786651a517a49dd084b1d76072f755d40c5483f5be53b7322ca4f3403548b26",
+  "p2p.py": "7292865dedff7a0ea78675d6ea85e9135e81fb59ea9b7247b1d6bf42b48aa9f3",
+  "strencodings.cpp": "e7b53609dbb5d0d025a77ae7db749c084e0c75d798cba6f4456aea0be026804f",
+  "strencodings.h": "05a92016f6407e7e51586ee7643a72ab98593abb88ed70b45ef702f698980a65",
+  "util_tests.cpp": "7dcc31af27791801c915a8ab4ac9ac052bace098cbeaf6954ec405cfcd0ba01d"
+ },
+ "baseline": {
+  "BTC-REAL-05": "6/11 exit 1",
+  "BTC-REAL-06": "4/6 exit 1",
+  "BTC-REAL-08": "4/7 exit 1"
+ },
+ "reference": {
+  "BTC-REAL-05": "11/11 exit 0",
+  "BTC-REAL-06": "6/6 exit 0",
+  "BTC-REAL-08": "7/7 exit 0"
+ },
+ "accept_times_s": {
+  "BTC-REAL-05": 0.04,
+  "BTC-REAL-06": 0.07,
+  "BTC-REAL-08": 0.33
+ },
+ "validate": "eval.py do core principal (somente leitura): sem flag -> balanced false (1 problema: desbalanceamento vs 4/4/4/4); com --allow-imbalance -> problems []",
+ "blocked_07": "sem headers de dev (libevent/Boost/zmq), sem sudo; fetch completo do src inviavel no enlace; deps parciais extraidas sem root em /tmp/btcdeps/root (fora do git)"
+}

@@ -1,0 +1,7 @@
+FAIL truncated-raises-eoferror: returned b'AB' instead of raising
+PASS valid-cursor-preserved
+PASS empty-string-ok
+PASS valid-string-ok
+FAIL p2p-truncated-no-callback
+PASS p2p-valid-called-once
+2 case(s) FAILED

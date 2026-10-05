@@ -1,0 +1,17 @@
+Error reading message: EOFError('deser_string: truncated payload (declared 100 bytes, got 2)')
+Traceback (most recent call last):
+  File "/tmp/btcp/ws_ref06/test/functional/test_framework/p2p.py", line 373, in _on_data
+    t.deserialize(f)
+  File "/tmp/btcp/ws_ref06/test/functional/test_framework/messages.py", line 1600, in deserialize
+    self.data = deser_string(f)
+                ^^^^^^^^^^^^^^^
+  File "/tmp/btcp/ws_ref06/test/functional/test_framework/messages.py", line 157, in deser_string
+    raise EOFError("deser_string: truncated payload (declared %d bytes, got %d)" % (nit, len(r)))
+EOFError: deser_string: truncated payload (declared 100 bytes, got 2)
+PASS truncated-raises-eoferror
+PASS valid-cursor-preserved
+PASS empty-string-ok
+PASS valid-string-ok
+PASS p2p-truncated-no-callback
+PASS p2p-valid-called-once
+all cases passed

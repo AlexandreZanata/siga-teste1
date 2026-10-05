@@ -1,0 +1,12 @@
+FAIL attr-ensure-ascii
+FAIL attr-reuse-conn
+PASS attr-shares-connection
+PASS attr-timeout
+FAIL div-ensure-ascii
+FAIL div-reuse-conn
+PASS div-shares-connection
+FAIL child-frozen-after-parent-change
+PASS default-ensure-ascii
+PASS default-reuse-conn
+PASS child-usable
+5 case(s) FAILED

@@ -1,0 +1,51 @@
+{
+ "_note": "Conjunto piloto Bitcoin parcial (TASK-B02, 2026-10-05). 3 tarefas validadas (05/06/08); BTC-REAL-07 (C++) bloqueada por ambiente (ver CURADORIA_PILOTO.md) e fora deste conjunto — nao admitida sem prova vermelho/verde. Validador: eval.py do core principal, somente leitura.",
+ "schema": "atlas-tasks/2",
+ "platform": "bitcoin",
+ "sealed": false,
+ "base_sha": "9be056a8a72b624dae9623b2f7bded92c2a21c91",
+ "tasks": [
+  {
+   "id": "BTC-REAL-05",
+   "split": "piloto",
+   "category": "bug_local",
+   "statement": "Proxies RPC derivados por atributo/metodo ou operador / devem preservar ensure_ascii e reuse_http_connections configurados no proxy pai. Compartilhamento de conexao e timeout devem conservar a semantica existente. Alteracoes posteriores no pai nao precisam mudar filhos ja criados.",
+   "base_sha": "9be056a8a72b624dae9623b2f7bded92c2a21c91",
+   "test_command": ["bash", "atlas-accept/run.sh", "BTC-REAL-05"],
+   "timeout_s": 300,
+   "allowed_paths": ["test/functional/test_framework/authproxy.py"],
+   "immutable_paths": ["atlas-accept/**"],
+   "origin": "Curadoria dev B02 (aceite + referencia validada) em 2026-10-05: falha reproduzida na base (filho volta a ensure_ascii=True/reuse=True), 11 casos com conexao fake em-processo, timeout/conexao preservados.",
+   "contamination_risk": "medio",
+   "contamination_note": "Codigo upstream publico; requisito dev publicado nesta curadoria. Nao usar este item nem variantes da familia btc-authproxy como holdout (familia repetida no smoke BTC-REAL-03: se usada para politica, excluir do piloto de inferencia). Nao pesquisar solucao upstream durante as tentativas."
+  },
+  {
+   "id": "BTC-REAL-06",
+   "split": "piloto",
+   "category": "entre_arquivos",
+   "statement": "A desserializacao de strings no framework deve rejeitar EOF antes do comprimento declarado com EOFError. Na cadeia que recebe mensagens P2P, uma mensagem com esse payload nao pode chegar ao callback como se estivesse completa. Preservar strings vazias, validas e a leitura subsequente no stream.",
+   "base_sha": "9be056a8a72b624dae9623b2f7bded92c2a21c91",
+   "test_command": ["bash", "atlas-accept/run.sh", "BTC-REAL-06"],
+   "timeout_s": 300,
+   "allowed_paths": ["test/functional/test_framework/messages.py"],
+   "immutable_paths": ["atlas-accept/**"],
+   "origin": "Curadoria dev B02 (aceite + referencia validada) em 2026-10-05: falha reproduzida na base (bytes curtos aceitos em silencio; callback chamado com payload truncado), 6 casos com frame v1 sintetico (filterload) percorrendo desserializacao e _on_data.",
+   "contamination_risk": "medio",
+   "contamination_note": "Codigo upstream publico; requisito dev publicado nesta curadoria. Nao usar este item nem variantes da familia btc-p2p-deserialization como holdout. Nao pesquisar solucao upstream durante as tentativas."
+  },
+  {
+   "id": "BTC-REAL-08",
+   "split": "piloto",
+   "category": "configuracao_interface",
+   "statement": "Adicionar --fail-if-empty ao test_runner funcional. Com essa opcao, uma selecao vazia apos filtros/exclusoes termina com erro e mensagem clara sem criar cache de testes ou iniciar daemon. Sem a opcao, preservar o comportamento atual. Atualizar ajuda do runner.",
+   "base_sha": "9be056a8a72b624dae9623b2f7bded92c2a21c91",
+   "test_command": ["bash", "atlas-accept/run.sh", "BTC-REAL-08"],
+   "timeout_s": 300,
+   "allowed_paths": ["test/functional/test_runner.py"],
+   "immutable_paths": ["atlas-accept/**"],
+   "origin": "Curadoria dev B02 (aceite + referencia validada) em 2026-10-05: falha reproduzida na base (selecao vazia sem erro especifico; flag ausente em --help), 7 casos em subprocessos com config.ini de fixture (criada e removida pelo harness), sem daemon.",
+   "contamination_risk": "medio",
+   "contamination_note": "Codigo upstream publico; requisito dev publicado nesta curadoria. Nao usar este item nem variantes da familia btc-runner como holdout (familia repetida no smoke BTC-REAL-04: se usada para politica, excluir do piloto de inferencia). Nao pesquisar solucao upstream durante as tentativas."
+  }
+ ]
+}

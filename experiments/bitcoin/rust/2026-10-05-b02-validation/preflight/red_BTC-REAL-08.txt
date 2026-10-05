@@ -1,0 +1,8 @@
+FAIL empty-with-flag-errors exit=1 out='st_runner.py with no arguments to run all tests\nTemporary test directory at /tmp/atlas-b08-tmp-xldextg2/atlas-b08-case-btwb1kk0/test_runner_₿_🏃_20261005_072806\n'
+PASS empty-with-flag-no-cache
+PASS empty-without-flag-legacy
+FAIL filter-empty-with-flag-errors exit=1 out='st_runner.py with no arguments to run all tests\nTemporary test directory at /tmp/atlas-b08-tmp-xldextg2/atlas-b08-case-hoo8rzf4/test_runner_₿_🏃_20261005_072806\n'
+PASS nonempty-passes-gate
+FAIL help-advertises-flag exit=0 cites=False
+PASS fixture-config-removed
+3 case(s) FAILED
