@@ -1,0 +1,7 @@
+$ BTC_WORKSPACE=/tmp/btcp3/ws_base bash atlas-accept/run.sh BTC-REAL-14
+FAIL long-type-rejected
+PASS twelve-type-preserved
+PASS empty-type-preserved
+PASS ping-roundtrip-callback
+1 case(s) FAILED
+exit=1

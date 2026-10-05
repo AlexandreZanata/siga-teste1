@@ -1,0 +1,7 @@
+$ BTC_WORKSPACE=/tmp/btcp3/ws_ref16 bash atlas-accept/run.sh BTC-REAL-16
+PASS missing-prefix-usage-error
+PASS missing-prefix-no-dirs
+PASS valid-prefix-passes-validation
+PASS fixture-config-removed
+all cases passed
+exit=0

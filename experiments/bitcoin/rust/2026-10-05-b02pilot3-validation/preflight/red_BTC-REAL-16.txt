@@ -1,0 +1,7 @@
+$ BTC_WORKSPACE=/tmp/btcp3/ws_base bash atlas-accept/run.sh BTC-REAL-16
+FAIL missing-prefix-usage-error exit=1 out='py, or run test_runner.py with no arguments to run all tests\nTemporary test directory at /tmp/atlas-b16-20yopt4s/no-such-prefix/test_runner_₿_🏃_20261005_081622\n'
+FAIL missing-prefix-no-dirs fixture modified: ['no-such-prefix']
+PASS valid-prefix-passes-validation
+PASS fixture-config-removed
+2 case(s) FAILED
+exit=1

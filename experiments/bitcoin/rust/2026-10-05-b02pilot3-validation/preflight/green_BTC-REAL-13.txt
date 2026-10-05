@@ -1,0 +1,9 @@
+$ BTC_WORKSPACE=/tmp/btcp3/ws_ref13 bash atlas-accept/run.sh BTC-REAL-13
+PASS k-zero-rejected
+PASS k-above-n-rejected
+PASS empty-keys-rejected
+PASS n-of-n-default
+PASS one-of-two
+PASS two-of-three
+all cases passed
+exit=0

@@ -1,0 +1,9 @@
+$ BTC_WORKSPACE=/tmp/btcp3/ws_base bash atlas-accept/run.sh BTC-REAL-13
+FAIL k-zero-rejected: built '00210000000000000000000000000000000000000000000000000000000000000000002101010101010101010101010101010101010101010101010101010101010101010152ae'
+FAIL k-above-n-rejected: wrong exception AssertionError
+FAIL empty-keys-rejected: built '0000ae'
+PASS n-of-n-default
+PASS one-of-two
+PASS two-of-three
+3 case(s) FAILED
+exit=1

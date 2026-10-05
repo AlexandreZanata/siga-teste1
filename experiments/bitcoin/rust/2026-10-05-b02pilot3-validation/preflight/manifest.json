@@ -1,0 +1,26 @@
+{
+ "run_id": "2026-10-05-b02pilot3-validation",
+ "task": "EXP02-final lote 13-16",
+ "base_sha": "9be056a8a72b624dae9623b2f7bded92c2a21c91",
+ "prospeccao": "arestas no framework ja extraido (/tmp/btcp3, sem fetch novo); descartes: ser_compact(-1) (OverflowError explicito), b58 vazio, segwit None, batch erro/500, CScriptNum, ver256, etc. Admitidos so os 4 com defeito reproduzido",
+ "baseline": {
+  "BTC-REAL-13": "3/6 exit 1",
+  "BTC-REAL-14": "3/4 exit 1",
+  "BTC-REAL-15": "4/7 exit 1",
+  "BTC-REAL-16": "2/4 exit 1"
+ },
+ "reference": {
+  "BTC-REAL-13": "6/6 exit 0",
+  "BTC-REAL-14": "4/4 exit 0",
+  "BTC-REAL-15": "7/7 exit 0",
+  "BTC-REAL-16": "4/4 exit 0"
+ },
+ "accept_times_s": {
+  "BTC-REAL-13": 0.07,
+  "BTC-REAL-14": 0.08,
+  "BTC-REAL-15": 0.05,
+  "BTC-REAL-16": 0.22
+ },
+ "validate": "eval.py do core principal (somente leitura): 4 tarefas, 1/1/1/1, problems []",
+ "trilha": "16 validadas (smoke 01-04 + piloto 05-08 + lote2 09-12 + lote-final 13-16); EXP02 completa"
+}

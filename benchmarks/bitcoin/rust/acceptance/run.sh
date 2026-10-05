@@ -74,6 +74,19 @@ case "$TASK" in
   BTC-REAL-12)
     [ -f "$WORK/test/functional/test_runner.py" ] || { echo "ATLAS-ENV-BLOCK: fonte ausente no workspace: test/functional/test_runner.py" >&2; exit 3; }
     HARNESS="accept_b12" ;;
+  BTC-REAL-13)
+    [ -f "$WORK/test/functional/test_framework/script_util.py" ] || { echo "ATLAS-ENV-BLOCK: fonte ausente no workspace: test/functional/test_framework/script_util.py" >&2; exit 3; }
+    HARNESS="accept_b13" ;;
+  BTC-REAL-14)
+    [ -f "$WORK/test/functional/test_framework/p2p.py" ] || { echo "ATLAS-ENV-BLOCK: fonte ausente no workspace: test/functional/test_framework/p2p.py" >&2; exit 3; }
+    [ -f "$WORK/test/functional/test_framework/messages.py" ] || { echo "ATLAS-ENV-BLOCK: fonte ausente no workspace: test/functional/test_framework/messages.py" >&2; exit 3; }
+    HARNESS="accept_b14" ;;
+  BTC-REAL-15)
+    [ -f "$WORK/test/functional/test_framework/util.py" ] || { echo "ATLAS-ENV-BLOCK: fonte ausente no workspace: test/functional/test_framework/util.py" >&2; exit 3; }
+    HARNESS="accept_b15" ;;
+  BTC-REAL-16)
+    [ -f "$WORK/test/functional/test_runner.py" ] || { echo "ATLAS-ENV-BLOCK: fonte ausente no workspace: test/functional/test_runner.py" >&2; exit 3; }
+    HARNESS="accept_b16" ;;
   *)
     echo "tarefa desconhecida neste conjunto: $TASK" >&2
     exit 2 ;;

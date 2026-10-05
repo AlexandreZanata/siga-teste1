@@ -1,0 +1,10 @@
+$ BTC_WORKSPACE=/tmp/btcp3/ws_ref15 bash atlas-accept/run.sh BTC-REAL-15
+PASS bogus-mode-rejected
+PASS none-mode-rejected
+PASS int-mode-rejected
+PASS round-down
+PASS round-up
+PASS round-half-even
+PASS all-modes-accepted
+all cases passed
+exit=0

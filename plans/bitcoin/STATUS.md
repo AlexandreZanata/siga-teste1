@@ -36,6 +36,14 @@ com dataset, tarefas, pré-registro e resultados próprios. Nenhum aceite copiad
 - **Testes:** 5 novos em [`tests/bitcoin/test_btc_pilot2_b02.py`](../../tests/bitcoin/test_btc_pilot2_b02.py) (schema+balanço, sem ouro, dispatches, logs, conjuntos anteriores intactos). Nenhuma tentativa com modelo; P1/P2/P4 seguem pendentes.
 - **O que continua aberto:** expansão para 16 (EXP02 completa exige +4 além das 12), EXP01 (P1/P2), holdout P4. Build C++ completo segue pendente.
 
+## EXP02 completa, lote final (2026-10-05) — piloto 13–16 validado, trilha soma 16
+
+- **O que existe agora:** [`pilot3.tasks.json`](../../benchmarks/bitcoin/rust/pilot3.tasks.json) (`atlas-tasks/2`, 4 piloto, balanço 1/1/1/1, `eval.py validate` limpo) + harnesses `accept_b13..b16` e dispatches em [`acceptance/`](../../benchmarks/bitcoin/rust/acceptance/) + evidências em `experiments/bitcoin/rust/2026-10-05-b02pilot3-validation/preflight/`. Curadoria (com descartes da prospecção) em [`CURADORIA_PILOTO3.md`](../../research/bitcoin/rust/CURADORIA_PILOTO3.md).
+- **Vermelho→verde no SHA fixado:** 13 → 3/6→6/6 (k=0 monta degenerado, k>n `AssertionError`, `[]` monta `0000ae`); 14 → 3/4→4/4 (tipo 13B truncado silencioso); 15 → 4/7→7/7 (`None` silencioso, `BOGUS`/número `TypeError`); 16 → 2/4→4/4 (prefixo inexistente cria datadir com exit 1). Referências em custódia fora do git (diffs mínimos: `ValueError` 1<=k<=n; `ValueError` len>12; `ValueError` modo + import parentetizado; `parser.error` tmpdirprefix). Aceite 0,05–0,22 s. Workspace `/tmp/btcp3` com layout `base/test_framework` + `base/test_runner.py` irmãos (`sys.path[0]` resolve symlinks).
+- **Somado aos lotes anteriores, a trilha tem 16 tarefas validadas** (smoke 01–04 + piloto 05–08 + lote2 09–12 + lote-final 13–16; EXP02 completa). Famílias repetidas com requisitos disjuntos (`btc-p2p-deserialization` 06×10×14, `btc-runner` 04×08×12×16) e novas (`btc-script-multisig` 13, `btc-amount-rounding` 15), com regra de exclusão registrada.
+- **Testes:** 5 novos em [`tests/bitcoin/test_btc_pilot3_b02.py`](../../tests/bitcoin/test_btc_pilot3_b02.py) (schema+balanço, sem ouro, dispatches, logs, conjuntos anteriores intactos). Nenhuma tentativa com modelo; P1/P2/P4 seguem pendentes.
+- **O que continua aberto:** EXP01 (P1/P2), holdout P4. Build C++ completo segue pendente.
+
 ## Checkpoint
 
 - Etapa atual: **build verificado como BLOQUEADO (veredito registrado)** — libevent/Boost/ZMQ
