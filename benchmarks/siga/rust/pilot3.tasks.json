@@ -1,0 +1,102 @@
+{
+  "_note": "Terceiro lote piloto SIGA (NEXT-02, 2026-10-05). 4 tarefas piloto, 1 por categoria, balanco 1/1/1/1. Aceites no runner run-pilot3.sh (run.sh/run-pilot.sh/run-pilot2.sh congelados). Sem gabarito, sem teste privado.",
+  "schema": "atlas-tasks/2",
+  "platform": "siga",
+  "sealed": false,
+  "base_sha": "e3be22828f787cbe71b339aecb7a7bf569099803",
+  "tasks": [
+    {
+      "id": "SIGA-REAL-17",
+      "split": "piloto",
+      "category": "bug_local",
+      "statement": "AcaoVO.getUrl deve montar a query na ordem de iteracao do mapa de parametros, sem '&' sobrando e com '?' somente quando ha parametros. URL explicita continua devolvida como esta; namespace ausente nao gera prefixo.",
+      "base_sha": "e3be22828f787cbe71b339aecb7a7bf569099803",
+      "test_command": [
+        "bash",
+        "atlas-accept/run-pilot3.sh",
+        "SIGA-REAL-17"
+      ],
+      "timeout_s": 600,
+      "allowed_paths": [
+        "siga-base/src/main/java/br/gov/jfrj/siga/base/AcaoVO.java"
+      ],
+      "immutable_paths": [
+        "atlas-accept/**",
+        "siga-base/src/test/**"
+      ],
+      "origin": "Curadoria dev NEXT-02 em 2026-10-05: defeito reproduzido na base (ordem invertida e '&' sobrando: 3/8), 8 casos independentes, URL explicita e mapa vazio/nulo preservados.",
+      "contamination_risk": "medio",
+      "contamination_note": "Codigo upstream publico; requisito dev publicado nesta curadoria. Nao usar este item nem variantes da familia siga-acao como holdout. Nao pesquisar solucao upstream durante as tentativas."
+    },
+    {
+      "id": "SIGA-REAL-18",
+      "split": "piloto",
+      "category": "entre_arquivos",
+      "statement": "VO.getAcoesOrdenadasPorNome deve devolver permitidas primeiro e ordem alfabetica ignorando '_' (via AcaoVO.ordena), sem reordenar a lista interna do VO. Chamadas repetidas devolvem o mesmo resultado; getAcoes conserva a insercao.",
+      "base_sha": "e3be22828f787cbe71b339aecb7a7bf569099803",
+      "test_command": [
+        "bash",
+        "atlas-accept/run-pilot3.sh",
+        "SIGA-REAL-18"
+      ],
+      "timeout_s": 600,
+      "allowed_paths": [
+        "siga-base/src/main/java/br/gov/jfrj/siga/base/VO.java",
+        "siga-base/src/main/java/br/gov/jfrj/siga/base/AcaoVO.java"
+      ],
+      "immutable_paths": [
+        "atlas-accept/**",
+        "siga-base/src/test/**"
+      ],
+      "origin": "Curadoria dev NEXT-02 em 2026-10-05: efeito colateral reproduzido na base (getter reordena a lista interna: 6/9), 9 casos independentes pela cadeia VO->AcaoVO, ordenacao e estabilidade preservadas.",
+      "contamination_risk": "medio",
+      "contamination_note": "Codigo upstream publico; requisito dev publicado nesta curadoria. Nao usar este item nem variantes da familia siga-acao como holdout. Nao pesquisar solucao upstream durante as tentativas."
+    },
+    {
+      "id": "SIGA-REAL-19",
+      "split": "piloto",
+      "category": "testes_comportamento_de_api",
+      "statement": "Texto.stringsSeparadarComVirgulaEE deve renderizar 'a, b e c' (', ' entre itens, ' e ' antes do ultimo) sem modificar a lista recebida. Lista vazia continua null.",
+      "base_sha": "e3be22828f787cbe71b339aecb7a7bf569099803",
+      "test_command": [
+        "bash",
+        "atlas-accept/run-pilot3.sh",
+        "SIGA-REAL-19"
+      ],
+      "timeout_s": 600,
+      "allowed_paths": [
+        "siga-base/src/main/java/br/gov/jfrj/siga/base/util/Texto.java"
+      ],
+      "immutable_paths": [
+        "atlas-accept/**",
+        "siga-base/src/test/**"
+      ],
+      "origin": "Curadoria dev NEXT-02 em 2026-10-05: lista de entrada esvaziada reproduzida na base (6/10), 10 casos independentes, mesma renderizacao antes e depois.",
+      "contamination_risk": "medio",
+      "contamination_note": "Codigo upstream publico; requisito dev publicado nesta curadoria. Nao usar este item nem variantes da familia siga-lista-virgula como holdout. Nao pesquisar solucao upstream durante as tentativas."
+    },
+    {
+      "id": "SIGA-REAL-20",
+      "split": "piloto",
+      "category": "configuracao_interface",
+      "statement": "Texto.removeAcentoHTML deve trocar toda entidade acentuada por ASCII puro, incluindo '&agrave;' em 'a'. Entidades fora da tabela passam intactas; null continua null.",
+      "base_sha": "e3be22828f787cbe71b339aecb7a7bf569099803",
+      "test_command": [
+        "bash",
+        "atlas-accept/run-pilot3.sh",
+        "SIGA-REAL-20"
+      ],
+      "timeout_s": 600,
+      "allowed_paths": [
+        "siga-base/src/main/java/br/gov/jfrj/siga/base/util/Texto.java"
+      ],
+      "immutable_paths": [
+        "atlas-accept/**",
+        "siga-base/src/test/**"
+      ],
+      "origin": "Curadoria dev NEXT-02 em 2026-10-05: acento restante reproduzido na base ('&agrave;' virava 'à': 12/14), 14 casos independentes, onze irmas e passthrough preservados.",
+      "contamination_risk": "medio",
+      "contamination_note": "Codigo upstream publico; requisito dev publicado nesta curadoria. Nao usar este item nem variantes da familia siga-acentos-html como holdout. Nao pesquisar solucao upstream durante as tentativas."
+    }
+  ]
+}

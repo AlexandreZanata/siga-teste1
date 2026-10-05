@@ -1,0 +1,11 @@
+Note: /tmp/next02-red/siga-base/src/main/java/br/gov/jfrj/siga/base/util/Utils.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+FAIL treemap-order expected=<ns/act?a=1&b=2> actual=<ns/act?b=2&a=1&>
+FAIL insertion-order expected=<ns/act?z=1&a=2&m=3> actual=<ns/act?m=3&a=2&z=1&>
+FAIL single expected=<ns/act?so=um> actual=<ns/act?so=um&>
+FAIL empty-value expected=<ns/act?k=> actual=<ns/act?k=&>
+PASS no-params
+PASS null-params
+FAIL null-namespace expected=<act?so=um> actual=<act?so=um&>
+PASS explicit-url
+AtlasAccept17: 3/8 passed

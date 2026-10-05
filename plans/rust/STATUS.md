@@ -23,6 +23,14 @@ Próxima ação: A começa NEXT-01 e NEXT-02/SIGA; B começa NEXT-02/Bitcoin ap�
 - **Checkpoint de core para B:** [`benchmarks/rust/next01-checkpoint.json`](../../benchmarks/rust/next01-checkpoint.json). Nenhuma tentativa com modelo rodou; P1/P2 continuam pendentes.
 - **O que continua aberto:** NEXT-02 (conjuntos piloto separados), NEXT-03/04 (ensaio completo e executor real com modelo/teto).
 
+## NEXT-02/SIGA executada (2026-10-05) — piloto de 16 separado do smoke
+
+- **O que existe agora:** [`piloto16.tasks.json`](../../benchmarks/siga/rust/piloto16.tasks.json) (16 exclusivamente piloto 05–20, 4/4/4/4, `sealed:true`) = 12 do inventário antigo (cópia fiel) + [`pilot3.tasks.json`](../../benchmarks/siga/rust/pilot3.tasks.json) (17–20, 1/categoria). Smoke (01–04) em arquivo próprio, IDs sem sobreposição. Aceites novos `AtlasAccept17–20` + `run-pilot3.sh`; runners antigos congelados. Selo em `experiments/rust/siga/2026-10-05-next02-pilot-seal/seal.json` + revisão em [`REVISAO_SEAL_PILOTO16.md`](../../research/siga/rust/REVISAO_SEAL_PILOTO16.md). Inventário selado antigo preservado como histórico.
+- **Lote 17–20 (vermelho→verde no SHA fixado):** 17 `AcaoVO.getUrl` canônica 3/8→8/8; 18 ordenação VO→AcaoVO sem mutar a lista 6/9→9/9; 19 lista por extenso sem consumir a entrada 6/10→10/10; 20 `&agrave;`→`a` 12/14→14/14; privados 6/11→11/11. Curadoria em [`CURADORIA_PILOTO3.md`](../../research/siga/rust/CURADORIA_PILOTO3.md) (famílias novas sem colisão com smoke; regra de exclusão registrada antes de resultados de modelos; escopo 12 isoladas + 4 integrações, 100% Java). Aceite 0,7–1,1 s/tarefa; custo financeiro não computável sem P2.
+- **Testes:** 6 novos em [`tests/test_siga_piloto16_next02.py`](../../tests/test_siga_piloto16_next02.py) (validação por split, sobreposição vazia, fidelidade ao inventário + lote, selo/checkpoint travados, manifestos com logs, pacote sem ouro).
+- **Checkpoint de core para B:** [`pilot3-checkpoint.json`](../../benchmarks/siga/rust/pilot3-checkpoint.json). Nenhuma tentativa com modelo rodou.
+- **O que continua aberto:** NEXT-02/Bitcoin (trilha B), NEXT-03/04 (ensaio completo e executor real com modelo/teto).
+
 ## TASK-EXP02 selada (2026-10-02) — piloto SIGA de 16 congelado
 
 - **O que existe agora:** [`pilot16.tasks.json`](../../benchmarks/siga/rust/pilot16.tasks.json) (`atlas-tasks/2`, 16 tarefas, `sealed:true`, `sha256:6b9ea882…57d1443c`, `eval.py validate` limpo 4/4/4/4) gerado por união fiel dos três lotes + [`pilot16-checkpoint.json`](../../benchmarks/siga/rust/pilot16-checkpoint.json) para B + selo travado em `experiments/rust/siga/2026-10-02-exp02-seal/seal.json` + revisão em [`REVISAO_SEAL16.md`](../../research/siga/rust/REVISAO_SEAL16.md).

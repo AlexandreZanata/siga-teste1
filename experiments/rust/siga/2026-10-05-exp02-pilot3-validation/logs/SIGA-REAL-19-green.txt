@@ -1,0 +1,11 @@
+PASS render-trio
+PASS intact-trio
+PASS render-single
+PASS intact-single
+PASS render-pair
+PASS intact-pair
+PASS render-empty
+PASS intact-empty
+PASS render-dup
+PASS intact-dup
+AtlasAccept19: 10/10 passed

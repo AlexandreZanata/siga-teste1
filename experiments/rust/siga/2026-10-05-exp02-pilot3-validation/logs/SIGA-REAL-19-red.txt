@@ -1,0 +1,11 @@
+PASS render-trio
+FAIL intact-trio expected=<[a, b, c]> actual=<[]>
+PASS render-single
+FAIL intact-single expected=<[so]> actual=<[]>
+PASS render-pair
+FAIL intact-pair expected=<[a, b]> actual=<[]>
+PASS render-empty
+PASS intact-empty
+PASS render-dup
+FAIL intact-dup expected=<[x, x]> actual=<[]>
+AtlasAccept19: 6/10 passed

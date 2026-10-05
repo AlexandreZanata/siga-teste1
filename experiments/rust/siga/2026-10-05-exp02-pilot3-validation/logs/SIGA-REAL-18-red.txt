@@ -1,0 +1,12 @@
+Note: /tmp/next02-red/siga-base/src/main/java/br/gov/jfrj/siga/base/util/Utils.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+PASS ordered-names
+FAIL internal-intact expected=<[zebra, abacaxi, morango]> actual=<[abacaxi, zebra, morango]>
+PASS stable-repeat
+FAIL internal-intact-2 expected=<[zebra, abacaxi, morango]> actual=<[abacaxi, zebra, morango]>
+PASS underscore-tie
+PASS underscore-internal
+PASS denied-ordered
+FAIL denied-internal expected=<[zulu, alfa]> actual=<[alfa, zulu]>
+PASS empty
+AtlasAccept18: 6/9 passed

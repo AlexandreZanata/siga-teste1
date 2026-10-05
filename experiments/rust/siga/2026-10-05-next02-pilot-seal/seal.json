@@ -1,0 +1,150 @@
+{
+  "schema": "atlas-pilot-seal/1",
+  "date": "2026-10-05",
+  "base_sha": "e3be22828f787cbe71b339aecb7a7bf569099803",
+  "set": {
+    "file": "benchmarks/siga/rust/piloto16.tasks.json",
+    "sha256": "919b83c1b0845bc2e30468ba2a20bfbd275490d51137e7bbfb71aff70b7c1b70",
+    "sealed": true,
+    "tasks": 16,
+    "categories": {
+      "bug_local": 4,
+      "entre_arquivos": 4,
+      "testes_comportamento_de_api": 4,
+      "configuracao_interface": 4
+    },
+    "balanced": true
+  },
+  "members": {
+    "benchmarks/siga/rust/pilot.tasks.json": {
+      "sha256": "fae1032d644071c1cd9ff863ddb3f93ea2b33cc00aa7575fa6a50142f58ab850",
+      "tasks": [
+        "SIGA-REAL-05",
+        "SIGA-REAL-06",
+        "SIGA-REAL-07",
+        "SIGA-REAL-08"
+      ]
+    },
+    "benchmarks/siga/rust/pilot2.tasks.json": {
+      "sha256": "20bc851f15642e1855de300cd30150f50fdb53f2a6148e6778131287cab9dce5",
+      "tasks": [
+        "SIGA-REAL-09",
+        "SIGA-REAL-10",
+        "SIGA-REAL-11",
+        "SIGA-REAL-12",
+        "SIGA-REAL-13",
+        "SIGA-REAL-14",
+        "SIGA-REAL-15",
+        "SIGA-REAL-16"
+      ]
+    },
+    "benchmarks/siga/rust/pilot3.tasks.json": {
+      "sha256": "a45cc7164f03c36b92c4e30eb05c612c3c7ecfa2b8f41040f214ee13e2275ed2",
+      "tasks": [
+        "SIGA-REAL-17",
+        "SIGA-REAL-18",
+        "SIGA-REAL-19",
+        "SIGA-REAL-20"
+      ]
+    }
+  },
+  "smoke_separate": {
+    "file": "benchmarks/siga/rust/smoke.tasks.json",
+    "sha256": "ffb9dd8bcf9899d94cd1cc267cc1426908d4ec48efe7437b775a6ad931f5e820",
+    "tasks": [
+      "SIGA-REAL-01",
+      "SIGA-REAL-02",
+      "SIGA-REAL-03",
+      "SIGA-REAL-04"
+    ],
+    "overlap_with_pilot": [],
+    "note": "Smoke separado do piloto (NEXT-02): IDs sem sobreposicao; o inventario selado antigo pilot16.tasks.json (4 smoke + 12 piloto) fica preservado como historico."
+  },
+  "acceptance": {
+    "run_sh_sha256": "118d7c5128c3af1d3a885dae91e32627aaae6cd0ba32b1df0e160f36c94e7319",
+    "run_pilot_sh_sha256": "ba4c1b757bd6165a8b8d4aa2a43b720962a66319ab776f1c26cb8f6f6b817202",
+    "run_pilot2_sh_sha256": "0b4ad587efc4edc372fed7bac17c963fd07b370f3e59ebf1d25f44c6f6ecf40f",
+    "run_pilot3_sh_sha256": "bf1df7917806175efe742d7ad603e5206b9a7fc8b8f863e91ac4b4223ab9221d",
+    "harnesses_sha256": {
+      "AtlasAccept17": "81f856d1bc50408b77839c482e7cada1a1b68ad3d7468e0730ae4fbcf69ae3f8",
+      "AtlasAccept18": "9699d6eace8b4c3ca91afcda09ea4d3c7623f9e8dc63d262692c049b6e9793fd",
+      "AtlasAccept19": "ab2861e104e535c863fdccbbafbb38cb4a9693695adb8b6aff8476df6fd6fab9",
+      "AtlasAccept20": "c256a11ea3da9f0cb041edee618a644579d2aaeee76d154fcff777363cbe0b12"
+    },
+    "harness_count": 20
+  },
+  "families": {
+    "distinct": 15,
+    "repeated_in_pilot": {
+      "siga-acao": [
+        "SIGA-REAL-17",
+        "SIGA-REAL-18"
+      ]
+    },
+    "smoke_overlap": {
+      "siga-data-localidade": [
+        "SIGA-REAL-02",
+        "SIGA-REAL-07"
+      ],
+      "siga-prop": [
+        "SIGA-REAL-04",
+        "SIGA-REAL-08"
+      ]
+    },
+    "new": {
+      "siga-acao": [
+        "SIGA-REAL-17",
+        "SIGA-REAL-18"
+      ],
+      "siga-lista-virgula": [
+        "SIGA-REAL-19"
+      ],
+      "siga-acentos-html": [
+        "SIGA-REAL-20"
+      ]
+    },
+    "note": "Repeticoes com defeitos e trechos disjuntos. Smoke ainda nao afinou politica (nenhum modelo rodou); se afinar, as familias do smoke saem do piloto de inferencia e buscam-se substitutos — decisao registrada antes de observar resultados de modelos."
+  },
+  "shared_sources": {
+    "siga-base/src/main/java/br/gov/jfrj/siga/base/util/Texto.java": [
+      "SIGA-REAL-16",
+      "SIGA-REAL-19",
+      "SIGA-REAL-20"
+    ],
+    "siga-base/src/main/java/br/gov/jfrj/siga/base/AcaoVO.java": [
+      "SIGA-REAL-17",
+      "SIGA-REAL-18"
+    ],
+    "siga-base/src/main/java/br/gov/jfrj/siga/base/VO.java": [
+      "SIGA-REAL-18"
+    ],
+    "siga-base/src/main/java/br/gov/jfrj/siga/base/util/Utils.java": [
+      "SIGA-REAL-09",
+      "SIGA-REAL-10",
+      "SIGA-REAL-12"
+    ],
+    "siga-base/src/main/java/br/gov/jfrj/siga/base/DateUtils.java": [
+      "SIGA-REAL-11",
+      "SIGA-REAL-13"
+    ],
+    "note": "Defeitos e trechos disjuntos por tarefa; cada tentativa roda em workspace novo com uma so tarefa, sem interferencia entre tarefas."
+  },
+  "scope_note": {
+    "languages": [
+      "java"
+    ],
+    "isolated_utils": 12,
+    "integrations": 4,
+    "note": "12 tarefas de utilitario isolado (javac, sem container) e 4 integracoes entre componentes (06, 11, 12, 18); 100% Java. Conclusoes restritas a esse escopo: sem backend web, sem banco, sem C++/outras linguagens."
+  },
+  "operational_basis": {
+    "acceptance_wall_s": {
+      "SIGA-REAL-17": 1.1,
+      "SIGA-REAL-18": 1.1,
+      "SIGA-REAL-19": 1.0,
+      "SIGA-REAL-20": 0.7
+    },
+    "note": "javac + execucao por tarefa, medido 2026-10-05 (morno). Custo financeiro por tentativa: nao computavel sem modelo faturado (P2 pendente); nenhuma tentativa com modelo rodou."
+  },
+  "contains_gold": false
+}

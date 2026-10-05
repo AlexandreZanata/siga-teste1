@@ -1,0 +1,38 @@
+{
+  "schema": "atlas-acceptance-validation/1",
+  "task": "SIGA-REAL-19",
+  "base_sha": "e3be22828f787cbe71b339aecb7a7bf569099803",
+  "sources": [
+    {
+      "path": "siga-base/src/main/java/br/gov/jfrj/siga/base/util/Texto.java"
+    }
+  ],
+  "harness": {
+    "file": "acceptance/AtlasAccept19.java",
+    "sha256": "ab2861e104e535c863fdccbbafbb38cb4a9693695adb8b6aff8476df6fd6fab9",
+    "cases": 10
+  },
+  "runner": {
+    "file": "acceptance/run-pilot3.sh",
+    "sha256": "bf1df7917806175efe742d7ad603e5206b9a7fc8b8f863e91ac4b4223ab9221d"
+  },
+  "baseline": {
+    "result": "red",
+    "passed": "6/10",
+    "exit": 1,
+    "log": "logs/SIGA-REAL-19-red.txt"
+  },
+  "reference": {
+    "result": "green",
+    "passed": "10/10",
+    "exit": 0,
+    "log": "logs/SIGA-REAL-19-green.txt",
+    "solution_sha256": "fcdf5138bdadfb3dc1c51652045701564215f54b6cbda30d0735639cd237a5a9",
+    "solution_note": "hash do arquivo de referencia em custodia (fora do git); conteudo nao publicado"
+  },
+  "private_acceptance": {
+    "red": "6/11",
+    "green": "11/11",
+    "note": "11 casos extras do avaliador em custodia (PrivateExtraPilot3); contagens publicadas, casos nao"
+  }
+}

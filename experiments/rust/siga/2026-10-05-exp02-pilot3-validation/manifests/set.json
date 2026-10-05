@@ -1,0 +1,13 @@
+{
+  "schema": "atlas-acceptance-validation-set/1",
+  "lot": "pilot3",
+  "tasks": [
+    "SIGA-REAL-17",
+    "SIGA-REAL-18",
+    "SIGA-REAL-19",
+    "SIGA-REAL-20"
+  ],
+  "private_harness": "PrivateExtraPilot3 (custodia)",
+  "private_red": "6/11",
+  "private_green": "11/11"
+}

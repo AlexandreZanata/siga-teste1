@@ -1,0 +1,12 @@
+Note: /tmp/next02-green/siga-base/src/main/java/br/gov/jfrj/siga/base/util/Utils.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+PASS ordered-names
+PASS internal-intact
+PASS stable-repeat
+PASS internal-intact-2
+PASS underscore-tie
+PASS underscore-internal
+PASS denied-ordered
+PASS denied-internal
+PASS empty
+AtlasAccept18: 9/9 passed

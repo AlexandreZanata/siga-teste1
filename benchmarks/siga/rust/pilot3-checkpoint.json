@@ -1,0 +1,30 @@
+{
+  "schema": "atlas-checkpoint/1",
+  "from": "NEXT-02-piloto-17-20",
+  "date": "2026-10-05",
+  "base_sha": "e3be22828f787cbe71b339aecb7a7bf569099803",
+  "set": {
+    "file": "benchmarks/siga/rust/pilot3.tasks.json",
+    "sha256": "a45cc7164f03c36b92c4e30eb05c612c3c7ecfa2b8f41040f214ee13e2275ed2"
+  },
+  "pilot16_fixed": {
+    "file": "benchmarks/siga/rust/piloto16.tasks.json",
+    "sha256": "919b83c1b0845bc2e30468ba2a20bfbd275490d51137e7bbfb71aff70b7c1b70",
+    "note": "16 piloto exclusivas (05-20), 4/4/4/4; 05-16 copia fiel do inventario selado antigo; smoke separado sem sobreposicao."
+  },
+  "acceptance": {
+    "run_pilot3_sh_sha256": "bf1df7917806175efe742d7ad603e5206b9a7fc8b8f863e91ac4b4223ab9221d",
+    "harnesses_sha256": {
+      "SIGA-REAL-17": "81f856d1bc50408b77839c482e7cada1a1b68ad3d7468e0730ae4fbcf69ae3f8",
+      "SIGA-REAL-18": "9699d6eace8b4c3ca91afcda09ea4d3c7623f9e8dc63d262692c049b6e9793fd",
+      "SIGA-REAL-19": "ab2861e104e535c863fdccbbafbb38cb4a9693695adb8b6aff8476df6fd6fab9",
+      "SIGA-REAL-20": "c256a11ea3da9f0cb041edee618a644579d2aaeee76d154fcff777363cbe0b12"
+    },
+    "note": "run.sh, run-pilot.sh e run-pilot2.sh seguem congelados (shas nos checkpoints anteriores); este checkpoint ancora run-pilot3.sh do terceiro lote."
+  },
+  "seal": "experiments/rust/siga/2026-10-05-next02-pilot-seal/seal.json",
+  "validation": "experiments/rust/siga/2026-10-05-exp02-pilot3-validation/",
+  "curation": "research/siga/rust/CURADORIA_PILOTO3.md",
+  "contains_gold": false,
+  "note": "Checkpoint de documentos/core para B (protocolo paralelo). Sem gabaritos, sem casos privados."
+}
