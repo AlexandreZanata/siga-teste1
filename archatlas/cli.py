@@ -8,6 +8,23 @@ import sys
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent))
 
 
+def _under_nested_repo(path: pathlib.Path, scope: pathlib.Path) -> bool:
+    """True se algum ancestral estrito abaixo de `scope` contiver `.git`.
+
+    Alinha o `rglob` Python ao walker Rust (crate `ignore`), que não desce em
+    repos aninhados — ex.: fixtures externas vendoredadas com `.git` próprio.
+    A raiz do escopo nunca é excluída (o próprio dataset pode ser um repo).
+    """
+    if scope not in path.parents:
+        return False
+    for parent in path.parents:
+        if parent == scope:
+            break
+        if (parent / ".git").exists():
+            return True
+    return False
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(prog="archatlas")
     ap.add_argument("cmd", choices=["verify", "index", "find", "doctor", "context"],
@@ -71,7 +88,8 @@ def main() -> int:
         if not scope.is_dir():
             print(f"subarvore ausente: {scope}", file=sys.stderr)
             return 2
-        paths = sorted(scope.rglob("*.java"))
+        paths = sorted(p for p in scope.rglob("*.java")
+                       if not _under_nested_repo(p, scope))
         print(index_many(con, paths, "e3be22828"))
         return 0
     if args.cmd == "find":

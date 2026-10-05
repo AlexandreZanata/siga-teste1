@@ -75,16 +75,18 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--corpus", required=True, help="corpus.json produzido por freeze_corpus.py")
     ap.add_argument("--dataset", default=None)
+    ap.add_argument("--subtree", default=SUBTREE,
+                    help="subarvore lida sob o dataset (default: corpus R2; Q8-real usa a raiz)")
     ap.add_argument("--out", required=True)
     args = ap.parse_args()
 
     corpus = json.loads(Path(args.corpus).read_text())
     dataset = Path(args.dataset or (Path(args.corpus).resolve().parent / ".." / ".." / ".." / ".." / ".." / "siga")).resolve()
-    if not (dataset / SUBTREE).is_dir():
+    if not (dataset / args.subtree).is_dir():
         # Fallback: descobrir pela raiz declarada no manifesto do ambiente, se existir.
         candidate = Path(corpus.get("environment", {}).get("git_head") or ".").resolve()
         dataset = candidate.parent
-    root = dataset / SUBTREE
+    root = dataset / args.subtree
     if not root.is_dir():
         raise SystemExit(f"subarvore ausente: {root}; passe --dataset explicitamente")
 
