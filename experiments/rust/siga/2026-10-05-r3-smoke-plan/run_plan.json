@@ -1,0 +1,82 @@
+{
+ "_note": "Plano de ordem congelado da rodada smoke R3/EXP01 (12 arms por trilha). Regra determinística: para a i-ésima tarefa (0-based), a ordem dos braços é a i%3-ésima rotação de [BASE, LEX-RS, CTX-RS]. Congela a ordem ANTES de ver qualquer dado; objetivo é não deixar a ordem correlacionar com o braço. Bitcoin usa o mesmo plano trocando os ids por BTC-REAL-01..04 (publicado por B).",
+ "schema": "atlas-run-plan/1",
+ "round": "smoke",
+ "trail": "siga",
+ "rule": "rots = [[BASE,LEX-RS,CTX-RS],[LEX-RS,CTX-RS,BASE],[CTX-RS,BASE,LEX-RS]]; task i -> rots[i%3]",
+ "runs": 12,
+ "arms": [
+  {
+   "arm": 1,
+   "task": "SIGA-REAL-01",
+   "condition": "BASE",
+   "repetition": 1
+  },
+  {
+   "arm": 2,
+   "task": "SIGA-REAL-01",
+   "condition": "LEX-RS",
+   "repetition": 1
+  },
+  {
+   "arm": 3,
+   "task": "SIGA-REAL-01",
+   "condition": "CTX-RS",
+   "repetition": 1
+  },
+  {
+   "arm": 4,
+   "task": "SIGA-REAL-02",
+   "condition": "LEX-RS",
+   "repetition": 1
+  },
+  {
+   "arm": 5,
+   "task": "SIGA-REAL-02",
+   "condition": "CTX-RS",
+   "repetition": 1
+  },
+  {
+   "arm": 6,
+   "task": "SIGA-REAL-02",
+   "condition": "BASE",
+   "repetition": 1
+  },
+  {
+   "arm": 7,
+   "task": "SIGA-REAL-03",
+   "condition": "CTX-RS",
+   "repetition": 1
+  },
+  {
+   "arm": 8,
+   "task": "SIGA-REAL-03",
+   "condition": "BASE",
+   "repetition": 1
+  },
+  {
+   "arm": 9,
+   "task": "SIGA-REAL-03",
+   "condition": "LEX-RS",
+   "repetition": 1
+  },
+  {
+   "arm": 10,
+   "task": "SIGA-REAL-04",
+   "condition": "BASE",
+   "repetition": 1
+  },
+  {
+   "arm": 11,
+   "task": "SIGA-REAL-04",
+   "condition": "LEX-RS",
+   "repetition": 1
+  },
+  {
+   "arm": 12,
+   "task": "SIGA-REAL-04",
+   "condition": "CTX-RS",
+   "repetition": 1
+  }
+ ]
+}

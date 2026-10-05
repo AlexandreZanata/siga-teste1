@@ -81,7 +81,7 @@ Nova fila: [TASK-A01–A03, B01–B02 e EXP01–EXP04](../PROXIMAS_TASKS_SIGA_BI
 - R0 **não** executou piloto, custo nem confirmação. Nenhuma conclusão de utilidade existe até R5.
 - Bloqueios de ambiente: RAM disponível restringe medições de RSS; build Bitcoin segue bloqueado (sem `depends`/sudo) — SIGA não espera.
 - Pendências de dono **usuário**: modelo efetivo (P1), teto financeiro (P2), custodiante do holdout (P4). As demais têm dono A ou B e estão em `BASELINE.md` §5.
-- Próxima ação executora: **R3** bloqueada por P1/P2 (modelo efetivo e teto financeiro). Com a camada de avaliação implementada, as pendências técnicas de A estão fechadas (Q1, Q3, Q5, Q7, além do instrumento de R3/R5) e o que resta aberto exige decisão do usuário — Q2 (CI), Q4 (cache frio e cgroup), Q6 (execução real do runner), Q8 (fechada em 2026-10-05: reps ×30/×100 + corpus real de 2278 medido) — ou dado que ainda não existe (tarefas reais, revisores humanos, intervalo de confiança de R4).
+- Próxima ação executora: **R3** com config congelada (`research/rust/R3_SMOKE_FREEZE.json` + plano de ordem em `experiments/rust/siga/2026-10-05-r3-smoke-plan/`, 4 guardas); execução bloqueada por P1/P2 (modelo efetivo e teto financeiro). Com a camada de avaliação implementada, as pendências técnicas de A estão fechadas (Q1, Q3, Q5, Q7, além do instrumento de R3/R5) e o que resta aberto exige decisão do usuário — Q2 (CI), Q4 (cache frio e cgroup), Q6 (execução real do runner), Q8 (fechada em 2026-10-05: reps ×30/×100 + corpus real de 2278 medido) — ou dado que ainda não existe (tarefas reais, revisores humanos, intervalo de confiança de R4).
 
 ## R1 executado (2026-09-29)
 

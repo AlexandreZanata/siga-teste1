@@ -1,0 +1,44 @@
+{
+  "_note": "Congelamento operacional da rodada smoke R3/EXP01 (2026-10-05). Tudo que independe de P1/P2 está fixado; modelo, chave e teto financeiro ficam null com motivo (convenção do protocolo §6). A rodada NÃO começou: nenhum run executado, nenhum patch produzido.",
+  "schema": "atlas-r3-freeze/1",
+  "date": "2026-10-05",
+  "round": "smoke",
+  "design": {
+    "tasks_per_trail": ["SIGA-REAL-01", "SIGA-REAL-02", "SIGA-REAL-03", "SIGA-REAL-04"],
+    "conditions": ["BASE", "LEX-RS", "CTX-RS"],
+    "reps": 1,
+    "runs_per_trail": 12,
+    "output_budget_tokens": 2000,
+    "ceilings": {"wall_s": 1800, "model_turns": 40, "tool_calls": 100},
+    "ceilings_source": "PREREGISTRATION_R0 §1.3 (budget) e §1.4 (tetos); espelham os defaults de real_executor.py"
+  },
+  "task_sets": {
+    "siga": {"file": "benchmarks/siga/rust/pilot16.tasks.json",
+             "sha256": "6b9ea88252a3717603929cf233d1ce055c6626a7e2579c34ed7efa057d1443c0",
+             "split": "smoke"},
+    "bitcoin": {"file": "benchmarks/bitcoin/rust/pilot16.tasks.json",
+                "sha256": "82443fe9be66bb54746c5ec80357860d25a8ce254090bd0a4e6681cb299e6f13",
+                "split": "smoke",
+                "note": "trilha B (branch codex/bitcoin-context); o freeze da execução Bitcoin é publicado por B"}
+  },
+  "executor": {
+    "file": "benchmarks/rust/real_executor.py",
+    "tools": ["shell", "read", "write"],
+    "arm_separation": "runner.py: BASE não recebe atlas/atlas-read; LEX-RS/CTX-RS recebem (teste test_condicao_base_nao_recebe_ferramenta_de_contexto). Loop e ferramentas do executor idênticos nos três braços."
+  },
+  "pending_P1_P2": {
+    "model": {"provider": null, "id": null, "version": null,
+              "reason": "P1 pendente do usuário (PREREGISTRATION_R0 §2)"},
+    "api_key": {"present": false,
+                "reason": "nenhuma credencial no ambiente em 2026-10-05 (verificado: ANTHROPIC/OPENAI/OPENROUTER ausentes)"},
+    "spending_cap": {"amount": null, "currency": null,
+                     "reason": "P2 pendente do usuário (PREREGISTRATION_R0 §2)"},
+    "prices": {"file": null,
+               "reason": "tabela por-1M do modelo só existe após P1; molde em benchmarks/rust/prices.example.json"}
+  },
+  "evaluation": {
+    "mechanical_first": "eval.py (rubrica ATLAS-RUBRIC/1): patch aplica, aceite imutável passa, escopo respeitado",
+    "blind": "bundle cego + dupla revisão/adjudicação (AVALIACAO_CEGA.md); chave em custódia",
+    "unit_of_inference": "tarefa (tentativas agrupadas; repetição não é tarefa independente)"
+  }
+}
