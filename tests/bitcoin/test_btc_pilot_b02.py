@@ -1,9 +1,8 @@
-"""Guardas do piloto Bitcoin parcial (TASK-B02): 05/06/08 validados, 07 fora.
+"""Guardas do piloto Bitcoin (TASK-B02 + desbloqueio 07): 05/06/07/08.
 
 Valida `benchmarks/bitcoin/rust/pilot.tasks.json` + harnesses sem exigir
-clone do Bitcoin nem custódia: estrutura atlas-tasks/2, categorias,
-aceite existente com dispatches, pacote sem ouro, e o estado parcial
-explícito (07 bloqueada, conjunto desbalanceado com razão em curadoria).
+clone do Bitcoin nem custódia: estrutura atlas-tasks/2, balanço 1/1/1/1,
+aceite existente com dispatches (07 com sonda C++), pacote sem ouro.
 """
 import json
 import pathlib
@@ -20,11 +19,14 @@ EXPECTED = {
                     ["test/functional/test_framework/messages.py"]),
     "BTC-REAL-08": ("configuracao_interface",
                     ["test/functional/test_runner.py"]),
+    "BTC-REAL-07": ("testes_comportamento_de_api",
+                    ["src/util/strencodings.cpp"]),
 }
 GOLD_MARKERS = [
     "proxy.reuse_http_connections",
     "truncated payload",
     "test selection is empty after",
+    "multiplier = ByteUnit::NOOP",
     "siga-a03-custody",
 ]
 
@@ -40,10 +42,11 @@ def test_schema_and_partial_balance_declared():
     assert data["platform"] == "bitcoin"
     assert data["base_sha"] == BASE_SHA
     assert data["sealed"] is False
-    assert "07" in data["_note"] and "bloqueada" in data["_note"]
     tasks = data["tasks"]
     assert [t["id"] for t in tasks] == sorted(EXPECTED)
-    assert "BTC-REAL-07" not in [t["id"] for t in tasks]
+    cats = sorted(t["category"] for t in tasks)
+    assert cats == ["bug_local", "configuracao_interface",
+                    "entre_arquivos", "testes_comportamento_de_api"]
     for t in tasks:
         cat, allowed = EXPECTED[t["id"]]
         assert t["split"] == "piloto"
@@ -71,16 +74,20 @@ def test_acceptance_dispatches_and_is_gold_free():
         assert harness.exists(), str(harness)
     for marker in GOLD_MARKERS:
         for py in [ACC / "accept_b05.py", ACC / "accept_b06.py",
-                   ACC / "accept_b08.py"]:
+                   ACC / "accept_b07.py", ACC / "accept_b08.py",
+                   ACC / "probe_b07.cpp"]:
             assert marker not in py.read_text(encoding="utf-8"), (py, marker)
 
 
 def test_preflight_logs_present():
     pre = (REPO / "experiments" / "bitcoin" / "rust"
            / "2026-10-05-b02-validation" / "preflight")
+    pre07 = (REPO / "experiments" / "bitcoin" / "rust"
+             / "2026-10-05-b07-validation" / "preflight")
     for tid in EXPECTED:
-        red = pre / ("red_%s.txt" % tid)
-        green = pre / ("green_%s.txt" % tid)
+        d = pre07 if tid == "BTC-REAL-07" else pre
+        red = d / ("red_%s.txt" % tid)
+        green = d / ("green_%s.txt" % tid)
         assert red.exists() and green.exists(), tid
         assert "FAIL" in red.read_text(encoding="utf-8")
         assert "FAILED" not in green.read_text(encoding="utf-8")

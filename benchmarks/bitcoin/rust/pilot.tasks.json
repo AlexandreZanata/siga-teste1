@@ -1,5 +1,5 @@
 {
- "_note": "Conjunto piloto Bitcoin parcial (TASK-B02, 2026-10-05). 3 tarefas validadas (05/06/08); BTC-REAL-07 (C++) bloqueada por ambiente (ver CURADORIA_PILOTO.md) e fora deste conjunto — nao admitida sem prova vermelho/verde. Validador: eval.py do core principal, somente leitura.",
+ "_note": "Conjunto piloto Bitcoin (TASK-B02 + desbloqueio 07, 2026-10-05). 4 tarefas validadas (05/06/07/08), balanco 1/1/1/1. A 07 usa aceite por TU C++ (adaptacao registrada em CURADORIA_PILOTO.md); build completo test_bitcoin segue bloqueado. Validador: eval.py do core principal, somente leitura.",
  "schema": "atlas-tasks/2",
  "platform": "bitcoin",
  "sealed": false,
@@ -32,6 +32,20 @@
    "origin": "Curadoria dev B02 (aceite + referencia validada) em 2026-10-05: falha reproduzida na base (bytes curtos aceitos em silencio; callback chamado com payload truncado), 6 casos com frame v1 sintetico (filterload) percorrendo desserializacao e _on_data.",
    "contamination_risk": "medio",
    "contamination_note": "Codigo upstream publico; requisito dev publicado nesta curadoria. Nao usar este item nem variantes da familia btc-p2p-deserialization como holdout. Nao pesquisar solucao upstream durante as tentativas."
+  },
+  {
+   "id": "BTC-REAL-07",
+   "split": "piloto",
+   "category": "testes_comportamento_de_api",
+   "statement": "Estender ParseByteUnits para aceitar sufixo B como bytes independentemente de default_multiplier. Preservar todas as unidades ja aceitas e o comportamento de entradas invalidas e overflow. Este e um requisito experimental de utilitario, nao uma falha confirmada do consenso.",
+   "base_sha": "9be056a8a72b624dae9623b2f7bded92c2a21c91",
+   "test_command": ["bash", "atlas-accept/run.sh", "BTC-REAL-07"],
+   "timeout_s": 600,
+   "allowed_paths": ["src/util/strencodings.cpp"],
+   "immutable_paths": ["atlas-accept/**"],
+   "origin": "Curadoria dev B07 (aceite por TU C++ + referencia validada) em 2026-10-05: falha reproduzida na base (10B->nullopt com K e m; 0B->nullopt), 17 casos compilando a TU do workspace com g++ 13.3 -std=c++20; build completo test_bitcoin segue bloqueado (adaptacao registrada).",
+   "contamination_risk": "medio",
+   "contamination_note": "Codigo upstream publico; requisito dev publicado nesta curadoria. Nao usar este item nem variantes da familia btc-byteunits como holdout. Nao pesquisar solucao upstream durante as tentativas."
   },
   {
    "id": "BTC-REAL-08",

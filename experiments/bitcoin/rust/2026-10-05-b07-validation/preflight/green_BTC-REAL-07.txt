@@ -1,0 +1,19 @@
+PASS B-explicit-K: ParseByteUnits("10B") -> 10
+PASS B-explicit-m: ParseByteUnits("10B") -> 10
+PASS B-zero: ParseByteUnits("0B") -> 0
+PASS B-bare-rejected: ParseByteUnits("B") -> nullopt
+PASS B-decimal-rejected: ParseByteUnits("1.5B") -> nullopt
+PASS B-negative-rejected: ParseByteUnits("-3B") -> nullopt
+PASS B-overflow-rejected: ParseByteUnits("99999999999999999999B") -> nullopt
+PASS plain-preserved: ParseByteUnits("42") -> 42
+PASS k-preserved: ParseByteUnits("1k") -> 1000
+PASS K-preserved: ParseByteUnits("1K") -> 1024
+PASS m-preserved: ParseByteUnits("2m") -> 2000000
+PASS M-preserved: ParseByteUnits("2M") -> 2097152
+PASS g-preserved: ParseByteUnits("3g") -> 3000000000
+PASS G-preserved: ParseByteUnits("3G") -> 3221225472
+PASS t-preserved: ParseByteUnits("4t") -> 4000000000000
+PASS T-preserved: ParseByteUnits("4T") -> 4398046511104
+PASS empty-rejected: ParseByteUnits("") -> nullopt
+all cases passed
+REF 1.21s

@@ -1,4 +1,4 @@
-# Curadoria piloto Bitcoin — TASK-B02 (parcial: 05/06/08; 07 bloqueada)
+# Curadoria piloto Bitcoin — TASK-B02 + desbloqueio 07 (05/06/07/08)
 
 Data: 2026-10-05. Dono: B. Base: bitcoin/bitcoin `9be056a8a72b624dae9623b2f7bded92c2a21c91`
 (v31.1). Catálogo dev: `benchmarks/rust/tasks/bitcoin.dev.json` (somente leitura,
@@ -42,35 +42,37 @@ Referências em `/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-a03-custody/referenc
 Aceite medido (referência, execução única): 05 → 0,04 s; 06 → 0,07 s;
 08 → 0,33 s (`timeout_s: 300`).
 
-## BTC-REAL-07 — bloqueada só ela (coorte Python segue)
+## BTC-REAL-07 — DESBLOQUEADA via build C++ por TU (adaptação registrada)
 
 Requisito: sufixo `B` em `ParseByteUnits` (`src/util/strencodings.cpp:386`,
 `switch` sem `case 'B'`; `ByteUnit` sem membro bytes; teste existente
-`util_ParseByteUnits` em `src/test/util_tests.cpp:1623`).Fontes inspecionadas
-e hashes acima conferem; **sem prova vermelho/verde: item NÃO admitido** em
-`pilot.tasks.json`.
+`util_ParseByteUnits` em `src/test/util_tests.cpp:1623`). **Vermelho→verde
+com build e execução reais:** base → 14/17 FAIL (`10B`→nullopt com K e m,
+`0B`→nullopt); referência (`case 'B'` → `ByteUnit::NOOP`) → 17/17.
 
-Motivo exato (verificado em 2026-10-05, sem `sudo`): headers de
-desenvolvimento ausentes (`libevent-dev`, Boost ≥ 1.83 com `unit_test_framework`,
-`libzmq3-dev`; só runtimes `.so` presentes) e checkout completo do `src/`
-inviável neste enlace (fetch parcial >600 s para <100 MiB úteis). Mitigação
-tentada: `apt-get download` + extração sem root de `libevent-dev`,
-`libboost1.83-dev` (+thread/chrono/filesystem/program-options/test),
-`libzmq3-dev`, `libsqlite3-dev` em `/tmp/btcdeps/root` — headers/libs
-recuperados, mas sem a árvore `src/` completa não há `configure`/`test_bitcoin`.
-Desbloqueio: máquina com depends (`doc/build-unix.md` do snapshot) + RAM
-reservada; então configure/build isolado, `compile_commands.json` e
-`test_bitcoin --run_test=util_ParseByteUnits` com caso novo executado.
+Como: a TU é autocontida — `strencodings.cpp` + `hex_base.cpp` compilam com
+`g++ 13.3 -std=c++20 -O1 -I src` usando só 4 headers do snapshot
+(`util/strencodings.h`, `crypto/hex_base.h`, `span.h`, `util/string.h`),
+sem Boost/libevent/ZMQ. O harness (`accept_b07.py`) compila as fontes **do
+workspace** + a sonda `probe_b07.cpp` do atlas-accept, linka e executa
+(1,21 s no total); `timeout_s: 600`. Evidências em
+`experiments/bitcoin/rust/2026-10-05-b07-validation/preflight/`.
+
+**Desvio explícito do plano B02:** o aceite original pedia build completo e
+`test_bitcoin`/`util_tests` com caso novo — que seguem bloqueados (sem
+headers de dev, sem sudo, fetch do `src/` inviável no enlace; deps parciais
+em `/tmp/btcdeps/root`, fora do git). A unidade sob teste é exercitada de
+verdade (compilador, flags, fontes e tempos registrados, nada simulado),
+mas regressões de `util_tests` **não** foram executadas — ressalva para o
+EXP01/julgamento. Build completo continua pendente de depends + RAM.
 
 ## Balanço do conjunto (razão do desbalanceamento, cf. validador)
 
-`pilot.tasks.json` traz 3 validadas (05 `bug_local`, 06 `entre_arquivos`,
-08 `configuracao_interface`); `testes_comportamento_de_api` fica em 0 pela
-ausência da 07. `eval.py validate` (core principal, somente leitura):
-`balanced: false` sem flag (problema único: desbalanceamento vs 4/4/4/4) e
-`problems: []` com `--allow-imbalance`. Esta seção é o relatório que sustenta
-a exceção: conjunto parcial explícito, sem declarar piloto pronto nem 16
-tarefas. Completar a 07 (ou substituta validada) antes de qualquer rodada.
+`pilot.tasks.json` traz 4 validadas (05 `bug_local`, 06 `entre_arquivos`,
+07 `testes_comportamento_de_api`, 08 `configuracao_interface`), balanço
+1/1/1/1. `eval.py validate` (core principal, somente leitura): `balanced:
+true`, `problems: []` sem flags. (Exceção anterior com `--allow-imbalance`
+superada pelo desbloqueio da 07; histórico preservado nesta revisão.)
 
 ## Isolamento e famílias
 

@@ -1,0 +1,29 @@
+{
+ "run_id": "2026-10-05-b07-validation",
+ "task": "BTC-REAL-07 (desbloqueio C++)",
+ "base_sha": "9be056a8a72b624dae9623b2f7bded92c2a21c91",
+ "build": {
+  "compiler": "g++ 13.3.0 (Ubuntu 13.3.0-6ubuntu2~24.04.1)",
+  "std": "c++20",
+  "opt": "-O1",
+  "units": [
+   "src/util/strencodings.cpp (workspace)",
+   "src/crypto/hex_base.cpp (workspace)",
+   "probe_b07.cpp (atlas-accept)"
+  ],
+  "headers": [
+   "src/util/strencodings.h",
+   "src/crypto/hex_base.h",
+   "src/span.h",
+   "src/util/string.h"
+  ]
+ },
+ "baseline": {
+  "BTC-REAL-07": "14/17 exit 1 (10B->nullopt com K e m; 0B->nullopt)"
+ },
+ "reference": {
+  "BTC-REAL-07": "17/17 exit 0"
+ },
+ "accept_time_s": 1.21,
+ "adaptation": "build completo test_bitcoin/Boost.Test segue bloqueado (sem depends/sudo); TU autocontida compilada e executada de verdade; desvio registrado na curadoria"
+}

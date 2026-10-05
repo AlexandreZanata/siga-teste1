@@ -11,7 +11,7 @@ com dataset, tarefas, pré-registro e resultados próprios. Nenhum aceite copiad
 - **Vermelho→verde:** 01 → 6/9→9/9 (`IndexError`/`TypeError` em checksum malformado); 02 → 10/16→16/16 (`ValueError` em mainnet v0/v5); 03 → 4/10→10/10 (`-342` com charset); 04 → 2/5→5/5 (`FileNotFoundError` sem citar `--jobs`). Referências em custódia fora do git (diffs mínimos: guarda de tamanho + `None`; ramos v0/v5; media-type com parâmetros; validação de `--jobs` + `--help` antes de `config.ini`). Aceite medido 0,04–0,76 s por tarefa (`timeout_s: 300`).
 - **Isolamento além de diretório:** custódia fora do repo; pacote sem ouro (harnesses comparam em execução, citam só `--jobs` genérico; sem campo de curadoria, só hashes); `test_command` relativo; `atlas-accept/**` em `immutable_paths`. Nota de família: `btc-authproxy` (03×05) e `btc-runner` (04×08) repetem famílias com requisitos disjuntos — se usadas para política, excluir do piloto de inferência.
 - **Testes:** 5 novos em [`tests/bitcoin/test_btc_smoke_b01.py`](../../tests/bitcoin/test_btc_smoke_b01.py) (schema+balanço, sem campos de curadoria/ouro, aceite existente com dispatches, `allowed_paths` com shas, logs vermelho/verde). Nenhuma tentativa com modelo rodou; P1/P2 continuam pendentes e bloqueiam só a rodada paga.
-- **O que continua aberto:** B02-parcial acima (07 exige build, bloqueada), EXP01 (bloqueada por P1/P2), holdout P4.
+- **O que continua aberto:** B02 abaixo (07 desbloqueada via TU — ver seção própria), EXP01 (bloqueada por P1/P2), holdout P4.
 
 ## TASK-B02 parcial executada (2026-10-05) — piloto 05/06/08 validado, 07 bloqueada
 
@@ -19,7 +19,14 @@ com dataset, tarefas, pré-registro e resultados próprios. Nenhum aceite copiad
 - **Vermelho→verde no SHA fixado:** 05 → 6/11→11/11 (filho perdia `ensure_ascii`/`reuse`); 06 → 4/6→6/6 (truncado aceito em silêncio, callback chamado); 08 → 4/7→7/7 (vazia sem erro específico, flag ausente em `--help`). Referências em custódia fora do git (diffs mínimos: propaga 2 opções; `EOFError` em leitura curta; flag + erro estrito). Aceite 0,04–0,33 s (`timeout_s: 300`). `smoke.tasks.json` da B01 intacto (verificado por teste).
 - **07 bloqueada só ela** (lacuna localizada: `ParseByteUnits` sem `case 'B'`, `ByteUnit` sem bytes, teste `util_ParseByteUnits` em `util_tests.cpp:1623`; hashes 3/3 conferem): sem headers de dev (libevent/Boost/zmq), sem sudo, fetch completo do `src/` inviável no enlace; deps parciais extraídas sem root em `/tmp/btcdeps/root` (fora do git), insuficientes sem a árvore. Item NÃO admitido sem prova. Desbloqueio: depends + RAM reservada, configure/build isolado, `test_bitcoin` com caso novo.
 - **Testes:** 5 novos em [`tests/bitcoin/test_btc_pilot_b02.py`](../../tests/bitcoin/test_btc_pilot_b02.py) (schema+parcial explícito, sem ouro, dispatches, logs, smoke intacto). Nenhuma tentativa com modelo; P1/P2/P4 seguem pendentes.
-- **O que continua aberto:** 07/build C++, expansão para 16 (EXP02 completa), EXP01 (P1/P2), holdout P4.
+- **O que continua aberto:** 07 (desbloqueada via TU abaixo; build completo segue pendente), expansão para 16 (EXP02 completa), EXP01 (P1/P2), holdout P4.
+
+## BTC-REAL-07 desbloqueada (2026-10-05) — build C++ por TU, 14/17→17/17
+
+- **Como:** `src/util/strencodings.cpp` (+ `hex_base.cpp`, 4 headers do snapshot) compila com `g++ 13.3 -std=c++20 -O1`, sem Boost/libevent/ZMQ. `accept_b07.py` + `probe_b07.cpp` compilam as fontes do workspace, linkam e executam 17 casos (1,21 s; `timeout_s: 600`). Referência em custódia (`case 'B'` → `ByteUnit::NOOP`). Evidências em `experiments/bitcoin/rust/2026-10-05-b07-validation/preflight/`.
+- **Piloto completo 05–08:** `pilot.tasks.json` agora com 4 tarefas, balanço 1/1/1/1, `validate` limpo sem flags.
+- **Desvio explícito:** `test_bitcoin`/`util_tests` seguem sem executar (sem depends/sudo) — ressalva para EXP01/julgamento; build completo pendente de provisionamento.
+- **O que continua aberto:** expansão para 16 (EXP02 completa exige +4 além das 12), EXP01 (P1/P2), holdout P4.
 
 ## EXP02 parcial, lote 2 (2026-10-05) — piloto 09–12 validado, trilha soma 11
 
@@ -27,7 +34,7 @@ com dataset, tarefas, pré-registro e resultados próprios. Nenhum aceite copiad
 - **Vermelho→verde no SHA fixado:** 09 → 2/4→4/4 (`TypeError` em `descsum_create` Unicode); 10 → 4/9→9/9 (0 silencioso/`IndexError`/inv zerado); 11 → 3/7→7/7 (`TypeError` em JSON não-objeto, inclusive em `_get_response`); 12 → 3/5→5/5 (traceback `re.error`). Referências em custódia fora do git (diffs mínimos: `ValueError`; leitura exata; guarda dict/list+dict; valida regex). Aceite 0,01–0,26 s.
 - **Somado aos lotes anteriores, a trilha tem 11 tarefas validadas** (smoke 01–04 + piloto 05/06/08 + lote2 09–12). Famílias repetidas com requisitos disjuntos (`btc-descriptors` 01×09, `btc-p2p-deserialization` 06×10, `btc-authproxy` 03×05×11, `btc-runner` 04×08×12) e regra de exclusão registrada.
 - **Testes:** 5 novos em [`tests/bitcoin/test_btc_pilot2_b02.py`](../../tests/bitcoin/test_btc_pilot2_b02.py) (schema+balanço, sem ouro, dispatches, logs, conjuntos anteriores intactos). Nenhuma tentativa com modelo; P1/P2/P4 seguem pendentes.
-- **O que continua aberto:** 07/build C++, expansão para 16 (EXP02 completa exige +5 além das 11), EXP01 (P1/P2), holdout P4.
+- **O que continua aberto:** expansão para 16 (EXP02 completa exige +4 além das 12), EXP01 (P1/P2), holdout P4. Build C++ completo segue pendente.
 
 ## Checkpoint
 

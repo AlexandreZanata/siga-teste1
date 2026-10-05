@@ -95,4 +95,4 @@ def test_previous_sets_untouched():
         "BTC-REAL-01", "BTC-REAL-02", "BTC-REAL-03", "BTC-REAL-04"]
     pilot = json.loads((RUST / "pilot.tasks.json").read_text(encoding="utf-8"))
     assert [t["id"] for t in pilot["tasks"]] == [
-        "BTC-REAL-05", "BTC-REAL-06", "BTC-REAL-08"]
+        "BTC-REAL-05", "BTC-REAL-06", "BTC-REAL-07", "BTC-REAL-08"]
