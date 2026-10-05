@@ -55,13 +55,14 @@ com dataset, tarefas, pré-registro e resultados próprios. Nenhum aceite copiad
 
 - Etapa atual: **build verificado como BLOQUEADO (veredito registrado)** — libevent/Boost/ZMQ
   ausentes, sem sudo, RAM ~0 livre; compilar aqui arriscaria o host; requisitos documentados.
-- Último aceite e evidências: `research/bitcoin/BUILD_ENV.md` (sondagem + veredito + requisitos
-  de desbloqueio); resto inalterado.
-- SHA publicado: `ba4d901` (lote final 13–16) em `origin/codex/bitcoin-context`; este commit
-  (selo EXP02) a registrar após push.
+- Último aceite e evidências: selo EXP02 (`pilot16.tasks.json` + `seal.json` +
+  `REVISAO_SEAL16.md`); pós-push verificado em 2026-10-05: `pytest tests/bitcoin/`
+  69 passed/1 skipped, `eval.py validate` do core (somente leitura) 16 selado limpo.
+- SHA publicado: `9d7d40b` (selo EXP02) em `origin/codex/bitcoin-context` (publicado e
+  conferido via `ls-remote`); worktree limpo após o push.
 - `run_id`: nenhum (sondagem). Reserva: nenhuma. Pedido ao core: nenhum.
 - Bloqueio exato: build (veredito) + teto + modelos + custodiante + dev (todos nulos ou externos);
-  `main` em `f4523d5` (P6 SIGA) observado, NÃO incorporado. Sem escritor concorrente neste turno.
+  `main` em `48f5037` (selo SIGA) observado, NÃO incorporado. Sem escritor concorrente neste turno.
 - Alternativa independente: nenhuma unilateral restante — trilha aguarda provisionamento/autorização.
 - Próximo comando/ação: máquina com depends + RAM reservada; então configure/build isolado,
   `compile_commands.json`, índice com símbolos e tarefas reais de edição.
