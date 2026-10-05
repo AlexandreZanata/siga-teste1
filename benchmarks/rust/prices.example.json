@@ -1,0 +1,14 @@
+{
+  "_note": "Modelo de tabela de preços do executor real (P2). Copie para prices.json, preencha com a tabela PUBLICADA do provedor e registre fonte+data. Valores por 1M de tokens. Sem tabela do modelo, o executor recusa (saída 2) em vez de declarar custo inventado.",
+  "currency": "USD",
+  "source": "PREENCHER: ex. https://www.anthropic.com/pricing (tabela vigente em AAAA-MM-DD)",
+  "date": "PREENCHER: AAAA-MM-DD",
+  "models": {
+    "PREENCHER-model-id": {
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null
+    }
+  }
+}

@@ -246,3 +246,42 @@ qualidade do patch). Cada afirmação tem um veredito `supported` com o motivo:
 O manifesto de capacidade existe para que a ausência de cobertura não vire silêncio: em vez de
 um número que parece medido, fica escrito o que não foi observado e por quê. Uma tentativa com
 contrato `partial` continua `real` — mas nenhuma afirmativa sem cobertura entra no relatório.
+
+## 12. Executor real (P1/P2): `benchmarks/rust/real_executor.py`
+
+O contrato `atlas-executor/1` e o `dry` já existiam; faltava o comando que
+**realmente chama um modelo**. O executor real é um loop de agente autocontido
+(só stdlib), com as três ferramentas básicas fixas — `shell`, `read`, `write` —
+iguais nos três braços, tetos do pré-registro §1.3/§1.4 (2 000 tokens de saída,
+40 turnos, 100 chamadas de ferramenta) e telemetria evento a evento. Ele escreve
+também o `atlas-executor-result/1`, reconciliável com o stream por construção.
+
+Contrato de comando (o runner invoca; nunca à mão na rodada):
+
+```bash
+ATLAS_EXECUTOR_TELEMETRY=<att>/stream.jsonl ATLAS_EXECUTOR_RESULT=<att>/result.json \
+ATLAS_API_KEY=<segredo> python benchmarks/rust/real_executor.py \
+  --statement-file <att>/statement.md --dir <workspace> \
+  --provider anthropic --model <id> --prices benchmarks/rust/prices.json
+```
+
+- **Preço obrigatório:** sem tabela por-1M do modelo (`prices.json`, formato em
+  `prices.example.json`) o executor sai 2 e **não** escreve resultado — custo
+  não é estimado por chute. Com tabela, o custo é reconciliado com o tarifário
+  oficial que o P2 fixa.
+- **Identidade verificável:** `model.version`/`verified_by` vêm do echo da API
+  (`response.model`). Echo ausente ou divergente marca `coverage.model_identity:
+  false` (MISMATCH) — o rótulo `real` exige contrato fechado, não nome informal.
+- **Ausência nunca vira zero:** sem chave, sem enunciado, sem telemetria/result,
+  ou sem preços, saída 2 sem resultado. Erro de auth para o loop
+  (`stop.reason: auth_error`); erro de API transitório faz retry contado, cada
+  tentativa com `request_id` próprio (reemissão do mesmo id não é nova chamada).
+- **Reconciliado por construção:** stream e result saem do mesmo acumulador, então
+  `StreamAccounting` + `reconcile` não acusam divergência no caminho feliz —
+  por isso o teste de integração fecha.
+
+Provado offline (sem rede, sem chave): `tests/test_rust_real_executor.py`, 9 testes
+com transporte sintético — caminho feliz, retry→sucesso, auth, echo divergente,
+tetos de turnos e ferramentas, recusa sem preços, matemática de custo exata e
+não-emissão de nomes reservados. O que continua **pendente do usuário (P1/P2)**:
+modelo efetivo, chave e teto financeiro; sem eles a rodada smoke não começa.
