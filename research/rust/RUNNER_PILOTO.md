@@ -122,10 +122,7 @@ conferidos contra o stream dele. Nenhum total de provedor é medido por fora, e 
 isso em `contract.provenance` em toda tentativa. Isso não é uma limitação a corrigir com mais
 código aqui; é o limite do que um instrumento sem acesso à API de cobrança pode afirmar.
 
-O loop também é fixado e conferível: `executor.loop_sha256` reúne executor, ferramentas básicas,
-tetos e enunciado. `--expect-loop-sha` recusa iniciar quando a rodada não está no loop fixado —
-é assim que "o mesmo loop e as mesmas ferramentas nos três braços" deixa de ser promessa e vira
-checagem por tentativa.
+O loop também é fixado e conferível em duas camadas (NEXT-01). `executor.loop_config_sha256` (`atlas-loop-config/1`) reúne **só** o que é da rodada — espécie e hash do código do executor (`runner.py` + `executor_contract.py` + `real_executor.py`), protocolo de ferramentas (`atlas-tools/1`: shims + `TOOLS_SPEC`) e tetos — sem caminhos e sem enunciado: mesmo loop em diretórios distintos produz o mesmo hash, e mudança de código, ferramenta ou teto muda o hash. `--expect-loop-config-sha` recusa iniciar fora da configuração fixada. `executor.loop_sha256` continua existindo como identidade da **tentativa** (comando efetivo + enunciado, instável entre diretórios por construção); `--expect-loop-sha` o confere por compatibilidade. Enunciado e caminhos ficam em campos próprios (`prompt.statement_sha256`, `executor.cmd`, `executor.task_identity`), e a conferência de "mesma tarefa entre braços" é por tarefa+enunciado, nunca pelo hash do loop.
 
 ## 6. Manifesto mínimo, com nulos e motivo
 
@@ -148,6 +145,8 @@ Preenchidos de verdade: `snapshot.base_sha` e `tree_sha256` do workspace, `tool.
 
 Nenhum campo ausente vira zero; nenhum campo desconhecido é omitido.
 
+**NEXT-01, sempre preenchidos:** `executor.loop_config_sha256` + `executor.loop_config` (rodada), `executor.cmd_template` + `executor.task_identity` (tentativa), `preflight.workspace` (SHA completo, HEAD, limpeza) + `preflight.overlay`, `acceptance.state` + `acceptance.test_command_sha256` + HEADs da base + `deps` + `restored`. O avaliador lê `acceptance.state` para separar `patch_fault` de `environmental` (detalhe em [`AVALIACAO_CEGA.md`](AVALIACAO_CEGA.md) §2.1).
+
 ## 7. Executor `dry`: infraestrutura, nunca evidência
 
 O executor `dry` usa as ferramentas de verdade (chama `atlas` e o leitor, edita um arquivo) sem modelo. Serve para provar que a captura funciona.
@@ -157,9 +156,17 @@ O executor `dry` usa as ferramentas de verdade (chama `atlas` e o leitor, edita 
 - O que ele valida: contagem de chamadas, evento `opened`, `delivered` medido, captura e aplicação de patch, tetos, separação do ouro e — desde a TASK-A02 — o caminho do stream declarado, com um evento `stop` de infraestrutura que exercita a leitura do contrato.
 - O que ele **não** valida: qualquer coisa sobre utilidade, custo de provedor ou qualidade de patch. Nenhum resultado de R3 pode vir dele. Como o `dry` não escreve result contract, ele sai `contract.state: not_applicable` e `infrastructure_only` — nunca `real`, nunca `unverified`: o ensaio de infraestrutura não é uma tentativa de contrato malfeito.
 
+## ## 4c. Preflight fechado e falhas distintas (NEXT-01)
+
+**Preflight do workspace, antes do executor** (recusa sem manifesto, nada rodou ainda): HEAD presente, `base_sha` da tarefa em SHA completo (40 hex, comparação exata — prefixo de 8 não fixa base) e árvore rastreada limpa. O overlay imutável (`immutable_paths`) é identificado no manifesto (`preflight.overlay`); quem o fiscaliza é M5.
+
+**Preflight da base de aceitação, depois do executor** (falha vira estado no manifesto, sem culpar o patch): HEAD presente, base limpa e dependências do `test_command` conferidas **antes** de aplicar. Falta comprovada (`deps_missing`) não aplica o patch; base suja ou sem HEAD vira `env_blocked`. Após o teste a base é restaurada (`reset --hard` + limpeza dos caminhos do patch) — nunca reutilizar base modificada; a tentativa seguinte exige base limpa.
+
+**Estados do aceite**, mesma regra nos três braços: `passed`, `patch_regression`, `apply_failed`, `empty_patch`, `deps_missing`, `env_blocked` (exit 3, reservado ao harness), `acceptance_timeout`, `acceptance_error`, `no_base`. Timeout escreve manifesto + log parcial e restaura a base em vez de travar o runner. O hash do comando (`test_command_sha256`) e os HEADs antes/depois ficam no manifesto, junto do binário Rust (`tool.binary_sha256`). Custos/retries do executor continuam registrados em qualquer estado.
+
 ## 8. O que os testes guardam
 
-13 testes do runner e 17 do contrato do executor
+13 testes do runner, 13 do instrumento fechado (NEXT-01) e 17 do contrato do executor
 ([`tests/test_rust_executor_contract.py`](../../tests/test_rust_executor_contract.py)), sem rede,
 sem modelo e sem depender do binário Rust (exceto o de integração, pulado se o binário não estiver
 construído). Os do contrato cobrem: agregação de tokens/custo/latência/erro/retry, `request_id`
@@ -193,6 +200,9 @@ Testes do runner:
 | leitura fabricada pelo executor | `opened` virando auto-relato |
 | teto de shell declarada e teto de turnos | chamadas fora do shim escapando do teto |
 | `--expect-loop-sha` divergente | braço mudando de loop sem que a rodada pare |
+| config estável entre caminhos, instável com teto novo | caminho temporário virando "mudança de loop" falsa, ou teto mudando sem deixar rastro |
+| preflight recusando SHA curto/HEAD ausente/base suja | tentativa medindo a base errada sem ninguém perceber |
+| timeout/env/dep sem culpar o patch | falha de infra virando rejeição de patch (ou sucesso), ou base modificada reutilizada |
 
 ## 9. O que falta para R3
 

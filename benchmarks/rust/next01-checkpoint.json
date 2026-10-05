@@ -1,0 +1,27 @@
+{
+  "schema": "atlas-core-checkpoint/1",
+  "gate": "NEXT-01",
+  "date": "2026-10-05",
+  "note": "Instrumento fechado antes da rodada: hash de configuração estável, preflight fechado e falhas distintas. Checkpoint de core para a trilha Bitcoin consumir sem tocar nos selos anteriores.",
+  "core_parent_sha": "02c371037fdab057578ad77bbbba6a98a9b868e3",
+  "files": {
+    "benchmarks/rust/runner.py": "sha256:72ce8c3fa50581cf60e23ebf586b5551c47343167162092a495a7b33d29dcb5e",
+    "benchmarks/rust/executor_contract.py": "sha256:85c07e264c89710fccb78f16753ac5c7f36681a4eb59b982526ee33a59c5a13f",
+    "benchmarks/rust/real_executor.py": "sha256:6d1da69017bfc63436d794223b10d34befb5b61a874e587e31b28d7fa7d8f349",
+    "benchmarks/rust/eval.py": "sha256:4f642cf662fc1e8cadf12242f3945ef2f25aa1e3c88180282cba7757bb0dc7ef"
+  },
+  "loop_config": {
+    "schema": "atlas-loop-config/1",
+    "tool_protocol": "atlas-tools/1",
+    "how_to_verify": "rodar qualquer tentativa dry e conferir executor.loop_config_sha256 no manifest; repetir em diretórios distintos e exigir o mesmo hash; mudar um teto e exigir hash diferente"
+  },
+  "acceptance_contract": {
+    "env_exit_code": 3,
+    "states": ["no_base", "empty_patch", "deps_missing", "apply_failed", "passed", "patch_regression", "env_blocked", "acceptance_timeout", "acceptance_error"],
+    "indeterminate_rule": "só M1/M2 acusam E causa ambiental (env_blocked, acceptance_timeout, deps_missing, no_base) => indeterminado; resto que não passa => rejeitado; nada vira sucesso",
+    "same_rule_all_arms": true
+  },
+  "tests": "tests/test_next01_closed_instrument.py (13 testes de integração, sem modelo nem rede)",
+  "docs": ["research/rust/RUNNER_PILOTO.md", "research/rust/AVALIACAO_CEGA.md"],
+  "seals_untouched": ["benchmarks/siga/rust/pilot16.tasks.json", "benchmarks/bitcoin/rust/pilot16.tasks.json"]
+}

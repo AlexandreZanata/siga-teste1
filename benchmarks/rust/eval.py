@@ -290,6 +290,14 @@ def matches_any(path: str, globs: list[str]) -> bool:
     return any(fnmatch.fnmatch(path, g) for g in globs)
 
 
+# Estados do aceite que bloqueiam o julgamento sem culpar o patch (NEXT-01): falta
+# comprovada ou ambiente. Regra pré-especificada e igual nos três braços — o executor
+# nunca escolhe a classe da própria falha; ela vem do código de saída do harness e da
+# checagem de dependências do runner. Manifestos legados sem `state` caem na regra
+# antiga (M1/M2 por `applied`/`exit_code`, veredito `rejeitado`).
+ENV_INDETERMINATE_STATES = ("env_blocked", "acceptance_timeout", "deps_missing", "no_base")
+
+
 def check_attempt(attempt: Path, tasks: dict) -> dict:
     man = json.loads((attempt / "manifest.json").read_text())
     task = next((t for t in tasks["tasks"] if t["id"] == man["task"]["id"]), None)
@@ -302,12 +310,30 @@ def check_attempt(attempt: Path, tasks: dict) -> dict:
     fora = [p for p in paths if not matches_any(p, task["allowed_paths"])]
     imutaveis = [p for p in paths if matches_any(p, task.get("immutable_paths") or [])]
     stopped = bool(man.get("stopped_by") or man.get("stopped_killed"))
+    state = acc.get("state")
+    # `failure_class` separa o que é culpa do patch do que é bloqueio de julgamento —
+    # sem tirar nenhuma falha do denominador: nada aqui vira sucesso.
+    if state in ("passed",):
+        failure_class = None
+    elif state in ("patch_regression", "apply_failed", "empty_patch"):
+        failure_class = "patch_fault"
+    elif state in ENV_INDETERMINATE_STATES:
+        failure_class = "environmental"
+    elif state in ("acceptance_error",):
+        failure_class = "environmental"
+    elif state is None:
+        failure_class = "patch_fault" if not (acc.get("applied") is True
+                                              and acc.get("exit_code") == 0) else None
+    else:
+        failure_class = "patch_fault"
     items = {
         "M1": {"ok": acc.get("applied") is True,
                "observed": acc.get("applied"),
                "reason": acc.get("reason")},
         "M2": {"ok": acc.get("applied") is True and acc.get("exit_code") == 0,
-               "observed": acc.get("exit_code")},
+               "observed": acc.get("exit_code"),
+               "acceptance_state": state,
+               "failure_class": failure_class},
         "M3": {"ok": bool(patch_text.strip()),
                "observed": {"patch_bytes": man["patch"].get("bytes"), "paths": paths}},
         "M4": {"ok": not fora, "observed": {"fora_do_escopo": fora,
@@ -317,14 +343,24 @@ def check_attempt(attempt: Path, tasks: dict) -> dict:
         "M6": {"ok": not stopped, "observed": {"stopped_by": man.get("stopped_by")}},
     }
     rejeitados = [k for k, v in items.items() if not v["ok"]]
+    if not rejeitados:
+        verdict = "aceito"
+    elif failure_class == "environmental" and not [k for k in rejeitados if k not in ("M1", "M2")]:
+        # Só M1/M2 acusam, e a causa é ambiente/timeout/falta comprovada: julgamento
+        # bloqueado (`indeterminado`), nunca sucesso — e nunca rejeição do patch.
+        verdict = "indeterminado"
+    else:
+        verdict = "rejeitado"
     return {
         "attempt": attempt.name,
         "task_id": man["task"]["id"],
         "condition": man.get("condition"),
         "paths": paths,
         "mechanical": items,
-        "mechanical_verdict": "rejeitado" if rejeitados else "aceito",
+        "mechanical_verdict": verdict,
         "mechanical_rejected_items": rejeitados,
+        "acceptance_state": state,
+        "failure_class": failure_class,
         "acceptance_command": man["task"].get("test_command"),
         "evidence_class": man.get("evidence_class"),
     }
@@ -341,13 +377,19 @@ def cmd_check(args) -> int:
     if args.out:
         write_json(Path(args.out), out)
     rejeitadas = [r for r in rows if r["mechanical_verdict"] == "rejeitado"]
-    print(f"{len(rows)} tentativas, {len(rejeitadas)} reprovadas pela mecanica antes de "
+    indeterminadas = [r for r in rows if r["mechanical_verdict"] == "indeterminado"]
+    print(f"{len(rows)} tentativas, {len(rejeitadas)} reprovadas pela mecanica e "
+          f"{len(indeterminadas)} com julgamento bloqueado (ambiente/timeout), antes de "
           f"qualquer revisao")
     for r in rejeitadas:
-        print(f"  {r['attempt']} [{r['task_id']}] {r['mechanical_rejected_items']}")
+        print(f"  {r['attempt']} [{r['task_id']}] {r['mechanical_rejected_items']} "
+              f"({r.get('failure_class')})")
+    for r in indeterminadas:
+        print(f"  {r['attempt']} [{r['task_id']}] julgamento bloqueado: "
+              f"{r.get('acceptance_state')} ({r.get('failure_class')})")
     if args.out:
         print(f"-> {args.out}")
-    return 0 if not rejeitadas else 1
+    return 0 if (not rejeitadas and not indeterminadas) else 1
 
 
 # --- vazamento e bundle ---------------------------------------------------------------

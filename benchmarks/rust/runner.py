@@ -192,13 +192,102 @@ def sha256_file(path: Path) -> str | None:
 
 def loop_fingerprint(executor_kind: str, cmd: list[str], limits: dict,
                      statement_sha: str | None) -> str:
-    """Hash do loop fixado: executor, ferramentas básicas, tetos e enunciado.
+    """Hash da tentativa: executor, comando efetivo, tetos e enunciado (legado, instável).
 
-    Comparar este campo entre tentativas é o que impede que uma condição mude de executor,
-    ferramenta ou teto sem que o manifesto mude junto.
+    Mantido por compatibilidade com manifestos e com `--expect-loop-sha`. Ele mistura a
+    identidade da tentativa — comando com caminhos absolutos temporários + enunciado — e
+    por isso muda quando só o diretório muda (probe da auditoria 2026-10-05 §1.2). A
+    identidade da **rodada** é `loop_config_sha256` (NEXT-01); este aqui identifica a
+    tentativa, com caminhos e enunciado em campos próprios.
     """
     doc = {"executor": {"kind": executor_kind, "cmd": cmd}, "tools": sorted(FIXED_TOOLS),
            "limits": limits, "statement_sha256": statement_sha}
+    return "sha256:" + hashlib.sha256(json.dumps(doc, sort_keys=True).encode()).hexdigest()
+
+
+# --- NEXT-01: hash de configuração estável ----------------------------------------
+# O probe da auditoria mostrou `loop_fingerprint` mudando só porque os caminhos
+# temporários mudaram. A identidade da rodada exclui tudo que é da tentativa: sem
+# caminhos, sem enunciado. Mesmo loop em caminhos distintos => mesmo hash; mudança de
+# código do executor, ferramenta ou teto => hash diferente. A conferência de "mesma
+# tarefa entre braços" continua separada (tarefa + `statement_sha256`, não loop).
+LOOP_CONFIG_SCHEMA = "atlas-loop-config/1"
+TOOL_PROTOCOL = "atlas-tools/1"
+RUNNER_CODE_FILES = ("runner.py", "executor_contract.py", "real_executor.py")
+# Código de saída que os aceites reservam para falha de ambiente (harness, não patch).
+ENV_EXIT_CODE = 3
+ACCEPTANCE_STATES = ("no_base", "empty_patch", "deps_missing", "apply_failed", "passed",
+                     "patch_regression", "env_blocked", "acceptance_timeout",
+                     "acceptance_error")
+# Regra pré-especificada e igual nos três braços: só estes estados bloqueiam o
+# julgamento sem culpar o patch (o avaliador os marca `indeterminado`, nunca sucesso).
+# Todo o resto que não passa é `rejeitado` — inclusive saída 3 pós-patch sem falta
+# comprovada pré-patch não vira ambiente sozinha: a classificação vem do código de
+# saída do harness e da checagem de dependências, nunca de declaração do executor.
+ENV_INDETERMINATE_STATES = ("env_blocked", "acceptance_timeout", "deps_missing", "no_base")
+
+
+def executor_code_sha() -> dict:
+    """Hash do código do executor (runner + contrato + loop real). Muda se o código mudar."""
+    base = Path(__file__).resolve().parent
+    files: dict[str, str] = {}
+    for name in RUNNER_CODE_FILES:
+        h = sha256_file(base / name)
+        if h:
+            files[name] = "sha256:" + h
+    if len(files) < len(RUNNER_CODE_FILES):
+        missing = sorted(set(RUNNER_CODE_FILES) - set(files))
+        return {"sha256": None, "files": files,
+                "reason": f"código do executor sem hash: ausente {missing}"}
+    combined = hashlib.sha256()
+    for name in sorted(files):
+        combined.update(name.encode())
+        combined.update(b"\0")
+        combined.update(files[name].encode())
+    return {"sha256": "sha256:" + combined.hexdigest(), "files": files, "reason": None}
+
+
+def tool_spec_digest() -> dict:
+    """Protocolo de ferramentas do loop: shims do runner + ferramentas fixas do executor."""
+    try:
+        from real_executor import FIXED_EXECUTOR_TOOLS, TOOLS_SPEC  # type: ignore
+        exec_tools = sorted(tuple(FIXED_EXECUTOR_TOOLS))
+        spec = TOOLS_SPEC
+    except Exception as exc:  # noqa: BLE001 - sem o módulo, o protocolo fica sem hash
+        return {"sha256": None, "protocol": TOOL_PROTOCOL,
+                "runner_tools": sorted(FIXED_TOOLS), "executor_tools": None,
+                "reason": f"TOOLS_SPEC indisponível: {exc.__class__.__name__}"}
+    doc = {"protocol": TOOL_PROTOCOL, "runner_tools": sorted(FIXED_TOOLS),
+           "executor_tools": exec_tools, "spec": spec}
+    return {"sha256": "sha256:" + hashlib.sha256(
+        json.dumps(doc, sort_keys=True).encode()).hexdigest(),
+        "protocol": TOOL_PROTOCOL, "runner_tools": sorted(FIXED_TOOLS),
+        "executor_tools": exec_tools, "reason": None}
+
+
+def loop_config_doc(executor_kind: str, cmd_template: str | None, limits: dict) -> dict:
+    """Documento da configuração do loop: só o que é da rodada, nada da tentativa."""
+    code = executor_code_sha()
+    tools = tool_spec_digest()
+    template_sha = ("sha256:" + hashlib.sha256(cmd_template.encode()).hexdigest()
+                    if cmd_template else None)
+    return {
+        "schema": LOOP_CONFIG_SCHEMA,
+        "executor": {"kind": executor_kind, "code_sha256": code["sha256"],
+                     "code_files": code["files"], "code_reason": code["reason"]},
+        "tools": {"protocol": tools["protocol"], "runner_tools": tools["runner_tools"],
+                  "executor_tools": tools["executor_tools"],
+                  "spec_sha256": tools["sha256"], "spec_reason": tools.get("reason")},
+        "limits": limits,
+        "cmd_template_sha256": template_sha,
+        "cmd_template_note": ("modelo do comando antes de substituir {statement_file}, "
+                              "{workspace}, {tool_dir}, {out_dir}; os caminhos efetivos ficam "
+                              "em executor.cmd, fora deste hash"),
+    }
+
+
+def loop_config_sha(doc: dict) -> str:
+    """Hash estável da configuração: igual entre tentativas do mesmo loop."""
     return "sha256:" + hashlib.sha256(json.dumps(doc, sort_keys=True).encode()).hexdigest()
 
 
@@ -513,29 +602,216 @@ def capture_patch(workspace: Path, out: Path) -> dict:
     return {"file": patch.name, "bytes": len(diff.stdout), "empty": not diff.stdout}
 
 
+def git_head(repo: Path) -> str | None:
+    """HEAD completo (40 hex) ou None quando ausente."""
+    proc = subprocess.run(["git", "-C", str(repo), "rev-parse", "HEAD"],
+                          stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
+    head = proc.stdout.decode().strip()
+    return head if proc.returncode == 0 and head else None
+
+
+def git_tracked_clean(repo: Path) -> bool:
+    """Árvore rastreada limpa: sem modificação em staged nem unstaged. Não-trackeados ok."""
+    for extra in (["--cached"], []):
+        proc = subprocess.run(["git", "-C", str(repo), "diff", "--quiet", *extra],
+                              stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        if proc.returncode != 0:
+            return False
+    return True
+
+
+def preflight_workspace(workspace: Path, expected_sha: str | None) -> dict:
+    """Preflight fechado do workspace, antes do executor: SHA completo, HEAD, limpeza.
+
+    Falha aqui é BLOQUEIO (SystemExit, sem manifesto): nada rodou ainda, então recusar
+    é barato e não esconde custo. O overlay imutável (`immutable_paths`) é registrado
+    no manifesto, não bloqueia aqui — quem o fiscaliza é M5, no avaliador.
+    """
+    head = git_head(workspace)
+    if not head:
+        raise SystemExit(f"BLOQUEADO: workspace sem HEAD legível ({workspace}). "
+                         "Base sem commit não é base fixada.")
+    if expected_sha:
+        if len(expected_sha) < 40 or any(c not in "0123456789abcdef" for c in expected_sha.lower()):
+            raise SystemExit(
+                f"BLOQUEADO: base_sha da tarefa não é SHA completo (40 hex): "
+                f"{expected_sha!r}. Prefixo de 8 caracteres não fixa base.")
+        if head.lower() != expected_sha.lower():
+            raise SystemExit(f"BLOQUEADO: workspace fora do snapshot pedido: {head} vs "
+                             f"{expected_sha} (comparação exata, sem prefixo).")
+    if not git_tracked_clean(workspace):
+        raise SystemExit(f"BLOQUEADO: workspace com árvore rastreada suja ({workspace}). "
+                         "Uma tentativa por workspace novo e limpo.")
+    return {"base_sha_full": head, "head_present": True, "tracked_clean": True,
+            "tree_sha256": tree_hash(workspace),
+            "expected_sha": expected_sha,
+            "expected_reason": None if expected_sha else
+                               "tarefa sem base_sha fixado; HEAD registrado sem conferência"}
+
+
+def check_test_deps(task: dict, base: Path) -> dict:
+    """Dependências do aceite **antes** do patch: falta comprovada não culpa o patch.
+
+    Mesma regra nos três braços: só o binário/arquivo do comando é checado aqui (sem
+    executar nada). Se faltar, o patch nem é aplicado (`applied: None`) e o estado é
+    `deps_missing` — não sucesso, nem rejeição do patch.
+    """
+    command = task.get("test_command") or []
+    if not command:
+        return {"ok": False, "reason": "test_command ausente na tarefa"}
+    binary = str(command[0])
+    candidate = Path(binary)
+    if candidate.is_absolute():
+        ok = candidate.exists()
+        return {"ok": ok, "binary": binary,
+                "reason": None if ok else f"binário do aceite ausente: {binary}"}
+    if (base / binary).exists():
+        return {"ok": True, "binary": binary, "reason": None,
+                "note": "binário relativo resolvido dentro da base de aceitação"}
+    which = shutil.which(binary)
+    return {"ok": which is not None, "binary": binary,
+            "reason": None if which else f"dependência do aceite não encontrada: {binary!r} "
+                                          f"(nem em {base}, nem no PATH)"}
+
+
+def _patch_paths(text: str) -> list[str]:
+    """Caminhos tocados pelo patch (para desfazer só o patch na restauração da base)."""
+    out: list[str] = []
+    for line in text.splitlines():
+        if line.startswith("diff --git "):
+            parts = line.split()
+            if len(parts) >= 4:
+                p = parts[3]
+                out.append(p[2:] if p.startswith("b/") else p)
+        elif line.startswith("rename to "):
+            p = line[len("rename to "):].strip()
+            if p and p not in out:
+                out.append(p)
+    return out
+
+
+def restore_acceptance_base(base: Path, patch_text: str) -> dict:
+    """Devolve a base ao HEAD e remove arquivos novos vindos do patch. Nunca reutilizar
+    base modificada: a tentativa seguinte exige base limpa no preflight."""
+    subprocess.run(["git", "-C", str(base), "reset", "--hard", "-q", "HEAD"],
+                   check=False, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    removed: list[str] = []
+    for rel in _patch_paths(patch_text):
+        proc = subprocess.run(["git", "-C", str(base), "clean", "-fdq", "--", rel],
+                              check=False, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        if proc.returncode == 0:
+            removed.append(rel)
+    clean = git_tracked_clean(base)
+    return {"reset_hard": True, "patch_paths_removed": removed, "tracked_clean_after": clean,
+            "reason": None if clean else "base segue suja após restauração; orquestrador deve "
+                              "fornecer base nova (nunca reutilizar base modificada)"}
+
+
 def run_acceptance(args, task: dict, patch: Path) -> dict:
-    """Patch candidato aplicado a base limpa, testado com comando imutável do avaliador."""
+    """Patch candidato aplicado a base limpa, testado com comando imutável do avaliador.
+
+    Estados distintos (NEXT-01), mesma regra nos três braços: `no_base` (sem base),
+    `empty_patch`, `deps_missing` (falta comprovada **antes** do patch, sem aplicar),
+    `apply_failed`, `passed`, `patch_regression` (exit != 0 e != 3), `env_blocked`
+    (exit 3, reservado ao harness para ambiente), `acceptance_timeout` e
+    `acceptance_error`. Timeout e erro escrevem manifesto + log parcial e restauram a
+    base — nunca travam o runner sem rastro. Custos/retries do executor já estão no
+    manifesto; a falha do aceite não os apaga.
+    """
+    outdir = Path(args.out).resolve()
+    log_path = outdir / "acceptance_output.txt"
+    command = task.get("test_command")
+    command_sha = ("sha256:" + hashlib.sha256(
+        json.dumps(command, sort_keys=True).encode()).hexdigest() if command else None)
     if not args.acceptance_repo:
-        return {"applied": None, "exit_code": None, "seconds": None,
+        return {"state": "no_base", "applied": None, "exit_code": None, "seconds": None,
+                "command": command, "test_command_sha256": command_sha,
                 "reason": "sem --acceptance-repo: nenhuma base limpa fornecida nesta tentativa"}
-    if patch.read_bytes() == b"":
-        return {"applied": None, "exit_code": None, "seconds": None,
+    patch_bytes = patch.read_bytes()
+    patch_text = patch_bytes.decode("utf-8", errors="replace")
+    if patch_bytes == b"":
+        return {"state": "empty_patch", "applied": None, "exit_code": None, "seconds": None,
+                "command": command, "test_command_sha256": command_sha,
                 "reason": "patch vazio; nada a aplicar"}
     base = Path(args.acceptance_repo).resolve()
+    base_head_before = git_head(base)
+    if not base_head_before:
+        return {"state": "env_blocked", "applied": None, "exit_code": None, "seconds": None,
+                "command": command, "test_command_sha256": command_sha,
+                "base_head_before": None, "reason": "base de aceitação sem HEAD legível; "
+                "julgamento bloqueado sem culpar o patch"}
+    if not git_tracked_clean(base):
+        return {"state": "env_blocked", "applied": None, "exit_code": None, "seconds": None,
+                "command": command, "test_command_sha256": command_sha,
+                "base_head_before": base_head_before,
+                "reason": "base de aceitação suja: nunca reutilizar base modificada pela "
+                          "tentativa anterior; julgamento bloqueado sem culpar o patch"}
+    deps = check_test_deps(task, base)
+    if not deps["ok"]:
+        return {"state": "deps_missing", "applied": None, "exit_code": None, "seconds": None,
+                "command": command, "test_command_sha256": command_sha,
+                "base_head_before": base_head_before, "deps": deps,
+                "reason": f"dependência do aceite ausente antes do patch ({deps['reason']}): "
+                          "falta comprovada não é sucesso nem rejeição do patch; patch não aplicado"}
     apply_proc = subprocess.run(["git", "-C", str(base), "apply", "--check", str(patch)],
                                 stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     if apply_proc.returncode != 0:
-        return {"applied": False, "exit_code": None, "seconds": None,
-                "reason": apply_proc.stdout.decode("utf-8", errors="replace")[-400:]}
+        return {"state": "apply_failed", "applied": False, "exit_code": None, "seconds": None,
+                "command": command, "test_command_sha256": command_sha,
+                "base_head_before": base_head_before, "deps": deps,
+                "reason": apply_proc.stdout.decode("utf-8", errors="replace")[-400:] or
+                          "git apply --check reprovou o patch"}
     subprocess.run(["git", "-C", str(base), "apply", str(patch)], check=True)
-    command = task["test_command"]
+    timeout_s = task.get("timeout_s", 600)
     started = time.time()
-    proc = subprocess.run(command, cwd=str(base), stdout=subprocess.PIPE,
-                          stderr=subprocess.STDOUT, timeout=task.get("timeout_s", 600))
+    try:
+        proc = subprocess.run(command, cwd=str(base), stdout=subprocess.PIPE,
+                              stderr=subprocess.STDOUT, timeout=timeout_s)
+    except subprocess.TimeoutExpired as exc:
+        seconds = time.time() - started
+        partial = exc.stdout or b""
+        log_path.write_bytes(partial if isinstance(partial, bytes) else str(partial).encode())
+        restored = restore_acceptance_base(base, patch_text)
+        return {"state": "acceptance_timeout", "applied": True, "command": command,
+                "test_command_sha256": command_sha, "exit_code": None,
+                "seconds": round(seconds, 3), "timeout_s": timeout_s,
+                "base_head_before": base_head_before, "base_head_after": git_head(base),
+                "deps": deps, "restored": restored, "log_file": log_path.name,
+                "reason": f"aceite excedeu o teto de {timeout_s}s; saída parcial em "
+                          f"{log_path.name}; base restaurada"}
+    except Exception as exc:  # noqa: BLE001 - aceite que nem executa e bloqueio, não patch
+        seconds = time.time() - started
+        restored = restore_acceptance_base(base, patch_text)
+        return {"state": "acceptance_error", "applied": True, "command": command,
+                "test_command_sha256": command_sha, "exit_code": None,
+                "seconds": round(seconds, 3),
+                "base_head_before": base_head_before, "base_head_after": git_head(base),
+                "deps": deps, "restored": restored, "log_file": None,
+                "reason": f"aceite não executou ({exc.__class__.__name__}: {exc}); base restaurada"}
     seconds = time.time() - started
-    (Path(args.out).resolve() / "acceptance_output.txt").write_bytes(proc.stdout)
-    return {"applied": True, "command": command, "exit_code": proc.returncode,
-            "seconds": round(seconds, 3), "reason": None}
+    log_path.write_bytes(proc.stdout)
+    restored = restore_acceptance_base(base, patch_text)
+    if proc.returncode == 0:
+        return {"state": "passed", "applied": True, "command": command,
+                "test_command_sha256": command_sha, "exit_code": 0,
+                "seconds": round(seconds, 3),
+                "base_head_before": base_head_before, "base_head_after": git_head(base),
+                "deps": deps, "restored": restored, "log_file": log_path.name, "reason": None}
+    if proc.returncode == ENV_EXIT_CODE:
+        return {"state": "env_blocked", "applied": True, "command": command,
+                "test_command_sha256": command_sha, "exit_code": proc.returncode,
+                "seconds": round(seconds, 3),
+                "base_head_before": base_head_before, "base_head_after": git_head(base),
+                "deps": deps, "restored": restored, "log_file": log_path.name,
+                "reason": "aceite saiu com código 3 (ambiente, reservado ao harness): "
+                          "julgamento bloqueado; saída preservada em acceptance_output.txt para "
+                          "auditoria; não conta como sucesso nem como regressão do patch"}
+    return {"state": "patch_regression", "applied": True, "command": command,
+            "test_command_sha256": command_sha, "exit_code": proc.returncode,
+            "seconds": round(seconds, 3),
+            "base_head_before": base_head_before, "base_head_after": git_head(base),
+            "deps": deps, "restored": restored, "log_file": log_path.name,
+            "reason": f"aceite reprovou o patch (exit {proc.returncode})"}
 
 
 DRY_SCRIPT = '''#!/usr/bin/env python3
@@ -621,7 +897,12 @@ def main() -> int:
     ap.add_argument("--executor-result", default=None,
                     help="result contract do executor (padrao: <out>/executor_result.json)")
     ap.add_argument("--expect-loop-sha", default=None,
-                    help="recusa iniciar se o loop fixado (executor+ferramentas+tetos+enunciado) divergir")
+                    help="legado: recusa iniciar se o hash da tentativa "
+                    "(executor+comando+tetos+enunciado) divergir")
+    ap.add_argument("--expect-loop-config-sha", default=None,
+                    help="recusa iniciar se a configuração do loop (código do executor + "
+                    "protocolo de ferramentas + tetos, sem caminhos nem enunciado) divergir "
+                    "da fixada para a rodada")
     args = ap.parse_args()
 
     if args.executor == "dry" and not args.allow_dry:
@@ -640,11 +921,10 @@ def main() -> int:
     out.mkdir(parents=True, exist_ok=True)
     gold_check = check_gold_separation(gold, workspace)
 
-    base_sha = subprocess.run(["git", "-C", str(workspace), "rev-parse", "HEAD"],
-                              stdout=subprocess.PIPE, stderr=subprocess.DEVNULL
-                              ).stdout.decode().strip() or None
-    if task.get("base_sha") and base_sha and not base_sha.startswith(task["base_sha"][:8]):
-        raise SystemExit(f"workspace nao esta no snapshot pedido: {base_sha} vs {task['base_sha']}")
+    # Preflight fechado do workspace (NEXT-01): SHA completo, HEAD presente e árvore
+    # rastreada limpa — antes do executor, sem manifesto em caso de recusa.
+    wf_preflight = preflight_workspace(workspace, task.get("base_sha"))
+    base_sha = wf_preflight["base_sha_full"]
 
     statement_file = out / "statement.txt"
     statement_file.write_text(task["statement"])
@@ -679,12 +959,25 @@ def main() -> int:
 
     limits = {"wall_s": args.wall_limit, "turns": args.turn_limit,
               "tool_calls": args.tool_call_limit}
-    loop_sha = loop_fingerprint(args.executor, cmd, limits, sha256_file(statement_file))
+    statement_sha = sha256_file(statement_file)
+    loop_sha = loop_fingerprint(args.executor, cmd, limits, statement_sha)
+    # Configuração estável da rodada (NEXT-01): modelo do comando antes de substituir
+    # caminhos — caminhos efetivos e enunciado ficam fora deste hash, em campos próprios.
+    cmd_template = args.executor_cmd if args.executor == "cmd" else None
+    config_doc = loop_config_doc(args.executor, cmd_template, limits)
+    config_sha = loop_config_sha(config_doc)
     if args.expect_loop_sha and args.expect_loop_sha != loop_sha:
         raise SystemExit(
-            f"BLOQUEADO: loop diferente do fixado para a rodada ({loop_sha} != "
+            f"BLOQUEADO: tentativa fora do loop fixado ({loop_sha} != "
             f"{args.expect_loop_sha}). Os tres bracos rodam o mesmo loop; mudar executor, "
             "ferramenta ou teto exige configuracao nova registrada, nao edicao silenciosa."
+        )
+    if args.expect_loop_config_sha and args.expect_loop_config_sha != config_sha:
+        raise SystemExit(
+            f"BLOQUEADO: configuração do loop diferente da fixada para a rodada "
+            f"({config_sha} != {args.expect_loop_config_sha}). Mesmo loop em caminhos "
+            "distintos produz o mesmo hash; divergência aqui significa mudança de código, "
+            "ferramenta ou teto — exige configuração nova registrada."
         )
     started_iso = time.strftime("%Y-%m-%dT%H:%M:%S%z")
     exit_code, stopped_by, killed, seconds, peak_rss, acct = run_executor(
@@ -788,13 +1081,30 @@ def main() -> int:
         "executor": {"kind": args.executor, "cmd": cmd,
                      "cmd_sha256": "sha256:" + hashlib.sha256(
                          json.dumps(cmd, sort_keys=True).encode()).hexdigest(),
+                     "cmd_template": cmd_template,
                      "loop_sha256": loop_sha, "expected_loop_sha256": args.expect_loop_sha,
+                     "loop_config_sha256": config_sha, "loop_config": config_doc,
+                     "expected_loop_config_sha256": args.expect_loop_config_sha,
+                     "task_identity": {"id": task["id"],
+                                      "statement_sha256": statement_sha,
+                                      "note": "mesma tarefa entre braços se confere por "
+                                              "tarefa+enunciado, nunca pelo hash do loop"},
                      "tools_registered": list(FIXED_TOOLS),
                      "result_path": str(result_path),
                      "result_received": result_doc is not None},
         "model": model_block,
         "tokenizer": tokenizer_block,
-        "prompt": {"statement_sha256": sha256_file(statement_file),
+        "preflight": {
+            "workspace": wf_preflight,
+            "overlay": {"immutable_paths": task.get("immutable_paths"),
+                        "note": "overlay imutável identificado por lista declarada da tarefa; "
+                                "a fiscalização é M5 no avaliador"},
+            "note": "preflight fechado (NEXT-01): SHA completo, HEAD presente, árvore "
+                      "rastreada limpa; base de aceitação tem preflight próprio em "
+                      "acceptance.* e é restaurada após o teste (nunca reutilizar base "
+                      "modificada)",
+        },
+        "prompt": {"statement_sha256": statement_sha,
                    "tool_specs_sha256": None,
                    "tool_specs_reason": "as descricoes das ferramentas sao do executor, nao deste runner"},
         "limits": limits,

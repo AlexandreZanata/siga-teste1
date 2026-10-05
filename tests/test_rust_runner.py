@@ -263,6 +263,10 @@ def test_integracao_com_o_binario_rust_de_verdade(tmp_path):
         "package br.gov;\n\npublic class App {\n  public int getTitular() { return 7; }\n}\n"
     )
     (repo / "br/gov/Outro.java").write_text("package br.gov;\n\npublic class Outro {}\n")
+    # NEXT-01: o preflight fechado exige workspace com HEAD — checkout git, como na rodada.
+    for cmd in (["git", "init", "-q"], ["git", "add", "-A"],
+                ["git", "-c", "user.email=t@t", "-c", "user.name=t", "commit", "-qm", "base"]):
+        subprocess.run(cmd, cwd=repo, check=True, stdout=subprocess.DEVNULL)
     index = tmp_path / "idx.sqlite"
     built = subprocess.run(
         [str(ATLAS_BIN), "index", "--repo", str(repo), "--index", str(index),

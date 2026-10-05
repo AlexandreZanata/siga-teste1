@@ -16,6 +16,13 @@ Fila atual: [fases após preparação](../FASES_POS_PREPARACAO_2026_10_05.md). V
 
 Próxima ação: A começa NEXT-01 e NEXT-02/SIGA; B começa NEXT-02/Bitcoin após consumir checkpoint. Nenhum modelo chamado nesta revisão; ganho científico continua **não avaliado**. Histórico abaixo preservado, inclusive os selos válidos como inventários.
 
+## NEXT-01 executada (2026-10-05) — instrumento fechado antes da rodada
+
+- **O que existe agora:** `executor.loop_config_sha256` (`atlas-loop-config/1`: espécie + hash do código do executor, protocolo `atlas-tools/1`, tetos — sem caminhos nem enunciado) com `--expect-loop-config-sha`; `loop_sha256` mantido como identidade da tentativa. Preflight fechado do workspace (SHA completo exato, HEAD presente, árvore rastreada limpa) e da base de aceitação (HEAD, limpeza, dependências antes do patch, restauração após o teste). `acceptance.state` em 9 estados (`passed`, `patch_regression`, `apply_failed`, `empty_patch`, `deps_missing`, `env_blocked` no exit 3, `acceptance_timeout`, `acceptance_error`, `no_base`), mesma regra nos três braços; avaliador marca `indeterminado` (`environmental`) quando só M1/M2 acusam por causa ambiental — nunca sucesso, nunca rejeição do patch.
+- **Testes:** 13 novos em [`tests/test_next01_closed_instrument.py`](../../tests/test_next01_closed_instrument.py) (config estável entre caminhos, preflight recusando SHA curto/HEAD ausente/base suja, timeout com manifesto+log, exit 3 igual nos 3 braços, dependência ausente sem culpar o patch, `apply_failed` ≠ `patch_regression`). Ajuste honesto em `test_integracao_com_o_binario_rust_de_verdade` (workspace virou checkout git, como a regra exige). Rubrica `ATLAS-RUBRIC/1` intacta; selos anteriores intocados.
+- **Checkpoint de core para B:** [`benchmarks/rust/next01-checkpoint.json`](../../benchmarks/rust/next01-checkpoint.json). Nenhuma tentativa com modelo rodou; P1/P2 continuam pendentes.
+- **O que continua aberto:** NEXT-02 (conjuntos piloto separados), NEXT-03/04 (ensaio completo e executor real com modelo/teto).
+
 ## TASK-EXP02 selada (2026-10-02) — piloto SIGA de 16 congelado
 
 - **O que existe agora:** [`pilot16.tasks.json`](../../benchmarks/siga/rust/pilot16.tasks.json) (`atlas-tasks/2`, 16 tarefas, `sealed:true`, `sha256:6b9ea882…57d1443c`, `eval.py validate` limpo 4/4/4/4) gerado por união fiel dos três lotes + [`pilot16-checkpoint.json`](../../benchmarks/siga/rust/pilot16-checkpoint.json) para B + selo travado em `experiments/rust/siga/2026-10-02-exp02-seal/seal.json` + revisão em [`REVISAO_SEAL16.md`](../../research/siga/rust/REVISAO_SEAL16.md).

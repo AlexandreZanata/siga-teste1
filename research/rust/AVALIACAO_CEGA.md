@@ -38,6 +38,8 @@ O schema `/1` bastou para ensaiar o runner: `id`, `split`, `category`, `statemen
 
 `M2` merece uma frase: os testes que o **agente** escreveu são evidência complementar, nunca o critério — se ele escreve um teste que passa, isso não prova que o requisito foi atendido.
 
+**NEXT-01 — estados do aceite.** O runner persiste `acceptance.state`: `passed`, `patch_regression` (exit ≠ 0 e ≠ 3), `apply_failed`, `empty_patch`, `deps_missing` (falta comprovada antes do patch, sem aplicar), `env_blocked` (exit 3, reservado ao harness para ambiente), `acceptance_timeout` e `acceptance_error`, além de `no_base`. A regra é pré-especificada e igual nos três braços. Quando só M1/M2 acusam e a causa é ambiental (`env_blocked`, `acceptance_timeout`, `deps_missing`, `no_base`), o veredito mecânico é `indeterminado` — julgamento bloqueado, nunca sucesso e nunca rejeição do patch (`failure_class: environmental`). Todo o resto que não passa é `rejeitado` (`failure_class: patch_fault`). Nenhuma falha sai do denominador. A rubrica `ATLAS-RUBRIC/1` não mudou: só a interpretação de M1/M2 ganhou a classe da falha, sem renomear itens.
+
 ### 2.2 Itens semânticos (revisão humana)
 
 | Item | Pergunta | O que **não** é evidência |
