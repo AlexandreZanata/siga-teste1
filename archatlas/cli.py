@@ -18,6 +18,8 @@ def main() -> int:
     ap.add_argument("--name", default="ExMovimentacao")
     ap.add_argument("--query", default="")
     ap.add_argument("--budget", type=int, default=2000)
+    ap.add_argument("--subtree", default="siga-ex/src/main/java",
+                    help="subarvore do dataset indexada por `index` (default: corpus congelado R2)")
     args = ap.parse_args()
     ds = pathlib.Path(args.dataset) if args.dataset else dataset_root()
     if args.cmd == "verify":
@@ -65,7 +67,11 @@ def main() -> int:
             return 2
         raise
     if args.cmd == "index":
-        paths = sorted((ds / "siga-ex/src/main/java").rglob("*.java"))
+        scope = ds / args.subtree
+        if not scope.is_dir():
+            print(f"subarvore ausente: {scope}", file=sys.stderr)
+            return 2
+        paths = sorted(scope.rglob("*.java"))
         print(index_many(con, paths, "e3be22828"))
         return 0
     if args.cmd == "find":

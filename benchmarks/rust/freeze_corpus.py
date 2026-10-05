@@ -32,11 +32,12 @@ REPO_ROOT = Path(__file__).resolve().parent.parent.parent
 SUBTREE = "siga-ex/src/main/java"
 
 
-def python_index(dataset: Path, index: Path, python_bin: str) -> dict:
+def python_index(dataset: Path, index: Path, python_bin: str, subtree: str) -> dict:
     index.unlink(missing_ok=True)
     env = dict(os.environ, ARCHATLAS_DATASET=str(dataset))
     proc = subprocess.run(
-        [python_bin, "-m", "archatlas.cli", "index", "--db", str(index)],
+        [python_bin, "-m", "archatlas.cli", "index", "--db", str(index),
+         "--subtree", subtree],
         cwd=str(REPO_ROOT),
         env=env,
         stdout=subprocess.PIPE,
@@ -49,14 +50,14 @@ def python_index(dataset: Path, index: Path, python_bin: str) -> dict:
     return {"stdout": proc.stdout.decode().strip()}
 
 
-def rust_index(dataset: Path, index: Path, rust_bin: Path) -> dict:
+def rust_index(dataset: Path, index: Path, rust_bin: Path, subtree: str) -> dict:
     index.unlink(missing_ok=True)
     for extra in (Path(str(index) + "-wal"), Path(str(index) + "-shm")):
         extra.unlink(missing_ok=True)
     proc = subprocess.run(
         [
             str(rust_bin), "index",
-            "--repo", str(dataset / SUBTREE),
+            "--repo", str(dataset / subtree),
             "--index", str(index),
             # O filtro é o que torna o corpus idêntico ao da referência.
             "--include", "java",
@@ -107,6 +108,8 @@ def main() -> int:
     ap.add_argument("--rust-bin", default=str(REPO_ROOT / "rust/archatlas/target/release/archatlas"))
     ap.add_argument("--python-bin", default=sys.executable)
     ap.add_argument("--keep-indexes", action="store_true", help="manter os .sqlite na saida")
+    ap.add_argument("--subtree", default=SUBTREE,
+                    help="subarvore do dataset a congelar (default: corpus R2; Q8-real usa a raiz)")
     args = ap.parse_args()
 
     dataset = Path(args.dataset).resolve()
@@ -114,17 +117,17 @@ def main() -> int:
     out.mkdir(parents=True, exist_ok=True)
     find_time_bin()  # falha cedo se não houver medição confiável
 
-    subtree = dataset / SUBTREE
+    subtree = dataset / args.subtree
     if not subtree.is_dir():
         raise SystemExit(f"subarvore ausente: {subtree}")
 
     py_index = out / "index_python.sqlite"
     rs_index = out / "index_rust.sqlite"
 
-    print("[1/3] indice Python (504 .java)...")
-    py_raw = python_index(dataset, py_index, args.python_bin)
-    print("[2/3] indice Rust (mesma subarvore, --include java)...")
-    rs_counts = rust_index(dataset, rs_index, Path(args.rust_bin))
+    print(f"[1/3] indice Python ({args.subtree}, *.java)...")
+    py_raw = python_index(dataset, py_index, args.python_bin, args.subtree)
+    print(f"[2/3] indice Rust (mesma subarvore, --include java)...")
+    rs_counts = rust_index(dataset, rs_index, Path(args.rust_bin), args.subtree)
 
     print("[3/3] conferindo igualdade de corpus...")
     py_files = read_side(py_index, subtree)
@@ -146,7 +149,7 @@ def main() -> int:
 
     manifest = {
         "schema": "atlas-corpus/1",
-        "dataset": {"root_name": dataset.name, "sha": dataset_sha, "subtree": SUBTREE},
+        "dataset": {"root_name": dataset.name, "sha": dataset_sha, "subtree": args.subtree},
         "corpus": {
             "files": len(common),
             "list_sha256": hashlib.sha256("\n".join(common).encode()).hexdigest(),
@@ -167,7 +170,7 @@ def main() -> int:
             },
         },
         "side_config": {
-            "python": {"index": py_index.name, "stdout": py_raw["stdout"], "root_prefix": SUBTREE},
+            "python": {"index": py_index.name, "stdout": py_raw["stdout"], "root_prefix": args.subtree},
             "rust": {"index": rs_index.name, "counts": rs_counts, "root_prefix": "(ja relativo)"},
         },
         "environment": environment_manifest(),
