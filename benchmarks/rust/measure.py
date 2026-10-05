@@ -121,7 +121,7 @@ def python_argv(python_bin: str, index: Path, query: str, budget: int) -> list[s
 
 
 def measure_queries(args) -> int:
-    subtree = Path(args.dataset).resolve() / SUBTREE
+    subtree = Path(args.dataset).resolve() / args.subtree
     rust_index = Path(args.rust_index).resolve()
     py_index = Path(args.python_index).resolve()
     out = Path(args.out).resolve()
@@ -240,7 +240,7 @@ def measure_queries(args) -> int:
             "rust_index": str(rust_index),
             "python_index": str(py_index),
             "python_bin": args.python_bin,
-            "repo_subtree": SUBTREE,
+            "repo_subtree": args.subtree,
             "max_bytes_rule": "4 * budget_tokens",
         },
         "measurement": {
@@ -262,7 +262,7 @@ def measure_queries(args) -> int:
 
 def measure_index(args) -> int:
     """Dispersão de build: uma execução por diretório exclusivo, nada reaproveitado."""
-    subtree = Path(args.dataset).resolve() / SUBTREE
+    subtree = Path(args.dataset).resolve() / args.subtree
     out = Path(args.out).resolve()
     out.mkdir(parents=True, exist_ok=True)
     work = Path(tempfile.mkdtemp(prefix="atlas-idx-"))
@@ -282,7 +282,8 @@ def measure_index(args) -> int:
             else:
                 idx = work / f"python-{rep}.sqlite"
                 idx.unlink(missing_ok=True)
-                argv = [args.python_bin, "-m", "archatlas.cli", "index", "--db", str(idx)]
+                argv = [args.python_bin, "-m", "archatlas.cli", "index", "--db", str(idx),
+                        "--subtree", args.subtree]
                 res = run_measured(argv, env=py_env, cwd=str(REPO_ROOT))
             m = res["metrics"]
             rows.append({
@@ -318,7 +319,7 @@ def measure_index(args) -> int:
         "repetitions": args.reps,
         "rows": len(rows),
         "inputs": {"rust_bin": args.rust_bin, "python_bin": args.python_bin,
-                   "corpus": SUBTREE, "include": "java",
+                   "corpus": args.subtree, "include": "java",
                    "index_dirs": "exclusivos por execucao (nada reaproveitado)"},
         "environment": environment_manifest(),
     })
@@ -1019,6 +1020,8 @@ def main() -> int:
                     help="corpus.json (obrigatório em --mode update e --mode scale)")
     ap.add_argument("--scale-sizes", default="1,10,30,100",
                     help="multiplicadores do corpus base em --mode scale")
+    ap.add_argument("--subtree", default=SUBTREE,
+                    help="subarvore do dataset nos modos index/query (default: corpus R2)")
     ap.add_argument("--index-reps", type=int, default=3,
                     help="repetições de indexação no maior tamanho (decresce 1 por tamanho)")
     ap.add_argument("--rust-bin", default=str(REPO_ROOT / "rust/archatlas/target/release/archatlas"))

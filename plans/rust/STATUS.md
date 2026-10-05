@@ -81,7 +81,7 @@ Nova fila: [TASK-A01–A03, B01–B02 e EXP01–EXP04](../PROXIMAS_TASKS_SIGA_BI
 - R0 **não** executou piloto, custo nem confirmação. Nenhuma conclusão de utilidade existe até R5.
 - Bloqueios de ambiente: RAM disponível restringe medições de RSS; build Bitcoin segue bloqueado (sem `depends`/sudo) — SIGA não espera.
 - Pendências de dono **usuário**: modelo efetivo (P1), teto financeiro (P2), custodiante do holdout (P4). As demais têm dono A ou B e estão em `BASELINE.md` §5.
-- Próxima ação executora: **R3** bloqueada por P1/P2 (modelo efetivo e teto financeiro). Com a camada de avaliação implementada, as pendências técnicas de A estão fechadas (Q1, Q3, Q5, Q7, além do instrumento de R3/R5) e o que resta aberto exige decisão do usuário — Q2 (CI), Q4 (cache frio e cgroup), Q6 (execução real do runner), Q8-parcial (replicado ×30/×100 em 2026-10-05, Adendo no R2_REPORT; resta corpus real não copiado) — ou dado que ainda não existe (tarefas reais, revisores humanos, intervalo de confiança de R4).
+- Próxima ação executora: **R3** bloqueada por P1/P2 (modelo efetivo e teto financeiro). Com a camada de avaliação implementada, as pendências técnicas de A estão fechadas (Q1, Q3, Q5, Q7, além do instrumento de R3/R5) e o que resta aberto exige decisão do usuário — Q2 (CI), Q4 (cache frio e cgroup), Q6 (execução real do runner), Q8 (fechada em 2026-10-05: reps ×30/×100 + corpus real de 2278 medido) — ou dado que ainda não existe (tarefas reais, revisores humanos, intervalo de confiança de R4).
 
 ## R1 executado (2026-09-29)
 
@@ -134,6 +134,6 @@ Cada gate registra separadamente `planejado / implementado / ensaiado / executad
 
 Na retomada registrar dono, checkpoint, versão/hash do binário, datasets, fase, último aceite, próxima ação, execução ativa e reserva de recursos. Não copiar números dos experimentos Python para resultados Rust.
 
-Pendências ao fim de R2: Q2 (workflow de CI para `cargo test`, dono usuário), Q4 (cache frio e cgroup isolado, dono usuário), Q6 (execução real do runner: contrato do executor implementado e ensaiado em 2026-10-02; faltam executor/modelo, captura real, rubrica do avaliador e teto financeiro), Q8-parcial (replicado ×30/×100 em 2026-10-05; resta corpus real não copiado) e Q9 (o alcance lexical da consulta é subconjunto dos arquivos que o `context` já entregou — quem quer alcance novo consulta, não expande). Q1, Q3, Q5 e **Q7** fechadas. Detalhe em [`R2_REPORT.md`](../../research/rust/R2_REPORT.md) §13.
+Pendências ao fim de R2: Q2 (workflow de CI para `cargo test`, dono usuário), Q4 (cache frio e cgroup isolado, dono usuário), Q6 (execução real do runner: contrato do executor implementado e ensaiado em 2026-10-02; faltam executor/modelo, captura real, rubrica do avaliador e teto financeiro), Q8 (fechada em 2026-10-05; corpus real de 2278 dentro das metas §5) e Q9 (o alcance lexical da consulta é subconjunto dos arquivos que o `context` já entregou — quem quer alcance novo consulta, não expande). Q1, Q3, Q5 e **Q7** fechadas. Detalhe em [`R2_REPORT.md`](../../research/rust/R2_REPORT.md) §13.
 
 O que ainda não tem dono técnico e é o caminho natural: **R3 só depende de P1/P2**, mas a rubrica por tarefa e o avaliador cego de R4 podem ser escritos antes — são eles que decidem o que "aceite" significa quando o modelo enfim rodar.

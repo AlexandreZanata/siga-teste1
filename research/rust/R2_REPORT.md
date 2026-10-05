@@ -331,7 +331,7 @@ Pendências ao fim de R2:
 | Q2 | Workflow de CI para `cargo test` | usuário | aberta |
 | Q3 | Comparação de implementação ou de produto | A | **fechada** (§6: de produto, declarado) |
 | Q4 | Cache frio e cgroup isolado (P8) | usuário | aberta — exige máquina dedicada/root |
-| Q8 | Corpus de escala sintético e `n=1` nos dois maiores tamanhos | A | **replicada em 2026-10-05** (Adendo: índice ×30 n=4, ×100 n=3; `context` n=10; tendência confirmada) — resta medir um corpus real grande não copiado |
+| Q8 | Corpus de escala sintético e `n=1` nos dois maiores tamanhos | A | **fechada em 2026-10-05** (Adendos: reps ×30/×100 + corpus real de 2278 medido; tendência e metas confirmadas) |
 | Q5 | Microbenchmark de `expand` e `verify` | A | **fechada** (§8: 700 + 875 execuções, 875/875 códigos previstos) |
 | Q6 | Integração com o runner real | A (infra) + usuário (P1/P2) | **infraestrutura pronta e ensaiada** ([`RUNNER_PILOTO.md`](RUNNER_PILOTO.md)); falta executor/modelo, rubrica e teto financeiro |
 | Q7 | `evidence_wanted=references` inerte quando `known_refs` consomem o teto | A | **fechada** (§8.1.1 e §8.1.2: dois grupos de spans por arquivo citado + `evidence_reserve_pct`, com antes/depois medido) |
@@ -372,3 +372,21 @@ Sonda da raiz (`--subtree .`, repo SIGA real, 2,1 GiB): Python 2328 × Rust 2278
 Alinhamento em vez de exclusão: o indexador Python pula subdiretórios com `.git` próprio (regra de repos aninhados, igual ao walker Rust; a raiz do escopo nunca é excluída), e `gen_queries.py` aceita `--subtree` (default idêntico ao fixo; regenerar as 30 consultas do corpus 504 produz lista idêntica). Provas em `tests/test_corpus_subtree.py` (5 testes: fingerprint 504 pinado, flag noop, walker unitário, raiz equivalente, regen idêntica).
 
 Corpus real congelado em `experiments/rust/siga/2026-10-05-q8-realcorpus/corpus.json`: **2278 arquivos, fingerprint `34eb6630…`, equivalência OK (conjunto e bytes)**. Falta o passo 3, ainda aberto: rosquear `--subtree` nos modos `index`/`query` de `measure.py`, derivar as consultas do corpus real e medir (índice + `context`) — só então Q8 fecha.
+
+## Adendo 2026-10-05 (4) — Q8 fechada: corpus real medido (passo 3)
+
+`--subtree` rosqueado em `measure.py` (modos `index`/`query`, manifests registram o corpus; demais modos seguem no 504 por desenho) — provas em `tests/test_measure_subtree.py` (2 testes). Medição em `experiments/rust/siga/2026-10-05-q8-realmeasure/`: 30 consultas derivadas do vocabulário real (36 906 tokens) + 6 de borda, CTX-RS orçamento 2000, 5 reps/braço (360 execuções, exit 0 em todas, `used_bytes` == stdout em 180/180), índices removidos antes do commit.
+
+| fase | impl | n | wall p50 | wall p95 | wall máx | RSS p50 | índice |
+|---|---|---|---|---|---|---|---|
+| index (2278 arqs reais) | python | 3 | 17,81 s | 22,99 s | 22,99 s | 26,1 MB | 9,46 MB |
+| index (2278 arqs reais) | rust | 3 | 0,61 s | 0,64 s | 0,64 s | 12,9 MB | 17,23 MB |
+| context (36 consultas) | python | 180 | 0,305 s | 0,650 s | 0,810 s | 49,8 MB | — |
+| context (36 consultas) | rust | 180 | 0,010 s | 0,030 s | 0,040 s | 7,3 MB | — |
+
+Leitura:
+
+- **Metas §5 atendidas no corpus real, pela primeira vez fora do 504:** Rust `context` p95 0,030 s (teto 150 ms) e pico 13,6 MB (teto 96 MiB); `index` RSS 13,0 MB (teto 256 MiB). Medido, não projetado — e desta vez com `doc_freq`/ranking reais.
+- **Textura de projeto real:** o lado Rust contou a árvore inteira (7331 não-suportados, 4640 excluídos pelo filtro, 0 ilegíveis) — número que o corpus copiado jamais daria.
+- **Só custo, como em §9:** sem gabarito para as consultas novas, não há afirmação de recall/qualidade no corpus real — só tempo, RSS e bytes.
+- **Q8 fechada** (reps + corpus real). De R2 seguem abertos só itens de dono usuário (Q2, Q4), P1/P2 (Q6, R3) e o fato estrutural Q9.

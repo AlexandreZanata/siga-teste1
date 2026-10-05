@@ -1,0 +1,49 @@
+{
+ "schema": "atlas-run/1",
+ "mode": "index",
+ "invocation": [
+  "python",
+  "benchmarks/rust/measure.py",
+  "--mode",
+  "index",
+  "--out",
+  "experiments/rust/siga/2026-10-05-q8-realmeasure",
+  "--reps",
+  "3",
+  "--subtree",
+  ".",
+  "--dataset",
+  "../siga",
+  "--rust-bin",
+  "rust/archatlas/target/release/archatlas",
+  "--python-bin",
+  ".venv/bin/python"
+ ],
+ "repetitions": 3,
+ "rows": 6,
+ "inputs": {
+  "rust_bin": "rust/archatlas/target/release/archatlas",
+  "python_bin": ".venv/bin/python",
+  "corpus": ".",
+  "include": "java",
+  "index_dirs": "exclusivos por execucao (nada reaproveitado)"
+ },
+ "environment": {
+  "os": "Linux-7.1.5-76070105-generic-x86_64-with-glibc2.39",
+  "kernel": "7.1.5-76070105-generic",
+  "machine": "x86_64",
+  "cpu_model": "13th Gen Intel(R) Core(TM) i7-13620H",
+  "nproc": 16,
+  "meminfo": {
+   "MemTotal": "32556576 kB",
+   "MemAvailable": "11100872 kB"
+  },
+  "rustc": "rustc 1.96.0 (ac68faa20 2026-05-25)",
+  "cargo": "cargo 1.96.0 (30a34c682 2026-05-25)",
+  "python": "3.12.3",
+  "gnu_time": "time (GNU Time) UNKNOWN\nCopyright (C) 2018 Free Software Foundation, Inc.\nLicense GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>.\nThis is free software: you are free to change and redistribute it.\nThere is NO WARRANTY, to the extent permitted by law.\n\nWritten by David Keppel, David MacKenzie, and Assaf Gordon.",
+  "git_head": "7e1cb73227f34cf78bf7a9e04e9164f314dad463",
+  "git_head_short": "7e1cb73",
+  "git_dirty": true
+ }
+}

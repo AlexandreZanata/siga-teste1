@@ -1,0 +1,259 @@
+{
+ "schema": "atlas-queries/1",
+ "generator": "benchmarks/rust/gen_queries.py",
+ "source_corpus": {
+  "files": 2278,
+  "fingerprint": "34eb6630709f24c5d96941b97e9b7f9e9bf986dfe488bf19c4c05f07e9dd173d"
+ },
+ "strata_definition": {
+  "1": {
+   "min": 1,
+   "max": 1
+  },
+  "2-5": {
+   "min": 2,
+   "max": 5
+  },
+  "6-20": {
+   "min": 6,
+   "max": 20
+  },
+  "21-100": {
+   "min": 21,
+   "max": 100
+  },
+  ">100": {
+   "min": 101,
+   "max": null
+  }
+ },
+ "per_stratum": 6,
+ "queries": [
+  {
+   "id": "q01",
+   "text": "A04000",
+   "stratum": "1",
+   "doc_freq": 1
+  },
+  {
+   "id": "q02",
+   "text": "RESOURCE_BUNDLE",
+   "stratum": "1",
+   "doc_freq": 1
+  },
+  {
+   "id": "q03",
+   "text": "desc_tipo_mobil",
+   "stratum": "1",
+   "doc_freq": 1
+  },
+  {
+   "id": "q04",
+   "text": "imageQRCode",
+   "stratum": "1",
+   "doc_freq": 1
+  },
+  {
+   "id": "q05",
+   "text": "redirecionaPaginaCasoOcorraErros",
+   "stratum": "1",
+   "doc_freq": 1
+  },
+  {
+   "id": "q06",
+   "text": "zone",
+   "stratum": "1",
+   "doc_freq": 1
+  },
+  {
+   "id": "q07",
+   "text": "AAAA",
+   "stratum": "2-5",
+   "doc_freq": 2
+  },
+  {
+   "id": "q08",
+   "text": "RecuperarMenuAbastecimentosAvancado",
+   "stratum": "2-5",
+   "doc_freq": 2
+  },
+  {
+   "id": "q09",
+   "text": "daoId",
+   "stratum": "2-5",
+   "doc_freq": 2
+  },
+  {
+   "id": "q10",
+   "text": "getTipoPermissaoSet",
+   "stratum": "2-5",
+   "doc_freq": 4
+  },
+  {
+   "id": "q11",
+   "text": "protocolo_arq_transf",
+   "stratum": "2-5",
+   "doc_freq": 3
+  },
+  {
+   "id": "q12",
+   "text": "zonedDateTime",
+   "stratum": "2-5",
+   "doc_freq": 2
+  },
+  {
+   "id": "q13",
+   "text": "ABERTA",
+   "stratum": "6-20",
+   "doc_freq": 9
+  },
+  {
+   "id": "q14",
+   "text": "NoSuchMethodException",
+   "stratum": "6-20",
+   "doc_freq": 14
+  },
+  {
+   "id": "q15",
+   "text": "consultarCpServicoPorChave",
+   "stratum": "6-20",
+   "doc_freq": 7
+  },
+  {
+   "id": "q16",
+   "text": "getModelos",
+   "stratum": "6-20",
+   "doc_freq": 8
+  },
+  {
+   "id": "q17",
+   "text": "pessoaObjetoSel",
+   "stratum": "6-20",
+   "doc_freq": 6
+  },
+  {
+   "id": "q18",
+   "text": "zero",
+   "stratum": "6-20",
+   "doc_freq": 14
+  },
+  {
+   "id": "q19",
+   "text": "ALERTA",
+   "stratum": "21-100",
+   "doc_freq": 23
+  },
+  {
+   "id": "q20",
+   "text": "Revision",
+   "stratum": "21-100",
+   "doc_freq": 32
+  },
+  {
+   "id": "q21",
+   "text": "containsKey",
+   "stratum": "21-100",
+   "doc_freq": 52
+  },
+  {
+   "id": "q22",
+   "text": "getRequest",
+   "stratum": "21-100",
+   "doc_freq": 67
+  },
+  {
+   "id": "q23",
+   "text": "permitida",
+   "stratum": "21-100",
+   "doc_freq": 29
+  },
+  {
+   "id": "q24",
+   "text": "xpath",
+   "stratum": "21-100",
+   "doc_freq": 35
+  },
+  {
+   "id": "q25",
+   "text": "AplicacaoException",
+   "stratum": ">100",
+   "doc_freq": 329
+  },
+  {
+   "id": "q26",
+   "text": "Retorna",
+   "stratum": ">100",
+   "doc_freq": 198
+  },
+  {
+   "id": "q27",
+   "text": "desta",
+   "stratum": ">100",
+   "doc_freq": 106
+  },
+  {
+   "id": "q28",
+   "text": "instanceof",
+   "stratum": ">100",
+   "doc_freq": 206
+  },
+  {
+   "id": "q29",
+   "text": "replace",
+   "stratum": ">100",
+   "doc_freq": 165
+  },
+  {
+   "id": "q30",
+   "text": "yyyy",
+   "stratum": ">100",
+   "doc_freq": 122
+  }
+ ],
+ "edge": [
+  {
+   "id": "e01",
+   "kind": "zero_match",
+   "text": "ZzqR2TokenInexistenteNoCorpus",
+   "note": "ausente do vocabario"
+  },
+  {
+   "id": "e02",
+   "kind": "unicode",
+   "text": "movimentação",
+   "note": "acento nao-ASCII"
+  },
+  {
+   "id": "e03",
+   "kind": "multi_token",
+   "text": "A04000 RESOURCE_BUNDLE",
+   "note": "dois tokens"
+  },
+  {
+   "id": "e04",
+   "kind": "long",
+   "text": "A04000 RESOURCE_BUNDLE desc_tipo_mobil imageQRCode redirecionaPaginaCasoOcorraErros zone AAAA RecuperarMenuAbastecimentosAvancado daoId getTipoPermissaoSet protocolo_arq_transf zonedDateTime",
+   "note": "12 tokens"
+  },
+  {
+   "id": "e05",
+   "kind": "punctuation",
+   "text": "getId();",
+   "note": "pontuacao de codigo"
+  },
+  {
+   "id": "e06",
+   "kind": "short",
+   "text": "id",
+   "note": "token curto e comum"
+  }
+ ],
+ "vocabulary_size": 36906,
+ "counts_by_stratum": {
+  "1": 17688,
+  "2-5": 13822,
+  "6-20": 3885,
+  "21-100": 1265,
+  ">100": 246
+ }
+}
