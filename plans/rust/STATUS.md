@@ -4,6 +4,18 @@ Criado em 2026-09-29. Dono: agente A (core), com validação Bitcoin pelo agente
 
 Plano: [construção e etapas](../RUST_CLI_PILOTO_REAL.md). Método: [protocolo](../../research/rust/PROTOCOLO_VALIDACAO.md).
 
+## Revisão de continuação (2026-10-05) — NEXT-01–09 abertas
+
+Fila atual: [fases após preparação](../FASES_POS_PREPARACAO_2026_10_05.md). Verificação registrada em [auditoria JSON](../../research/rust/AUDITORIA_CONTINUACAO_2026_10_05.json). Base inspecionada: main `48f5037`, worktree Bitcoin `726f5c7` (selo `9d7d40b`). Passaram 83 testes selecionados de core/SIGA e 24 Bitcoin; hashes dos conjuntos conferem. Não equivale a reexecutar todas as referências/aceites privados ou builds completos.
+
+- A01/A03 e curadoria Bitcoin avançaram; A02 está implementada/ensaiada, sem provedor real ou custo reconciliado.
+- **EXP02 reaberta para adequação do desenho:** ambos os `pilot16.tasks.json` selam inventário de 4 smoke + 12 piloto. O pré-registro exige 4 smoke e 16 piloto separados. NEXT-02 acrescenta pelo menos quatro piloto por trilha e trata substituições por família/contaminação, sem alterar os selos antigos.
+- **NEXT-01 aberta:** probe confirma hash do loop dependente de caminhos de tentativa. Revisão do código também identificou ausência de classificação de ambiente/timeout no aceite e de preflight fechado das bases.
+- **NEXT-03/04 abertas:** provar execução privada/isolamento e integrar executor real. NEXT-05 smoke e NEXT-06 piloto aguardam esses gates e ID de modelo/teto.
+- Bitcoin: sonda C++ por unidade compilada; build completo/`test_bitcoin`/regtest pendentes. Leitura do status B não autoriza marcar esses gates concluídos.
+
+Próxima ação: A começa NEXT-01 e NEXT-02/SIGA; B começa NEXT-02/Bitcoin após consumir checkpoint. Nenhum modelo chamado nesta revisão; ganho científico continua **não avaliado**. Histórico abaixo preservado, inclusive os selos válidos como inventários.
+
 ## TASK-EXP02 selada (2026-10-02) — piloto SIGA de 16 congelado
 
 - **O que existe agora:** [`pilot16.tasks.json`](../../benchmarks/siga/rust/pilot16.tasks.json) (`atlas-tasks/2`, 16 tarefas, `sealed:true`, `sha256:6b9ea882…57d1443c`, `eval.py validate` limpo 4/4/4/4) gerado por união fiel dos três lotes + [`pilot16-checkpoint.json`](../../benchmarks/siga/rust/pilot16-checkpoint.json) para B + selo travado em `experiments/rust/siga/2026-10-02-exp02-seal/seal.json` + revisão em [`REVISAO_SEAL16.md`](../../research/siga/rust/REVISAO_SEAL16.md).
@@ -69,7 +81,7 @@ Nova fila: [TASK-A01–A03, B01–B02 e EXP01–EXP04](../PROXIMAS_TASKS_SIGA_BI
 - R0 **não** executou piloto, custo nem confirmação. Nenhuma conclusão de utilidade existe até R5.
 - Bloqueios de ambiente: RAM disponível restringe medições de RSS; build Bitcoin segue bloqueado (sem `depends`/sudo) — SIGA não espera.
 - Pendências de dono **usuário**: modelo efetivo (P1), teto financeiro (P2), custodiante do holdout (P4). As demais têm dono A ou B e estão em `BASELINE.md` §5.
-- Próxima ação executora: **R3** bloqueada por P1/P2 (modelo efetivo e teto financeiro). Com a camada de avaliação implementada, as pendências técnicas de A estão fechadas (Q1, Q3, Q5, Q7, além do instrumento de R3/R5) e o que resta aberto exige decisão do usuário — Q2 (CI), Q4 (cache frio e cgroup), Q6 (execução real do runner), Q8 (mais repetições na escala) — ou dado que ainda não existe (tarefas reais, revisores humanos, intervalo de confiança de R4).
+- Próxima ação executora: **R3** bloqueada por P1/P2 (modelo efetivo e teto financeiro). Com a camada de avaliação implementada, as pendências técnicas de A estão fechadas (Q1, Q3, Q5, Q7, além do instrumento de R3/R5) e o que resta aberto exige decisão do usuário — Q2 (CI), Q4 (cache frio e cgroup), Q6 (execução real do runner), Q8-parcial (replicado ×30/×100 em 2026-10-05, Adendo no R2_REPORT; resta corpus real não copiado) — ou dado que ainda não existe (tarefas reais, revisores humanos, intervalo de confiança de R4).
 
 ## R1 executado (2026-09-29)
 
@@ -122,6 +134,6 @@ Cada gate registra separadamente `planejado / implementado / ensaiado / executad
 
 Na retomada registrar dono, checkpoint, versão/hash do binário, datasets, fase, último aceite, próxima ação, execução ativa e reserva de recursos. Não copiar números dos experimentos Python para resultados Rust.
 
-Pendências ao fim de R2: Q2 (workflow de CI para `cargo test`, dono usuário), Q4 (cache frio e cgroup isolado, dono usuário), Q6 (execução real do runner: contrato do executor implementado e ensaiado em 2026-10-02; faltam executor/modelo, captura real, rubrica do avaliador e teto financeiro), Q8 (mais repetições no ensaio de escala) e Q9 (o alcance lexical da consulta é subconjunto dos arquivos que o `context` já entregou — quem quer alcance novo consulta, não expande). Q1, Q3, Q5 e **Q7** fechadas. Detalhe em [`R2_REPORT.md`](../../research/rust/R2_REPORT.md) §13.
+Pendências ao fim de R2: Q2 (workflow de CI para `cargo test`, dono usuário), Q4 (cache frio e cgroup isolado, dono usuário), Q6 (execução real do runner: contrato do executor implementado e ensaiado em 2026-10-02; faltam executor/modelo, captura real, rubrica do avaliador e teto financeiro), Q8-parcial (replicado ×30/×100 em 2026-10-05; resta corpus real não copiado) e Q9 (o alcance lexical da consulta é subconjunto dos arquivos que o `context` já entregou — quem quer alcance novo consulta, não expande). Q1, Q3, Q5 e **Q7** fechadas. Detalhe em [`R2_REPORT.md`](../../research/rust/R2_REPORT.md) §13.
 
 O que ainda não tem dono técnico e é o caminho natural: **R3 só depende de P1/P2**, mas a rubrica por tarefa e o avaliador cego de R4 podem ser escritos antes — são eles que decidem o que "aceite" significa quando o modelo enfim rodar.

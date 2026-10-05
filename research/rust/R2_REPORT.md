@@ -331,10 +331,32 @@ Pendências ao fim de R2:
 | Q2 | Workflow de CI para `cargo test` | usuário | aberta |
 | Q3 | Comparação de implementação ou de produto | A | **fechada** (§6: de produto, declarado) |
 | Q4 | Cache frio e cgroup isolado (P8) | usuário | aberta — exige máquina dedicada/root |
-| Q8 | Corpus de escala sintético e `n=1` nos dois maiores tamanhos | A | aberta — replicar em ×30/×100 com mais repetições e, se houver projeto real grande, medir um corpus não copiado |
+| Q8 | Corpus de escala sintético e `n=1` nos dois maiores tamanhos | A | **replicada em 2026-10-05** (Adendo: índice ×30 n=4, ×100 n=3; `context` n=10; tendência confirmada) — resta medir um corpus real grande não copiado |
 | Q5 | Microbenchmark de `expand` e `verify` | A | **fechada** (§8: 700 + 875 execuções, 875/875 códigos previstos) |
 | Q6 | Integração com o runner real | A (infra) + usuário (P1/P2) | **infraestrutura pronta e ensaiada** ([`RUNNER_PILOTO.md`](RUNNER_PILOTO.md)); falta executor/modelo, rubrica e teto financeiro |
 | Q7 | `evidence_wanted=references` inerte quando `known_refs` consomem o teto | A | **fechada** (§8.1.1 e §8.1.2: dois grupos de spans por arquivo citado + `evidence_reserve_pct`, com antes/depois medido) |
 | Q9 | Alcance lexical ser subconjunto dos arquivos já entregues | A | registrada (§8.1.1: 70/70 sondagens). Enquanto `known_refs` vier do `context`, "arquivo novo" é impossível por construção — quem quiser alcance novo deve consultar em vez de expandir |
 
-Próxima ação: **R3** (smoke com modelo, 3 condições × 4 tarefas = 12 execuções por trilha) assim que o modelo efetivo e o teto financeiro existirem. R3 não pode começar por documentação. De R2 seguem abertos Q2 (CI), Q4 (cache frio), Q6 (runner real, bloqueado por P1/P2), Q8 (mais repetições no ensaio de escala) e Q9 (alcance lexical é subconjunto do que o `context` já entregou). Q1, Q3, Q5 e Q7 fechadas.
+Próxima ação: **R3** (smoke com modelo, 3 condições × 4 tarefas = 12 execuções por trilha) assim que o modelo efetivo e o teto financeiro existirem. R3 não pode começar por documentação. De R2 seguem abertos Q2 (CI), Q4 (cache frio), Q6 (runner real, bloqueado por P1/P2), Q8-parcial (resta corpus real não copiado) e Q9 (alcance lexical é subconjunto do que o `context` já entregou). Q1, Q3, Q5 e Q7 fechadas.
+
+## Adendo 2026-10-05 — replicação Q8 (×30/×100 com mais repetições)
+
+Linha de comando (mesmo harness, mesmos insumos congelados de 29/09 — `corpus.json`/`queries.json` reutilizados, fingerprint `bb7a99fb…` conferido, dataset intocado): `measure.py --mode scale --scale-sizes 30,100 --index-reps 4 --reps 5 --policy CTX-RS`. Binário reconstruído do fonte (`rustc 1.96.0`, mesmo toolchain de 29/09; `git_head 48f5037`, sujo só por untracked). Artefatos brutos em `experiments/rust/siga/2026-10-05-r2-scale-q8/` (`runs_scale.jsonl` 54 linhas, exit ≠ 0 zero, `indexed == files` em todas; `tables.md` gerado por `report.py`, nenhum número à mão). Reserva: sem build/indexação pesada concorrente da outra trilha no período; host compartilhado sem reserva exclusiva (load ~5–7, MemAvailable ~6 GiB contra ~11 GiB em 29/09) — registrado porque as condições diferem.
+
+| × | fase | impl | n (29/09) | wall p50 | wall máx | RSS p50 | índice/arquivo |
+|---|---|---|---|---|---|---|---|
+| ×30 | index | python | 4 (1) | 196,73 s (92,85 s) | 295,05 s | 46,6 MB (47,2) | 3 323,9 B (3 324) |
+| ×30 | index | rust | 4 (1) | 2,28 s (1,54 s) | 6,68 s | 22,8 MB (22,6) | 7 195,9 B (7 196) |
+| ×100 | index | python | 3 (1) | 435,38 s (283,84 s) | 493,73 s | 108,1 MB (108,6) | 3 350,6 B (3 351) |
+| ×100 | index | rust | 3 (1) | 12,67 s (5,55 s) | 13,57 s | 53,3 MB (53,1) | 7 125,2 B (7 125) |
+| ×30 | context | python | 10 (10) | 1,27 s (1,295 s) | 2,33 s | 203,5 MB (203,3) | — |
+| ×30 | context | rust | 10 (10) | 0,020 s (0,020 s) | 0,080 s | 12,3 MB (12,3) | — |
+| ×100 | context | python | 10 (10) | 4,28 s (4,300 s) | 7,28 s | 631,0 MB (630,5) | — |
+| ×100 | context | rust | 10 (10) | 0,065 s (0,050 s) | **0,350 s** | 22,1 MB (22,2) | — |
+
+Leitura honesta, ponto a ponto:
+
+- **A tendência de §9 sobrevive com repetições:** índice escala linearmente nos dois lados; bytes de índice por arquivo são determinísticos e byte-idênticos aos de 29/09 (3 324/3 351 e 7 196/7 125 B); `context` replica os valores de 29/09 dentro de centésimos (p50) e do ruído de pico (RSS máx).
+- **Paredes absolutas de indexação ~2x maiores que em 29/09** (python ×30 p50 197 s contra 93 s; ×100 435 s contra 284 s). A primeira repetição de cada série é a mais lenta (295 s → 124 s no ×30), padrão de cache/contenção, não de produto: o `declared` (contagens, bytes de índice) é idêntico entre reps. Nada aqui muda constante por arquivo como conclusão — muda o aviso de que parede absoluta depende do host.
+- **A meta §5 de `context` (p95 ≤ 150 ms) NÃO é atendida nesta replicação no ×100:** p95 por posto mais próximo = máx = 0,350 s (9/10 reps ≤ 0,10 s; o outlier é a primeira repetição sob load). Em 29/09 o máx era 0,070 s. O quadro de §10 continua valendo para a rodada original; para este host carregado, o número com repetições é 0,35 s de pior caso, não 0,07 s.
+- **Q8 segue parcial:** a metade "mais repetições" está feita; a metade "corpus real grande não copiado" continua aberta — o harness de escala só sabe copiar a subárvore Java congelada (`SUBTREE` fixo) e não há corpus real grande alternativo disponível neste host (o checkout Bitcoin local é C++/Python, fora do formato do harness; adaptá-lo seria outro experimento, não esta replicação).
