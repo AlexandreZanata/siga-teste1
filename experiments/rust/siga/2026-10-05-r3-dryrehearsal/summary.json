@@ -1,0 +1,143 @@
+{
+ "_note": "Ensaio dry da rodada smoke congelada (infraestrutura, sem modelo, sem patch, sem acceptance-repo). 12/12 exit 0; manifests íntegros em manifest-*.json (cópias). Limites honestos: o aceite com patch real e o uso do atlas via shim só serão exercitados na R3 com modelo.",
+ "schema": "atlas-dry-rehearsal/1",
+ "date": "2026-10-05",
+ "plan": "experiments/rust/siga/2026-10-05-r3-smoke-plan/run_plan.json",
+ "executor": "dry --allow-dry",
+ "attempts_exit_0": 12,
+ "attempts": 12,
+ "arms": [
+  {
+   "attempt": "att-01",
+   "task": "SIGA-REAL-01",
+   "condition": "BASE",
+   "exit": 0,
+   "wall_s": 0.271,
+   "evidence_class": "infrastructure_only",
+   "contract": "not_applicable",
+   "snapshot_sha": "e3be22828f787cbe71b339aecb7a7bf569099803",
+   "stop": null
+  },
+  {
+   "attempt": "att-02",
+   "task": "SIGA-REAL-01",
+   "condition": "LEX-RS",
+   "exit": 0,
+   "wall_s": 0.662,
+   "evidence_class": "infrastructure_only",
+   "contract": "not_applicable",
+   "snapshot_sha": "e3be22828f787cbe71b339aecb7a7bf569099803",
+   "stop": null
+  },
+  {
+   "attempt": "att-03",
+   "task": "SIGA-REAL-01",
+   "condition": "CTX-RS",
+   "exit": 0,
+   "wall_s": 0.779,
+   "evidence_class": "infrastructure_only",
+   "contract": "not_applicable",
+   "snapshot_sha": "e3be22828f787cbe71b339aecb7a7bf569099803",
+   "stop": null
+  },
+  {
+   "attempt": "att-04",
+   "task": "SIGA-REAL-02",
+   "condition": "LEX-RS",
+   "exit": 0,
+   "wall_s": 0.257,
+   "evidence_class": "infrastructure_only",
+   "contract": "not_applicable",
+   "snapshot_sha": "e3be22828f787cbe71b339aecb7a7bf569099803",
+   "stop": null
+  },
+  {
+   "attempt": "att-05",
+   "task": "SIGA-REAL-02",
+   "condition": "CTX-RS",
+   "exit": 0,
+   "wall_s": 0.56,
+   "evidence_class": "infrastructure_only",
+   "contract": "not_applicable",
+   "snapshot_sha": "e3be22828f787cbe71b339aecb7a7bf569099803",
+   "stop": null
+  },
+  {
+   "attempt": "att-06",
+   "task": "SIGA-REAL-02",
+   "condition": "BASE",
+   "exit": 0,
+   "wall_s": 0.782,
+   "evidence_class": "infrastructure_only",
+   "contract": "not_applicable",
+   "snapshot_sha": "e3be22828f787cbe71b339aecb7a7bf569099803",
+   "stop": null
+  },
+  {
+   "attempt": "att-07",
+   "task": "SIGA-REAL-03",
+   "condition": "CTX-RS",
+   "exit": 0,
+   "wall_s": 0.909,
+   "evidence_class": "infrastructure_only",
+   "contract": "not_applicable",
+   "snapshot_sha": "e3be22828f787cbe71b339aecb7a7bf569099803",
+   "stop": null
+  },
+  {
+   "attempt": "att-08",
+   "task": "SIGA-REAL-03",
+   "condition": "BASE",
+   "exit": 0,
+   "wall_s": 0.849,
+   "evidence_class": "infrastructure_only",
+   "contract": "not_applicable",
+   "snapshot_sha": "e3be22828f787cbe71b339aecb7a7bf569099803",
+   "stop": null
+  },
+  {
+   "attempt": "att-09",
+   "task": "SIGA-REAL-03",
+   "condition": "LEX-RS",
+   "exit": 0,
+   "wall_s": 0.925,
+   "evidence_class": "infrastructure_only",
+   "contract": "not_applicable",
+   "snapshot_sha": "e3be22828f787cbe71b339aecb7a7bf569099803",
+   "stop": null
+  },
+  {
+   "attempt": "att-10",
+   "task": "SIGA-REAL-04",
+   "condition": "BASE",
+   "exit": 0,
+   "wall_s": 0.789,
+   "evidence_class": "infrastructure_only",
+   "contract": "not_applicable",
+   "snapshot_sha": "e3be22828f787cbe71b339aecb7a7bf569099803",
+   "stop": null
+  },
+  {
+   "attempt": "att-11",
+   "task": "SIGA-REAL-04",
+   "condition": "LEX-RS",
+   "exit": 0,
+   "wall_s": 1.604,
+   "evidence_class": "infrastructure_only",
+   "contract": "not_applicable",
+   "snapshot_sha": "e3be22828f787cbe71b339aecb7a7bf569099803",
+   "stop": null
+  },
+  {
+   "attempt": "att-12",
+   "task": "SIGA-REAL-04",
+   "condition": "CTX-RS",
+   "exit": 0,
+   "wall_s": 0.534,
+   "evidence_class": "infrastructure_only",
+   "contract": "not_applicable",
+   "snapshot_sha": "e3be22828f787cbe71b339aecb7a7bf569099803",
+   "stop": null
+  }
+ ]
+}

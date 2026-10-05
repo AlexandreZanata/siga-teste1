@@ -93,3 +93,19 @@ def test_plano_de_ordem_segue_a_regra_e_nao_rodou():
     from collections import Counter
     assert Counter(a["condition"] for a in arms) == {"BASE": 4, "LEX-RS": 4, "CTX-RS": 4}
     assert list(PLAN.parent.glob("runs_*.jsonl")) == [], "a rodada não começou"
+
+
+REHEARSAL = REPO_ROOT / "experiments/rust/siga/2026-10-05-r3-dryrehearsal/summary.json"
+
+
+def test_ensaio_dry_cobriu_os_12_bracos_do_plano():
+    summary = json.loads(REHEARSAL.read_text())
+    assert summary["schema"] == "atlas-dry-rehearsal/1"
+    assert summary["attempts"] == summary["attempts_exit_0"] == 12
+    plan = json.loads(PLAN.read_text())
+    assert [(a["task"], a["condition"]) for a in summary["arms"]] == \
+        [(a["task"], a["condition"]) for a in plan["arms"]]
+    for a in summary["arms"]:
+        assert a["exit"] == 0
+        assert a["evidence_class"] == "infrastructure_only"
+        assert a["snapshot_sha"] == "e3be22828f787cbe71b339aecb7a7bf569099803"

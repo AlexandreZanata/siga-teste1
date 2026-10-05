@@ -1,0 +1,269 @@
+{
+ "schema": "atlas-run/1",
+ "run_id": "att-09",
+ "platform": "siga",
+ "phase": "smoke",
+ "task": {
+  "id": "SIGA-REAL-03",
+  "split": "smoke",
+  "category": "testes_comportamento_de_api",
+  "base_sha": "e3be22828f787cbe71b339aecb7a7bf569099803",
+  "test_command": [
+   "bash",
+   "atlas-accept/run.sh",
+   "SIGA-REAL-03"
+  ],
+  "allowed_paths": [
+   "siga-base/src/main/java/br/gov/jfrj/siga/base/util/CPFUtils.java"
+  ],
+  "immutable_paths": [
+   "atlas-accept/**",
+   "siga-base/src/test/**"
+  ],
+  "origin": "Curadoria dev A03 em 2026-10-02: requisito revisto por curador; baseline vermelho (8/10) e referencia verde (10/10) demonstrados; 7 testes legados de CPFUtilsTest preservados.",
+  "contamination_risk": "medio"
+ },
+ "condition": "LEX-RS",
+ "snapshot": {
+  "base_sha": "e3be22828f787cbe71b339aecb7a7bf569099803",
+  "tree_sha256": "4225af38281a645f1ae8b8db604454fb846b3478b17b52bf0cf07cf619dcdc93",
+  "workspace": "/tmp/r3dry/ws-09",
+  "source": "workspace fornecido pelo chamador (nao criado por este runner)"
+ },
+ "tool": {
+  "contract": "CLI_CONTRACT/1",
+  "binary": "rust/archatlas/target/release/archatlas",
+  "binary_sha256": "e6166ed85e4a51a504af8354ac536ca64c1b36d3e3ddf05c70f9981549e594ef",
+  "policy": "LEX-RS",
+  "index": "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/experiments/rust/siga/2026-09-29-r2-queries/index_rust.sqlite",
+  "index_generation": null,
+  "index_generation_reason": "o runner nao abre o indice; o campo vem do envelope quando houver",
+  "absent_in_base": false
+ },
+ "executor": {
+  "kind": "dry",
+  "cmd": [
+   "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/.venv/bin/python",
+   "/tmp/r3dry/att-09/dry_executor.py"
+  ],
+  "cmd_sha256": "sha256:8cea6bb9fd37410c4b397c75784cd959e032f6c9743e7433fe624b7ad3244ec0",
+  "loop_sha256": "sha256:ea4dbd48182a9a1253a1c0c9ca1109d28301bb27605d545820f1fc84228baf99",
+  "expected_loop_sha256": null,
+  "tools_registered": [
+   "atlas",
+   "atlas-read"
+  ],
+  "result_path": "/tmp/r3dry/att-09/executor_result.json",
+  "result_received": false
+ },
+ "model": {
+  "provider": null,
+  "id": null,
+  "version": null,
+  "verified_by": null,
+  "identity_verified": false,
+  "reason": "executor dry: contrato de modelo nao se aplica a ensaio de infraestrutura"
+ },
+ "tokenizer": {
+  "id": null,
+  "is_exact": null,
+  "reason": "P3 pendente: nenhum executor declarou tokenizer"
+ },
+ "prompt": {
+  "statement_sha256": "8922a0573895a7a503a74a8ebbc9740a6767b6068d6af42b8bb0f79646e420df",
+  "tool_specs_sha256": null,
+  "tool_specs_reason": "as descricoes das ferramentas sao do executor, nao deste runner"
+ },
+ "limits": {
+  "wall_s": 1800.0,
+  "turns": 40,
+  "tool_calls": 100
+ },
+ "usage": {
+  "wall_s": 0.925,
+  "tool_calls": 0,
+  "tool_calls_observed": 0,
+  "tool_calls_declared": 0,
+  "tool_calls_rejected": 0,
+  "tool_calls_by_tool": {},
+  "opened": 0,
+  "delivered_bytes": 0,
+  "declared_delivered_bytes": null,
+  "turns": null,
+  "turns_reason": "executor nao emitiu evento de turno; teto de turnos nao fiscalizavel",
+  "model_calls": null,
+  "calls_ok": null,
+  "calls_error": null,
+  "tokens": null,
+  "latency_ms": null,
+  "errors": null,
+  "retries": null,
+  "declared_cost": null,
+  "declared_stop": {
+   "reason": "dry_infrastructure",
+   "reasons": {
+    "dry_infrastructure": 1
+   }
+  },
+  "duplicate_request_ids": 0,
+  "unattributed_events": 0,
+  "stream_violations": [],
+  "retrieved_candidates": null,
+  "retrieved_reason": "o envelope do `context` nao expoe a contagem interna de candidatos"
+ },
+ "cost": {
+  "provider_billed": null,
+  "currency": null,
+  "source": null,
+  "coverage": {
+   "observed": false,
+   "source": "ausente",
+   "reason": "sem custo faturado: nenhuma tarifa observada (P2 pendente nao autoriza inventar preco)"
+  },
+  "stream_declared": null,
+  "reason": "P2 pendente: sem teto financeiro e sem custo faturado declarado",
+  "local_cpu_s": null,
+  "local_cpu_reason": "medido no nivel do processo externo pelo harness de microbenchmark, nao aqui",
+  "local_peak_rss_kb": 13544
+ },
+ "contract": {
+  "schema": "atlas-executor/1",
+  "state": "not_applicable",
+  "reason": "executor dry: contrato de modelo nao se aplica a ensaio de infraestrutura",
+  "violations": [],
+  "missing": [],
+  "reconciliation": [],
+  "coverage": {
+   "model_identity": {
+    "observed": false,
+    "source": "ausente",
+    "reason": "executor nao entregou result contract"
+   },
+   "tokens": {
+    "observed": false,
+    "source": "ausente",
+    "reason": "nenhuma chamada de modelo com tokens observada no stream nem no result"
+   },
+   "cost": {
+    "observed": false,
+    "source": "ausente",
+    "reason": "sem custo faturado: nenhuma tarifa observada (P2 pendente nao autoriza inventar preco)"
+   },
+   "tool_calls": {
+    "observed": true,
+    "source": "stream:tool_call (shim + executor)",
+    "reason": null
+   },
+   "turns": {
+    "observed": false,
+    "source": "ausente",
+    "reason": "executor nao emitiu evento de turno; teto de turnos nao fiscalizavel"
+   }
+  },
+  "result_schema": null,
+  "result_error": null,
+  "provenance": {
+   "totals": "declarados pelo executor e conferidos contra o proprio stream",
+   "externally_observed": [
+    "parede (wall_s) e pico de RSS do processo externo",
+    "eventos do shim: chamadas `atlas`, leituras sancionadas (`opened`) e bytes entregues",
+    "patch do workspace e exit code do comando de aceite",
+    "aplicacao do patch em base limpa e teste imutavel do avaliador"
+   ]
+  }
+ },
+ "capability": {
+  "manifest": "capability_manifest.json",
+  "supported_claims": [
+   "contagem_de_chamadas_de_ferramenta_em_todas_as_ferramentas",
+   "teto_de_parede_aplicado",
+   "teto_de_chamadas_aplicado",
+   "patch_do_executor_capturado"
+  ],
+  "unsupported_claims": [
+   "custo_faturado_do_provedor",
+   "tokens_do_modelo",
+   "turnos_do_modelo",
+   "reducao_de_leituras_totais_do_agente",
+   "isolamento_do_ouro",
+   "custo_por_sucesso"
+  ]
+ },
+ "cache": {
+  "index": "indice da rodada, aquecido",
+  "filesystem": "aquecido (nao foi possivel derrubar sem maquina dedicada)"
+ },
+ "order": {
+  "repetition": 0,
+  "position": 9
+ },
+ "timestamps": {
+  "started": "2026-10-05T10:13:49-0400",
+  "finished": "2026-10-05T10:13:51-0400"
+ },
+ "processes": [
+  {
+   "argv": [
+    "/home/iiii/PESSOAL-PROJETOS-ALEXANDRE/siga-teste1/.venv/bin/python",
+    "/tmp/r3dry/att-09/dry_executor.py"
+   ],
+   "exit_code": 0
+  }
+ ],
+ "patch": {
+  "file": "attempt.patch",
+  "bytes": 172,
+  "empty": false
+ },
+ "acceptance": {
+  "applied": null,
+  "exit_code": null,
+  "seconds": null,
+  "reason": "sem --acceptance-repo: nenhuma base limpa fornecida nesta tentativa"
+ },
+ "stopped_by": null,
+ "stopped_killed": false,
+ "stopped_note": null,
+ "outcome": "completed",
+ "evidence_class": "infrastructure_only",
+ "evidence_class_reason": "executor dry: valida a infraestrutura, nao responde a pergunta de utilidade",
+ "gold_isolation": {
+  "declared_dir_ref": null,
+  "path_recorded": false,
+  "path_recorded_reason": "manifesto e artefato de tentativa; o caminho do ouro nao entra nele",
+  "in_executor_env": false,
+  "checks": [
+   "gold fora do workspace",
+   "gold fora do checkout do repo",
+   "caminho do ouro nao entra no ambiente do executor",
+   "caminho do ouro nao entra no manifesto"
+  ],
+  "not_covered": [
+   "mesmo usuario do sistema",
+   "mesmo .git e historico do checkout",
+   "sem container/namespace: o executor pode ler o disco se souber o caminho"
+  ],
+  "level": "checagem_por_caminho; insuficiente para R5",
+  "state": "ausente",
+  "note": "sem --gold nesta tentativa; nenhum ouro foi lido nem referenciado"
+ },
+ "executor_seconds": 0.152,
+ "environment": {
+  "os": "Linux-7.1.5-76070105-generic-x86_64-with-glibc2.39",
+  "kernel": "7.1.5-76070105-generic",
+  "machine": "x86_64",
+  "cpu_model": "13th Gen Intel(R) Core(TM) i7-13620H",
+  "nproc": 16,
+  "meminfo": {
+   "MemTotal": "32556576 kB",
+   "MemAvailable": "10064508 kB"
+  },
+  "rustc": "rustc 1.96.0 (ac68faa20 2026-05-25)",
+  "cargo": "cargo 1.96.0 (30a34c682 2026-05-25)",
+  "python": "3.12.3",
+  "gnu_time": "time (GNU Time) UNKNOWN\nCopyright (C) 2018 Free Software Foundation, Inc.\nLicense GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>.\nThis is free software: you are free to change and redistribute it.\nThere is NO WARRANTY, to the extent permitted by law.\n\nWritten by David Keppel, David MacKenzie, and Assaf Gordon.",
+  "git_head": "c0c8d69d7b86277da14dd9c0ade58916f9ed16dd",
+  "git_head_short": "c0c8d69",
+  "git_dirty": true
+ }
+}
